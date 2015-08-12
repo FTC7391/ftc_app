@@ -34,6 +34,8 @@ package com.qualcomm.ftcrobotcontroller.opmodes;
 import com.qualcomm.robotcore.eventloop.opmode.OpModeManager;
 import com.qualcomm.robotcore.eventloop.opmode.OpModeRegister;
 
+import FTC7391.AutoOp;
+
 /**
  * Register Op Modes
  */
@@ -97,6 +99,6 @@ public class FtcOpModeRegister implements OpModeRegister {
     manager.register("PushBotDriveTouch", PushBotDriveTouch.class);
     manager.register("PushBotIrSeek", PushBotIrSeek.class);
     manager.register("PushBotSquare", PushBotSquare.class);
-
+    manager.register("AutoOp", AutoOp.class);
   }
 }

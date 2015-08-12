@@ -2,19 +2,17 @@ package FTC7391;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 
-import FTC7391.DriveTrain;
-
 /**
  * Created by Dylan on 7/19/2015.
  */
-public class DylanOp extends OpMode
+public class AutoOp extends OpMode
 {
-    private static final String TAG = DylanOp.class.getSimpleName();
+    private static final String TAG = AutoOp.class.getSimpleName();
     private static DriveTrain dt;
     enum DriveTrainState {FORWARD, STOP, BACKWARD}
     DriveTrainState dtState;
     @Override
-    public void start()
+    public void init()
     {
         telemetry.addData(TAG, "OpMode Started");
         dtState = DriveTrainState.FORWARD;
