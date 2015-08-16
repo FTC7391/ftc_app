@@ -8,58 +8,63 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 public class AutoOp extends OpMode
 {
     private static final String TAG = AutoOp.class.getSimpleName();
-    private static DriveTrain dt;
+    private static DriveTrain driveTrain;
     enum DriveTrainState {FORWARD, STOP, BACKWARD}
-    DriveTrainState dtState;
+    DriveTrainState driveTrainState;
     @Override
     public void init()
     {
-        telemetry.addData(TAG, "OpMode Started");
-        dtState = DriveTrainState.FORWARD;
-        dt.moveInches(24.0, 100);
+        telemetry.addData(TAG, "OpMode Init");
+        driveTrain = new DriveTrain(hardwareMap);
+        driveTrainState = DriveTrainState.FORWARD;
+        driveTrain.moveInches(24.0, 100);
     }
     @Override
     public void loop()
     {
-       switch(dtState)
-       {
-           case FORWARD:
-               if(dt.isDone())
-               {
-                   dtState = DriveTrainState.STOP;
-                   telemetry.addData(TAG, "Moved FORWARD");
-               }
-           case STOP:
-           {
-               dtState = DriveTrainState.BACKWARD;
-               dt.moveInches(-24.0, 100);
-           }
-           case BACKWARD:
-               if(dt.isDone())
-               {
-                   dtState = DriveTrainState.STOP;
-                   telemetry.addData(TAG, "Moved Backward");
-               }
-       }
-//       if(dt.isDone() && dtState == DriveTrainState.FORWARD)
+//       switch(driveTrainState)
 //       {
-//           dtState = DriveTrainState.STOP;
+//           case FORWARD:
+//               if(driveTrain.isDone())
+//               {
+//                   driveTrainState = DriveTrainState.STOP;
+//                   telemetry.addData(TAG, "Moved FORWARD");
+//               }
+//           case STOP:
+//           {
+//               driveTrainState = DriveTrainState.BACKWARD;
+//               driveTrain.moveInches(-24.0, 100);
+//           }
+//           case BACKWARD:
+//               if(driveTrain.isDone())
+//               {
+//                   driveTrainState = DriveTrainState.STOP;
+//                   telemetry.addData(TAG, "Moved Backward");
+//               }
+//       }
+//       if(driveTrain.isDone() && driveTrainState == DriveTrainState.FORWARD)
+//       {
+//           driveTrainState = DriveTrainState.STOP;
 //           telemetry.addData(TAG, "Moved Forward");
 //       }
-//       else if(dtState == DriveTrainState.STOP)
+//       else if(driveTrainState == DriveTrainState.STOP)
 //       {
-//           dtState = DriveTrainState.BACKWARD;
-//           dt.moveInches(-24.0, 100);
+//           driveTrainState = DriveTrainState.BACKWARD;
+//           driveTrain.moveInches(-24.0, 100);
 //       }
-//       else if(dt.isDone() && dtState == DriveTrainState.BACKWARD)
+//       else if(driveTrain.isDone() && driveTrainState == DriveTrainState.BACKWARD)
 //       {
-//           dtState = DriveTrainState.STOP;
+//           driveTrainState = DriveTrainState.STOP;
 //           telemetry.addData(TAG, "Moved Backward");
 //       }
+        telemetry.addData(TAG, "Test Moving");
+        driveTrain.moveInches(1, 10);
+
     }
     @Override
     public void stop()
     {
-
+        telemetry.addData(TAG, "Test Stopped");
+        driveTrain.moveInches(1, 0);
     }
 }
