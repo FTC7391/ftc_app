@@ -15,7 +15,7 @@ public class AutoOp extends OpMode
     public void init()
     {
         telemetry.addData(TAG, "OpMode Init");
-        driveTrain = new DriveTrain(hardwareMap);
+        driveTrain = new DriveTrain(hardwareMap, 4.0, 14.5);
         driveTrainState = DriveTrainState.FORWARD;
         driveTrain.moveInches(24.0, 100);
     }
