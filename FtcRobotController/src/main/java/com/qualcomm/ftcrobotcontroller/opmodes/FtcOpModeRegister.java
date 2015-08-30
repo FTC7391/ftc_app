@@ -81,7 +81,7 @@ public class FtcOpModeRegister implements OpModeRegister {
      *  - K9IrSeeker uses a legacy IR seeker V2 sensor to follow a beacon.
      *  - K9Line uses a legacy LEGO NXT light sensor to follow a white line.
      */
-
+    manager.register("TeleOpTest", FTC7391.TeleOpTest.class);
     manager.register("K9TeleOp", K9TeleOp.class);
     manager.register("K9IrSeeker", K9IrSeeker.class);
     manager.register("K9Line", K9Line.class);
