@@ -71,6 +71,7 @@ public class FtcOpModeRegister implements OpModeRegister {
     /*
      * The NullOp op mode
      */
+    manager.register("AutoOp", AutoOp.class);
     manager.register("NullOp", NullOp.class);
 
 
@@ -99,6 +100,6 @@ public class FtcOpModeRegister implements OpModeRegister {
     manager.register("PushBotDriveTouch", PushBotDriveTouch.class);
     manager.register("PushBotIrSeek", PushBotIrSeek.class);
     manager.register("PushBotSquare", PushBotSquare.class);
-    manager.register("AutoOp", AutoOp.class);
+
   }
 }

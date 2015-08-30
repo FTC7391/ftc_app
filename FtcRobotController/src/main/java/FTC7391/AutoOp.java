@@ -11,6 +11,10 @@ public class AutoOp extends OpMode
     private static DriveTrain driveTrain;
     enum DriveTrainState {FORWARD, STOP, BACKWARD}
     DriveTrainState driveTrainState;
+    public AutoOp(){
+
+    }
+
     @Override
     public void init()
     {
@@ -58,13 +62,13 @@ public class AutoOp extends OpMode
 //           telemetry.addData(TAG, "Moved Backward");
 //       }
         telemetry.addData(TAG, "Test Moving");
-        driveTrain.moveInches(1, 10);
+        //driveTrain.moveInches(1, 10);
 
     }
     @Override
     public void stop()
     {
         telemetry.addData(TAG, "Test Stopped");
-        driveTrain.moveInches(1, 0);
+        //driveTrain.moveInches(1, 0);
     }
 }
