@@ -47,6 +47,7 @@ public class DriveTrain {
 
         setMotorTargetPosition(frontRightTargetTick, frontLeftTargetTick, backRightTargetTick, backLeftTargetTick);
     }
+
     public static void lateraMoveInches(boolean right, int distance, int power) {
         if (right) {
             setPowerOfMotors(power, -power, -power, power);
