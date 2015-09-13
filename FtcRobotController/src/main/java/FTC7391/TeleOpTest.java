@@ -127,6 +127,7 @@ public class TeleOpTest extends OpMode {
 		// 1 is full down
 		// direction: left_stick_x ranges from -1 to 1, where -1 is full left
 		// and 1 is full right
+		/*
 		float throttle = -gamepad1.left_stick_y;
 		float direction = gamepad1.left_stick_x;
 		float right = throttle - direction;
@@ -140,32 +141,36 @@ public class TeleOpTest extends OpMode {
 		// the robot more precisely at slower speeds.
 		right = (float)scaleInput(right);
 		left =  (float)scaleInput(left);
+		*/
 
+		if (gamepad1.dpad_right) {
+			//DriveTrain.testRotateDegrees(positiveNumber);
+		}
+		if (gamepad1.dpad_left) {
+			//DriveTrain.testRotateDegrees(negativeNumber);
+		}
 
 		// update the position of the arm.
 		if (gamepad1.a) {
-			// if the A button is pushed on gamepad1, increment the position of
-			// the arm servo.
+
 			telemetry.addData(TAG, "A Button Pressed.");
-			armPosition += armDelta;
+			//DriveTrain.testMoveLongitudinal(negativeNumber);
 		}
 
 		if (gamepad1.y) {
 			telemetry.addData(TAG, "Y Button Pressed.");
-			// if the Y button is pushed on gamepad1, decrease the position of
-			// the arm servo.
-			armPosition -= armDelta;
+			//DriveTrain.testMoveVertical(positiveNumber);
 		}
 
 		// update the position of the claw
 		if (gamepad1.x) {
 			telemetry.addData(TAG, "X Button Pressed.");
-			clawPosition += clawDelta;
+			//DriveTrain.testMoveLateral(negativeNumber);
 		}
 
 		if (gamepad1.b) {
 			telemetry.addData(TAG, "B Button Pressed.");
-			clawPosition -= clawDelta;
+			//DriveTrain.testMoveLateral(positiveNumber);
 		}
 
         // clip the position values so that they never exceed their allowed range.
@@ -181,8 +186,8 @@ public class TeleOpTest extends OpMode {
         telemetry.addData("Text", "*** Robot Data***");
         telemetry.addData("arm", "arm:  " + String.format("%.2f", armPosition));
         telemetry.addData("claw", "claw:  " + String.format("%.2f", clawPosition));
-        telemetry.addData("left tgt pwr",  "left  pwr: " + String.format("%.2f", left));
-        telemetry.addData("right tgt pwr", "right pwr: " + String.format("%.2f", right));
+        //telemetry.addData("left tgt pwr",  "left  pwr: " + String.format("%.2f", left));
+        //telemetry.addData("right tgt pwr", "right pwr: " + String.format("%.2f", right));
 
 	}
 
