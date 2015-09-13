@@ -21,8 +21,9 @@ public class AutoOp extends OpMode
         telemetry.addData(TAG, "OpMode Init");
         driveTrain = new DriveTrain(hardwareMap);
         driveTrainState = DriveTrainState.FORWARD;
+
         driveTrain.moveInches(24, 50);
-        driveTrain.lateraMoveInches(true, 10, 50);
+        driveTrain.lateralMoveInches(true, 10, 50);
     }
     @Override
     public void loop()
