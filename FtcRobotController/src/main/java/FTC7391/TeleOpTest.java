@@ -33,6 +33,7 @@ package FTC7391;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.Range;
 
@@ -113,6 +114,7 @@ public class TeleOpTest extends OpMode {
 	 */
 	@Override
 	public void loop() {
+		Gamepad gamepad1 = new Gamepad();
 
 		telemetry.addData(TAG, "OpMode Started");
 
@@ -179,8 +181,8 @@ public class TeleOpTest extends OpMode {
 		}
 
         // clip the position values so that they never exceed their allowed range.
-        armPosition = Range.clip(armPosition, ARM_MIN_RANGE, ARM_MAX_RANGE);
-        clawPosition = Range.clip(clawPosition, CLAW_MIN_RANGE, CLAW_MAX_RANGE);
+       // armPosition = Range.clip(armPosition, ARM_MIN_RANGE, ARM_MAX_RANGE);
+        //clawPosition = Range.clip(clawPosition, CLAW_MIN_RANGE, CLAW_MAX_RANGE);
 
 		/*
 		 * Send telemetry data back to driver station. Note that if we are using
