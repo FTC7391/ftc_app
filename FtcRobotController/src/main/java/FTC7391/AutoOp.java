@@ -22,8 +22,9 @@ public class AutoOp extends OpMode
         driveTrain = new DriveTrain(hardwareMap);
         driveTrainState = DriveTrainState.FORWARD;
 
-        driveTrain.moveInches(24, 50);
-        driveTrain.lateralMoveInches(true, 10, 50);
+        //driveTrain.moveInches(24, .50);
+
+        driveTrain.lateralMoveInches(true, 10, .50);
     }
     @Override
     public void loop()

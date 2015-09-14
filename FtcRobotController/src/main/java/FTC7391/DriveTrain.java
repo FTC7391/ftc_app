@@ -22,7 +22,6 @@ public class DriveTrain {
     private static final double DIAMETER = 4.0;
     private static final int TOTAL_TICKS = 1440;
     private static final int TOTAL_DEGREES = 360;
-
     private static final int OFFSET = (int) (TOTAL_TICKS / (Math.PI * DIAMETER));
 
     //Constructor
@@ -105,7 +104,7 @@ public class DriveTrain {
         MODE_ROTATE_LEFT,
     }
 
-    public void setOPMode(TestModes mode, int power) {
+    public static void setOPMode(TestModes mode, int power) {
         switch (mode) {
             case MODE_MOVE_BACKWARD:
                 axialMove(-1 * power);    //negative power = backwards
@@ -128,13 +127,13 @@ public class DriveTrain {
         }
     }
 
-    private void axialMove(int power) {
+    private static void axialMove(int power) {
         setPowerOfMotors(power,power,power,power);
     }
-    private void lateralMove(int power) {
+    private static void lateralMove(int power) {
         setPowerOfMotors(power, -power, -power, power);
     }
-    private void rotate(int power) {
+    private static void rotate(int power) {
         setPowerOfMotors(power, power, -power, -power);
     }
 }
