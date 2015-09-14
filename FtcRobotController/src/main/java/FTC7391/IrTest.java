@@ -15,23 +15,23 @@ public class IrTest extends OpMode
     IrSeekerSensor irSeeker;
     private static final String TAG = AutoOp.class.getSimpleName();
 
+    private double angle = 0;
+    private double strength = 0;
+
     @Override
     public void init()
     {
+
         irSeeker = hardwareMap.irSeekerSensor.get("irSeeker");
     }
 
     @Override
     public void loop()
     {
-        double angle = 0;
-        double strength = 0;
-
         angle = irSeeker.getAngle();
         strength = irSeeker.getStrength();
 
-        telemetry.addData("TAG", angle);
-        telemetry.addData("TAG", strength);
+        telemetry.addData("TAG", "angle: " + angle + "strength: " + strength);
 
     }
 
