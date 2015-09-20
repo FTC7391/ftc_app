@@ -33,6 +33,7 @@ package FTC7391;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.Range;
 
@@ -113,6 +114,7 @@ public class TeleOpTest extends OpMode {
 	 */
 	@Override
 	public void loop() {
+		Gamepad gamepad1 = new Gamepad();
 
 		telemetry.addData(TAG, "OpMode Started");
 
@@ -145,9 +147,11 @@ public class TeleOpTest extends OpMode {
 
 		if (gamepad1.dpad_right) {
 			//DriveTrain.testRotateDegrees(positiveNumber);
+			DriveTrain.setOPMode(DriveTrain.TestModes.MODE_ROTATE_RIGHT, 15);
 		}
 		if (gamepad1.dpad_left) {
 			//DriveTrain.testRotateDegrees(negativeNumber);
+			DriveTrain.setOPMode(DriveTrain.TestModes.MODE_ROTATE_LEFT, 15);
 		}
 
 		// update the position of the arm.
@@ -155,27 +159,30 @@ public class TeleOpTest extends OpMode {
 
 			telemetry.addData(TAG, "A Button Pressed.");
 			//DriveTrain.testMoveLongitudinal(negativeNumber);
+			DriveTrain.setOPMode(DriveTrain.TestModes.MODE_MOVE_BACKWARD, 15);
 		}
 
 		if (gamepad1.y) {
 			telemetry.addData(TAG, "Y Button Pressed.");
-			//DriveTrain.testMoveVertical(positiveNumber);
+			DriveTrain.setOPMode(DriveTrain.TestModes.MODE_MOVE_FORWARD, 15);
 		}
 
 		// update the position of the claw
 		if (gamepad1.x) {
 			telemetry.addData(TAG, "X Button Pressed.");
 			//DriveTrain.testMoveLateral(negativeNumber);
+			DriveTrain.setOPMode(DriveTrain.TestModes.MODE_MOVE_LEFT, 15);
 		}
 
 		if (gamepad1.b) {
 			telemetry.addData(TAG, "B Button Pressed.");
 			//DriveTrain.testMoveLateral(positiveNumber);
+			DriveTrain.setOPMode(DriveTrain.TestModes.MODE_MOVE_RIGHT, 15);
 		}
 
         // clip the position values so that they never exceed their allowed range.
-        armPosition = Range.clip(armPosition, ARM_MIN_RANGE, ARM_MAX_RANGE);
-        clawPosition = Range.clip(clawPosition, CLAW_MIN_RANGE, CLAW_MAX_RANGE);
+       // armPosition = Range.clip(armPosition, ARM_MIN_RANGE, ARM_MAX_RANGE);
+        //clawPosition = Range.clip(clawPosition, CLAW_MIN_RANGE, CLAW_MAX_RANGE);
 
 		/*
 		 * Send telemetry data back to driver station. Note that if we are using
