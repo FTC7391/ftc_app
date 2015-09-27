@@ -17,6 +17,7 @@ public class DriveTrain {
     private static int frontLeftTargetTick = 0;
     private static int backRightTargetTick = 0;
     private static int backLeftTargetTick = 0;
+    private static int[] cummulativeError = {0,0,0,0};
 
     private static final double AXLE_LENGTH = 14.5;
     private static final double DIAMETER = 4.0;
@@ -135,6 +136,11 @@ public class DriveTrain {
     }
     private static void rotate(int power) {
         setPowerOfMotors(power, power, -power, -power);
+    }
+
+    private static void fixStability(){
+        int[] positions = {motorFrontRight.getCurrentPosition(), motorFrontLeft.getCurrentPosition(), motorBackRight.getCurrentPosition(), motorBackLeft.getCurrentPosition()};
+
     }
 }
 
