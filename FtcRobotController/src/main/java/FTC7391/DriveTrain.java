@@ -13,6 +13,8 @@ public class DriveTrain {
     protected static DcMotor motorBackRight;
     protected static DcMotor motorBackLeft;
 
+    protected static boolean initialized = false;
+
     protected static final double AXLE_LENGTH = 14.5;
     protected static final double WHEEL_DIAMETER = 4.0;
     protected static final int TICKS_PER_REVOLUTION = 1440;
@@ -21,6 +23,9 @@ public class DriveTrain {
 
     //init
     public static void init (HardwareMap hardwareMap) {
+        if (initialized) return;
+        initialized = true;
+
         motorFrontRight = hardwareMap.dcMotor.get("motor_2");
         motorFrontLeft = hardwareMap.dcMotor.get("motor_1");
         motorBackRight = hardwareMap.dcMotor.get("motor_3");
