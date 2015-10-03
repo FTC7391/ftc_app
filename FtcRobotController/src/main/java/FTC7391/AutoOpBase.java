@@ -8,7 +8,7 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 public class AutoOpBase extends OpMode {
 
     private static final String TAG = AutoOpBase.class.getSimpleName();
-    private State currentState;
+    protected State currentState;
 
 
     public void init(){
@@ -29,8 +29,8 @@ public class AutoOpBase extends OpMode {
 
     protected abstract class State{
 
-        private boolean done = false;
-        private State nextState;
+        protected boolean done = false;
+        protected State nextState;
 
         public State(){
             //initialize nextState
