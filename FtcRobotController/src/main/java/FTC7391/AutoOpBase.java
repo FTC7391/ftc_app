@@ -8,13 +8,12 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 public class AutoOpBase extends OpMode {
 
     private static final String TAG = AutoOpBase.class.getSimpleName();
-    private static DriveTrain driveTrain;
     private State currentState;
 
 
     public void init(){
-        telemetry.addData(TAG, "OpMode Init");
-        driveTrain = new DriveTrain(hardwareMap);
+        telemetry.addData(TAG, "AutoOp Init");
+        DriveTrainAuto.init(hardwareMap);
         //initialize current state
 
     }
