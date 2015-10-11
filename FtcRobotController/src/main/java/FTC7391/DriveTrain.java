@@ -8,25 +8,24 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
  */
 public class DriveTrain {
 
-    private static DcMotor motorFrontRight;
-    private static DcMotor motorFrontLeft;
-    private static DcMotor motorBackRight;
-    private static DcMotor motorBackLeft;
+    protected static DcMotor motorFrontRight;
+    protected static DcMotor motorFrontLeft;
+    protected static DcMotor motorBackRight;
+    protected static DcMotor motorBackLeft;
 
-    private static int frontRightTargetTick = 0;
-    private static int frontLeftTargetTick = 0;
-    private static int backRightTargetTick = 0;
-    private static int backLeftTargetTick = 0;
+    protected static boolean initialized = false;
 
-    private static final double AXLE_LENGTH = 14.5;
-    private static final double DIAMETER = 4.0;
-    private static final int TOTAL_TICKS = 1440;
-    private static final int TOTAL_DEGREES = 360;
+    protected static final double AXLE_LENGTH = 14.5;
+    protected static final double WHEEL_DIAMETER = 4.0;
+    protected static final int TICKS_PER_REVOLUTION = 1120;
+    protected static final int DEGREES_PER_REVOLUTION = 360;
+    protected static final int TICKS_PER_INCH = (int) (TICKS_PER_REVOLUTION / (Math.PI * WHEEL_DIAMETER));
 
-    private static final int OFFSET = (int) (TOTAL_TICKS / (Math.PI * DIAMETER));
+    //init
+    public static void init (HardwareMap hardwareMap) {
+        if (initialized) return;
+        initialized = true;
 
-    //Constructor
-    public DriveTrain(HardwareMap hardwareMap) {
         motorFrontRight = hardwareMap.dcMotor.get("motor_2");
         motorFrontLeft = hardwareMap.dcMotor.get("motor_1");
         motorBackRight = hardwareMap.dcMotor.get("motor_3");
@@ -36,107 +35,13 @@ public class DriveTrain {
 
     }
 
-    //Move Inches. Calculates the target tick
-    public static void moveInches(int distance, double power) {
-
-        setPowerOfMotors(power, power, power, power);
-        frontRightTargetTick = motorFrontRight.getCurrentPosition() + distance * OFFSET;
-        frontLeftTargetTick = motorFrontLeft.getCurrentPosition() + distance * OFFSET;
-        backRightTargetTick = motorBackRight.getCurrentPosition() + distance * OFFSET;
-        backLeftTargetTick = motorBackLeft.getCurrentPosition() + distance * OFFSET;
-
-        setMotorTargetPosition(frontRightTargetTick, frontLeftTargetTick, backRightTargetTick, backLeftTargetTick);
-    }
-
-    public static void lateralMoveInches(boolean right, int distance, double power) {
-        if (right) {
-            setPowerOfMotors(power, -power, -power, power);
-        } else if (!right) {
-            setPowerOfMotors(-power, power, power, -power);
-        }
-
-        frontRightTargetTick = motorFrontRight.getCurrentPosition() + distance * OFFSET;
-        frontLeftTargetTick = motorFrontLeft.getCurrentPosition() + distance * OFFSET;
-        backRightTargetTick = motorBackRight.getCurrentPosition() + distance * OFFSET;
-        backLeftTargetTick = motorBackLeft.getCurrentPosition() + distance * OFFSET;
-
-        setMotorTargetPosition(frontRightTargetTick, frontLeftTargetTick, backRightTargetTick, backLeftTargetTick);
-    }
-
-    public boolean isDone() {
-//        if(getCurrentPosition() >= targetMotorPosition)
-        return true;
-    }
-
-    public static void rotateDegrees(double degrees, double power) {
-        if (degrees > 0) {
-            setPowerOfMotors(power, power, -power, -power);
-        } else if (degrees < 0) {
-            setPowerOfMotors(-power, -power, power, power);
-        } else {
-            setPowerOfMotors(0.0, 0.0, 0.0, 0.0);
-        }
-
-        //targetTick = currentTick + (int)(degrees*(TOTAL_TICKS/(TOTAL_DEGREES)));
-        //setMotorTargetPosition(targetTick, targetTick, targetTick, targetTick);
-    }
-
-
-    private static void setPowerOfMotors(double frontRightPower, double frontLeftPower, double backRightPower, double backLeftPower) {
+    protected static void setPowerOfMotors(double frontRightPower, double frontLeftPower, double backRightPower, double backLeftPower) {
         motorFrontRight.setPower(frontRightPower);
         motorFrontLeft.setPower(frontLeftPower);
         motorBackRight.setPower(backRightPower);
         motorBackLeft.setPower(backLeftPower);
     }
 
-    private static void setMotorTargetPosition(int frontRightTick, int frontLeftTick, int backRightTick, int backLeftTick) {
-        motorFrontRight.setTargetPosition(frontRightTick);
-        motorFrontLeft.setTargetPosition(frontLeftTick);
-        motorBackRight.setTargetPosition(backRightTick);
-        motorBackLeft.setTargetPosition(backLeftTick);
-    }
-
-    enum TestModes {
-        MODE_MOVE_FORWARD,
-        MODE_MOVE_BACKWARD,
-        MODE_MOVE_RIGHT,
-        MODE_MOVE_LEFT,
-        MODE_ROTATE_RIGHT,
-        MODE_ROTATE_LEFT,
-    }
-
-    public void setOPMode(TestModes mode, int power) {
-        switch (mode) {
-            case MODE_MOVE_BACKWARD:
-                axialMove(-1 * power);    //negative power = backwards
-                break;
-            case MODE_MOVE_FORWARD:
-                axialMove(1 * power);    //negative power = backwards
-                break;
-            case MODE_MOVE_RIGHT:
-                lateralMove(1 * power);    //negative power = left
-                break;
-            case MODE_MOVE_LEFT:
-                lateralMove(-1 * power);    //negative power = left
-                break;
-            case MODE_ROTATE_LEFT:
-                rotate(-1 * power);    //negative power = backwards
-                break;
-            case MODE_ROTATE_RIGHT:
-                rotate(1 * power);    //negative power = backwards
-                break;
-        }
-    }
-
-    private void axialMove(int power) {
-        setPowerOfMotors(power,power,power,power);
-    }
-    private void lateralMove(int power) {
-        setPowerOfMotors(power, -power, -power, power);
-    }
-    private void rotate(int power) {
-        setPowerOfMotors(power, power, -power, -power);
-    }
 }
 
 
