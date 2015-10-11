@@ -46,6 +46,14 @@ public class DriveTrainTele extends DriveTrain{
     public static void moveLateral(double power) {
         setPowerOfMotors(power, -power, -power, power);
     }
+
+    //angle is angle counterclockwise from right
+    public static void moveDiagonal(double angle){
+        double frontLeft = (Math.cos(angle) + Math.sin(angle)) / (Math.sqrt(2));
+        double frontRight = (Math.sin(angle) - Math.cos(angle)) / (Math.sqrt(2));
+        setPowerOfMotors(frontRight, frontLeft, frontLeft, frontRight);
+    }
+
     public static void rotate(double power) {
         setPowerOfMotors(power, power, -power, -power);
     }
