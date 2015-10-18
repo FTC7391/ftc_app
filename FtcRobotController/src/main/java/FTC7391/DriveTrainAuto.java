@@ -32,6 +32,14 @@ public class DriveTrainAuto extends DriveTrain{
         }
     }
 
+    //angle is angle counterclockwise from right
+    public static void moveDiagonalInches(double angle, int distance){
+        double frontLeft = (Math.cos(angle) + Math.sin(angle)) / (Math.sqrt(2));
+        double frontRight = (Math.sin(angle) - Math.cos(angle)) / (Math.sqrt(2));
+        setPowerOfMotors(frontRight, frontLeft, frontLeft, frontRight);
+
+    }
+
     public static boolean isDone() {
 //        if(getCurrentPosition() >= targetMotorPosition)
         return true;
