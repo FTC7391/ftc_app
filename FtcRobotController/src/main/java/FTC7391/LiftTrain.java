@@ -22,6 +22,14 @@ public class LiftTrain {
     private static final double DIAMETER= 1.0;  //??????????
     private static final int OFFSET = (int) (TOTAL_TICKS / (Math.PI * DIAMETER));
 
+    private static final double f = 1;
+    private static final double h = 1;
+    private static final double d = 1;
+    private static double x = 1;
+
+    private static double angle = 180 - (Math.atan(h/d) + (Math.acos(((f*f) - (x*x) + (h*h) + (d*d)) / (2*f*Math.sqrt((h*h)+(d*d))))));
+
+
 
     public LiftTrain(){}
 
@@ -50,7 +58,8 @@ public class LiftTrain {
 
         LiftTrain.setMotorTargetPosition((int)target, (int)target);
         LiftTrain.setPowerOfMotors(1, 1);
-        LiftTrain.isDone();
+        if(LiftTrain.isDone())
+            LiftTrain.setPowerOfMotors(0,0);
     }
 
     public void lower(int targetTicks){
@@ -58,25 +67,38 @@ public class LiftTrain {
         int differentTicks = currentTicks1 - targetTicks;
         double target = targetTicks - 0.5*differentTicks;
 
-        LiftTrain.setMotorTargetPosition((int)target, (int)target);
+        LiftTrain.setMotorTargetPosition((int) target, (int) target);
         LiftTrain.setPowerOfMotors(-1, -1);
-        LiftTrain.isDone();
+        if(LiftTrain.isDone())
+            LiftTrain.setPowerOfMotors(0,0);
 
 
     }
-
-
 
 
 
     public static boolean isDone() {
-//        if(getCurrentPosition() >= targetMotorPosition)
-        return true;
+        if(liftHigh.getPower() > 0 && liftHigh.getTargetPosition() <= liftHigh.getCurrentPosition() && liftLow.getTargetPosition() <= liftLow.getCurrentPosition())
+            return true;
+        else if(liftHigh.getPower() < 0 && liftHigh.getTargetPosition() >= liftHigh.getCurrentPosition() && liftLow.getTargetPosition() >= liftLow.getCurrentPosition())
+            return true;
+        else
+            return false;
+
     }
 
     public static void setMotorTargetPosition(int liftHighDifference, int liftLowDifference) {
-        liftHigh.setTargetPosition(liftHigh.getCurrentPosition() + liftHighDifference);
-        liftLow.setTargetPosition(liftHigh.getCurrentPosition() + liftLowDifference);
+        if(liftHigh.getCurrentPosition() + liftHighDifference > 0)
+            liftHigh.setTargetPosition(liftHigh.getCurrentPosition() + liftHighDifference);
+        else
+            liftHigh.setTargetPosition(liftHigh.getCurrentPosition());
+
+
+        if(liftLow.getCurrentPosition() + liftHighDifference > 0)
+            liftLow.setTargetPosition(liftHigh.getCurrentPosition() + liftLowDifference);
+        else
+            liftLow.setTargetPosition(liftLow.getCurrentPosition());
+
 
     }
 
