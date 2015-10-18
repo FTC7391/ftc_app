@@ -15,6 +15,7 @@ public class DriveTrainTele extends DriveTrain{
         MODE_MOVE_LEFT,
         MODE_ROTATE_RIGHT,
         MODE_ROTATE_LEFT,
+        MODE_STOP,
     }
 
     public static void setTestMode(TestModes mode, double power) {
@@ -36,6 +37,9 @@ public class DriveTrainTele extends DriveTrain{
                 break;
             case MODE_ROTATE_LEFT:
                 rotate(-1 * power);    //negative power = counter clockwise
+                break;
+            case MODE_STOP:
+                setPowerOfMotors(0.0,0.0,0.0,0.0);
                 break;
         }
     }

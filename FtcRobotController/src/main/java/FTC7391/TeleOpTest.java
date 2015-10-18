@@ -43,7 +43,6 @@ import com.qualcomm.robotcore.util.Range;
  * Enables control of the robot via the gamepad
  */
 public class TeleOpTest extends OpMode {
-
 	private static final String TAG = TeleOpTest.class.getSimpleName();
 
 	/*
@@ -83,8 +82,8 @@ public class TeleOpTest extends OpMode {
 	 */
 	@Override
 	public void init() {
-
-
+		DriveTrainTele.init(hardwareMap);
+		//DriveTrainAuto.moveInches(15, .5);
 		/*
 		 * Use the hardwareMap to get the dc motors and servos by name. Note
 		 * that the names of the devices must match the names used when you
@@ -114,7 +113,6 @@ public class TeleOpTest extends OpMode {
 	 */
 	@Override
 	public void loop() {
-		Gamepad gamepad1 = new Gamepad();
 
 		telemetry.addData(TAG, "OpMode Started");
 
@@ -145,39 +143,35 @@ public class TeleOpTest extends OpMode {
 		left =  (float)scaleInput(left);
 		*/
 
-		if (gamepad1.dpad_right) {
-			//DriveTrain.testRotateDegrees(positiveNumber);
-			DriveTrainTele.setTestMode(DriveTrainTele.TestModes.MODE_ROTATE_RIGHT, 15);
-		}
-		if (gamepad1.dpad_left) {
-			//DriveTrain.testRotateDegrees(negativeNumber);
-			DriveTrainTele.setTestMode(DriveTrainTele.TestModes.MODE_ROTATE_LEFT, 15);
-		}
 
 		// update the position of the arm.
 		if (gamepad1.a) {
 
 			telemetry.addData(TAG, "A Button Pressed.");
 			//DriveTrain.testMoveLongitudinal(negativeNumber);
-			DriveTrainTele.setTestMode(DriveTrainTele.TestModes.MODE_MOVE_BACKWARD, 15);
+			DriveTrainTele.setTestMode(DriveTrainTele.TestModes.MODE_MOVE_BACKWARD, .75);
+
 		}
 
 		if (gamepad1.y) {
 			telemetry.addData(TAG, "Y Button Pressed.");
-			DriveTrainTele.setTestMode(DriveTrainTele.TestModes.MODE_MOVE_FORWARD, 15);
+			DriveTrainTele.setTestMode(DriveTrainTele.TestModes.MODE_MOVE_FORWARD, .75);
 		}
 
 		// update the position of the claw
 		if (gamepad1.x) {
 			telemetry.addData(TAG, "X Button Pressed.");
 			//DriveTrain.testMoveLateral(negativeNumber);
-			DriveTrainTele.setTestMode(DriveTrainTele.TestModes.MODE_MOVE_LEFT, 15);
+			DriveTrainTele.setTestMode(DriveTrainTele.TestModes.MODE_MOVE_LEFT, .75);
 		}
 
 		if (gamepad1.b) {
 			telemetry.addData(TAG, "B Button Pressed.");
 			//DriveTrain.testMoveLateral(positiveNumber);
-			DriveTrainTele.setTestMode(DriveTrainTele.TestModes.MODE_MOVE_RIGHT, 15);
+			DriveTrainTele.setTestMode(DriveTrainTele.TestModes.MODE_MOVE_RIGHT, .75);
+		}
+		if (!gamepad1.a && !gamepad1.b && !gamepad1.x && !gamepad1.y && !gamepad1.a) {
+			DriveTrainTele.setTestMode(DriveTrainTele.TestModes.MODE_STOP,0.0);
 		}
 
         // clip the position values so that they never exceed their allowed range.
