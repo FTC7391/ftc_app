@@ -26,15 +26,15 @@ public class DriveTrain {
         if (initialized) return;
         initialized = true;
 
-        motorFrontRight = hardwareMap.dcMotor.get("motor_2");
+        motorFrontRight = hardwareMap.dcMotor.get("motor_4");
         motorFrontLeft = hardwareMap.dcMotor.get("motor_1");
         motorBackRight = hardwareMap.dcMotor.get("motor_3");
-        motorBackLeft = hardwareMap.dcMotor.get("motor_4");
+        motorBackLeft = hardwareMap.dcMotor.get("motor_2");
 
-        motorFrontRight.setDirection(DcMotor.Direction.FORWARD);
-        motorFrontLeft.setDirection(DcMotor.Direction.REVERSE);
-        motorBackRight.setDirection(DcMotor.Direction.FORWARD);
-        motorBackLeft.setDirection(DcMotor.Direction.REVERSE);
+       // motorFrontRight.setDirection(DcMotor.Direction.FORWARD);
+        //motorFrontLeft.setDirection(DcMotor.Direction.REVERSE);
+        //motorBackRight.setDirection(DcMotor.Direction.FORWARD);
+        //motorBackLeft.setDirection(DcMotor.Direction.REVERSE);
 
         //run_using_encoders();
 

@@ -149,26 +149,26 @@ public class TeleOpTest extends OpMode {
 
 			telemetry.addData(TAG, "A Button Pressed.");
 			//DriveTrain.testMoveLongitudinal(negativeNumber);
-			DriveTrainTele.setTestMode(DriveTrainTele.TestModes.MODE_MOVE_BACKWARD, .75);
+			DriveTrainTele.setTestMode(DriveTrainTele.TestModes.MODE_MOVE_BACKWARD, .25);
 
 		}
 
 		if (gamepad1.y) {
 			telemetry.addData(TAG, "Y Button Pressed.");
-			DriveTrainTele.setTestMode(DriveTrainTele.TestModes.MODE_MOVE_FORWARD, .75);
+			DriveTrainTele.setTestMode(DriveTrainTele.TestModes.MODE_MOVE_FORWARD, .25);
 		}
 
 		// update the position of the claw
 		if (gamepad1.x) {
 			telemetry.addData(TAG, "X Button Pressed.");
 			//DriveTrain.testMoveLateral(negativeNumber);
-			DriveTrainTele.setTestMode(DriveTrainTele.TestModes.MODE_MOVE_LEFT, .75);
+			DriveTrainTele.setTestMode(DriveTrainTele.TestModes.MODE_MOVE_LEFT, .25);
 		}
 
 		if (gamepad1.b) {
 			telemetry.addData(TAG, "B Button Pressed.");
 			//DriveTrain.testMoveLateral(positiveNumber);
-			DriveTrainTele.setTestMode(DriveTrainTele.TestModes.MODE_MOVE_RIGHT, .75);
+			DriveTrainTele.setTestMode(DriveTrainTele.TestModes.MODE_MOVE_RIGHT, .25);
 		}
 		if (!gamepad1.a && !gamepad1.b && !gamepad1.x && !gamepad1.y && !gamepad1.a) {
 			DriveTrainTele.setTestMode(DriveTrainTele.TestModes.MODE_STOP,0.0);
