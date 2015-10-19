@@ -43,6 +43,7 @@ import com.qualcomm.robotcore.util.Range;
  * Enables control of the robot via the gamepad
  */
 public class TeleOpTest extends OpMode {
+
 	private static final String TAG = TeleOpTest.class.getSimpleName();
 
 	/*
@@ -143,6 +144,14 @@ public class TeleOpTest extends OpMode {
 		left =  (float)scaleInput(left);
 		*/
 
+		if (gamepad1.dpad_right) {
+			//DriveTrain.testRotateDegrees(positiveNumber);
+			DriveTrainTele.setTestMode(DriveTrainTele.TestModes.MODE_ROTATE_RIGHT, 15);
+		}
+		if (gamepad1.dpad_left) {
+			//DriveTrain.testRotateDegrees(negativeNumber);
+			DriveTrainTele.setTestMode(DriveTrainTele.TestModes.MODE_ROTATE_LEFT, 15);
+		}
 
 		// update the position of the arm.
 		if (gamepad1.a) {
