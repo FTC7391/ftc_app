@@ -1,6 +1,8 @@
 package FTC7391;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
+import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.HardwareMap;
 
 /**
  * Created by Dylan on 7/19/2015.
@@ -19,12 +21,15 @@ public class AutoOp extends OpMode
     public void init()
     {
         telemetry.addData(TAG, "OpMode Init");
-        driveTrain = new DriveTrain(hardwareMap);
+        //driveTrain = new DriveTrainAuto(hardwareMap);
         driveTrainState = DriveTrainState.FORWARD;
-
-        //driveTrain.moveInches(24, .50);
-
-        driveTrain.lateralMoveInches(true, 10, .50);
+       // DcMotor motorFrontRight = hardwareMap.dcMotor.get("motor_2");
+        //DcMotor motorFrontLeft = hardwareMap.dcMotor.get("motor_1");
+        //driveTrain.moveInches(5, .5);
+        //motorFrontRight.setPower(0.3);
+        //motorFrontLeft.setPower(0.3);
+        //driveTrain.lateralMoveInches(true, 10, .50);
+        //driveTrain.setPowerOfMotors(0.5,0.5,0.5,0.5);
     }
     @Override
     public void loop()
