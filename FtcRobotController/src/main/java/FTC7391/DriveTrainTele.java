@@ -13,6 +13,11 @@ public class DriveTrainTele extends DriveTrain{
         MODE_MOVE_BACKWARD,
         MODE_MOVE_RIGHT,
         MODE_MOVE_LEFT,
+        MODE_MOVE_DIAGONAL_RIGHT,
+        MODE_MOVE_DIAGONAL_22,
+        MODE_MOVE_DIAGONAL_45,
+        MODE_MOVE_DIAGONAL_67,
+        MODE_MOVE_DIAGONAL_FORWARD,
         MODE_ROTATE_RIGHT,
         MODE_ROTATE_LEFT,
         MODE_STOP,
@@ -32,6 +37,16 @@ public class DriveTrainTele extends DriveTrain{
             case MODE_MOVE_LEFT:
                 moveLateral(-1 * power);    //negative power = left
                 break;
+            case MODE_MOVE_DIAGONAL_RIGHT:
+                moveDiagonal(0); break;
+            case MODE_MOVE_DIAGONAL_22:
+                moveDiagonal(22.5); break;
+            case MODE_MOVE_DIAGONAL_45:
+                moveDiagonal(45); break;
+            case MODE_MOVE_DIAGONAL_67:
+                moveDiagonal(67.5); break;
+            case MODE_MOVE_DIAGONAL_FORWARD:
+                moveDiagonal(90); break;
             case MODE_ROTATE_RIGHT:
                 rotate(1 * power);
                 break;

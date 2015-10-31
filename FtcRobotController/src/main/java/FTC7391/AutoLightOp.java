@@ -1,13 +1,11 @@
 package FTC7391;
 
-import com.qualcomm.robotcore.eventloop.opmode.OpMode;
-
 /**
  * Created by Allana on 10/3/2015.
  */
-public class AutoOp extends AutoOpBase
+public class AutoLightOp extends AutoOpBase
 {
-    private static final String TAG = AutoOp.class.getSimpleName();
+    private static final String TAG = AutoLightOp.class.getSimpleName();
 
     @Override
     public void init()
@@ -26,7 +24,7 @@ public class AutoOp extends AutoOpBase
     private class MoveForwardState extends State {
 
         public MoveForwardState(){
-            nextState = new StopState();
+            nextState = new LightState();
             DriveTrainAuto.moveInches(10,  0.5);
         }
 
@@ -34,6 +32,16 @@ public class AutoOp extends AutoOpBase
             done = DriveTrainAuto.isDone();
         }
 
+    }
+
+    private class LightState extends State {
+
+        public LightState(){
+            nextState = new StopState();
+
+        }
+
+        public void update() {done = true;}
     }
 
     private class StopState extends State {
