@@ -8,18 +8,12 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
  */
 public class Lift {
 
-<<<<<<< HEAD
-    public static DcMotor liftHigh;
-    public static DcMotor liftLow;
-=======
+
     private static DcMotor liftHigh;
     private static DcMotor liftLow;
->>>>>>> origin/master
+
 
     private static int driveModeTicks = 0; //to be added
-    private int currentTicks1 = liftHigh.getCurrentPosition();
-    private int currentTicks2 = liftLow.getCurrentPosition();
-    private int overallCurrent = currentTicks1 + currentTicks2;
     private static int originalTicks = 0; //to be added
 
     private static final int TOTAL_TICKS = 1120;
@@ -32,28 +26,29 @@ public class Lift {
     private static final double d = 1;
     private static double x = 1;
 
-<<<<<<< HEAD
     protected static boolean initialized = false;
 
-=======
->>>>>>> origin/master
     private static double angle = 180 - (Math.atan(h/d) + (Math.acos(((f*f) - (x*x) + (h*h) + (d*d)) / (2*f*Math.sqrt((h*h)+(d*d))))));
 
 
-
-<<<<<<< HEAD
     public static void init (HardwareMap hardwareMap) {
         if (initialized) return;
         initialized = true;
 
-        liftHigh = hardwareMap.dcMotor.get("liftHigh");
-        liftLow = hardwareMap.dcMotor.get("liftLow");
+        liftHigh = hardwareMap.dcMotor.get("motor_high");
+        liftLow = hardwareMap.dcMotor.get("motor_low");
+
 
     }
 
-=======
+    private int currentTicks1 = liftHigh.getCurrentPosition();
+    private int currentTicks2 = liftLow.getCurrentPosition();
+    private int overallCurrent = currentTicks1 + currentTicks2;
+
+
+
     public Lift(){}
->>>>>>> origin/master
+
 
     public void setDriveMode(){
 
@@ -78,17 +73,11 @@ public class Lift {
         int differentTicks = targetTicks - currentTicks1;
         double target = 0.5*differentTicks + targetTicks;
 
-<<<<<<< HEAD
         Lift.setMotorTargetPosition((int) target, (int) target);
         Lift.setPowerOfMotors(1, 1);
         if(Lift.isDone())
             Lift.setPowerOfMotors(0, 0);
-=======
-        Lift.setMotorTargetPosition((int)target, (int)target);
-        Lift.setPowerOfMotors(1, 1);
-        if(Lift.isDone())
-            Lift.setPowerOfMotors(0,0);
->>>>>>> origin/master
+
     }
 
     public void lower(int targetTicks){
@@ -99,18 +88,11 @@ public class Lift {
         Lift.setMotorTargetPosition((int) target, (int) target);
         Lift.setPowerOfMotors(-1, -1);
         if(Lift.isDone())
-<<<<<<< HEAD
-            Lift.setPowerOfMotors(0, 0);
-=======
             Lift.setPowerOfMotors(0,0);
->>>>>>> origin/master
 
 
     }
 
-
-
-<<<<<<< HEAD
     public enum TestModes {
         MODE_MOVE_HIGH,
         MODE_MOVE_LOW,
@@ -132,9 +114,6 @@ public class Lift {
         }
     }
 
-
-=======
->>>>>>> origin/master
     public static boolean isDone() {
         if(liftHigh.getPower() > 0 && liftHigh.getTargetPosition() <= liftHigh.getCurrentPosition() && liftLow.getTargetPosition() <= liftLow.getCurrentPosition())
             return true;
