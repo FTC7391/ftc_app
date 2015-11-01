@@ -30,6 +30,7 @@ public class CameraOp extends OpMode {
     private YuvImage yuvImage = null;
     private int looped = 0;
     private String data;
+    private static final String TAG = CameraOp.class.getSimpleName();
 
     private int red(int pixel) {
         return (pixel >> 16) & 0xff;
@@ -121,7 +122,7 @@ public class CameraOp extends OpMode {
                 }
 
             }
-            System.out.println("answer " + answer);
+            telemetry.addData(TAG, "answer " + answer);
 
         }
 

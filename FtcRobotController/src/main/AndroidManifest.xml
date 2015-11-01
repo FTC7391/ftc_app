@@ -5,7 +5,10 @@
           android:versionCode="3"
           android:versionName="User Developed App">
 
+  <uses-permission android:name="android.permission.CAMERA" />
 
+  <uses-feature android:name="android.hardware.camera" />
+  <uses-feature android:name="android.hardware.camera.front" />
   <uses-permission
     android:name="android.permission.ACCESS_WIFI_STATE"
     android:required="true" />
