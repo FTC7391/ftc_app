@@ -51,9 +51,11 @@ public class DriveTrainAuto extends DriveTrain{
 
     public static void rotateDegrees(double degrees, double power) {
         if (degrees > 0) {
-            setPowerOfMotors(power, power, -power, -power);
+            //Rotate to the left,frontRight & backRight postive
+            setPowerOfMotors(power, -power, power, -power);
         } else if (degrees < 0) {
-            setPowerOfMotors(-power, -power, power, power);
+            //Rotate to the right,frontLeft & backLeft postive
+            setPowerOfMotors(-power, power, -power, power);
         } else {
             setPowerOfMotors(0.0, 0.0, 0.0, 0.0);
         }

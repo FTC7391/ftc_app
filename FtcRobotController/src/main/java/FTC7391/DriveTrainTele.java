@@ -48,10 +48,10 @@ public class DriveTrainTele extends DriveTrain{
             case MODE_MOVE_DIAGONAL_FORWARD:
                 moveDiagonal(90); break;
             case MODE_ROTATE_RIGHT:
-                rotate(1 * power);
+                rotate(-1 * power);
                 break;
             case MODE_ROTATE_LEFT:
-                rotate(-1 * power);    //negative power = counter clockwise
+                rotate(1 * power);    //negative power = counter clockwise
                 break;
             case MODE_STOP:
                 setPowerOfMotors(0.0,0.0,0.0,0.0);
@@ -74,7 +74,8 @@ public class DriveTrainTele extends DriveTrain{
     }
 
     public static void rotate(double power) {
-        setPowerOfMotors(power, power, -power, -power);
+        //Positive power, rotate to the left, frontRight & backRight postive
+        setPowerOfMotors(power, -power, power, -power);
     }
 
 }
