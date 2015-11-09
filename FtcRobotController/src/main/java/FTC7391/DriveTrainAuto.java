@@ -18,7 +18,8 @@ public class DriveTrainAuto extends DriveTrain{
     public static void moveInches(int distance, double power) {
 
         setPowerOfMotors(power, power, power, power);
-        setMotorTargetPosition(distance, distance, distance, distance);
+        int ticks = distance * TICKS_PER_INCH;
+        setMotorTargetPosition(ticks, ticks, ticks, ticks);
 
     }
 
@@ -50,25 +51,28 @@ public class DriveTrainAuto extends DriveTrain{
     }
 
     public static void rotateDegrees(double degrees, double power) {
+        int ticks = (int)Math.abs(degrees*(TICKS_PER_REVOLUTION/(DEGREES_PER_REVOLUTION)));
         if (degrees > 0) {
             //Rotate to the left,frontRight & backRight postive
             setPowerOfMotors(power, -power, power, -power);
+            setMotorTargetPosition(ticks, -ticks, ticks, -ticks);
         } else if (degrees < 0) {
             //Rotate to the right,frontLeft & backLeft postive
             setPowerOfMotors(-power, power, -power, power);
+            setMotorTargetPosition(-ticks, ticks, -ticks, ticks);
         } else {
             setPowerOfMotors(0.0, 0.0, 0.0, 0.0);
         }
 
-        //targetTick = currentTick + (int)(degrees*(TICKS_PER_REVOLUTION/(DEGREES_PER_REVOLUTION)));
-        //setMotorTargetPosition(targetTick, targetTick, targetTick, targetTick);
+
+
     }
 
     private static void setMotorTargetPosition(int frontRightPosition, int frontLeftPosition, int backRightPosition, int backLeftPosition) {
-        motorFrontRight.setTargetPosition(motorFrontRight.getCurrentPosition() + frontRightPosition * TICKS_PER_INCH);
-        motorFrontLeft.setTargetPosition(motorFrontLeft.getCurrentPosition() + frontLeftPosition * TICKS_PER_INCH);
-        motorBackRight.setTargetPosition(motorBackRight.getCurrentPosition() + backRightPosition * TICKS_PER_INCH);
-        motorBackLeft.setTargetPosition(motorBackLeft.getCurrentPosition() + backLeftPosition * TICKS_PER_INCH);
+        motorFrontRight.setTargetPosition(motorFrontRight.getCurrentPosition() + frontRightPosition);
+        motorFrontLeft.setTargetPosition(motorFrontLeft.getCurrentPosition() + frontLeftPosition);
+        motorBackRight.setTargetPosition(motorBackRight.getCurrentPosition() + backRightPosition);
+        motorBackLeft.setTargetPosition(motorBackLeft.getCurrentPosition() + backLeftPosition);
     }
 
     private static void fixStability(){
