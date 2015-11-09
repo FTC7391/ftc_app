@@ -32,19 +32,15 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 package FTC7391;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
-import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.Gamepad;
-import com.qualcomm.robotcore.hardware.Servo;
-import com.qualcomm.robotcore.util.Range;
 
 /**
  * TeleOp Mode
  * <p>
  * Enables control of the robot via the gamepad
  */
-public class TeleOpTest extends OpMode {
+public class StabilityTest extends OpMode {
 
-	private static final String TAG = TeleOpTest.class.getSimpleName();
+	private static final String TAG = StabilityTest.class.getSimpleName();
 
 	/*
 	 * Note: the configuration of the servos is such that
@@ -72,7 +68,7 @@ public class TeleOpTest extends OpMode {
 	/**
 	 * Constructor
 	 */
-	public TeleOpTest() {
+	public StabilityTest() {
 
 	}
 
@@ -158,26 +154,26 @@ public class TeleOpTest extends OpMode {
 
 			telemetry.addData(TAG, "A Button Pressed.");
 			//DriveTrain.testMoveLongitudinal(negativeNumber);
-			DriveTrainTele.setTestMode(DriveTrainTele.TestModes.MODE_MOVE_BACKWARD, .25);
+			DriveTrainTele.setTestMode(DriveTrainTele.TestModes.MODE_MOVE_DIAGONAL_RIGHT, .25);
 
 		}
 
 		if (gamepad1.y) {
 			telemetry.addData(TAG, "Y Button Pressed.");
-			DriveTrainTele.setTestMode(DriveTrainTele.TestModes.MODE_MOVE_FORWARD, .25);
+			DriveTrainTele.setTestMode(DriveTrainTele.TestModes.MODE_MOVE_DIAGONAL_22, .25);
 		}
 
 		// update the position of the claw
 		if (gamepad1.x) {
 			telemetry.addData(TAG, "X Button Pressed.");
 			//DriveTrain.testMoveLateral(negativeNumber);
-			DriveTrainTele.setTestMode(DriveTrainTele.TestModes.MODE_MOVE_LEFT, .25);
+			DriveTrainTele.setTestMode(DriveTrainTele.TestModes.MODE_MOVE_DIAGONAL_45, .25);
 		}
 
 		if (gamepad1.b) {
 			telemetry.addData(TAG, "B Button Pressed.");
 			//DriveTrain.testMoveLateral(positiveNumber);
-			DriveTrainTele.setTestMode(DriveTrainTele.TestModes.MODE_MOVE_RIGHT, .25);
+			DriveTrainTele.setTestMode(DriveTrainTele.TestModes.MODE_MOVE_DIAGONAL_67, .25);
 		}
 		if (!gamepad1.a && !gamepad1.b && !gamepad1.x && !gamepad1.y && !gamepad1.a) {
 			DriveTrainTele.setTestMode(DriveTrainTele.TestModes.MODE_STOP,0.0);

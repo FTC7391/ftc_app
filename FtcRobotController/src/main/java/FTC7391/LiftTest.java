@@ -32,23 +32,24 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 package FTC7391;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
-
+import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.Gamepad;
+import com.qualcomm.robotcore.hardware.Servo;
+import com.qualcomm.robotcore.util.Range;
 
 /**
  * TeleOp Mode
  * <p>
  * Enables control of the robot via the gamepad
  */
-public class DriveTrainTest extends OpMode {
+public class LiftTest extends OpMode {
 
-    private static final String TAG = DriveTrainTest.class.getSimpleName();
-    private static double power;
-
-
+    private static final String TAG = Lift.class.getSimpleName();
+    private double power = 0;
     /**
      * Constructor
      */
-    public DriveTrainTest() {
+    public LiftTest() {
 
     }
 
@@ -59,8 +60,29 @@ public class DriveTrainTest extends OpMode {
      */
     @Override
     public void init() {
-        DriveTrain.init(hardwareMap);
+        Lift.init(hardwareMap);
+        //DriveTrainAuto.moveInches(15, .5);
+		/*
+		 * Use the hardwareMap to get the dc motors and servos by name. Note
+		 * that the names of the devices must match the names used when you
+		 * configured your robot and created the configuration file.
+		 */
+		
+		/*
+		 * For the demo Tetrix K9 bot we assume the following,
+		 *   There are two motors "motor_1" and "motor_2"
+		 *   "motor_1" is on the right side of the bot.
+		 *   "motor_2" is on the left side of the bot and reversed.
+		 *   
+		 * We also assume that there are two servos "servo_1" and "servo_6"
+		 *    "servo_1" controls the arm joint of the manipulator.
+		 *    "servo_6" controls the claw joint of the manipulator.
+		 */
+
+        // assign the starting position of the wrist and claw
+
     }
+
     /*
      * This method will be called repeatedly in a loop
      *
@@ -71,71 +93,55 @@ public class DriveTrainTest extends OpMode {
 
         telemetry.addData(TAG, "OpMode Started");
 
+		/*
+		 * Gamepad 1
+		 * 
+		 * Gamepad 1 controls the motors via the left stick, and it controls the
+		 * wrist/claw via the a,b, x, y buttons
+		 */
+
+        // throttle: left_stick_y ranges from -1 to 1, where -1 is full up, and
+        // 1 is full down
+        // direction: left_stick_x ranges from -1 to 1, where -1 is full left
+        // and 1 is full right
+		/*
+		float throttle = -gamepad1.left_stick_y;
+		float direction = gamepad1.left_stick_x;
+		float right = throttle - direction;
+		float left = throttle + direction;
+
+		// clip the right/left values so that the values never exceed +/- 1
+		right = Range.clip(right, -1, 1);
+		left = Range.clip(left, -1, 1);
+
+		// scale the joystick value to make it easier to control
+		// the robot more precisely at slower speeds.
+		right = (float)scaleInput(right);
+		left =  (float)scaleInput(left);
+		*/
 
         power = scaleInput(gamepad1.left_stick_y);
-//		if (gamepad1.left_stick_y > 0)
-//		power = .25;
-//		else
-//		power = -.25;
-
-
 
         if (gamepad1.y) {
-            telemetry.addData(TAG, "Y Button Pressed.");
-            telemetry.addData(TAG, "MODE_MOVE_FRONT_RIGHT Power:" + String.format("%.2f", power));
-            DriveTrain.setTestMode(DriveTrain.TestModes.MODE_MOVE_FRONT_RIGHT, power);
+            //DriveTrain.testRotateDegrees(positiveNumber);
+            Lift.setTestMode(Lift.TestModes.MODE_MOVE_HIGH, power);
         }
-
-        if (gamepad1.x) {
-            telemetry.addData(TAG, "X Button Pressed.");
-            telemetry.addData(TAG, "MODE_MOVE_FRONT_LEFT Power:" + String.format("%.2f", power));
-            DriveTrain.setTestMode(DriveTrain.TestModes.MODE_MOVE_FRONT_LEFT, power);
-        }
-
         if (gamepad1.b) {
-            telemetry.addData(TAG, "B Button Pressed.");
-            telemetry.addData(TAG, "MODE_MOVE_BACK_RIGHT Power:" + String.format("%.2f", power));
-            DriveTrain.setTestMode(DriveTrain.TestModes.MODE_MOVE_BACK_RIGHT, power);
+            //DriveTrain.testRotateDegrees(negativeNumber);
+            Lift.setTestMode(Lift.TestModes.MODE_MOVE_HOOK, power);
         }
-
         if (gamepad1.a) {
-            telemetry.addData(TAG, "A Button Pressed.");
-            telemetry.addData(TAG, "MODE_MOVE_BACK_LEFT Power:" + String.format("%.2f", power));
-            DriveTrain.setTestMode(DriveTrain.TestModes.MODE_MOVE_BACK_LEFT, power);
+            Lift.setTestMode(Lift.TestModes.MODE_MOVE_ANGLE, power);
+        }
+        if (gamepad1.x) {
+            Lift.setTestMode(Lift.TestModes.MODE_MOVE_BOTH, power);
         }
 
 
-        if (gamepad1.dpad_up) {
-            telemetry.addData(TAG, "Dpad UP");
-            telemetry.addData(TAG, "MODE_MOVE_FORWARD Power:" + String.format("%.2f", power));
-            DriveTrainTele.setTestMode(DriveTrainTele.TestModes.MODE_MOVE_FORWARD, power);
-        }
-        if (gamepad1.dpad_down) {
-            telemetry.addData(TAG, "Dpad DOWN");
-            telemetry.addData(TAG, "MODE_MOVE_BACKWARD Power:" + String.format("%.2f", power));
-            DriveTrainTele.setTestMode(DriveTrainTele.TestModes.MODE_MOVE_BACKWARD, power);
-        }
-        if (gamepad1.dpad_right) {
-            telemetry.addData(TAG, "Dpad DOWN");
-            telemetry.addData(TAG, "MODE_MOVE_BACKWARD Power:" + String.format("%.2f", power));
-            DriveTrainTele.setTestMode(DriveTrainTele.TestModes.MODE_MOVE_RIGHT, power);
-        }
-        if (gamepad1.dpad_left) {
-            DriveTrainTele.setTestMode(DriveTrainTele.TestModes.MODE_MOVE_LEFT, power);
-        }
 
-        if (gamepad1.right_bumper) {
-            DriveTrainTele.setTestMode(DriveTrainTele.TestModes.MODE_ROTATE_RIGHT, power);
-        }
-
-
-        if (gamepad1.left_bumper) {
-            DriveTrainTele.setTestMode(DriveTrainTele.TestModes.MODE_ROTATE_LEFT, power);
-        }
-
-//		if (!gamepad1.y && !gamepad1.x && !gamepad1.b && !gamepad1.a) {
-//			DriveTrain.setTestMode(DriveTrain.TestModes.MODE_STOP,0.0);
-//		}
+        // clip the position values so that they never exceed their allowed range.
+        // armPosition = Range.clip(armPosition, ARM_MIN_RANGE, ARM_MAX_RANGE);
+        //clawPosition = Range.clip(clawPosition, CLAW_MIN_RANGE, CLAW_MAX_RANGE);
 
 		/*
 		 * Send telemetry data back to driver station. Note that if we are using
@@ -143,7 +149,6 @@ public class DriveTrainTest extends OpMode {
 		 * will return a null value. The legacy NXT-compatible motor controllers
 		 * are currently write only.
 		 */
-        //telemetry.addData("Text", "*** Robot Data***");
 
     }
 
@@ -154,7 +159,7 @@ public class DriveTrainTest extends OpMode {
      */
     @Override
     public void stop() {
-        DriveTrain.setTestMode(DriveTrain.TestModes.MODE_STOP,0.0);
+//stop
     }
 
     /*
@@ -162,7 +167,7 @@ public class DriveTrainTest extends OpMode {
      * scaled value is less than linear.  This is to make it easier to drive
      * the robot more precisely at slower speeds.
      */
-    private double scaleInput(double dVal)  {
+    double scaleInput(double dVal)  {
         double[] scaleArray = { 0.0, 0.05, 0.09, 0.10, 0.12, 0.15, 0.18, 0.24,
                 0.30, 0.36, 0.43, 0.50, 0.60, 0.72, 0.85, 1.00, 1.00 };
 

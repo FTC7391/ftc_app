@@ -13,8 +13,14 @@ public class DriveTrainTele extends DriveTrain{
         MODE_MOVE_BACKWARD,
         MODE_MOVE_RIGHT,
         MODE_MOVE_LEFT,
+        MODE_MOVE_DIAGONAL_RIGHT,
+        MODE_MOVE_DIAGONAL_22,
+        MODE_MOVE_DIAGONAL_45,
+        MODE_MOVE_DIAGONAL_67,
+        MODE_MOVE_DIAGONAL_FORWARD,
         MODE_ROTATE_RIGHT,
         MODE_ROTATE_LEFT,
+        MODE_STOP,
     }
 
     public static void setTestMode(TestModes mode, double power) {
@@ -31,11 +37,24 @@ public class DriveTrainTele extends DriveTrain{
             case MODE_MOVE_LEFT:
                 moveLateral(-1 * power);    //negative power = left
                 break;
+            case MODE_MOVE_DIAGONAL_RIGHT:
+                moveDiagonal(0); break;
+            case MODE_MOVE_DIAGONAL_22:
+                moveDiagonal(22.5); break;
+            case MODE_MOVE_DIAGONAL_45:
+                moveDiagonal(45); break;
+            case MODE_MOVE_DIAGONAL_67:
+                moveDiagonal(67.5); break;
+            case MODE_MOVE_DIAGONAL_FORWARD:
+                moveDiagonal(90); break;
             case MODE_ROTATE_RIGHT:
-                rotate(1 * power);
+                rotate(-1 * power);
                 break;
             case MODE_ROTATE_LEFT:
-                rotate(-1 * power);    //negative power = counter clockwise
+                rotate(1 * power);    //negative power = counter clockwise
+                break;
+            case MODE_STOP:
+                setPowerOfMotors(0.0,0.0,0.0,0.0);
                 break;
         }
     }
@@ -55,7 +74,8 @@ public class DriveTrainTele extends DriveTrain{
     }
 
     public static void rotate(double power) {
-        setPowerOfMotors(power, power, -power, -power);
+        //Positive power, rotate to the left, frontRight & backRight postive
+        setPowerOfMotors(power, -power, power, -power);
     }
 
 }

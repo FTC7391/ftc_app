@@ -35,8 +35,11 @@ import com.qualcomm.robotcore.eventloop.opmode.OpModeManager;
 import com.qualcomm.robotcore.eventloop.opmode.OpModeRegister;
 
 import FTC7391.AutoOp;
+import FTC7391.CameraOp;
+import FTC7391.LiftTest;
 import FTC7391.TeleOpTest;
 import FTC7391.TestOpticalDistanceSensorOp;
+import FTC7391.StabilityTest;
 
 /**
  * Register Op Modes
@@ -61,7 +64,6 @@ public class FtcOpModeRegister implements OpModeRegister {
 
     manager.register("TestTeleOp", TeleOpTest.class);
     manager.register("AutoOp", AutoOp.class);
-    manager.register("TestOpticalDistanceSensorOp", TestOpticalDistanceSensorOp.class);
 
     
   }

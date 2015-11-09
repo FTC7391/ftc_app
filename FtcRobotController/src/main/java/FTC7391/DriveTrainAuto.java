@@ -34,22 +34,28 @@ public class DriveTrainAuto extends DriveTrain{
 
     //angle is angle counterclockwise from right
     public static void moveDiagonalInches(double angle, int distance){
-        double frontLeft = (Math.cos(angle) + Math.sin(angle)) / (Math.sqrt(2));
-        double frontRight = (Math.sin(angle) - Math.cos(angle)) / (Math.sqrt(2));
-        setPowerOfMotors(frontRight, frontLeft, frontLeft, frontRight);
+        double frontLeft = (Math.cos(angle) + Math.sin(angle));
+        double frontRight = (Math.sin(angle) - Math.cos(angle));
+        setPowerOfMotors(frontRight / Math.sqrt(2), frontLeft / Math.sqrt(2), frontLeft / Math.sqrt(2), frontRight / Math.sqrt(2));
+        //setMotorTargetPosition(frontRight/distance, frontLeft/distance, frontLeft/distance, frontRight/distance);
 
     }
 
     public static boolean isDone() {
-//        if(getCurrentPosition() >= targetMotorPosition)
-        return true;
+        if(motorFrontRight.getPower() > 0 && motorFrontRight.getCurrentPosition() >= motorFrontRight.getTargetPosition())
+            return true;
+        else if(motorFrontRight.getPower() < 0 && motorFrontRight.getCurrentPosition() <= motorFrontRight.getTargetPosition())
+            return true;
+        else return false;
     }
 
     public static void rotateDegrees(double degrees, double power) {
         if (degrees > 0) {
-            setPowerOfMotors(power, power, -power, -power);
+            //Rotate to the left,frontRight & backRight postive
+            setPowerOfMotors(power, -power, power, -power);
         } else if (degrees < 0) {
-            setPowerOfMotors(-power, -power, power, power);
+            //Rotate to the right,frontLeft & backLeft postive
+            setPowerOfMotors(-power, power, -power, power);
         } else {
             setPowerOfMotors(0.0, 0.0, 0.0, 0.0);
         }

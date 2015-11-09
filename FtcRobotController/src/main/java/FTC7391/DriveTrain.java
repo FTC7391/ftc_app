@@ -26,10 +26,13 @@ public class DriveTrain {
         if (initialized) return;
         initialized = true;
 
-        motorFrontRight = hardwareMap.dcMotor.get("motor_2");
-        motorFrontLeft = hardwareMap.dcMotor.get("motor_1");
-        motorBackRight = hardwareMap.dcMotor.get("motor_3");
-        motorBackLeft = hardwareMap.dcMotor.get("motor_4");
+        motorFrontRight = hardwareMap.dcMotor.get("motor_front_right");
+        motorFrontLeft = hardwareMap.dcMotor.get("motor_front_left");
+        motorBackRight = hardwareMap.dcMotor.get("motor_back_right");
+        motorBackLeft = hardwareMap.dcMotor.get("motor_back_left");
+
+        motorBackRight.setDirection(DcMotor.Direction.REVERSE);
+        motorFrontRight.setDirection(DcMotor.Direction.REVERSE);
 
         //run_using_encoders();
 
@@ -41,6 +44,36 @@ public class DriveTrain {
         motorBackRight.setPower(backRightPower);
         motorBackLeft.setPower(backLeftPower);
     }
+
+
+    public enum TestModes {
+        MODE_MOVE_FRONT_RIGHT,
+        MODE_MOVE_FRONT_LEFT,
+        MODE_MOVE_BACK_RIGHT,
+        MODE_MOVE_BACK_LEFT,
+        MODE_STOP,
+    }
+
+    public static void setTestMode(TestModes mode, double power) {
+        switch (mode) {
+            case MODE_MOVE_FRONT_RIGHT:
+                setPowerOfMotors(power, 0, 0, 0);
+                break;
+            case MODE_MOVE_FRONT_LEFT:
+                setPowerOfMotors(0, power, 0, 0);
+                break;
+            case MODE_MOVE_BACK_RIGHT:
+                setPowerOfMotors(0, 0, power, 0);
+                break;
+            case MODE_MOVE_BACK_LEFT:
+                setPowerOfMotors(0, 0, 0, power);
+                break;
+            case MODE_STOP:
+                setPowerOfMotors(0.0,0.0,0.0,0.0);
+                break;
+        }
+    }
+
 
 }
 
