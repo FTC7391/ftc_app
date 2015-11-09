@@ -128,9 +128,14 @@ public class LiftTest extends OpMode {
         }
         if (gamepad1.b) {
             //DriveTrain.testRotateDegrees(negativeNumber);
-            Lift.setTestMode(Lift.TestModes.MODE_MOVE_LOW, power);
+            Lift.setTestMode(Lift.TestModes.MODE_MOVE_HOOK, power);
         }
-
+        if (gamepad1.a) {
+            Lift.setTestMode(Lift.TestModes.MODE_MOVE_ANGLE, power);
+        }
+        if (gamepad1.x) {
+            Lift.setTestMode(Lift.TestModes.MODE_MOVE_BOTH, power);
+        }
 
 
 

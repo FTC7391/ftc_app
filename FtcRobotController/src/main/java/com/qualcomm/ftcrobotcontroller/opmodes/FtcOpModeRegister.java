@@ -38,6 +38,7 @@ import FTC7391.AutoOp;
 import FTC7391.CameraOp;
 import FTC7391.LiftTest;
 import FTC7391.TeleOpTest;
+import FTC7391.TestOpticalDistanceSensorOp;
 import FTC7391.StabilityTest;
 import FTC7391.AutoTestOp;
 

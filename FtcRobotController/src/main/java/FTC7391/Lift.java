@@ -11,6 +11,8 @@ public class Lift {
 
     private static DcMotor liftHigh;
     private static DcMotor liftLow;
+    private static DcMotor liftHook;
+    private static DcMotor liftAngle;
 
 
     private static int driveModeTicks = 0; //to be added
@@ -37,6 +39,8 @@ public class Lift {
 
         liftHigh = hardwareMap.dcMotor.get("motor_high");
         liftLow = hardwareMap.dcMotor.get("motor_low");
+        liftHook = hardwareMap.dcMotor.get("motor_hook");
+        liftAngle = hardwareMap.dcMotor.get("motor_angle");
 
 
     }
@@ -95,7 +99,10 @@ public class Lift {
 
     public enum TestModes {
         MODE_MOVE_HIGH,
+        MODE_MOVE_HOOK,
+        MODE_MOVE_ANGLE,
         MODE_MOVE_LOW,
+        MODE_MOVE_BOTH,
         MODE_STOP,
     }
 
@@ -105,7 +112,14 @@ public class Lift {
             case MODE_MOVE_HIGH:
                 liftHigh.setPower(1 * power);
                 break;
-            case MODE_MOVE_LOW:
+            case MODE_MOVE_HOOK:
+                liftHook.setPower(1 * power);    //negative power = backwards
+                break;
+            case MODE_MOVE_ANGLE:
+                liftAngle.setPower(1 * power);
+                break;
+            case MODE_MOVE_BOTH:
+                liftHigh.setPower(1 * power);
                 liftLow.setPower(1 * power);    //negative power = backwards
                 break;
             case MODE_STOP:
