@@ -116,13 +116,25 @@ public class CameraOp extends OpMode {
                         }else{
                             answer = "right";
                             // System.out.println("i is " + i + "z is " + z + "out of " + width + "color is " + color);
+                            telemetry.addData(TAG, "answer " + answer);
                         }
                     }
 
                 }
 
             }
-            telemetry.addData(TAG, "answer " + answer);
+            FTC7391PrintWriter data1Writer = new FTC7391PrintWriter("Camera" , "TestFile1");
+
+            for (int j = 0; j < height; j+=10 ) {
+                for (int i = 0; i < width; i+=80 ) {
+                    pixel = image.getPixel(i, j);
+                    data1Writer.printf("%x %x %x *  ", red(pixel), green(pixel), blue(pixel));
+                }
+                data1Writer.printf("\n");
+                Log.d(TAG, "\n");
+            }
+            data1Writer.close();
+
 
         }
 

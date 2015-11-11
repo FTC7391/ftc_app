@@ -17,5 +17,6 @@
     </DeviceInterfaceModule>
     <MotorController name="Motor Controller Lift Low" serialNumber="AL00VGUM">
         <Motor name="motor_low" port="1" />
+        <Motor name="motor_angle" port="2" />
     </MotorController>
 </Robot>

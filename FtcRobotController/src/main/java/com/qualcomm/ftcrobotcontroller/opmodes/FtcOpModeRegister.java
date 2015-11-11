@@ -40,7 +40,9 @@ import FTC7391.DriveTrainTest;
 import FTC7391.LiftTest;
 import FTC7391.TeleOp7391;
 import FTC7391.TeleOpTest;
+import FTC7391.TestOpticalDistanceSensorOp;
 import FTC7391.StabilityTest;
+import FTC7391.AutoTestOp;
 
 /**
  * Register Op Modes
@@ -68,7 +70,7 @@ public class FtcOpModeRegister implements OpModeRegister {
     manager.register("AutoOp", AutoOp.class);
     manager.register("LiftTest", LiftTest.class);
     manager.register("CameraOp", CameraOp.class);
-    manager.register("DriveTrainTest", DriveTrainTest.class);
-    manager.register("TeleOp7391", TeleOp7391.class);
+
+    
   }
 }
