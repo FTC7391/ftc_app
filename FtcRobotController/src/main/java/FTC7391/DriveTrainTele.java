@@ -20,10 +20,11 @@ public class DriveTrainTele extends DriveTrain{
         MODE_MOVE_DIAGONAL_FORWARD,
         MODE_ROTATE_RIGHT,
         MODE_ROTATE_LEFT,
+        MODE_MOVE_ARC,
         MODE_STOP,
     }
 
-    public static void setTestMode(TestModes mode, double power) {
+    public static void setTestMode(TestModes mode, double power, double lateralPower) {
         switch (mode) {
             case MODE_MOVE_FORWARD:
                 moveAxial(1 * power);
@@ -53,6 +54,8 @@ public class DriveTrainTele extends DriveTrain{
             case MODE_ROTATE_LEFT:
                 rotate(1 * power);    //negative power = counter clockwise
                 break;
+            case MODE_MOVE_ARC:
+
             case MODE_STOP:
                 setPowerOfMotors(0.0,0.0,0.0,0.0);
                 break;
@@ -71,6 +74,15 @@ public class DriveTrainTele extends DriveTrain{
         double frontLeft = (Math.cos(angle) + Math.sin(angle)) / (Math.sqrt(2));
         double frontRight = (Math.sin(angle) - Math.cos(angle)) / (Math.sqrt(2));
         setPowerOfMotors(frontRight, frontLeft, frontLeft, frontRight);
+    }
+    public static void moveArc(double axialPower, double rotatePower) {
+        if (rotatePower > 0) {
+            setPowerOfMotors(rotatePower, axialPower, rotatePower, axialPower);
+        }
+        else {
+            setPowerOfMotors(axialPower, rotatePower, axialPower, rotatePower);
+        }
+
     }
 
     public static void rotate(double power) {

@@ -32,19 +32,17 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 package FTC7391;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
-import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.Gamepad;
-import com.qualcomm.robotcore.hardware.Servo;
-import com.qualcomm.robotcore.util.Range;
 
 /**
  * TeleOp Mode
  * <p>
  * Enables control of the robot via the gamepad
  */
-public class TeleOpTest extends OpMode {
+public class TeleOp7391 extends OpMode {
 
-	private static final String TAG = TeleOpTest.class.getSimpleName();
+	private static final String TAG = TeleOp7391.class.getSimpleName();
+	private static double axialPower;
+	private static double rotatePower;
 
 	/*
 	 * Note: the configuration of the servos is such that
@@ -72,7 +70,7 @@ public class TeleOpTest extends OpMode {
 	/**
 	 * Constructor
 	 */
-	public TeleOpTest() {
+	public TeleOp7391() {
 
 	}
 
@@ -117,6 +115,9 @@ public class TeleOpTest extends OpMode {
 
 		telemetry.addData(TAG, "OpMode Started");
 
+		axialPower = scaleInput(gamepad1.left_stick_y);
+		rotatePower = scaleInput(gamepad1.right_stick_x);
+
 		/*
 		 * Gamepad 1
 		 * 
@@ -144,44 +145,32 @@ public class TeleOpTest extends OpMode {
 		left =  (float)scaleInput(left);
 		*/
 
-		if (gamepad1.dpad_right) {
-			//DriveTrain.testRotateDegrees(positiveNumber);
-			DriveTrainTele.setTestMode(DriveTrainTele.TestModes.MODE_ROTATE_RIGHT, .15,0);
-		}
-		if (gamepad1.dpad_left) {
-			//DriveTrain.testRotateDegrees(negativeNumber);
-			DriveTrainTele.setTestMode(DriveTrainTele.TestModes.MODE_ROTATE_LEFT, .15,0);
-		}
-
-		// update the position of the arm.
-		if (gamepad1.a) {
-			telemetry.addData(TAG, "A Button Pressed.");
-			//DriveTrain.testMoveLongitudinal(negativeNumber);
-			DriveTrainTele.setTestMode(DriveTrainTele.TestModes.MODE_MOVE_BACKWARD, .25,0);
-
+		if (axialPower > 0) {
+			if (rotatePower > 0) {
+				DriveTrainTele.setTestMode(DriveTrainTele.TestModes.MODE_MOVE_ARC, axialPower, rotatePower);
+			}
+			else if (rotatePower < 0) {
+				DriveTrainTele.setTestMode(DriveTrainTele.TestModes.MODE_MOVE_ARC, axialPower, -rotatePower);
+			}
+			else {
+				DriveTrainTele.setTestMode(DriveTrainTele.TestModes.MODE_MOVE_FORWARD, axialPower, 0);
+			}
 		}
 
-		if (gamepad1.y) {
-			telemetry.addData(TAG, "Y Button Pressed.");
-			DriveTrainTele.setTestMode(DriveTrainTele.TestModes.MODE_MOVE_FORWARD, .25,0);
+		else if (axialPower < 0) {
+			DriveTrainTele.setTestMode(DriveTrainTele.TestModes.MODE_MOVE_BACKWARD, -axialPower, 0);
 		}
 
-		// update the position of the claw
-		if (gamepad1.x) {
-			telemetry.addData(TAG, "X Button Pressed.");
-			//DriveTrain.testMoveLateral(negativeNumber);
-			DriveTrainTele.setTestMode(DriveTrainTele.TestModes.MODE_MOVE_LEFT, .25,0);
+		else if (rotatePower > 0) {
+			DriveTrainTele.setTestMode(DriveTrainTele.TestModes.MODE_ROTATE_RIGHT, rotatePower, 0);
 		}
-
-		if (gamepad1.b) {
-			telemetry.addData(TAG, "B Button Pressed.");
-			//DriveTrain.testMoveLateral(positiveNumber);
-			DriveTrainTele.setTestMode(DriveTrainTele.TestModes.MODE_MOVE_RIGHT, .25,0);
+		else if (rotatePower < 0) {
+			DriveTrainTele.setTestMode(DriveTrainTele.TestModes.MODE_ROTATE_LEFT, -rotatePower, 0);
 		}
-		if (!gamepad1.a && !gamepad1.b && !gamepad1.x && !gamepad1.y && !gamepad1.a) {
-			DriveTrainTele.setTestMode(DriveTrainTele.TestModes.MODE_STOP,0.0,0);
+		
+		else {
+			DriveTrainTele.setTestMode(DriveTrainTele.TestModes.MODE_STOP, 0,0);
 		}
-
         // clip the position values so that they never exceed their allowed range.
        // armPosition = Range.clip(armPosition, ARM_MIN_RANGE, ARM_MAX_RANGE);
         //clawPosition = Range.clip(clawPosition, CLAW_MIN_RANGE, CLAW_MAX_RANGE);
@@ -193,8 +182,8 @@ public class TeleOpTest extends OpMode {
 		 * are currently write only.
 		 */
         telemetry.addData("Text", "*** Robot Data***");
-        telemetry.addData("arm", "arm:  " + String.format("%.2f", armPosition));
-        telemetry.addData("claw", "claw:  " + String.format("%.2f", clawPosition));
+        telemetry.addData("Power", "Axial:  " + String.format("%.2f", axialPower));
+        telemetry.addData("Power", "Rotate:  " + String.format("%.2f", rotatePower));
         //telemetry.addData("left tgt pwr",  "left  pwr: " + String.format("%.2f", left));
         //telemetry.addData("right tgt pwr", "right pwr: " + String.format("%.2f", right));
 
