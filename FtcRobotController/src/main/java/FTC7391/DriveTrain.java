@@ -16,7 +16,7 @@ public class DriveTrain {
     protected static boolean initialized = false;
 
     protected static final double AXLE_LENGTH = 14.5;
-    protected static final double WHEEL_DIAMETER = 4.0;
+    protected static final double WHEEL_DIAMETER = 3.0;
     protected static final int TICKS_PER_REVOLUTION = 1120;
     protected static final int DEGREES_PER_REVOLUTION = 360;
     protected static final int TICKS_PER_INCH = (int) (TICKS_PER_REVOLUTION / (Math.PI * WHEEL_DIAMETER));
