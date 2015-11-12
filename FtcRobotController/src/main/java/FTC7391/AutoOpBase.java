@@ -5,44 +5,33 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 /**
  * Created by Allana Evans on 9/26/15.
  */
-public class AutoOpBase extends OpMode {
+public abstract class AutoOpBase extends OpMode {
 
     private static final String TAG = AutoOpBase.class.getSimpleName();
     protected State currentState;
-
+    protected int step;
 
     public void init(){
         telemetry.addData(TAG, "AutoOp Init");
         DriveTrainAuto.init(hardwareMap);
+        step = 1;
         //initialize current state
 
     }
 
-    public void loop(){
-        currentState.update();
-        currentState = currentState.next();
-    }
+    public abstract void loop();
 
-    public void stop(){
+    public abstract void stop();
 
-    }
-
-    protected abstract class State{
-
-        protected boolean done = false;
-        protected State nextState;
+    protected class State{
 
         public State(){
-            //initialize nextState
+            //perform state action
         }
 
-        public abstract void update(); //perform state actions
-
-        public State next(){
-            if (!done) return this;
-            else return nextState;
+        public boolean update(){
+            return DriveTrainAuto.isDone();
         }
-
 
     }
 
