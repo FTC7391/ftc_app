@@ -45,7 +45,8 @@ import com.qualcomm.robotcore.util.Range;
 public class LiftTest extends OpMode {
 
     private static final String TAG = Lift.class.getSimpleName();
-    private double power = 0;
+    private double powerLift = 0;
+    private double powerDriveTrain = 0;
     /**
      * Constructor
      */
@@ -61,6 +62,7 @@ public class LiftTest extends OpMode {
     @Override
     public void init() {
         Lift.init(hardwareMap);
+        DriveTrain.init(hardwareMap);
         //DriveTrainAuto.moveInches(15, .5);
 		/*
 		 * Use the hardwareMap to get the dc motors and servos by name. Note
@@ -120,23 +122,29 @@ public class LiftTest extends OpMode {
 		left =  (float)scaleInput(left);
 		*/
 
-        power = scaleInput(gamepad1.left_stick_y);
+        powerLift = scaleInput(gamepad1.left_stick_y);
+        powerDriveTrain = scaleInput(gamepad1.right_stick_y);
 
         if (gamepad1.y) {
             //DriveTrain.testRotateDegrees(positiveNumber);
-            Lift.setTestMode(Lift.TestModes.MODE_MOVE_HIGH, power);
+            Lift.setTestMode(Lift.TestModes.MODE_MOVE_HIGH, powerLift);
         }
         if (gamepad1.b) {
             //DriveTrain.testRotateDegrees(negativeNumber);
-            Lift.setTestMode(Lift.TestModes.MODE_MOVE_HOOK, power);
+            Lift.setTestMode(Lift.TestModes.MODE_MOVE_LOW, powerLift);
         }
         if (gamepad1.a) {
-            Lift.setTestMode(Lift.TestModes.MODE_MOVE_ANGLE, power);
+            Lift.setTestMode(Lift.TestModes.MODE_MOVE_ANGLE, -powerLift);
         }
         if (gamepad1.x) {
-            Lift.setTestMode(Lift.TestModes.MODE_MOVE_BOTH, power);
+            Lift.setTestMode(Lift.TestModes.MODE_MOVE_HOOK, powerLift/3);
         }
-
+        if(gamepad1.dpad_up) {
+            Lift.setTestMode(Lift.TestModes.MODE_MOVE_BOTH, powerLift);
+        }
+       // if(powerDriveTrain != 0) {
+            DriveTrainTele.moveAxial(powerDriveTrain);
+       // }
 
 
         // clip the position values so that they never exceed their allowed range.
@@ -171,19 +179,23 @@ public class LiftTest extends OpMode {
         double[] scaleArray = { 0.0, 0.05, 0.09, 0.10, 0.12, 0.15, 0.18, 0.24,
                 0.30, 0.36, 0.43, 0.50, 0.60, 0.72, 0.85, 1.00, 1.00 };
 
+        //double[] scaleArray = { 0.0, 0.07, 0.15, 0.20, 0.26,
+        //        0.32, 0.38, 0.44, 0.50, 0.56, 0.62, 0.68, 0.74, 0.80, 0.86, 0.95, 1.00 };
+
+
         // get the corresponding index for the scaleInput array.
         int index = (int) (dVal * 16.0);
-        if (index < 0) {
-            index = -index;
-        } else if (index > 16) {
-            index = 16;
-        }
+            if (index < 0) {
+                index = -index;
+            } else if (index > 16) {
+                index = 16;
+            }
 
-        double dScale = 0.0;
-        if (dVal < 0) {
-            dScale = -scaleArray[index];
-        } else {
-            dScale = scaleArray[index];
+            double dScale = 0.0;
+            if (dVal < 0) {
+                dScale = -scaleArray[index];
+            } else {
+                dScale = scaleArray[index];
         }
 
         return dScale;

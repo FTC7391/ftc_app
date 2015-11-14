@@ -1,6 +1,7 @@
 package FTC7391;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorController;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 /**
@@ -15,11 +16,12 @@ public class DriveTrain {
 
     protected static boolean initialized = false;
 
-    protected static final double AXLE_LENGTH = 14.5;
+    protected static final double AXLE_LENGTH = 15;
     protected static final double WHEEL_DIAMETER = 4.0;
     protected static final int TICKS_PER_REVOLUTION = 1120;
     protected static final int DEGREES_PER_REVOLUTION = 360;
-    protected static final int TICKS_PER_INCH = (int) (TICKS_PER_REVOLUTION / (Math.PI * WHEEL_DIAMETER));
+    protected static final double TICKS_PER_INCH = (TICKS_PER_REVOLUTION / (Math.PI * WHEEL_DIAMETER));
+    protected static final double TICKS_PER_DEGREE = ((TICKS_PER_INCH * Math.PI * AXLE_LENGTH) / DEGREES_PER_REVOLUTION);
 
     //init
     public static void init (HardwareMap hardwareMap) {
@@ -34,8 +36,15 @@ public class DriveTrain {
         motorBackRight.setDirection(DcMotor.Direction.REVERSE);
         motorFrontRight.setDirection(DcMotor.Direction.REVERSE);
 
-        //run_using_encoders();
+        runUsingEncoders();
 
+    }
+
+    protected static void runUsingEncoders(){
+        motorFrontRight.setChannelMode(DcMotorController.RunMode.RUN_USING_ENCODERS);
+        motorFrontLeft.setChannelMode(DcMotorController.RunMode.RUN_USING_ENCODERS);
+        motorBackRight.setChannelMode(DcMotorController.RunMode.RUN_USING_ENCODERS);
+        motorBackLeft.setChannelMode(DcMotorController.RunMode.RUN_USING_ENCODERS);
     }
 
     protected static void setPowerOfMotors(double frontRightPower, double frontLeftPower, double backRightPower, double backLeftPower) {
