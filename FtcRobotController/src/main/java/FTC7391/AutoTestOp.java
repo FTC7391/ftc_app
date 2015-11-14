@@ -22,7 +22,7 @@ public class AutoTestOp extends AutoOpBase
         switch (step){
             case 1: currentState = new MoveState(6, 0.4); break;
             case 2: currentState = new WaitState(30); break;
-            case 3: currentState = new MoveState(6, -0.4);break;
+            case 3: currentState = new MoveState(-6, -0.4);break;
             case 4: currentState = new WaitState(30); break;
             case 5: currentState = new RotateState(-90, 0.4); break;
             case 6: currentState = new WaitState(30); break;
