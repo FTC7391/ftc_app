@@ -8,13 +8,13 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 public class AutoOp extends AutoOpBase
 {
     private static final String TAG = AutoOp.class.getSimpleName();
-    protected static final boolean isRed = false;
+    protected static final int isRed = 1; //1 if we are red, -1 if we are blue
 
     @Override
     public void init()
     {
         super.init();
-        currentState = new MoveForwardState(10, 0.5);
+        currentState = new MoveForwardState(24, 0.5);
     }
 
     @Override
@@ -23,9 +23,18 @@ public class AutoOp extends AutoOpBase
         step++;
         switch(step) {
             case 2:
-                currentState = new RotateState( -45, 0.5);
+                currentState = new RotateState(45 * isRed, 0.5);
                 break;
             case 3:
+                currentState = new MoveForwardState(48, 0.5);
+                break;
+            case 4:
+                currentState = new RotateState(45 * isRed, 0.5);
+                break;
+            case 5:
+                currentState = new MoveForwardState(24, 0.5);
+                break;
+            case 6:
                 currentState = new StopState();
                 break;
         }

@@ -30,6 +30,7 @@ public abstract class AutoOpBase extends OpMode {
         }
 
         public boolean update(){
+            telemetry.addData(TAG, DriveTrainAuto.getPosition());
             return DriveTrainAuto.isDone();
         }
 
