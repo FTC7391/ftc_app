@@ -99,10 +99,10 @@ public class Lift {
 
     public enum TestModes {
         MODE_MOVE_HIGH,
-        MODE_MOVE_HOOK,
-        MODE_MOVE_ANGLE,
         MODE_MOVE_LOW,
+        MODE_MOVE_ANGLE,
         MODE_MOVE_BOTH,
+        MODE_MOVE_HOOK,
         MODE_STOP,
     }
 
@@ -112,8 +112,8 @@ public class Lift {
             case MODE_MOVE_HIGH:
                 liftHigh.setPower(1 * power);
                 break;
-            case MODE_MOVE_HOOK:
-                liftHook.setPower(1 * power);    //negative power = backwards
+            case MODE_MOVE_LOW:
+                liftLow.setPower(1 * power);    //negative power = backwards
                 break;
             case MODE_MOVE_ANGLE:
                 liftAngle.setPower(1 * power);
@@ -121,6 +121,9 @@ public class Lift {
             case MODE_MOVE_BOTH:
                 liftHigh.setPower(1 * power);
                 liftLow.setPower(1 * power);    //negative power = backwards
+                break;
+            case MODE_MOVE_HOOK:
+                liftHook.setPower(1*power);
                 break;
             case MODE_STOP:
                 Lift.setPowerOfMotors(0,0);

@@ -8,12 +8,27 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 public class AutoOp extends AutoOpBase
 {
     private static final String TAG = AutoOp.class.getSimpleName();
+    protected static final boolean isRed = false;
 
     @Override
     public void init()
     {
         super.init();
-        currentState = new MoveForwardState();
+        currentState = new MoveForwardState(10, 0.5);
+    }
+
+    @Override
+    public void loop(){
+        if (!currentState.update()) return;
+        step++;
+        switch(step) {
+            case 2:
+                currentState = new RotateState( -45, 0.5);
+                break;
+            case 3:
+                currentState = new StopState();
+                break;
+        }
     }
 
     @Override
@@ -25,13 +40,16 @@ public class AutoOp extends AutoOpBase
 
     private class MoveForwardState extends State {
 
-        public MoveForwardState(){
-            nextState = new StopState();
-            DriveTrainAuto.moveInches(10,  0.5);
+        public MoveForwardState(int inches, double power){
+            DriveTrainAuto.moveInches(inches,  power);
         }
 
-        public void update(){
-            done = DriveTrainAuto.isDone();
+    }
+
+    private class RotateState extends State {
+
+        public RotateState(int degrees, double power){
+            DriveTrainAuto.rotateDegrees(degrees, power);
         }
 
     }
@@ -39,12 +57,12 @@ public class AutoOp extends AutoOpBase
     private class StopState extends State {
 
         public StopState(){
-            nextState = new StopState();
             DriveTrainAuto.moveInches(0,0);
         }
 
-        public void update(){
-
+        @Override
+        public boolean update(){
+            return false;
         }
 
     }

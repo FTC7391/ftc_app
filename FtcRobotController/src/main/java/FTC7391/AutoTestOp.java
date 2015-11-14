@@ -11,7 +11,23 @@ public class AutoTestOp extends AutoOpBase
     public void init()
     {
         super.init();
-        currentState = new MoveForwardState();
+        currentState = new MoveState(24, 1);
+        step = 1;
+    }
+
+    @Override
+    public void loop(){
+        if (!currentState.update()) return;
+        step++;
+        switch (step){
+            case 2: currentState = new WaitState(); break;
+            case 3: currentState = new MoveState(24, -1);break;
+            case 4: currentState = new WaitState(); break;
+            case 5: currentState = new RotateState(-90, 1); break;
+            case 6: currentState = new WaitState(); break;
+            case 7: currentState = new RotateState(90,1); break;
+            case 8: currentState = new StopState(); break;
+        }
     }
 
     @Override
@@ -21,102 +37,36 @@ public class AutoTestOp extends AutoOpBase
         currentState = new StopState();
     }
 
-    private class MoveForwardState extends State {
 
-        public MoveForwardState(){
-            nextState = new WaitStateOne();
-            DriveTrainAuto.moveInches(24,  1);
-        }
 
-        public void update(){
-            done = DriveTrainAuto.isDone();
+    private class MoveState extends State {
+
+        public MoveState(int inches, double power){
+            DriveTrainAuto.moveInches(inches,  power);
         }
 
     }
 
-    private class WaitStateOne extends State {
+    private class WaitState extends State {
 
         private int counter = 0;
 
-        public WaitStateOne(){
-            nextState = new MoveBackwardState();
+        public WaitState(){
             DriveTrainAuto.moveInches(0,0);
         }
 
-        public void update(){
+        @Override
+        public boolean update(){
             counter++;
-            done = counter == 20;
+            return counter == 20;
         }
 
     }
 
-    private class MoveBackwardState extends State {
+    private class RotateState extends State {
 
-        public MoveBackwardState(){
-            nextState = new WaitStateTwo();
-            DriveTrainAuto.moveInches(24,  -1);
-        }
-
-        public void update(){
-            done = DriveTrainAuto.isDone();
-        }
-
-    }
-
-    private class WaitStateTwo extends State {
-
-        private int counter = 0;
-
-        public WaitStateTwo(){
-            nextState = new RotateRightState();
-            DriveTrainAuto.moveInches(0,0);
-        }
-
-        public void update(){
-            counter++;
-            done = counter == 20;
-        }
-
-    }
-
-    private class RotateRightState extends State {
-
-        public RotateRightState(){
-            nextState = new WaitStateThree();
-            DriveTrainAuto.rotateDegrees(-90, 1);
-        }
-
-        public void update(){
-            done = DriveTrainAuto.isDone();
-        }
-
-    }
-
-    private class WaitStateThree extends State {
-
-        private int counter = 0;
-
-        public WaitStateThree(){
-            nextState = new RotateLeftState();
-            DriveTrainAuto.moveInches(0, 0);
-        }
-
-        public void update(){
-            counter++;
-            done = counter == 20;
-        }
-
-    }
-
-    private class RotateLeftState extends State {
-
-        public RotateLeftState(){
-            nextState = new StopState();
-            DriveTrainAuto.rotateDegrees(90, 1);
-        }
-
-        public void update(){
-            done = DriveTrainAuto.isDone();
+        public RotateState(int degrees, double power){
+            DriveTrainAuto.rotateDegrees(degrees, power);
         }
 
     }
@@ -124,12 +74,12 @@ public class AutoTestOp extends AutoOpBase
     private class StopState extends State {
 
         public StopState(){
-            nextState = new StopState();
             DriveTrainAuto.moveInches(0,0);
         }
 
-        public void update(){
-
+        @Override
+        public boolean update(){
+            return false;
         }
 
     }
