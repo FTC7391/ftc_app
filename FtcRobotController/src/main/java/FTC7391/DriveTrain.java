@@ -1,6 +1,7 @@
 package FTC7391;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorController;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 /**
@@ -15,11 +16,12 @@ public class DriveTrain {
 
     protected static boolean initialized = false;
 
-    protected static final double AXLE_LENGTH = 14.5;
+    protected static final double AXLE_LENGTH = 15;
     protected static final double WHEEL_DIAMETER = 4.0;
     protected static final int TICKS_PER_REVOLUTION = 1120;
     protected static final int DEGREES_PER_REVOLUTION = 360;
-    protected static final int TICKS_PER_INCH = (int) (TICKS_PER_REVOLUTION / (Math.PI * WHEEL_DIAMETER));
+    protected static final double TICKS_PER_INCH = (TICKS_PER_REVOLUTION / (Math.PI * WHEEL_DIAMETER));
+    protected static final double TICKS_PER_DEGREE = ((TICKS_PER_INCH * Math.PI * AXLE_LENGTH) / DEGREES_PER_REVOLUTION);
 
     //init
     public static void init (HardwareMap hardwareMap) {
@@ -31,11 +33,28 @@ public class DriveTrain {
         motorBackRight = hardwareMap.dcMotor.get("motor_back_right");
         motorBackLeft = hardwareMap.dcMotor.get("motor_back_left");
 
-        motorBackRight.setDirection(DcMotor.Direction.REVERSE);
-        motorFrontRight.setDirection(DcMotor.Direction.REVERSE);
+        motorBackLeft.setDirection(DcMotor.Direction.REVERSE);
+        motorFrontLeft.setDirection(DcMotor.Direction.REVERSE);
 
-        //run_using_encoders();
 
+        runUsingEncoders();
+
+    }
+
+    protected static void resetEncoders(){
+        motorFrontRight.setChannelMode(DcMotorController.RunMode.RESET_ENCODERS);
+        motorFrontLeft.setChannelMode(DcMotorController.RunMode.RESET_ENCODERS);
+        motorBackRight.setChannelMode(DcMotorController.RunMode.RESET_ENCODERS);
+        motorBackLeft.setChannelMode(DcMotorController.RunMode.RESET_ENCODERS);
+
+    }
+
+    protected static void runUsingEncoders(){
+        resetEncoders();
+        motorFrontRight.setChannelMode(DcMotorController.RunMode.RUN_USING_ENCODERS);
+        motorFrontLeft.setChannelMode(DcMotorController.RunMode.RUN_USING_ENCODERS);
+        motorBackRight.setChannelMode(DcMotorController.RunMode.RUN_USING_ENCODERS);
+        motorBackLeft.setChannelMode(DcMotorController.RunMode.RUN_USING_ENCODERS);
     }
 
     protected static void setPowerOfMotors(double frontRightPower, double frontLeftPower, double backRightPower, double backLeftPower) {
@@ -72,6 +91,27 @@ public class DriveTrain {
                 setPowerOfMotors(0.0,0.0,0.0,0.0);
                 break;
         }
+    }
+    private double scaleInput(double dVal)  {
+        double[] scaleArray = { 0.0, 0.05, 0.09, 0.10, 0.12, 0.15, 0.18, 0.24,
+                0.30, 0.36, 0.43, 0.50, 0.60, 0.72, 0.85, 1.00, 1.00 };
+
+        // get the corresponding index for the scaleInput array.
+        int index = (int) (dVal * 16.0);
+        if (index < 0) {
+            index = -index;
+        } else if (index > 16) {
+            index = 16;
+        }
+
+        double dScale = 0.0;
+        if (dVal < 0) {
+            dScale = scaleArray[index];
+        } else {
+            dScale = -scaleArray[index];
+        }
+
+        return dScale;
     }
 
 
