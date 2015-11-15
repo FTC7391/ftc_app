@@ -58,7 +58,7 @@ public class StickTest extends OpMode {
      */
     @Override
     public void init() {
-        Stick.init(hardwareMap);
+        stick = new Stick();
         //DriveTrainAuto.moveInches(15, .5);
 		/*
 		 * Use the hardwareMap to get the dc motors and servos by name. Note
@@ -120,13 +120,17 @@ public class StickTest extends OpMode {
 
         //power = scaleInput(gamepad1.left_stick_y);
 
-        if (gamepad1.y) {
+        if (gamepad1.a) {
             //DriveTrain.testRotateDegrees(positiveNumber);
-            Stick.setTestMode(Stick.TestModes.MOVE_FORWARD);
+            stick.setRetractedPosition();
         }
         if (gamepad1.b) {
             //DriveTrain.testRotateDegrees(negativeNumber);
-            Stick.setTestMode(Stick.TestModes.MOVE_BACKWARD);
+            stick.setDrivePosition();
+        }
+        if (gamepad1.y) {
+            //DriveTrain.testRotateDegrees(negativeNumber);
+            stick.setDeployedPosition();
         }
 //
 //        if (gamepad1.a) {

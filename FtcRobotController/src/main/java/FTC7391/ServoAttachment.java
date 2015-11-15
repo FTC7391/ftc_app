@@ -38,8 +38,9 @@ public class ServoAttachment {
     }
 
     protected enum TestModes {
-        SERVO_RETRACT, SERVO_DRIVE, SERVO_DEPLOY
-
+        SERVO_RETRACT,
+        SERVO_DRIVE,
+        SERVO_DEPLOY
     }
 
 
