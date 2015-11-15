@@ -20,7 +20,7 @@ public class AutoTestOp extends AutoOpBase
         if (currentState != null && !currentState.update()) return;
         step++;
         switch (step){
-            case 1: currentState = new MoveState(6, 0.4); break;
+            case 1: currentState = new MoveState(6, 0.2); break;
             case 2: currentState = new WaitState(30); break;
             case 3: currentState = new MoveState(-6, -0.4);break;
             case 4: currentState = new WaitState(30); break;
