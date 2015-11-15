@@ -7,13 +7,12 @@ import com.qualcomm.robotcore.hardware.Servo;
 /**
  * Created by ArjunVerma on 10/3/15.
  */
-public class Stick {
+public class Stick extends ServoAttachment {
 
 
     private static Servo rescueStick;
 
     private static double position = 0.0; //to be added
-    private static int originalTicks = 0; //to be added
 
     private static final double DROP_POSITION = 0.0; //for now
 
@@ -31,7 +30,7 @@ public class Stick {
         if (initialized) return;
         initialized = true;
 
-        rescueStick = hardwareMap.servo.get("motor_high");
+        rescueStick = hardwareMap.servo.get("stick");
 
 
     }
@@ -42,17 +41,17 @@ public class Stick {
 
 
 
-    public Stick(){}
+    public Stick(){
+        super(0, 0, 100);
+    }
 
 
     public void setDrivePosition(){
-
         rescueStick.setPosition(Servo.MIN_POSITION);
-
     }
 
-    public void setDropPosition(){
-
+    public void setDeployedPosition(){
+        rescueStick.setPosition(100.0);
     }
 
 
