@@ -33,14 +33,24 @@ public class DriveTrain {
         motorBackRight = hardwareMap.dcMotor.get("motor_back_right");
         motorBackLeft = hardwareMap.dcMotor.get("motor_back_left");
 
-        motorBackRight.setDirection(DcMotor.Direction.REVERSE);
-        motorFrontRight.setDirection(DcMotor.Direction.REVERSE);
+        motorBackLeft.setDirection(DcMotor.Direction.REVERSE);
+        motorFrontLeft.setDirection(DcMotor.Direction.REVERSE);
+
 
         runUsingEncoders();
 
     }
 
+    protected static void resetEncoders(){
+        motorFrontRight.setChannelMode(DcMotorController.RunMode.RESET_ENCODERS);
+        motorFrontLeft.setChannelMode(DcMotorController.RunMode.RESET_ENCODERS);
+        motorBackRight.setChannelMode(DcMotorController.RunMode.RESET_ENCODERS);
+        motorBackLeft.setChannelMode(DcMotorController.RunMode.RESET_ENCODERS);
+
+    }
+
     protected static void runUsingEncoders(){
+        resetEncoders();
         motorFrontRight.setChannelMode(DcMotorController.RunMode.RUN_USING_ENCODERS);
         motorFrontLeft.setChannelMode(DcMotorController.RunMode.RUN_USING_ENCODERS);
         motorBackRight.setChannelMode(DcMotorController.RunMode.RUN_USING_ENCODERS);
@@ -81,6 +91,27 @@ public class DriveTrain {
                 setPowerOfMotors(0.0,0.0,0.0,0.0);
                 break;
         }
+    }
+    private double scaleInput(double dVal)  {
+        double[] scaleArray = { 0.0, 0.05, 0.09, 0.10, 0.12, 0.15, 0.18, 0.24,
+                0.30, 0.36, 0.43, 0.50, 0.60, 0.72, 0.85, 1.00, 1.00 };
+
+        // get the corresponding index for the scaleInput array.
+        int index = (int) (dVal * 16.0);
+        if (index < 0) {
+            index = -index;
+        } else if (index > 16) {
+            index = 16;
+        }
+
+        double dScale = 0.0;
+        if (dVal < 0) {
+            dScale = scaleArray[index];
+        } else {
+            dScale = -scaleArray[index];
+        }
+
+        return dScale;
     }
 
 
