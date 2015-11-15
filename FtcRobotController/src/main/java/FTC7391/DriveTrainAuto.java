@@ -14,11 +14,15 @@ public class DriveTrainAuto extends DriveTrain{
     private static int backLeftTargetTick = 0;
     private static int[] cummulativeError = {0,0,0,0};
 
+    public static String getPosition(){
+        return "Current: " + motorFrontRight.getCurrentPosition() + " Target: " + motorFrontRight.getTargetPosition() + " Current: " + motorFrontLeft.getCurrentPosition();
+    }
+
     //Move Inches. Calculates the target tick
     public static void moveInches(int distance, double power) {
 
         setPowerOfMotors(power, power, power, power);
-        int ticks = distance * TICKS_PER_INCH;
+        int ticks = (int) (distance * TICKS_PER_INCH);
         setMotorTargetPosition(ticks, ticks, ticks, ticks);
 
     }
@@ -43,6 +47,7 @@ public class DriveTrainAuto extends DriveTrain{
     }
 
     public static boolean isDone() {
+
         if(motorFrontRight.getPower() > 0 && motorFrontRight.getCurrentPosition() >= motorFrontRight.getTargetPosition())
             return true;
         else if(motorFrontRight.getPower() < 0 && motorFrontRight.getCurrentPosition() <= motorFrontRight.getTargetPosition())
@@ -51,7 +56,7 @@ public class DriveTrainAuto extends DriveTrain{
     }
 
     public static void rotateDegrees(double degrees, double power) {
-        int ticks = (int)Math.abs(degrees*(TICKS_PER_REVOLUTION/(DEGREES_PER_REVOLUTION)));
+        int ticks = (int) (degrees * TICKS_PER_DEGREE);
         if (degrees > 0) {
             //Rotate to the left,frontRight & backRight postive
             setPowerOfMotors(power, -power, power, -power);
@@ -63,8 +68,6 @@ public class DriveTrainAuto extends DriveTrain{
         } else {
             setPowerOfMotors(0.0, 0.0, 0.0, 0.0);
         }
-
-
 
     }
 

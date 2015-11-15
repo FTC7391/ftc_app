@@ -11,21 +11,22 @@ public class AutoTestOp extends AutoOpBase
     public void init()
     {
         super.init();
-        currentState = new MoveState(24, 1);
-        step = 1;
+        currentState = null;
+        step = 0;
     }
 
     @Override
     public void loop(){
-        if (!currentState.update()) return;
+        if (currentState != null && !currentState.update()) return;
         step++;
         switch (step){
-            case 2: currentState = new WaitState(); break;
-            case 3: currentState = new MoveState(24, -1);break;
-            case 4: currentState = new WaitState(); break;
-            case 5: currentState = new RotateState(-90, 1); break;
-            case 6: currentState = new WaitState(); break;
-            case 7: currentState = new RotateState(90,1); break;
+            case 1: currentState = new MoveState(6, 0.2); break;
+            case 2: currentState = new WaitState(30); break;
+            case 3: currentState = new MoveState(-6, -0.4);break;
+            case 4: currentState = new WaitState(30); break;
+            case 5: currentState = new RotateState(-90, 0.4); break;
+            case 6: currentState = new WaitState(30); break;
+            case 7: currentState = new RotateState(90, 0.4); break;
             case 8: currentState = new StopState(); break;
         }
     }
@@ -50,15 +51,17 @@ public class AutoTestOp extends AutoOpBase
     private class WaitState extends State {
 
         private int counter = 0;
+        private int waitTime;
 
-        public WaitState(){
+        public WaitState(int seconds){
             DriveTrainAuto.moveInches(0,0);
+            waitTime = (int)(seconds / 40);
         }
 
         @Override
         public boolean update(){
             counter++;
-            return counter == 20;
+            return (counter == waitTime || gamepad1.a);
         }
 
     }
