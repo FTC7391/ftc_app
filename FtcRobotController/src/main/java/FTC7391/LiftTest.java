@@ -146,6 +146,9 @@ public class LiftTest extends OpMode {
             DriveTrainTele.moveAxial(powerDriveTrain);
        // }
 
+        telemetry.addData("High", "original: " + Lift.originalTicksHigh + "|| end: " + Lift.getTicksLiftHigh());
+        telemetry.addData("Low", "original: " + Lift.originalTicksLow + "|| end: " + Lift.getTicksLiftLow());
+        telemetry.addData("Angle", "original: " + Lift.originalTicksAngle + "|| end: " + Lift.getTicksLiftAngle());
 
         // clip the position values so that they never exceed their allowed range.
         // armPosition = Range.clip(armPosition, ARM_MIN_RANGE, ARM_MAX_RANGE);
@@ -167,7 +170,7 @@ public class LiftTest extends OpMode {
      */
     @Override
     public void stop() {
-//stop
+
     }
 
     /*
