@@ -44,6 +44,7 @@ public class ZiplineTest extends OpMode {
 
     private static final String TAG = Zipline.class.getSimpleName();
     //private double power = 0;
+
     /**
      * Constructor
      */
@@ -141,7 +142,6 @@ public class ZiplineTest extends OpMode {
 //        }
 
 
-
         // clip the position values so that they never exceed their allowed range.
         // armPosition = Range.clip(armPosition, ARM_MIN_RANGE, ARM_MAX_RANGE);
         //clawPosition = Range.clip(clawPosition, CLAW_MIN_RANGE, CLAW_MAX_RANGE);
@@ -163,33 +163,6 @@ public class ZiplineTest extends OpMode {
     @Override
     public void stop() {
 //stop
-    }
-
-    /*
-     * This method scales the joyzipline input so for low joyzipline values, the
-     * scaled value is less than linear.  This is to make it easier to drive
-     * the robot more precisely at slower speeds.
-     */
-    double scaleInput(double dVal)  {
-        double[] scaleArray = { 0.0, 0.05, 0.09, 0.10, 0.12, 0.15, 0.18, 0.24,
-                0.30, 0.36, 0.43, 0.50, 0.60, 0.72, 0.85, 1.00, 1.00 };
-
-        // get the corresponding index for the scaleInput array.
-        int index = (int) (dVal * 16.0);
-        if (index < 0) {
-            index = -index;
-        } else if (index > 16) {
-            index = 16;
-        }
-
-        double dScale = 0.0;
-        if (dVal < 0) {
-            dScale = -scaleArray[index];
-        } else {
-            dScale = scaleArray[index];
-        }
-
-        return dScale;
     }
 
 }
