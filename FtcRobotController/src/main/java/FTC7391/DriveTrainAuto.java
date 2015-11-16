@@ -14,6 +14,11 @@ public class DriveTrainAuto extends DriveTrain{
     private static int backLeftTargetTick = 0;
     private static int[] cummulativeError = {0,0,0,0};
 
+    public static void init (HardwareMap hardwareMap) {
+        DriveTrain.init(hardwareMap);
+        runUsingEncoders();
+    }
+
     public static String getPosition(){
         return "Current: " + motorFrontRight.getCurrentPosition() + " Target: " + motorFrontRight.getTargetPosition() + " Current: " + motorFrontLeft.getCurrentPosition();
     }
