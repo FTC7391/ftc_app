@@ -1,6 +1,7 @@
 package FTC7391;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorController;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 /**
@@ -16,7 +17,12 @@ public class Lift {
 
 
     private static int driveModeTicks = 0; //to be added
-    private static int originalTicks = 0; //to be added
+
+
+    public static int originalTicksHigh = 0; //to be added
+    public static int originalTicksLow = 0; //to be added
+    public static int originalTicksHook = 0; //to be added
+    public static int originalTicksAngle = 0; //to be added
 
     private static final int TOTAL_TICKS = 1120;
     private static final int TOTAL_DEGREES = 360;
@@ -32,6 +38,9 @@ public class Lift {
 
     private static double angle = 180 - (Math.atan(h/d) + (Math.acos(((f*f) - (x*x) + (h*h) + (d*d)) / (2*f*Math.sqrt((h*h)+(d*d))))));
 
+    private int currentTicks1 = liftHigh.getCurrentPosition();
+    private int currentTicks2 = liftLow.getCurrentPosition();
+    private int overallCurrent = currentTicks1 + currentTicks2;
 
     public static void init (HardwareMap hardwareMap) {
         if (initialized) return;
@@ -42,12 +51,40 @@ public class Lift {
         liftHook = hardwareMap.dcMotor.get("motor_hook");
         liftAngle = hardwareMap.dcMotor.get("motor_angle");
 
+        originalTicksHigh = liftHigh.getCurrentPosition();
+        originalTicksLow = liftLow.getCurrentPosition();
+        originalTicksHook = liftHook.getCurrentPosition();
+        originalTicksAngle = liftAngle.getCurrentPosition();
+
+        runUsingEncoders();
+    }
+
+    protected static void resetEncoders(){
+        liftHigh.setChannelMode(DcMotorController.RunMode.RESET_ENCODERS);
+        liftLow.setChannelMode(DcMotorController.RunMode.RESET_ENCODERS);
+        liftAngle.setChannelMode(DcMotorController.RunMode.RESET_ENCODERS);
+        liftHook.setChannelMode(DcMotorController.RunMode.RESET_ENCODERS);
 
     }
 
-    private int currentTicks1 = liftHigh.getCurrentPosition();
-    private int currentTicks2 = liftLow.getCurrentPosition();
-    private int overallCurrent = currentTicks1 + currentTicks2;
+    protected static void runUsingEncoders(){
+        resetEncoders();
+        liftHigh.setChannelMode(DcMotorController.RunMode.RUN_USING_ENCODERS);
+        liftLow.setChannelMode(DcMotorController.RunMode.RUN_USING_ENCODERS);
+        liftAngle.setChannelMode(DcMotorController.RunMode.RUN_USING_ENCODERS);
+        liftHook.setChannelMode(DcMotorController.RunMode.RUN_USING_ENCODERS);
+
+    }
+
+
+    public static int getTicksLiftHigh(){return liftHigh.getCurrentPosition();}
+    public static int getTicksLiftLow(){return liftLow.getCurrentPosition();}
+    public static int getTicksLiftAngle(){return liftAngle.getCurrentPosition();}
+
+//    public static int getOriginalTicksHigh(){return originalTicksHigh;}
+//    public static int getOriginalTicksLow(){return originalTicksLow;}
+//    public static int getOriginalTicksAngle(){return originalTicksAngle;}
+
 
 
 
@@ -161,5 +198,7 @@ public class Lift {
         liftLow.setPower(liftLowPower);
 
     }
+
+
 
 }
