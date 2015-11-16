@@ -24,6 +24,10 @@ public class DriveTrainTele extends DriveTrain{
         MODE_STOP,
     }
 
+    public static String getPosition(){
+        return "Current: " + motorFrontRight.getCurrentPosition() + " Target: " + motorFrontRight.getTargetPosition() + " Current: " + motorFrontLeft.getCurrentPosition();
+    }
+
     public static void setTestMode(TestModes mode, double power, double lateralPower) {
         switch (mode) {
             case MODE_MOVE_FORWARD:

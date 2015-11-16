@@ -44,6 +44,7 @@ public class TeleOp7391 extends OpMode {
 	private static final String TAG = TeleOp7391.class.getSimpleName();
 	private static double axialPower;
 	private static double rotatePower;
+	private static double powerLift;
 
 	/*
 	 * Note: the configuration of the servos is such that
@@ -56,8 +57,8 @@ public class TeleOp7391 extends OpMode {
 	final static double CLAW_MIN_RANGE  = 0.20;
 	final static double CLAW_MAX_RANGE  = 0.7;
 
-	private DriveJoystick driver;
-	private LiftJoystick lift;
+	private DriveJoystick driveJoystick;
+	private LiftJoystick liftJoystick;
 
 	// position of the arm servo.
 	double armPosition;
@@ -86,8 +87,9 @@ public class TeleOp7391 extends OpMode {
 	@Override
 	public void init() {
 		DriveTrainTele.init(hardwareMap);
-		driver = new DriveJoystick();
-		lift = new LiftJoystick();
+		Lift.init(hardwareMap);
+		driveJoystick = new DriveJoystick();
+		liftJoystick = new LiftJoystick();
 	}
 
 	/*
@@ -100,9 +102,66 @@ public class TeleOp7391 extends OpMode {
 
 		telemetry.addData(TAG, "OpMode Started");
 
-		lift.update(gamepad2);
-		driver.update(gamepad1);
+		/*
+		driveJoystick.update(gamepad1);
+		telemetry.addData("Drive", DriveTrainTele.getPosition());
+		liftJoystick.update(gamepad2);
+		telemetry.addData("Lift", DriveTrainTele.getPosition());
+		*/
 
+		axialPower = scaleInput(gamepad1.left_stick_y);
+		rotatePower = scaleInput(gamepad1.right_stick_x);
+		powerLift = scaleInput(gamepad2.left_stick_y);
+
+
+		/*
+		 * Gamepad 1
+		 *
+		 * Gamepad 1 controls the motors via the left stick, and it controls the
+		 * wrist/claw via the a,b, x, y buttons
+		 */
+
+		if (gamepad2.y) {
+			//DriveTrain.testRotateDegrees(positiveNumber);
+			Lift.setTestMode(Lift.TestModes.MODE_MOVE_HIGH, powerLift);
+		}
+		if (gamepad2.b) {
+			//DriveTrain.testRotateDegrees(negativeNumber);
+			Lift.setTestMode(Lift.TestModes.MODE_MOVE_LOW, powerLift);
+		}
+		if (gamepad2.a) {
+			Lift.setTestMode(Lift.TestModes.MODE_MOVE_ANGLE, -powerLift);
+		}
+		if (gamepad2.x) {
+			Lift.setTestMode(Lift.TestModes.MODE_MOVE_HOOK, powerLift/3);
+		}
+		if(gamepad2.dpad_up) {
+			Lift.setTestMode(Lift.TestModes.MODE_MOVE_BOTH, powerLift);
+		}
+
+		if (axialPower > 0) {
+			if (rotatePower > 0) {
+				DriveTrainTele.setTestMode(DriveTrainTele.TestModes.MODE_MOVE_ARC, axialPower, rotatePower);
+			} else if (rotatePower < 0) {
+				DriveTrainTele.setTestMode(DriveTrainTele.TestModes.MODE_MOVE_ARC, axialPower, -rotatePower);
+			} else {
+				DriveTrainTele.setTestMode(DriveTrainTele.TestModes.MODE_MOVE_FORWARD, axialPower, 0);
+			}
+		} else if (axialPower < 0) {
+			if (rotatePower > 0) {
+				DriveTrainTele.setTestMode(DriveTrainTele.TestModes.MODE_MOVE_ARC, axialPower, rotatePower);
+			} else if (rotatePower < 0) {
+				DriveTrainTele.setTestMode(DriveTrainTele.TestModes.MODE_MOVE_ARC, axialPower, -rotatePower);
+			} else {
+				DriveTrainTele.setTestMode(DriveTrainTele.TestModes.MODE_MOVE_BACKWARD, axialPower, 0);
+			}
+		} else if (rotatePower > 0) {
+			DriveTrainTele.setTestMode(DriveTrainTele.TestModes.MODE_ROTATE_RIGHT, rotatePower, 0);
+		} else if (rotatePower < 0) {
+			DriveTrainTele.setTestMode(DriveTrainTele.TestModes.MODE_ROTATE_LEFT, -rotatePower, 0);
+		} else {
+			DriveTrainTele.setTestMode(DriveTrainTele.TestModes.MODE_STOP, 0, 0);
+		}
 	}
 
 	/*
@@ -113,6 +172,28 @@ public class TeleOp7391 extends OpMode {
 	@Override
 	public void stop() {
 
+	}
+
+	double scaleInput(double dVal) {
+		double[] scaleArray = {0.0, 0.05, 0.09, 0.10, 0.12, 0.15, 0.18, 0.24,
+				0.30, 0.36, 0.43, 0.50, 0.60, 0.72, 0.85, 1.00, 1.00};
+
+		// get the corresponding index for the scaleInput array.
+		int index = (int) (dVal * 16.0);
+		if (index < 0) {
+			index = -index;
+		} else if (index > 16) {
+			index = 16;
+		}
+
+		double dScale = 0.0;
+		if (dVal < 0) {
+			dScale = -scaleArray[index];
+		} else {
+			dScale = scaleArray[index];
+		}
+
+		return dScale;
 	}
 
 }
