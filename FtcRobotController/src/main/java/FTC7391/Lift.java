@@ -51,12 +51,12 @@ public class Lift {
         liftHook = hardwareMap.dcMotor.get("motor_hook");
         liftAngle = hardwareMap.dcMotor.get("motor_angle");
 
+        runUsingEncoders();
+
         originalTicksHigh = liftHigh.getCurrentPosition();
         originalTicksLow = liftLow.getCurrentPosition();
         originalTicksHook = liftHook.getCurrentPosition();
         originalTicksAngle = liftAngle.getCurrentPosition();
-
-        runUsingEncoders();
     }
 
     protected static void resetEncoders(){
@@ -140,6 +140,7 @@ public class Lift {
         MODE_MOVE_ANGLE,
         MODE_MOVE_BOTH,
         MODE_MOVE_HOOK,
+        MODE_LIFT_STAGE1,
         MODE_STOP,
     }
 
@@ -161,6 +162,17 @@ public class Lift {
                 break;
             case MODE_MOVE_HOOK:
                 liftHook.setPower(1*power);
+                break;
+            case MODE_LIFT_STAGE1:
+                while(originalTicksHigh>-5899){
+                    liftHigh.setPower(1*power);
+                }
+                while(originalTicksLow>-5906){
+                    liftLow.setPower(1*power);
+                }
+                while(originalTicksAngle>-10591){
+                    liftAngle.setPower(1*power);
+                }
                 break;
             case MODE_STOP:
                 Lift.setPowerOfMotors(0,0);
