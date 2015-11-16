@@ -14,11 +14,16 @@ public class DriveTrainAuto extends DriveTrain{
     private static int backLeftTargetTick = 0;
     private static int[] cummulativeError = {0,0,0,0};
 
+    public static void init (HardwareMap hardwareMap) {
+        DriveTrain.init(hardwareMap);
+        runUsingEncoders();
+    }
+
     public static String getPosition(){
         return "Current: " + motorFrontRight.getCurrentPosition() + " Target: " + motorFrontRight.getTargetPosition() + " Current: " + motorFrontLeft.getCurrentPosition();
     }
 
-    //Move Inches. Calculates the target tick
+    //Move Inches. Both parameters positive to move forward. Both negative to move backward.
     public static void moveInches(int distance, double power) {
 
         setPowerOfMotors(power, power, power, power);
@@ -55,6 +60,7 @@ public class DriveTrainAuto extends DriveTrain{
         else return false;
     }
 
+    //Always positive power.  Positive degrees is counterclockwise.
     public static void rotateDegrees(double degrees, double power) {
         int ticks = (int) (degrees * TICKS_PER_DEGREE);
         if (degrees > 0) {

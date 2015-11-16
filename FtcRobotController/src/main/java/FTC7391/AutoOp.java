@@ -14,25 +14,29 @@ public class AutoOp extends AutoOpBase
     public void init()
     {
         super.init();
-        currentState = new MoveForwardState(24, 0.5);
+        currentState = null;
+        step = 0;
     }
 
     @Override
     public void loop(){
-        if (!currentState.update()) return;
+        if (currentState != null && !currentState.update()) return;
         step++;
         switch(step) {
+            case 1:
+                currentState = new MoveState(24, 0.5);
+                break;
             case 2:
                 currentState = new RotateState(45 * isRed, 0.5);
                 break;
             case 3:
-                currentState = new MoveForwardState(48, 0.5);
+                currentState = new MoveState(48, 0.5);
                 break;
             case 4:
                 currentState = new RotateState(45 * isRed, 0.5);
                 break;
             case 5:
-                currentState = new MoveForwardState(24, 0.5);
+                currentState = new MoveState(24, 0.5);
                 break;
             case 6:
                 currentState = new StopState();
@@ -47,32 +51,4 @@ public class AutoOp extends AutoOpBase
         currentState = new StopState();
     }
 
-    private class MoveForwardState extends State {
-
-        public MoveForwardState(int inches, double power){
-            DriveTrainAuto.moveInches(inches,  power);
-        }
-
-    }
-
-    private class RotateState extends State {
-
-        public RotateState(int degrees, double power){
-            DriveTrainAuto.rotateDegrees(degrees, power);
-        }
-
-    }
-
-    private class StopState extends State {
-
-        public StopState(){
-            DriveTrainAuto.moveInches(0,0);
-        }
-
-        @Override
-        public boolean update(){
-            return false;
-        }
-
-    }
 }

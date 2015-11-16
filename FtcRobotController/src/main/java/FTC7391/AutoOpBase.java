@@ -36,4 +36,51 @@ public abstract class AutoOpBase extends OpMode {
 
     }
 
+    protected class MoveState extends State {
+
+        public MoveState(int inches, double power){
+            DriveTrainAuto.moveInches(inches,  power);
+        }
+
+    }
+
+    protected class WaitState extends State {
+
+        private int counter = 0;
+        private int waitTime;
+
+        public WaitState(int seconds){
+            DriveTrainAuto.moveInches(0,0);
+            waitTime = (int)(seconds * 40);
+        }
+
+        @Override
+        public boolean update(){
+            counter++;
+            return (counter == waitTime || gamepad1.a);
+        }
+
+    }
+
+    protected class RotateState extends State {
+
+        public RotateState(int degrees, double power){
+            DriveTrainAuto.rotateDegrees(degrees, power);
+        }
+
+    }
+
+    protected class StopState extends State {
+
+        public StopState(){
+            DriveTrainAuto.moveInches(0,0);
+        }
+
+        @Override
+        public boolean update(){
+            return false;
+        }
+
+    }
+
 }

@@ -12,6 +12,10 @@
         <Motor name="motor_front_right" port="1" />
         <Motor name="motor_back_right" port="2" />
     </MotorController>
+    <ServoController name="Servo Controller " serialNumber="AI02RMWJ">
+        <Servo name="zipline" port="1" />
+        <Servo name="stick" port="6" />
+    </ServoController>
     <DeviceInterfaceModule name="Device Interface Module" serialNumber="AL00VF3K">
         <OpticalDistanceSensor name="optical_distance" port="7" />
     </DeviceInterfaceModule>

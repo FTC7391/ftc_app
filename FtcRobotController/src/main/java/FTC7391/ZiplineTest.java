@@ -38,17 +38,18 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
  * <p>
  * Enables control of the robot via the gamepad
  */
-public class StickTest extends OpMode {
+public class ZiplineTest extends OpMode {
 
-    private Stick stick;
+    private Zipline zipline;
 
-    private static final String TAG = Stick.class.getSimpleName();
+    private static final String TAG = Zipline.class.getSimpleName();
 
     @Override
     public void init() {
-        stick = new Stick();
+        zipline = new Zipline(hardwareMap);
 
     }
+
 
     @Override
     public void loop() {
@@ -56,17 +57,18 @@ public class StickTest extends OpMode {
         telemetry.addData(TAG, "OpMode Started");
 
 
+
         if (gamepad1.a) {
 
-            stick.setRetractedPosition();
+            zipline.setRetractedPosition();
         }
         if (gamepad1.b) {
 
-            stick.setDrivePosition();
+            zipline.setDrivePosition();
         }
         if (gamepad1.y) {
 
-            stick.setDeployedPosition();
+            zipline.setDeployedPosition();
         }
 
     }
@@ -75,7 +77,5 @@ public class StickTest extends OpMode {
     public void stop() {
 
     }
-
-
 
 }
