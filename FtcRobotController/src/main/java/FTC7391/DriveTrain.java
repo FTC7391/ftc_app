@@ -19,9 +19,10 @@ public class DriveTrain {
     protected static final double AXLE_LENGTH = 15;
     protected static final double WHEEL_DIAMETER = 4.0;
     protected static final int TICKS_PER_REVOLUTION = 1120;
+    protected static final int GEAR_RATIO = 2;
     protected static final int DEGREES_PER_REVOLUTION = 360;
-    protected static final double TICKS_PER_INCH = (TICKS_PER_REVOLUTION / (Math.PI * WHEEL_DIAMETER));
-    protected static final double TICKS_PER_DEGREE = ((TICKS_PER_INCH * Math.PI * AXLE_LENGTH) / DEGREES_PER_REVOLUTION);
+    protected static final double TICKS_PER_INCH = 43.0; //TICKS_PER_REVOLUTION / (Math.PI * WHEEL_DIAMETER * GEAR_RATIO) = 45.1;
+    protected static final double TICKS_PER_DEGREE = 2.6*((TICKS_PER_INCH * Math.PI * AXLE_LENGTH) / DEGREES_PER_REVOLUTION);
 
     //init
     public static void init (HardwareMap hardwareMap) {

@@ -14,7 +14,16 @@ public abstract class AutoOpBase extends OpMode {
     public void init(){
         telemetry.addData(TAG, "AutoOp Init");
         DriveTrainAuto.init(hardwareMap);
-        step = 1;
+        showTelemetryDrivetrain();
+        //        try {
+//            Thread.sleep(200);
+//        }
+//        catch {
+//
+//        }
+        showTelemetryDrivetrain();
+        currentState = null;
+        step = 0;
         //initialize current state
 
     }
@@ -30,7 +39,7 @@ public abstract class AutoOpBase extends OpMode {
         }
 
         public boolean update(){
-            telemetry.addData(TAG, DriveTrainAuto.getPosition());
+            showTelemetryDrivetrain();
             return DriveTrainAuto.isDone();
         }
 
@@ -51,6 +60,7 @@ public abstract class AutoOpBase extends OpMode {
 
         public WaitState(int seconds){
             DriveTrainAuto.moveInches(0,0);
+            showTelemetryDrivetrain();
             waitTime = (int)(seconds * 40);
         }
 
@@ -81,6 +91,14 @@ public abstract class AutoOpBase extends OpMode {
             return false;
         }
 
+    }
+
+
+    private void showTelemetryDrivetrain() {
+        telemetry.addData("DriveTrain FrontRight", DriveTrainAuto.getPosition(DriveTrain.TestModes.MODE_MOVE_FRONT_RIGHT));
+        telemetry.addData("DriveTrain FrontLeft ", DriveTrainAuto.getPosition(DriveTrain.TestModes.MODE_MOVE_FRONT_LEFT));
+        telemetry.addData("DriveTrain BackRight ", DriveTrainAuto.getPosition(DriveTrain.TestModes.MODE_MOVE_BACK_RIGHT));
+        telemetry.addData("DriveTrain BackLeft  ", DriveTrainAuto.getPosition(DriveTrain.TestModes.MODE_MOVE_BACK_LEFT));
     }
 
 }
