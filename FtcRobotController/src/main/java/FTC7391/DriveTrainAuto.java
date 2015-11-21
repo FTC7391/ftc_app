@@ -13,22 +13,45 @@ public class DriveTrainAuto extends DriveTrain{
     private static int backRightTargetTick = 0;
     private static int backLeftTargetTick = 0;
     private static int[] cummulativeError = {0,0,0,0};
+    private static int ticks = 0;
+    private static boolean isRotating = false;
 
     public static void init (HardwareMap hardwareMap) {
         DriveTrain.init(hardwareMap);
         runUsingEncoders();
     }
 
-    public static String getPosition(){
-        return "Current: " + motorFrontRight.getCurrentPosition() + " Target: " + motorFrontRight.getTargetPosition() + " Current: " + motorFrontLeft.getCurrentPosition();
+    public static String getPosition(TestModes mode){
+
+        switch (mode) {
+            case MODE_MOVE_FRONT_RIGHT:
+                return "Current: "+ motorFrontRight.getCurrentPosition() + " Target: " + motorFrontRight.getTargetPosition();
+            case MODE_MOVE_FRONT_LEFT:
+                return "Current: "+ motorFrontLeft.getCurrentPosition() + " Target: " + motorFrontLeft.getTargetPosition();
+            case MODE_MOVE_BACK_RIGHT:
+                return "Current: "+ motorBackRight.getCurrentPosition() + " Target: " + motorBackRight.getTargetPosition();
+            case MODE_MOVE_BACK_LEFT:
+                return "Current: "+ motorBackLeft.getCurrentPosition() + " Target: " + motorBackLeft.getTargetPosition();
+            default:
+                return "Invalid DriveTrain getPosition() mode = " + mode;
+        }
     }
 
-    //Move Inches. Both parameters positive to move forward. Both negative to move backward.
+    //Move Inches.
+    // distance: Set distance negative to move backwards
+    // power: Magnitude only so typically pass in a positive value.
     public static void moveInches(int distance, double power) {
 
-        setPowerOfMotors(power, power, power, power);
-        int ticks = (int) (distance * TICKS_PER_INCH);
+        isRotating = false;
+        power = Math.abs(power);
+        ticks = (int) (distance * TICKS_PER_INCH);
         setMotorTargetPosition(ticks, ticks, ticks, ticks);
+        if (distance > 0)
+            setPowerOfMotors(power, power, power, power);
+        else if (distance < 0)
+            setPowerOfMotors(-power, -power, -power, -power);
+        else
+            setPowerOfMotors(0.0, 0.0, 0.0, 0.0);
 
     }
 
@@ -51,26 +74,25 @@ public class DriveTrainAuto extends DriveTrain{
 
     }
 
-    public static boolean isDone() {
-
-        if(motorFrontRight.getPower() > 0 && motorFrontRight.getCurrentPosition() >= motorFrontRight.getTargetPosition())
-            return true;
-        else if(motorFrontRight.getPower() < 0 && motorFrontRight.getCurrentPosition() <= motorFrontRight.getTargetPosition())
-            return true;
-        else return false;
-    }
-
     //Always positive power.  Positive degrees is counterclockwise.
     public static void rotateDegrees(double degrees, double power) {
-        int ticks = (int) (degrees * TICKS_PER_DEGREE);
+        isRotating = true;
+
+        //With no fudge factor,
+        // for degrees> 0, get 235deg when want 360deg
+        // for degress< 0, get -190deg when want -360deg
+        if (ticks > 0)
+            ticks = (int) (degrees * TICKS_PER_DEGREE * 1.9);
+        else
+            ticks = (int) (degrees * TICKS_PER_DEGREE * 1.65);
+        setMotorTargetPosition(ticks, -ticks, ticks, -ticks);
+
         if (degrees > 0) {
             //Rotate to the left,frontRight & backRight postive
             setPowerOfMotors(power, -power, power, -power);
-            setMotorTargetPosition(ticks, -ticks, ticks, -ticks);
         } else if (degrees < 0) {
             //Rotate to the right,frontLeft & backLeft postive
             setPowerOfMotors(-power, power, -power, power);
-            setMotorTargetPosition(-ticks, ticks, -ticks, ticks);
         } else {
             setPowerOfMotors(0.0, 0.0, 0.0, 0.0);
         }
@@ -82,6 +104,22 @@ public class DriveTrainAuto extends DriveTrain{
         motorFrontLeft.setTargetPosition(motorFrontLeft.getCurrentPosition() + frontLeftPosition);
         motorBackRight.setTargetPosition(motorBackRight.getCurrentPosition() + backRightPosition);
         motorBackLeft.setTargetPosition(motorBackLeft.getCurrentPosition() + backLeftPosition);
+    }
+
+    public static boolean isDone() {
+        if (isRotating &&
+                ( (ticks > 0 && motorBackLeft.getCurrentPosition() <= motorBackLeft.getTargetPosition()) ||
+                        (ticks < 0 && motorBackRight.getCurrentPosition() <= motorBackRight.getTargetPosition()))   ) {
+            setPowerOfMotors(0.0, 0.0, 0.0, 0.0);
+            return true;
+        }
+        else if (!isRotating &&
+                ( (ticks > 0 && motorFrontRight.getCurrentPosition() >= motorFrontRight.getTargetPosition()) ||
+                        (ticks < 0 && motorFrontRight.getCurrentPosition() <= motorFrontRight.getTargetPosition()))   ){
+            setPowerOfMotors(0.0, 0.0, 0.0, 0.0);
+            return true;
+        }
+        else return false;
     }
 
     private static void fixStability(){
