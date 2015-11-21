@@ -42,6 +42,9 @@ public class DriveTrainTele extends DriveTrain{
             case MODE_MOVE_LEFT:
                 moveLateral(-1 * power);    //negative power = left
                 break;
+            case MODE_MOVE_ARC:
+                moveArc(power, lateralPower);
+                break;
             case MODE_MOVE_DIAGONAL_RIGHT:
                 moveDiagonal(0); break;
             case MODE_MOVE_DIAGONAL_22:
@@ -79,12 +82,11 @@ public class DriveTrainTele extends DriveTrain{
     }
     public static void moveArc(double axialPower, double rotatePower) {
         if (rotatePower > 0) {
-            setPowerOfMotors(rotatePower, axialPower, rotatePower, axialPower);
+            setPowerOfMotors(axialPower, rotatePower, axialPower, rotatePower);
         }
         else {
             setPowerOfMotors(axialPower, rotatePower, axialPower, rotatePower);
         }
-
     }
 
     public static void rotate(double power) {
