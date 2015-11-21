@@ -46,7 +46,7 @@ public class StickTest extends OpMode {
 
     @Override
     public void init() {
-        stick = new Stick();
+        stick = new Stick(hardwareMap);
 
     }
 
