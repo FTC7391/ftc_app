@@ -19,7 +19,7 @@ public abstract class AutoOpBase extends OpMode {
         showTelemetryDrivetrain();
         currentState = null;
         step = 0;
-        stick = new Stick();
+        stick = new Stick(hardwareMap);
         stick.setRetractedPosition();
 
     }
