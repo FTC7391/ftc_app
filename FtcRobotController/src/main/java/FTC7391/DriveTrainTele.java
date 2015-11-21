@@ -20,15 +20,15 @@ public class DriveTrainTele extends DriveTrain{
         MODE_MOVE_DIAGONAL_FORWARD,
         MODE_ROTATE_RIGHT,
         MODE_ROTATE_LEFT,
+        MODE_MOVE_ARC,
         MODE_STOP,
     }
 
-    public static void init (HardwareMap hardwareMap) {
-        DriveTrain.init(hardwareMap);
-        runWithoutEncoders();
+    public static String getPosition(){
+        return "Current: " + motorFrontRight.getCurrentPosition() + " Target: " + motorFrontRight.getTargetPosition() + " Current: " + motorFrontLeft.getCurrentPosition();
     }
 
-    public static void setTestMode(TestModes mode, double power) {
+    public static void setTestMode(TestModes mode, double power, double lateralPower) {
         switch (mode) {
             case MODE_MOVE_FORWARD:
                 moveAxial(1 * power);
@@ -41,6 +41,9 @@ public class DriveTrainTele extends DriveTrain{
                 break;
             case MODE_MOVE_LEFT:
                 moveLateral(-1 * power);    //negative power = left
+                break;
+            case MODE_MOVE_ARC:
+                moveArc(power, lateralPower);
                 break;
             case MODE_MOVE_DIAGONAL_RIGHT:
                 moveDiagonal(0); break;
@@ -76,6 +79,14 @@ public class DriveTrainTele extends DriveTrain{
         double frontLeft = (Math.cos(angle) + Math.sin(angle)) / (Math.sqrt(2));
         double frontRight = (Math.sin(angle) - Math.cos(angle)) / (Math.sqrt(2));
         setPowerOfMotors(frontRight, frontLeft, frontLeft, frontRight);
+    }
+    public static void moveArc(double axialPower, double rotatePower) {
+        if (rotatePower > 0) {
+            setPowerOfMotors(axialPower, rotatePower, axialPower, rotatePower);
+        }
+        else {
+            setPowerOfMotors(axialPower, rotatePower, axialPower, rotatePower);
+        }
     }
 
     public static void rotate(double power) {

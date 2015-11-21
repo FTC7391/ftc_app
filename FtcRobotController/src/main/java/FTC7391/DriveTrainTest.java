@@ -86,51 +86,54 @@ public class DriveTrainTest extends OpMode {
             DriveTrain.setTestMode(DriveTrain.TestModes.MODE_MOVE_FRONT_RIGHT, power);
         }
 
-        if (gamepad1.x) {
+        else if (gamepad1.x) {
             telemetry.addData(TAG, "X Button Pressed.");
             telemetry.addData(TAG, "MODE_MOVE_FRONT_LEFT Power:" + String.format("%.2f", power));
             DriveTrain.setTestMode(DriveTrain.TestModes.MODE_MOVE_FRONT_LEFT, power);
         }
 
-        if (gamepad1.b) {
+        else if (gamepad1.b) {
             telemetry.addData(TAG, "B Button Pressed.");
             telemetry.addData(TAG, "MODE_MOVE_BACK_RIGHT Power:" + String.format("%.2f", power));
             DriveTrain.setTestMode(DriveTrain.TestModes.MODE_MOVE_BACK_RIGHT, power);
         }
 
-        if (gamepad1.a) {
+        else if (gamepad1.a) {
             telemetry.addData(TAG, "A Button Pressed.");
             telemetry.addData(TAG, "MODE_MOVE_BACK_LEFT Power:" + String.format("%.2f", power));
             DriveTrain.setTestMode(DriveTrain.TestModes.MODE_MOVE_BACK_LEFT, power);
         }
 
 
-        if (gamepad1.dpad_up) {
+        else if (gamepad1.dpad_up) {
             telemetry.addData(TAG, "Dpad UP");
             telemetry.addData(TAG, "MODE_MOVE_FORWARD Power:" + String.format("%.2f", power));
-            DriveTrainTele.setTestMode(DriveTrainTele.TestModes.MODE_MOVE_FORWARD, power);
+            DriveTrainTele.setTestMode(DriveTrainTele.TestModes.MODE_MOVE_FORWARD, power,0);
         }
-        if (gamepad1.dpad_down) {
+        else if (gamepad1.dpad_down) {
             telemetry.addData(TAG, "Dpad DOWN");
             telemetry.addData(TAG, "MODE_MOVE_BACKWARD Power:" + String.format("%.2f", power));
-            DriveTrainTele.setTestMode(DriveTrainTele.TestModes.MODE_MOVE_BACKWARD, power);
+            DriveTrainTele.setTestMode(DriveTrainTele.TestModes.MODE_MOVE_BACKWARD, power,0);
         }
-        if (gamepad1.dpad_right) {
+        else if (gamepad1.dpad_right) {
             telemetry.addData(TAG, "Dpad DOWN");
             telemetry.addData(TAG, "MODE_MOVE_BACKWARD Power:" + String.format("%.2f", power));
-            DriveTrainTele.setTestMode(DriveTrainTele.TestModes.MODE_MOVE_RIGHT, power);
+            DriveTrainTele.setTestMode(DriveTrainTele.TestModes.MODE_MOVE_RIGHT, power,0);
         }
-        if (gamepad1.dpad_left) {
-            DriveTrainTele.setTestMode(DriveTrainTele.TestModes.MODE_MOVE_LEFT, power);
-        }
-
-        if (gamepad1.right_bumper) {
-            DriveTrainTele.setTestMode(DriveTrainTele.TestModes.MODE_ROTATE_RIGHT, power);
+        else if (gamepad1.dpad_left) {
+            DriveTrainTele.setTestMode(DriveTrainTele.TestModes.MODE_MOVE_LEFT, power,0);
         }
 
+        else if (gamepad1.right_bumper) {
+            DriveTrainTele.setTestMode(DriveTrainTele.TestModes.MODE_ROTATE_RIGHT, power,0);
+        }
 
-        if (gamepad1.left_bumper) {
-            DriveTrainTele.setTestMode(DriveTrainTele.TestModes.MODE_ROTATE_LEFT, power);
+
+        else if (gamepad1.left_bumper) {
+            DriveTrainTele.setTestMode(DriveTrainTele.TestModes.MODE_ROTATE_LEFT, power,0);
+        }
+        else {
+            stop();
         }
 
 //		if (!gamepad1.y && !gamepad1.x && !gamepad1.b && !gamepad1.a) {
