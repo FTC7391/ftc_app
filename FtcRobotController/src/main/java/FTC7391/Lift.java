@@ -80,6 +80,7 @@ public class Lift {
     public static int getTicksLiftHigh(){return liftHigh.getCurrentPosition();}
     public static int getTicksLiftLow(){return liftLow.getCurrentPosition();}
     public static int getTicksLiftAngle(){return liftAngle.getCurrentPosition();}
+    public static int getTicksLiftHook(){return liftHook.getCurrentPosition();}
 
 //    public static int getOriginalTicksHigh(){return originalTicksHigh;}
 //    public static int getOriginalTicksLow(){return originalTicksLow;}
