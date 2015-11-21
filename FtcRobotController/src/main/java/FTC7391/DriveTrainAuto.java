@@ -37,9 +37,11 @@ public class DriveTrainAuto extends DriveTrain{
         }
     }
 
-    //Move Inches.
-    // distance: Set distance negative to move backwards
-    // power: Magnitude only so typically pass in a positive value.
+    /**Move Inches.
+     *
+     * @param distance    Set distance negative to move backwards
+     * @param power       Magnitude only so typically pass in a positive value.
+     */
     public static void moveInches(int distance, double power) {
 
         isRotating = false;
@@ -65,7 +67,11 @@ public class DriveTrainAuto extends DriveTrain{
         }
     }
 
-    //angle is angle counterclockwise from right
+    /**
+     *
+     * @param angle          angle counterclockwise from right
+     * @param distance       distance diagonally to move
+     */
     public static void moveDiagonalInches(double angle, int distance){
         double frontLeft = (Math.cos(angle) + Math.sin(angle));
         double frontRight = (Math.sin(angle) - Math.cos(angle));
@@ -74,7 +80,11 @@ public class DriveTrainAuto extends DriveTrain{
 
     }
 
-    //Always positive power.  Positive degrees is counterclockwise.
+    /**
+     *
+     * @param degrees        positive is counterclockwise
+     * @param power          always positive
+     */
     public static void rotateDegrees(double degrees, double power) {
         isRotating = true;
 
