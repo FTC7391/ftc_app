@@ -10,6 +10,7 @@ public abstract class AutoOpBase extends OpMode {
     private static final String TAG = AutoOpBase.class.getSimpleName();
     protected State currentState;
     protected int step;
+    protected Stick stick;
 
     public void init(){
         telemetry.addData(TAG, "AutoOp Init");
@@ -18,13 +19,17 @@ public abstract class AutoOpBase extends OpMode {
         showTelemetryDrivetrain();
         currentState = null;
         step = 0;
-        //initialize current state
+        stick = new Stick();
+        stick.setRetractedPosition();
 
     }
 
     public abstract void loop();
 
-    public abstract void stop();
+    public void stop(){
+        telemetry.addData(TAG, "Test Stopped");
+        currentState = new StopState();
+    }
 
     protected class State{
 
@@ -42,7 +47,9 @@ public abstract class AutoOpBase extends OpMode {
     protected class MoveState extends State {
 
         public MoveState(int inches, double power){
+
             DriveTrainAuto.moveInches(inches,  power);
+            stick.setDrivePosition();
         }
 
     }
@@ -70,6 +77,7 @@ public abstract class AutoOpBase extends OpMode {
 
         public RotateState(int degrees, double power){
             DriveTrainAuto.rotateDegrees(degrees, power);
+            stick.setDrivePosition();
         }
 
     }
@@ -77,12 +85,43 @@ public abstract class AutoOpBase extends OpMode {
     protected class StopState extends State {
 
         public StopState(){
+
             DriveTrainAuto.moveInches(0,0);
         }
 
         @Override
         public boolean update(){
             return false;
+        }
+
+    }
+
+    protected class StickState extends State {
+
+        private int counter = 0;
+        private int waitTime;
+
+        public StickState(){
+
+            DriveTrainAuto.moveInches(0,0);
+            stick.setDeployedPosition();
+            waitTime = 40;
+        }
+
+        @Override
+        public boolean update(){
+            counter++;
+            return (counter == waitTime || gamepad1.a);
+        }
+
+    }
+
+    protected class StickMoveState extends State {
+
+        public StickMoveState(int inches, double power){
+
+            DriveTrainAuto.moveInches(inches, power);
+
         }
 
     }
