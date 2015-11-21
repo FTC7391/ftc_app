@@ -15,12 +15,6 @@ public abstract class AutoOpBase extends OpMode {
         telemetry.addData(TAG, "AutoOp Init");
         DriveTrainAuto.init(hardwareMap);
         showTelemetryDrivetrain();
-        //        try {
-//            Thread.sleep(200);
-//        }
-//        catch {
-//
-//        }
         showTelemetryDrivetrain();
         currentState = null;
         step = 0;

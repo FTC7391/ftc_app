@@ -77,8 +77,16 @@ public class DriveTrainAuto extends DriveTrain{
     //Always positive power.  Positive degrees is counterclockwise.
     public static void rotateDegrees(double degrees, double power) {
         isRotating = true;
-        ticks = (int) (degrees * TICKS_PER_DEGREE);
+
+        //With no fudge factor,
+        // for degrees> 0, get 235deg when want 360deg
+        // for degress< 0, get -190deg when want -360deg
+        if (ticks > 0)
+            ticks = (int) (degrees * TICKS_PER_DEGREE * 1.9);
+        else
+            ticks = (int) (degrees * TICKS_PER_DEGREE * 1.65);
         setMotorTargetPosition(ticks, -ticks, ticks, -ticks);
+
         if (degrees > 0) {
             //Rotate to the left,frontRight & backRight postive
             setPowerOfMotors(power, -power, power, -power);
@@ -99,14 +107,15 @@ public class DriveTrainAuto extends DriveTrain{
     }
 
     public static boolean isDone() {
-        if( isRotating &&
+        if (isRotating &&
                 ( (ticks > 0 && motorBackLeft.getCurrentPosition() <= motorBackLeft.getTargetPosition()) ||
-                  (ticks < 0 && motorBackRight.getCurrentPosition() <= motorBackRight.getTargetPosition()))   ) {
+                        (ticks < 0 && motorBackRight.getCurrentPosition() <= motorBackRight.getTargetPosition()))   ) {
             setPowerOfMotors(0.0, 0.0, 0.0, 0.0);
             return true;
         }
-        else if (!isRotating && ((ticks > 0 && motorFrontRight.getCurrentPosition() >= motorFrontRight.getTargetPosition()) ||
-                (ticks < 0 && motorFrontRight.getCurrentPosition() <= motorFrontRight.getTargetPosition()))   ){
+        else if (!isRotating &&
+                ( (ticks > 0 && motorFrontRight.getCurrentPosition() >= motorFrontRight.getTargetPosition()) ||
+                        (ticks < 0 && motorFrontRight.getCurrentPosition() <= motorFrontRight.getTargetPosition()))   ){
             setPowerOfMotors(0.0, 0.0, 0.0, 0.0);
             return true;
         }
