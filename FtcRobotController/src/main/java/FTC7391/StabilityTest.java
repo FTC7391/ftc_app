@@ -142,11 +142,11 @@ public class StabilityTest extends OpMode {
 
 		if (gamepad1.dpad_right) {
 			//DriveTrain.testRotateDegrees(positiveNumber);
-			DriveTrainTele.setTestMode(DriveTrainTele.TestModes.MODE_ROTATE_RIGHT, 15);
+			DriveTrainTele.setTestMode(DriveTrainTele.TestModes.MODE_ROTATE_RIGHT, 15,0);
 		}
 		if (gamepad1.dpad_left) {
 			//DriveTrain.testRotateDegrees(negativeNumber);
-			DriveTrainTele.setTestMode(DriveTrainTele.TestModes.MODE_ROTATE_LEFT, 15);
+			DriveTrainTele.setTestMode(DriveTrainTele.TestModes.MODE_ROTATE_LEFT, 15,0);
 		}
 
 		// update the position of the arm.
@@ -154,29 +154,29 @@ public class StabilityTest extends OpMode {
 
 			telemetry.addData(TAG, "A Button Pressed.");
 			//DriveTrain.testMoveLongitudinal(negativeNumber);
-			DriveTrainTele.setTestMode(DriveTrainTele.TestModes.MODE_MOVE_DIAGONAL_RIGHT, .25);
+			DriveTrainTele.setTestMode(DriveTrainTele.TestModes.MODE_MOVE_DIAGONAL_RIGHT, .25,0);
 
 		}
 
 		if (gamepad1.y) {
 			telemetry.addData(TAG, "Y Button Pressed.");
-			DriveTrainTele.setTestMode(DriveTrainTele.TestModes.MODE_MOVE_DIAGONAL_22, .25);
+			DriveTrainTele.setTestMode(DriveTrainTele.TestModes.MODE_MOVE_DIAGONAL_22, .25,0);
 		}
 
 		// update the position of the claw
 		if (gamepad1.x) {
 			telemetry.addData(TAG, "X Button Pressed.");
 			//DriveTrain.testMoveLateral(negativeNumber);
-			DriveTrainTele.setTestMode(DriveTrainTele.TestModes.MODE_MOVE_DIAGONAL_45, .25);
+			DriveTrainTele.setTestMode(DriveTrainTele.TestModes.MODE_MOVE_DIAGONAL_45, .25,0);
 		}
 
 		if (gamepad1.b) {
 			telemetry.addData(TAG, "B Button Pressed.");
 			//DriveTrain.testMoveLateral(positiveNumber);
-			DriveTrainTele.setTestMode(DriveTrainTele.TestModes.MODE_MOVE_DIAGONAL_67, .25);
+			DriveTrainTele.setTestMode(DriveTrainTele.TestModes.MODE_MOVE_DIAGONAL_67, .25,0);
 		}
 		if (!gamepad1.a && !gamepad1.b && !gamepad1.x && !gamepad1.y && !gamepad1.a) {
-			DriveTrainTele.setTestMode(DriveTrainTele.TestModes.MODE_STOP,0.0);
+			DriveTrainTele.setTestMode(DriveTrainTele.TestModes.MODE_STOP,0.0,0);
 		}
 
         // clip the position values so that they never exceed their allowed range.
