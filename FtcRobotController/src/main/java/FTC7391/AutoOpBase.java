@@ -14,7 +14,10 @@ public abstract class AutoOpBase extends OpMode {
     public void init(){
         telemetry.addData(TAG, "AutoOp Init");
         DriveTrainAuto.init(hardwareMap);
-        step = 1;
+        showTelemetryDrivetrain();
+        showTelemetryDrivetrain();
+        currentState = null;
+        step = 0;
         //initialize current state
 
     }
@@ -30,10 +33,66 @@ public abstract class AutoOpBase extends OpMode {
         }
 
         public boolean update(){
-            telemetry.addData(TAG, DriveTrainAuto.getPosition());
+            showTelemetryDrivetrain();
             return DriveTrainAuto.isDone();
         }
 
+    }
+
+    protected class MoveState extends State {
+
+        public MoveState(int inches, double power){
+            DriveTrainAuto.moveInches(inches,  power);
+        }
+
+    }
+
+    protected class WaitState extends State {
+
+        private int counter = 0;
+        private int waitTime;
+
+        public WaitState(int seconds){
+            DriveTrainAuto.moveInches(0,0);
+            showTelemetryDrivetrain();
+            waitTime = (int)(seconds * 40);
+        }
+
+        @Override
+        public boolean update(){
+            counter++;
+            return (counter == waitTime || gamepad1.a);
+        }
+
+    }
+
+    protected class RotateState extends State {
+
+        public RotateState(int degrees, double power){
+            DriveTrainAuto.rotateDegrees(degrees, power);
+        }
+
+    }
+
+    protected class StopState extends State {
+
+        public StopState(){
+            DriveTrainAuto.moveInches(0,0);
+        }
+
+        @Override
+        public boolean update(){
+            return false;
+        }
+
+    }
+
+
+    private void showTelemetryDrivetrain() {
+        telemetry.addData("DriveTrain FrontRight", DriveTrainAuto.getPosition(DriveTrain.TestModes.MODE_MOVE_FRONT_RIGHT));
+        telemetry.addData("DriveTrain FrontLeft ", DriveTrainAuto.getPosition(DriveTrain.TestModes.MODE_MOVE_FRONT_LEFT));
+        telemetry.addData("DriveTrain BackRight ", DriveTrainAuto.getPosition(DriveTrain.TestModes.MODE_MOVE_BACK_RIGHT));
+        telemetry.addData("DriveTrain BackLeft  ", DriveTrainAuto.getPosition(DriveTrain.TestModes.MODE_MOVE_BACK_LEFT));
     }
 
 }

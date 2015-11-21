@@ -23,6 +23,11 @@ public class DriveTrainTele extends DriveTrain{
         MODE_STOP,
     }
 
+    public static void init (HardwareMap hardwareMap) {
+        DriveTrain.init(hardwareMap);
+        runWithoutEncoders();
+    }
+
     public static void setTestMode(TestModes mode, double power) {
         switch (mode) {
             case MODE_MOVE_FORWARD:

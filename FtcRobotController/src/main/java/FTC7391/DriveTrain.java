@@ -19,8 +19,9 @@ public class DriveTrain {
     protected static final double AXLE_LENGTH = 15;
     protected static final double WHEEL_DIAMETER = 4.0;
     protected static final int TICKS_PER_REVOLUTION = 1120;
+    protected static final double GEAR_RATIO = .5;
     protected static final int DEGREES_PER_REVOLUTION = 360;
-    protected static final double TICKS_PER_INCH = (TICKS_PER_REVOLUTION / (Math.PI * WHEEL_DIAMETER));
+    protected static final double TICKS_PER_INCH = .94 * (TICKS_PER_REVOLUTION / (Math.PI * WHEEL_DIAMETER * GEAR_RATIO));
     protected static final double TICKS_PER_DEGREE = ((TICKS_PER_INCH * Math.PI * AXLE_LENGTH) / DEGREES_PER_REVOLUTION);
 
     //init
@@ -36,24 +37,28 @@ public class DriveTrain {
         motorBackLeft.setDirection(DcMotor.Direction.REVERSE);
         motorFrontLeft.setDirection(DcMotor.Direction.REVERSE);
 
-        runUsingEncoders();
-
     }
 
     protected static void resetEncoders(){
-        motorFrontRight.setChannelMode(DcMotorController.RunMode.RESET_ENCODERS);
-        motorFrontLeft.setChannelMode(DcMotorController.RunMode.RESET_ENCODERS);
-        motorBackRight.setChannelMode(DcMotorController.RunMode.RESET_ENCODERS);
-        motorBackLeft.setChannelMode(DcMotorController.RunMode.RESET_ENCODERS);
-
+        motorFrontRight.setMode(DcMotorController.RunMode.RESET_ENCODERS);
+        motorFrontLeft.setMode(DcMotorController.RunMode.RESET_ENCODERS);
+        motorBackRight.setMode(DcMotorController.RunMode.RESET_ENCODERS);
+        motorBackLeft.setMode(DcMotorController.RunMode.RESET_ENCODERS);
     }
 
     protected static void runUsingEncoders(){
         resetEncoders();
-        motorFrontRight.setChannelMode(DcMotorController.RunMode.RUN_USING_ENCODERS);
-        motorFrontLeft.setChannelMode(DcMotorController.RunMode.RUN_USING_ENCODERS);
-        motorBackRight.setChannelMode(DcMotorController.RunMode.RUN_USING_ENCODERS);
-        motorBackLeft.setChannelMode(DcMotorController.RunMode.RUN_USING_ENCODERS);
+        motorFrontRight.setMode(DcMotorController.RunMode.RUN_USING_ENCODERS);
+        motorFrontLeft.setMode(DcMotorController.RunMode.RUN_USING_ENCODERS);
+        motorBackRight.setMode(DcMotorController.RunMode.RUN_USING_ENCODERS);
+        motorBackLeft.setMode(DcMotorController.RunMode.RUN_USING_ENCODERS);
+    }
+
+    protected static void runWithoutEncoders(){
+        motorFrontRight.setMode(DcMotorController.RunMode.RUN_WITHOUT_ENCODERS);
+        motorFrontLeft.setMode(DcMotorController.RunMode.RUN_WITHOUT_ENCODERS);
+        motorBackRight.setMode(DcMotorController.RunMode.RUN_WITHOUT_ENCODERS);
+        motorBackLeft.setMode(DcMotorController.RunMode.RUN_WITHOUT_ENCODERS);
     }
 
     protected static void setPowerOfMotors(double frontRightPower, double frontLeftPower, double backRightPower, double backLeftPower) {

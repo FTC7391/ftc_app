@@ -59,7 +59,7 @@ public class DriveTrainTest extends OpMode {
      */
     @Override
     public void init() {
-        DriveTrain.init(hardwareMap);
+        DriveTrainTele.init(hardwareMap);
     }
     /*
      * This method will be called repeatedly in a loop
