@@ -33,20 +33,8 @@ package FTC7391;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 
-/**
- * TeleOp Mode
- * <p>
- * Enables control of the robot via the gamepad
- */
+
 public class ZiplineTest extends OpMode {
-
-    private Zipline zipline;
-
-    private static final String TAG = Zipline.class.getSimpleName();
-
-    @Override
-    public void init() {
-        zipline = new Zipline(hardwareMap);
 
     }
 
