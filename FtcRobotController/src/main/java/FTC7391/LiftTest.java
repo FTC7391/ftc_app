@@ -162,7 +162,7 @@ public class LiftTest extends OpMode {
         if(gamepad1.dpad_up) {
             Lift.setTestMode(Lift.TestModes.MODE_MOVE_BOTH, powerLift);
         }
-        
+
 
 
         if(gamepad1.dpad_down){
