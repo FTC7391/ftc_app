@@ -40,13 +40,15 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
  */
 public class ZiplineTest extends OpMode {
 
-    private Zipline zipline;
+    private Zipline ziplineBlue;
+    private Zipline ziplineRed;
 
     private static final String TAG = Zipline.class.getSimpleName();
 
     @Override
     public void init() {
-        zipline = new Zipline(hardwareMap);
+        ziplineBlue = new Zipline(hardwareMap);
+        ziplineRed = new Zipline(hardwareMap);
 
     }
 
@@ -56,19 +58,29 @@ public class ZiplineTest extends OpMode {
 
         telemetry.addData(TAG, "OpMode Started");
 
+        boolean isRedSide = true;
+
+        if (gamepad1.x) {
+            isRedSide = !isRedSide;
+        }
 
 
         if (gamepad1.a) {
 
-            zipline.setRetractedPosition();
+            if(!isRedSide) ziplineBlue.setRetractedPosition();
+            if(isRedSide) ziplineRed.setRetractedPosition();
+
         }
         if (gamepad1.b) {
 
-            zipline.setDrivePosition();
+            if(!isRedSide) ziplineBlue.setDrivePosition();
+            if(isRedSide) ziplineRed.setDrivePosition();
         }
         if (gamepad1.y) {
 
-            zipline.setDeployedPosition();
+            if(!isRedSide) ziplineBlue.setDeployedPosition();
+            if(isRedSide) ziplineRed.setDeployedPosition();
+
         }
 
     }

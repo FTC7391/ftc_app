@@ -105,13 +105,13 @@ public abstract class AutoOpBase extends OpMode {
 
             DriveTrainAuto.moveInches(0,0);
             stick.setDeployedPosition();
-            waitTime = 40;
+            waitTime = 500;
         }
 
         @Override
         public boolean update(){
             counter++;
-            return (counter == waitTime || gamepad1.a);
+            return (counter == waitTime || gamepad1.b);
         }
 
     }
