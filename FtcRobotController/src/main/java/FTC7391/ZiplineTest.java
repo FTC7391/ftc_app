@@ -56,8 +56,6 @@ public class ZiplineTest extends OpMode {
 
         telemetry.addData(TAG, "OpMode Started");
 
-
-
         if (gamepad1.a) {
 
             zipline.setRetractedPosition();
