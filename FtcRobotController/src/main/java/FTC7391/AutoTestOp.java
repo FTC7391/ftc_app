@@ -12,6 +12,8 @@ public class AutoTestOp extends AutoOpBase
     public void init()
     {
         super.init();
+        FTC7391PrintWriter data1Writer = new FTC7391PrintWriter("Alliance" , "color");
+        data1Writer.print("red");
 
     }
 
