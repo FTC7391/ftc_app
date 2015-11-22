@@ -126,6 +126,14 @@ public abstract class AutoOpBase extends OpMode {
 
     }
 
+//    protected class LiftToStage1 extends State {
+//
+//        public LiftToStage1(int inches, double power){
+//
+//
+//        }
+//    }
+
 
     private void showTelemetryDrivetrain() {
         telemetry.addData("DriveTrain FrontRight", DriveTrainAuto.getPosition(DriveTrain.TestModes.MODE_MOVE_FRONT_RIGHT));

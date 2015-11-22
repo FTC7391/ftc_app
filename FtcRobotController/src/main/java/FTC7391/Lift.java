@@ -16,7 +16,8 @@ public class Lift {
     public static DcMotor liftAngle;
 
 
-    private static int driveModeTicks = 0; //to be added
+    private static int driveModeTicksHigh = 1575; //to be added
+    private static int driveModeTicksLow = -657;
 
 
     public static int originalTicksHigh = 0; //to be added
@@ -94,19 +95,9 @@ public class Lift {
 
     public void setDriveMode(){
 
-        if(currentTicks1 < driveModeTicks) {
-            while (currentTicks1 <= driveModeTicks) {
-                liftHigh.setPower(10);
-                currentTicks1 = liftHigh.getCurrentPosition();
-            }
+        if(liftHigh.getCurrentPosition() > 0){
+            
         }
-        else if(currentTicks1 > driveModeTicks) {
-            while(currentTicks1 >= driveModeTicks){
-                liftHigh.setPower(-10);
-                currentTicks1 = liftHigh.getCurrentPosition();
-            }
-        }
-        else{}
 
     }
 
@@ -163,17 +154,6 @@ public class Lift {
                 break;
             case MODE_MOVE_HOOK:
                 liftHook.setPower(1*power);
-                break;
-            case MODE_LIFT_STAGE1:
-                while(originalTicksHigh>-5899){
-                    liftHigh.setPower(1*power);
-                }
-                while(originalTicksLow>-5906){
-                    liftLow.setPower(1*power);
-                }
-                while(originalTicksAngle>-10591){
-                    liftAngle.setPower(1*power);
-                }
                 break;
             case MODE_STOP:
                 Lift.setPowerOfMotors(0,0);
