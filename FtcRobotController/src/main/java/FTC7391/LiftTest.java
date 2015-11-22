@@ -127,21 +127,43 @@ public class LiftTest extends OpMode {
 
         if (gamepad1.y) {
             //DriveTrain.testRotateDegrees(positiveNumber);
-            Lift.setTestMode(Lift.TestModes.MODE_MOVE_HIGH, powerLift);
+            Lift.setTestMode(Lift.TestModes.MODE_MOVE_HIGH, -powerLift);
         }
+        else{
+            Lift.liftHigh.setPower(0);
+        }
+
+
         if (gamepad1.b) {
             //DriveTrain.testRotateDegrees(negativeNumber);
             Lift.setTestMode(Lift.TestModes.MODE_MOVE_LOW, powerLift);
         }
-        if (gamepad1.a) {
-            Lift.setTestMode(Lift.TestModes.MODE_MOVE_ANGLE, -powerLift);
+        else{
+            Lift.liftLow.setPower(0);
         }
+
+
+        if (gamepad1.a) {
+            Lift.setTestMode(Lift.TestModes.MODE_MOVE_ANGLE, powerLift);
+        }
+        else{
+            Lift.liftAngle.setPower(0);
+        }
+
+
         if (gamepad1.x) {
             Lift.setTestMode(Lift.TestModes.MODE_MOVE_HOOK, powerLift/3);
         }
+        else{
+            Lift.liftHook.setPower(0);
+        }
+
+
         if(gamepad1.dpad_up) {
             Lift.setTestMode(Lift.TestModes.MODE_MOVE_BOTH, powerLift);
         }
+
+
 
         if(gamepad1.dpad_down){
 
@@ -153,6 +175,7 @@ public class LiftTest extends OpMode {
         telemetry.addData("High", "original: " + Lift.originalTicksHigh + "|| end: " + Lift.getTicksLiftHigh());
         telemetry.addData("Low", "original: " + Lift.originalTicksLow + "|| end: " + Lift.getTicksLiftLow());
         telemetry.addData("Angle", "original: " + Lift.originalTicksAngle + "|| end: " + Lift.getTicksLiftAngle());
+        telemetry.addData("Hook", "original: " + Lift.originalTicksHook + "|| end: " +Lift.getTicksLiftHook());
 
         // clip the position values so that they never exceed their allowed range.
         // armPosition = Range.clip(armPosition, ARM_MIN_RANGE, ARM_MAX_RANGE);

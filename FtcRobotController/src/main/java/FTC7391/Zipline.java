@@ -13,7 +13,7 @@ public class Zipline extends ServoAttachment {
 //    private final double DEPLOYED_POS = 86;
 
     public Zipline(HardwareMap hardwareMap) {
-        super(0, 10, 86);
+        super(0.0, 0.10, 1.0);
         servo = hardwareMap.servo.get("zipline");
     }
 }

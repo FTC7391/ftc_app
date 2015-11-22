@@ -10,10 +10,10 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 public class Lift {
 
 
-    private static DcMotor liftHigh;
-    private static DcMotor liftLow;
-    private static DcMotor liftHook;
-    private static DcMotor liftAngle;
+    public static DcMotor liftHigh;
+    public static DcMotor liftLow;
+    public static DcMotor liftHook;
+    public static DcMotor liftAngle;
 
 
     private static int driveModeTicks = 0; //to be added
@@ -60,19 +60,19 @@ public class Lift {
     }
 
     protected static void resetEncoders(){
-        liftHigh.setChannelMode(DcMotorController.RunMode.RESET_ENCODERS);
-        liftLow.setChannelMode(DcMotorController.RunMode.RESET_ENCODERS);
-        liftAngle.setChannelMode(DcMotorController.RunMode.RESET_ENCODERS);
-        liftHook.setChannelMode(DcMotorController.RunMode.RESET_ENCODERS);
+        liftHigh.setMode(DcMotorController.RunMode.RESET_ENCODERS);
+        liftLow.setMode(DcMotorController.RunMode.RESET_ENCODERS);
+        liftAngle.setMode(DcMotorController.RunMode.RESET_ENCODERS);
+        liftHook.setMode(DcMotorController.RunMode.RESET_ENCODERS);
 
     }
 
     protected static void runUsingEncoders(){
         resetEncoders();
-        liftHigh.setChannelMode(DcMotorController.RunMode.RUN_USING_ENCODERS);
-        liftLow.setChannelMode(DcMotorController.RunMode.RUN_USING_ENCODERS);
-        liftAngle.setChannelMode(DcMotorController.RunMode.RUN_USING_ENCODERS);
-        liftHook.setChannelMode(DcMotorController.RunMode.RUN_USING_ENCODERS);
+        liftHigh.setMode(DcMotorController.RunMode.RUN_USING_ENCODERS);
+        liftLow.setMode(DcMotorController.RunMode.RUN_USING_ENCODERS);
+        liftAngle.setMode(DcMotorController.RunMode.RUN_USING_ENCODERS);
+        liftHook.setMode(DcMotorController.RunMode.RUN_USING_ENCODERS);
 
     }
 
@@ -80,6 +80,7 @@ public class Lift {
     public static int getTicksLiftHigh(){return liftHigh.getCurrentPosition();}
     public static int getTicksLiftLow(){return liftLow.getCurrentPosition();}
     public static int getTicksLiftAngle(){return liftAngle.getCurrentPosition();}
+    public static int getTicksLiftHook(){return liftHook.getCurrentPosition();}
 
 //    public static int getOriginalTicksHigh(){return originalTicksHigh;}
 //    public static int getOriginalTicksLow(){return originalTicksLow;}
