@@ -58,23 +58,28 @@ public class ZiplineTest extends OpMode {
 
         telemetry.addData(TAG, "OpMode Started");
 
+        boolean isRedSide = true;
 
+        if (gamepad1.x) {
+            isRedSide = !isRedSide;
+        }
 
 
         if (gamepad1.a) {
 
-            ziplineBlue.setRetractedPosition();
-            ziplineRed.setRetractedPosition();
+            if(!isRedSide) ziplineBlue.setRetractedPosition();
+            if(isRedSide) ziplineRed.setRetractedPosition();
+
         }
         if (gamepad1.b) {
 
-            ziplineBlue.setDrivePosition();
-            ziplineRed.setDrivePosition();
+            if(!isRedSide) ziplineBlue.setDrivePosition();
+            if(isRedSide) ziplineRed.setDrivePosition();
         }
         if (gamepad1.y) {
 
-            ziplineBlue.setDeployedPosition();
-            ziplineRed.setDeployedPosition();
+            if(!isRedSide) ziplineBlue.setDeployedPosition();
+            if(isRedSide) ziplineRed.setDeployedPosition();
 
         }
 
