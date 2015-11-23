@@ -47,8 +47,8 @@ public class ZiplineTest extends OpMode {
 
     @Override
     public void init() {
-        ziplineBlue = new Zipline(hardwareMap);
-        ziplineRed = new Zipline(hardwareMap);
+        ziplineBlue = new Zipline(hardwareMap, 0, 0, "zipline_blue");
+        ziplineRed = new Zipline(hardwareMap, 0, 0, "zipline_red");
 
     }
 

@@ -69,6 +69,9 @@ public class FtcOpModeRegister implements OpModeRegister {
     manager.register("StickTest", StickTest.class);
     manager.register("ZiplineTest", ZiplineTest.class);
     manager.register("AutoLiftTestOp", AutoLiftTestOp.class);
-    
+    manager.register("TeleOp7391NoLift", TeleOp7391NoLift.class);
+    manager.register("TeleOp7391NoEncoder", TeleOp7391NoEncoder.class);
+
+
   }
 }
