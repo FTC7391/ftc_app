@@ -1,5 +1,6 @@
 package FTC7391;
 
+import java.util.ArrayList;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 
 /**
@@ -11,6 +12,7 @@ public abstract class AutoOpBase extends OpMode {
     protected State currentState;
     protected int step;
     protected Stick stick;
+    protected ArrayList<State> stepsList = new ArrayList<State> (20);
 
     public void init(){
         telemetry.addData(TAG, "AutoOp Init");
@@ -18,10 +20,10 @@ public abstract class AutoOpBase extends OpMode {
         showTelemetryDrivetrain();
         showTelemetryDrivetrain();
         currentState = null;
-        step = 0;
+        step = -1;
         stick = new Stick(hardwareMap);
         stick.setRetractedPosition();
-
+        //add steps to stepsList
     }
 
     public abstract void loop();

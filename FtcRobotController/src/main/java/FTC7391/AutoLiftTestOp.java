@@ -12,6 +12,7 @@ public class AutoLiftTestOp extends AutoOpBase
     public void init()
     {
         super.init();
+        step++;
 
     }
 
