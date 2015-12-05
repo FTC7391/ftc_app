@@ -32,17 +32,16 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 package FTC7391;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
-import com.qualcomm.robotcore.hardware.DcMotorController;
 
 /**
  * TeleOp Mode
  * <p>
  * Enables control of the robot via the gamepad
  */
-public class TeleOp7391 extends OpMode {
+public class TeleOp7391NoEncoder extends OpMode {
 
 
-	private static final String TAG = TeleOp7391.class.getSimpleName();
+	private static final String TAG = TeleOp7391NoEncoder.class.getSimpleName();
 	private static double axialPower;
 	private static double rotatePower;
 	private static double powerLift;
@@ -79,7 +78,7 @@ public class TeleOp7391 extends OpMode {
 	/**
 	 * Constructor
 	 */
-	public TeleOp7391() {
+	public TeleOp7391NoEncoder() {
 
 	}
 
@@ -91,13 +90,13 @@ public class TeleOp7391 extends OpMode {
 	@Override
 	public void init() {
 		DriveTrainTele.init(hardwareMap);
-		Lift.init(hardwareMap);
+		LiftNoEncoder.init(hardwareMap);
 		driveJoystick = new DriveJoystick();
 		liftJoystick = new LiftJoystick();
 		stick = new Stick(hardwareMap);
-		stick.setDrivePosition();
-		ziplineBlue = new Zipline(hardwareMap, .2, 1, "zipline_blue");
-		ziplineRed = new Zipline(hardwareMap, 1, .3, "zipline_red");
+		stick.setRetractedPosition();
+		ziplineBlue = new Zipline(hardwareMap, .1, .7, "zipline_blue");
+		ziplineRed = new Zipline(hardwareMap, 1, .5, "zipline_red");
 		ziplineBlue.setDrivePosition();
 		ziplineRed.setDrivePosition();
 	}
@@ -138,60 +137,57 @@ public class TeleOp7391 extends OpMode {
 		}
 
 		if (gamepad1.x){
-			ziplineBlue.setDeployedPosition();
+			//ziplineBlue.setDeployedPosition();
+			LiftNoEncoder.setTestMode(LiftNoEncoder.TestModes.MODE_MOVE_HOOK, -.25);
 		}
 		if (gamepad1.b){
 			ziplineRed.setDeployedPosition();
 		}
+		if (gamepad1.a){
+			ziplineRed.setDrivePosition();
+			ziplineBlue.setDrivePosition();
+			stick.setDrivePosition();
+		}
 
 		if (gamepad2.y) {
 			//DriveTrain.testRotateDegrees(positiveNumber);
-			Lift.setTestMode(Lift.TestModes.MODE_MOVE_HIGH, -powerLift);
-			stick.setDrivePosition();
-			ziplineRed.setDrivePosition();
-			ziplineBlue.setDrivePosition();
+			LiftNoEncoder.setTestMode(LiftNoEncoder.TestModes.MODE_MOVE_HIGH, -powerLift);
 		}
 		else{
-			Lift.liftHigh.setPower(0);
+			LiftNoEncoder.liftHigh.setPower(0);
 		}
 
 
 		if (gamepad2.b) {
 			//DriveTrain.testRotateDegrees(negativeNumber);
-			Lift.setTestMode(Lift.TestModes.MODE_MOVE_LOW, powerLift);
-			stick.setDrivePosition();
-			ziplineRed.setDrivePosition();
-			ziplineBlue.setDrivePosition();
+			LiftNoEncoder.setTestMode(LiftNoEncoder.TestModes.MODE_MOVE_LOW, powerLift);
+
 		}
 		else{
-			Lift.liftLow.setPower(0);
+			LiftNoEncoder.liftLow.setPower(0);
 		}
 
 
 		if (gamepad2.a) {
-			Lift.setTestMode(Lift.TestModes.MODE_MOVE_ANGLE, powerLift);
-			stick.setDrivePosition();
-			ziplineRed.setDrivePosition();
-			ziplineBlue.setDrivePosition();
+			LiftNoEncoder.setTestMode(LiftNoEncoder.TestModes.MODE_MOVE_ANGLE, powerLift);
+
 		}
 		else{
-			Lift.liftAngle.setPower(0);
+			LiftNoEncoder.liftAngle.setPower(0);
 		}
 
 
 		if (gamepad2.x) {
-			Lift.setTestMode(Lift.TestModes.MODE_MOVE_HOOK, powerLift/4);
-			stick.setDrivePosition();
-			ziplineRed.setDrivePosition();
-			ziplineBlue.setDrivePosition();
+			LiftNoEncoder.setTestMode(LiftNoEncoder.TestModes.MODE_MOVE_HOOK, -powerLift/4);
+
 		}
-		else{
-			Lift.liftHook.setPower(0);
-		}
+		//else{
+			//LiftNoEncoder.liftHook.setPower(0);
+		//}
 
 
 		if(gamepad2.dpad_up) {
-			Lift.setTestMode(Lift.TestModes.MODE_MOVE_BOTH, powerLift);
+			LiftNoEncoder.setTestMode(LiftNoEncoder.TestModes.MODE_MOVE_BOTH, powerLift);
 		}
 
 
@@ -202,12 +198,16 @@ public class TeleOp7391 extends OpMode {
 
 		if (axialPower > 0) {
 			DriveTrainTele.setTestMode(DriveTrainTele.TestModes.MODE_MOVE_FORWARD, axialPower, 0);
+			stick.setDrivePosition();
 		} else if (axialPower < 0) {
 			DriveTrainTele.setTestMode(DriveTrainTele.TestModes.MODE_MOVE_BACKWARD, -axialPower, 0);
+			stick.setDrivePosition();
 		} else if (rotatePower > 0) {
 			DriveTrainTele.setTestMode(DriveTrainTele.TestModes.MODE_ROTATE_RIGHT, -rotatePower, 0);
+			stick.setDrivePosition();
 		} else if (rotatePower < 0) {
 			DriveTrainTele.setTestMode(DriveTrainTele.TestModes.MODE_ROTATE_LEFT, rotatePower, 0);
+			stick.setDrivePosition();
 		} else {
 			DriveTrainTele.setTestMode(DriveTrainTele.TestModes.MODE_STOP, 0, 0);
 		}
