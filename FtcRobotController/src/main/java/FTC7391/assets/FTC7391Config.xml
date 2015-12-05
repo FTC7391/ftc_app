@@ -1,9 +1,5 @@
 <?xml version='1.0' encoding='UTF-8' standalone='yes' ?>
 <Robot>
-    <MotorController name="Motor Controller Left" serialNumber="AL00VCAK">
-        <Motor name="motor_front_left" port="1" />
-        <Motor name="motor_back_left" port="2" />
-    </MotorController>
     <MotorController name="Motor Controller Lift High" serialNumber="AL00XTK5">
         <Motor name="motor_high" port="1" />
         <Motor name="motor_hook" port="2" />
@@ -22,5 +18,9 @@
     <MotorController name="Motor Controller Lift Low" serialNumber="AL00VGUM">
         <Motor name="motor_low" port="1" />
         <Motor name="motor_angle" port="2" />
+    </MotorController>
+    <MotorController name="Motor Controller Left" serialNumber="AL00VCAK">
+        <Motor name="motor_front_left" port="1" />
+        <Motor name="motor_back_left" port="2" />
     </MotorController>
 </Robot>
