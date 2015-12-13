@@ -39,6 +39,8 @@ import android.content.Intent;
 import android.content.ServiceConnection;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
+import android.hardware.Sensor;
+import android.hardware.SensorManager;
 import android.hardware.usb.UsbManager;
 import android.os.Bundle;
 import android.os.IBinder;
@@ -70,7 +72,6 @@ import com.qualcomm.robotcore.util.Dimmer;
 import com.qualcomm.robotcore.util.ImmersiveMode;
 import com.qualcomm.robotcore.util.RobotLog;
 import com.qualcomm.robotcore.wifi.WifiDirectAssistant;
-import android.hardware.Camera;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -78,6 +79,9 @@ import java.io.Serializable;
 
 import FTC7391.CameraOp;
 import FTC7391.CameraPreview;
+import FTC7391.Gyro;
+import android.hardware.SensorManager;
+import android.hardware.Camera;
 
 public class FtcRobotControllerActivity extends Activity {
 
@@ -182,6 +186,14 @@ public class FtcRobotControllerActivity extends Activity {
 
     if (USE_DEVICE_EMULATION) { HardwareFactory.enableDeviceEmulation(); }
     camera=openFrontFacingCamera();
+
+    Gyro gyro = new Gyro();
+
+    SensorManager mSensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
+
+    //mSensorManager.registerListener(gyro, mSensorManager.getDefaultSensor(Sensor.TYPE_GYROSCOPE), mSensorManager.SENSOR_DELAY_GAME);
+
+    Sensor mSensor = mSensorManager.getDefaultSensor(Sensor.TYPE_GYROSCOPE);
   }
 
   @Override
@@ -422,4 +434,7 @@ public class FtcRobotControllerActivity extends Activity {
       }
     });
   }
+
+
+
 }
