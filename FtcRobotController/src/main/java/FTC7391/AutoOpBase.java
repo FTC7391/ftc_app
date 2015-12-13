@@ -6,7 +6,7 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 /**
  * Created by Allana Evans on 9/26/15.
  */
-public abstract class AutoOpBase extends OpMode {
+public class AutoOpBase extends OpMode {
 
     private static final String TAG = AutoOpBase.class.getSimpleName();
     protected State currentState;
@@ -26,7 +26,12 @@ public abstract class AutoOpBase extends OpMode {
         //add steps to stepsList
     }
 
-    public abstract void loop();
+    public void loop(){
+        if (currentState != null && !currentState.update()) return;
+        step++;
+        currentState = stepsList.get(step);
+        currentState.init();
+    }
 
     public void stop(){
         telemetry.addData(TAG, "Test Stopped");
@@ -35,7 +40,7 @@ public abstract class AutoOpBase extends OpMode {
 
     protected class State{
 
-        public State(){
+        public void init(){
             //perform state action
         }
 
@@ -48,8 +53,15 @@ public abstract class AutoOpBase extends OpMode {
 
     protected class MoveState extends State {
 
-        public MoveState(int inches, double power){
+        private int inches;
+        private double power;
 
+        public MoveState(int i, double p){
+            inches = i;
+            power = p;
+        }
+
+        public void init(){
             DriveTrainAuto.moveInches(inches,  power);
             stick.setDrivePosition();
         }
@@ -62,9 +74,12 @@ public abstract class AutoOpBase extends OpMode {
         private int waitTime;
 
         public WaitState(int seconds){
+            waitTime = (int)(seconds * 40);
+        }
+
+        public void init(){
             DriveTrainAuto.moveInches(0,0);
             showTelemetryDrivetrain();
-            waitTime = (int)(seconds * 40);
         }
 
         @Override
@@ -77,7 +92,16 @@ public abstract class AutoOpBase extends OpMode {
 
     protected class RotateState extends State {
 
-        public RotateState(int degrees, double power){
+        protected int degrees;
+        protected double power;
+
+        public RotateState(int d, double p){
+            degrees = d;
+            power = p;
+
+        }
+
+        public void init (){
             DriveTrainAuto.rotateDegrees(degrees, power);
             stick.setDrivePosition();
         }
@@ -88,6 +112,10 @@ public abstract class AutoOpBase extends OpMode {
 
         public StopState(){
 
+
+        }
+
+        public void init(){
             DriveTrainAuto.moveInches(0,0);
         }
 
@@ -105,9 +133,12 @@ public abstract class AutoOpBase extends OpMode {
 
         public StickState(){
 
+            waitTime = 500;
+        }
+
+        public void init(){
             DriveTrainAuto.moveInches(0,0);
             stick.setDeployedPosition();
-            waitTime = 500;
         }
 
         @Override
@@ -120,10 +151,18 @@ public abstract class AutoOpBase extends OpMode {
 
     protected class StickMoveState extends State {
 
-        public StickMoveState(int inches, double power){
+        private int inches;
+        private double power;
 
+        public StickMoveState(int i, double p){
+
+            inches = i;
+            power = p;
+
+        }
+
+        public void init(){
             DriveTrainAuto.moveInches(inches, power);
-
         }
 
     }

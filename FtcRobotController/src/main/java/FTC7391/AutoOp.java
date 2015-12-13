@@ -39,13 +39,4 @@ public class AutoOp extends AutoOpBase
 
     }
 
-    @Override
-    public void loop(){
-        if (currentState != null && !currentState.update()) return;
-        step++;
-        currentState = stepsList.get(step);
-
-    }
-
-
 }
