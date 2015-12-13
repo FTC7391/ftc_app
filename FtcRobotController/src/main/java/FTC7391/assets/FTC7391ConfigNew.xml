@@ -1,15 +1,16 @@
 <?xml version='1.0' encoding='UTF-8' standalone='yes' ?>
 <Robot>
-    <MotorController name="Motor Controller Lift High" serialNumber="AL00XTK5">
-        <Motor name="motor_high" port="1" />
-        <Motor name="motor_hook" port="2" />
+    <MotorController name="Motor Controller Left" serialNumber="AL00XTK5">
+        <Motor name="motor_front_left" port="1" />
+        <Motor name="motor_back_left" port="2" />
     </MotorController>
     <MotorController name="Motor Controller Right" serialNumber="AL00XUAK">
         <Motor name="motor_front_right" port="1" />
         <Motor name="motor_back_right" port="2" />
     </MotorController>
     <ServoController name="Servo Controller " serialNumber="AI02RMWJ">
-        <Servo name="zipline" port="1" />
+        <Servo name="zipline_blue" port="1" />
+        <Servo name="zipline_red" port="5"/>
         <Servo name="stick" port="6" />
     </ServoController>
     <DeviceInterfaceModule name="Device Interface Module" serialNumber="AL00VF3K">
@@ -19,8 +20,8 @@
         <Motor name="motor_low" port="1" />
         <Motor name="motor_angle" port="2" />
     </MotorController>
-    <MotorController name="Motor Controller Left" serialNumber="AL00VCAK">
-        <Motor name="motor_front_left" port="1" />
-        <Motor name="motor_back_left" port="2" />
+    <MotorController name="Motor Controller Lift High" serialNumber="AL00VVK3">
+        <Motor name="motor_high" port="1" />
+        <Motor name="motor_hook" port="2" />
     </MotorController>
 </Robot>

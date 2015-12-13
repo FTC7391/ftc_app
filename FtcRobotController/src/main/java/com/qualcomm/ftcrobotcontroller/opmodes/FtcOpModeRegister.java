@@ -61,10 +61,19 @@ public class FtcOpModeRegister implements OpModeRegister {
     manager.register("TeleOp7391", TeleOp7391.class);
     manager.register("StabilityTest", StabilityTest.class);
     manager.register("AutoOp", AutoOp.class);
+    manager.register("AutoRedOp", AutoRedOp.class);
+    manager.register("AutoBlueOp", AutoBlueOp.class);
     manager.register("LiftTest", LiftTest.class);
     manager.register("CameraOp", CameraOp.class);
     manager.register("AutoTestOp", AutoTestOp.class);
     manager.register("DriveTrainTest", DriveTrainTest.class);
     manager.register("GyroOp", GyroOp.class);
+    manager.register("StickTest", StickTest.class);
+    manager.register("ZiplineTest", ZiplineTest.class);
+    manager.register("AutoLiftTestOp", AutoLiftTestOp.class);
+    manager.register("TeleOp7391NoLift", TeleOp7391NoLift.class);
+    manager.register("TeleOp7391NoEncoder", TeleOp7391NoEncoder.class);
+
+
   }
 }

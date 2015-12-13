@@ -1,34 +1,47 @@
 package FTC7391;
 
+import java.util.ArrayList;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 
 /**
  * Created by Allana Evans on 9/26/15.
  */
-public abstract class AutoOpBase extends OpMode {
+public class AutoOpBase extends OpMode {
 
     private static final String TAG = AutoOpBase.class.getSimpleName();
     protected State currentState;
     protected int step;
+    protected Stick stick;
+    protected ArrayList<State> stepsList = new ArrayList<State> (20);
 
     public void init(){
         telemetry.addData(TAG, "AutoOp Init");
         DriveTrainAuto.init(hardwareMap);
+        Lift.init(hardwareMap);
         showTelemetryDrivetrain();
         showTelemetryDrivetrain();
         currentState = null;
-        step = 0;
-        //initialize current state
-
+        step = -1;
+        stick = new Stick(hardwareMap);
+        stick.setRetractedPosition();
+        //add steps to stepsList
     }
 
-    public abstract void loop();
+    public void loop(){
+        if (currentState != null && !currentState.update()) return;
+        step++;
+        currentState = stepsList.get(step);
+        currentState.init();
+    }
 
-    public abstract void stop();
+    public void stop(){
+        telemetry.addData(TAG, "Test Stopped");
+        currentState = new StopState();
+    }
 
     protected class State{
 
-        public State(){
+        public void init(){
             //perform state action
         }
 
@@ -41,8 +54,17 @@ public abstract class AutoOpBase extends OpMode {
 
     protected class MoveState extends State {
 
-        public MoveState(int inches, double power){
+        private int inches;
+        private double power;
+
+        public MoveState(int i, double p){
+            inches = i;
+            power = p;
+        }
+
+        public void init(){
             DriveTrainAuto.moveInches(inches,  power);
+            stick.setDrivePosition();
         }
 
     }
@@ -53,9 +75,12 @@ public abstract class AutoOpBase extends OpMode {
         private int waitTime;
 
         public WaitState(int seconds){
+            waitTime = (int)(seconds * 40);
+        }
+
+        public void init(){
             DriveTrainAuto.moveInches(0,0);
             showTelemetryDrivetrain();
-            waitTime = (int)(seconds * 40);
         }
 
         @Override
@@ -68,8 +93,18 @@ public abstract class AutoOpBase extends OpMode {
 
     protected class RotateState extends State {
 
-        public RotateState(int degrees, double power){
+        protected int degrees;
+        protected double power;
+
+        public RotateState(int d, double p){
+            degrees = d;
+            power = p;
+
+        }
+
+        public void init (){
             DriveTrainAuto.rotateDegrees(degrees, power);
+            stick.setDrivePosition();
         }
 
     }
@@ -77,6 +112,11 @@ public abstract class AutoOpBase extends OpMode {
     protected class StopState extends State {
 
         public StopState(){
+
+
+        }
+
+        public void init(){
             DriveTrainAuto.moveInches(0,0);
         }
 
@@ -85,6 +125,68 @@ public abstract class AutoOpBase extends OpMode {
             return false;
         }
 
+    }
+
+    protected class StickState extends State {
+
+        private int counter = 0;
+        private int waitTime;
+
+        public StickState(){
+
+            waitTime = 500;
+        }
+
+        public void init(){
+            DriveTrainAuto.moveInches(0,0);
+            stick.setDeployedPosition();
+        }
+
+        @Override
+        public boolean update(){
+            counter++;
+            return (counter == waitTime || gamepad1.b);
+        }
+
+    }
+
+    protected class StickMoveState extends State {
+
+        private int inches;
+        private double power;
+
+        public StickMoveState(int i, double p){
+
+            inches = i;
+            power = p;
+
+        }
+
+        public void init(){
+            DriveTrainAuto.moveInches(inches, power);
+        }
+
+    }
+
+    protected class ClimbPositionState extends State {
+
+        public void init(){
+            Lift.climbPosition();
+
+        }
+        public boolean update(){
+            return Lift.isDone();
+        }
+    }
+
+    protected class ReadyToHangPositionState extends State {
+
+        public void init(){
+            Lift.readyToHangPosition();
+        }
+        public boolean update(){
+            return Lift.isDone();
+        }
     }
 
 
