@@ -17,6 +17,7 @@ public class AutoOpBase extends OpMode {
     public void init(){
         telemetry.addData(TAG, "AutoOp Init");
         DriveTrainAuto.init(hardwareMap);
+        Lift.init(hardwareMap);
         showTelemetryDrivetrain();
         showTelemetryDrivetrain();
         currentState = null;
@@ -167,13 +168,26 @@ public class AutoOpBase extends OpMode {
 
     }
 
-//    protected class LiftToStage1 extends State {
-//
-//        public LiftToStage1(int inches, double power){
-//
-//
-//        }
-//    }
+    protected class ClimbPositionState extends State {
+
+        public void init(){
+            Lift.climbPosition();
+
+        }
+        public boolean update(){
+            return Lift.isDone();
+        }
+    }
+
+    protected class ReadyToHangPositionState extends State {
+
+        public void init(){
+            Lift.readyToHangPosition();
+        }
+        public boolean update(){
+            return Lift.isDone();
+        }
+    }
 
 
     private void showTelemetryDrivetrain() {
