@@ -111,8 +111,6 @@ public class AutoOpBase extends OpMode {
     protected class StopState extends State {
 
         public StopState(){
-
-
         }
 
         public void init(){
@@ -132,7 +130,6 @@ public class AutoOpBase extends OpMode {
         private int waitTime;
 
         public StickState(){
-
             waitTime = 500;
         }
 
