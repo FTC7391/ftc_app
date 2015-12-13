@@ -115,30 +115,7 @@ public class Lift {
 //
 //    }
 
-    public void raise(int targetTicks){
 
-        int differentTicks = targetTicks - currentTicks1;
-        double target = 0.5*differentTicks + targetTicks;
-
-        Lift.setMotorTargetPosition((int) target, (int) target);
-        Lift.setPowerOfMotors(1, 1);
-        if(Lift.isDone())
-            Lift.setPowerOfMotors(0, 0);
-
-    }
-
-    public void lower(int targetTicks){
-
-        int differentTicks = currentTicks1 - targetTicks;
-        double target = targetTicks - 0.5*differentTicks;
-
-        Lift.setMotorTargetPosition((int) target, (int) target);
-        Lift.setPowerOfMotors(-1, -1);
-        if(Lift.isDone())
-            Lift.setPowerOfMotors(0,0);
-
-
-    }
 
     public enum TestModes {
         MODE_MOVE_HIGH,
@@ -154,11 +131,11 @@ public class Lift {
     public static void setTestMode(TestModes mode, double power) {
         switch (mode) {
             case MODE_MOVE_HIGH:
-                while(liftHigh.getCurrentPosition() > -5500)
+                //while(liftHigh.getCurrentPosition() > -5500)
                     liftHigh.setPower(1 * power);
                 break;
             case MODE_MOVE_LOW:
-                while(liftLow.getCurrentPosition() > -5500)
+                //while(liftLow.getCurrentPosition() > -5500)
                     liftLow.setPower(1 * power);    //negative power = backwards
                 break;
             case MODE_MOVE_ANGLE:
@@ -172,42 +149,68 @@ public class Lift {
                 liftHook.setPower(1*power);
                 break;
             case MODE_STOP:
-                Lift.setPowerOfMotors(0,0);
+                Lift.setPowerOfMotors(0,0,0);
                 break;
         }
     }
 
     public static boolean isDone() {
-        if(liftHigh.getPower() > 0 && liftHigh.getTargetPosition() <= liftHigh.getCurrentPosition() && liftLow.getTargetPosition() <= liftLow.getCurrentPosition())
+        if(liftHigh.getPower() > 0 && liftHigh.getTargetPosition() <= liftHigh.getCurrentPosition() && liftLow.getTargetPosition() >= liftLow.getCurrentPosition()){
+            setPowerOfMotors(0, 0, 0);
             return true;
-        else if(liftHigh.getPower() < 0 && liftHigh.getTargetPosition() >= liftHigh.getCurrentPosition() && liftLow.getTargetPosition() >= liftLow.getCurrentPosition())
+        }
+
+        else if(liftHigh.getPower() < 0 && liftHigh.getTargetPosition() >= liftHigh.getCurrentPosition() && liftLow.getTargetPosition() >= liftLow.getCurrentPosition()){
+            setPowerOfMotors(0, 0, 0);
             return true;
+        }
+
         else
             return false;
 
     }
 
-    public static void setMotorTargetPosition(int liftHighDifference, int liftLowDifference) {
-        if(liftHigh.getCurrentPosition() + liftHighDifference > 0)
-            liftHigh.setTargetPosition(liftHigh.getCurrentPosition() + liftHighDifference);
-        else
-            liftHigh.setTargetPosition(liftHigh.getCurrentPosition());
+    public static void setMotorTargetPosition(int liftHighDifference, int liftLowDifference, int liftAngleDifference) {
+//        if(liftHigh.getCurrentPosition() + liftHighDifference > 0)
+//            liftHigh.setTargetPosition(liftHigh.getCurrentPosition() + liftHighDifference);
+//        else
+//            liftHigh.setTargetPosition(liftHigh.getCurrentPosition());
+//
+//
+//        if(liftLow.getCurrentPosition() + liftLowDifference < 0)
+//            liftLow.setTargetPosition(liftLow.getCurrentPosition() + liftLowDifference);
+//        else
+//            liftLow.setTargetPosition(liftLow.getCurrentPosition());
+//
+//
+//        if(liftAngle.getCurrentPosition() + liftAngleDifference < 0)
+//            liftAngle.setTargetPosition(liftAngle.getCurrentPosition() + liftAngleDifference);
+//        else
+//            liftAngle.setTargetPosition(liftAngle.getCurrentPosition());
 
-
-        if(liftLow.getCurrentPosition() + liftHighDifference > 0)
-            liftLow.setTargetPosition(liftHigh.getCurrentPosition() + liftLowDifference);
-        else
-            liftLow.setTargetPosition(liftLow.getCurrentPosition());
-
+        liftHigh.setTargetPosition(liftHighDifference);
+        liftLow.setTargetPosition(liftLowDifference);
+        liftAngle.setTargetPosition(liftAngleDifference);
 
     }
 
-    public static void setPowerOfMotors(double liftHighPower, double liftLowPower) {
+    public static void setPowerOfMotors(double liftHighPower, double liftLowPower, double liftAnglePower) {
         liftHigh.setPower(liftHighPower);
         liftLow.setPower(liftLowPower);
+        liftAngle.setPower(liftAnglePower);
 
     }
 
+    public static void climbPosition(){
+        setMotorTargetPosition(721, -341, -7778);
+        setPowerOfMotors(0.25, 0.25, 0.25);
+
+    }
+
+    public static void readyToHangPosition(){
+        setMotorTargetPosition(11425, -11292, -8783);
+        setPowerOfMotors(0.25, 0.25, 0.25);
+    }
 
 
 }

@@ -95,9 +95,9 @@ public class TeleOp7391 extends OpMode {
 		driveJoystick = new DriveJoystick();
 		liftJoystick = new LiftJoystick();
 		stick = new Stick(hardwareMap);
-		stick.setDrivePosition();
-		ziplineBlue = new Zipline(hardwareMap, .2, 1, "zipline_blue");
-		ziplineRed = new Zipline(hardwareMap, 1, .3, "zipline_red");
+		stick.setRetractedPosition();
+		ziplineBlue = new Zipline(hardwareMap, .1, .7, "zipline_blue");
+		ziplineRed = new Zipline(hardwareMap, 1, .5, "zipline_red");
 		ziplineBlue.setDrivePosition();
 		ziplineRed.setDrivePosition();
 	}
@@ -138,18 +138,21 @@ public class TeleOp7391 extends OpMode {
 		}
 
 		if (gamepad1.x){
-			ziplineBlue.setDeployedPosition();
+			//ziplineBlue.setDeployedPosition();
+			Lift.setTestMode(Lift.TestModes.MODE_MOVE_HOOK, -.25);
 		}
 		if (gamepad1.b){
 			ziplineRed.setDeployedPosition();
+		}
+		if (gamepad1.a){
+			ziplineRed.setDrivePosition();
+			ziplineBlue.setDrivePosition();
+			stick.setDrivePosition();
 		}
 
 		if (gamepad2.y) {
 			//DriveTrain.testRotateDegrees(positiveNumber);
 			Lift.setTestMode(Lift.TestModes.MODE_MOVE_HIGH, -powerLift);
-			stick.setDrivePosition();
-			ziplineRed.setDrivePosition();
-			ziplineBlue.setDrivePosition();
 		}
 		else{
 			Lift.liftHigh.setPower(0);
@@ -159,9 +162,6 @@ public class TeleOp7391 extends OpMode {
 		if (gamepad2.b) {
 			//DriveTrain.testRotateDegrees(negativeNumber);
 			Lift.setTestMode(Lift.TestModes.MODE_MOVE_LOW, powerLift);
-			stick.setDrivePosition();
-			ziplineRed.setDrivePosition();
-			ziplineBlue.setDrivePosition();
 		}
 		else{
 			Lift.liftLow.setPower(0);
@@ -170,9 +170,6 @@ public class TeleOp7391 extends OpMode {
 
 		if (gamepad2.a) {
 			Lift.setTestMode(Lift.TestModes.MODE_MOVE_ANGLE, powerLift);
-			stick.setDrivePosition();
-			ziplineRed.setDrivePosition();
-			ziplineBlue.setDrivePosition();
 		}
 		else{
 			Lift.liftAngle.setPower(0);
@@ -180,10 +177,7 @@ public class TeleOp7391 extends OpMode {
 
 
 		if (gamepad2.x) {
-			Lift.setTestMode(Lift.TestModes.MODE_MOVE_HOOK, powerLift/4);
-			stick.setDrivePosition();
-			ziplineRed.setDrivePosition();
-			ziplineBlue.setDrivePosition();
+			Lift.setTestMode(Lift.TestModes.MODE_MOVE_HOOK, powerLift);
 		}
 		else{
 			Lift.liftHook.setPower(0);
@@ -202,12 +196,16 @@ public class TeleOp7391 extends OpMode {
 
 		if (axialPower > 0) {
 			DriveTrainTele.setTestMode(DriveTrainTele.TestModes.MODE_MOVE_FORWARD, axialPower, 0);
+			stick.setDrivePosition();
 		} else if (axialPower < 0) {
 			DriveTrainTele.setTestMode(DriveTrainTele.TestModes.MODE_MOVE_BACKWARD, -axialPower, 0);
+			stick.setDrivePosition();
 		} else if (rotatePower > 0) {
 			DriveTrainTele.setTestMode(DriveTrainTele.TestModes.MODE_ROTATE_RIGHT, -rotatePower, 0);
+			stick.setDrivePosition();
 		} else if (rotatePower < 0) {
 			DriveTrainTele.setTestMode(DriveTrainTele.TestModes.MODE_ROTATE_LEFT, rotatePower, 0);
+			stick.setDrivePosition();
 		} else {
 			DriveTrainTele.setTestMode(DriveTrainTele.TestModes.MODE_STOP, 0, 0);
 		}
