@@ -47,8 +47,8 @@ public class AutoOpBase extends OpMode {
         }
 
         public boolean update(){
-            showTelemetryDrivetrain();
-            showTelemetryLift();
+//            showTelemetryDrivetrain();
+//            showTelemetryLift();
             return (updateState());
         }
 
@@ -67,9 +67,11 @@ public class AutoOpBase extends OpMode {
         }
 
         public void init(){
+            showTelemetryDrivetrain();
             DriveTrainAuto.moveInches(inches,  power);
             stick.setDrivePosition();
-            autoWriter.printf("Move Inches %d /n", inches);
+            autoWriter.printf("Move Inches %d \n", inches);
+            showTelemetryDrivetrain();
         }
 
         public boolean updateState(){
@@ -129,9 +131,11 @@ public class AutoOpBase extends OpMode {
         }
 
         public void init (){
+            showTelemetryDrivetrain();
             DriveTrainAuto.rotateDegrees(degrees, power);
             stick.setDrivePosition();
-            autoWriter.printf("Rotate Degrees %d /n", degrees);
+            autoWriter.printf("Rotate Degrees %d \n", degrees);
+            showTelemetryDrivetrain();
         }
 
         public boolean updateState(){
@@ -227,7 +231,7 @@ public class AutoOpBase extends OpMode {
         telemetry.addData("DriveTrain FrontLeft ", DriveTrainAuto.getPosition(DriveTrain.TestModes.MODE_MOVE_FRONT_LEFT));
         telemetry.addData("DriveTrain BackRight ", DriveTrainAuto.getPosition(DriveTrain.TestModes.MODE_MOVE_BACK_RIGHT));
         telemetry.addData("DriveTrain BackLeft  ", DriveTrainAuto.getPosition(DriveTrain.TestModes.MODE_MOVE_BACK_LEFT));
-        autoWriter.printf("fr:%s fl:%s br:%s bl:%s /n",
+        autoWriter.printf("fr:%s fl:%s br:%s bl:%s \n",
                 DriveTrainAuto.getPosition(DriveTrain.TestModes.MODE_MOVE_FRONT_RIGHT),
                 DriveTrainAuto.getPosition(DriveTrain.TestModes.MODE_MOVE_FRONT_LEFT),
                 DriveTrainAuto.getPosition(DriveTrain.TestModes.MODE_MOVE_BACK_RIGHT),
