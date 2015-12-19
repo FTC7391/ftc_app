@@ -13,6 +13,7 @@ public class AutoOpBase extends OpMode {
     protected int step;
     protected Stick stick;
     protected ArrayList<State> stepsList = new ArrayList<State> (20);
+    protected FTC7391PrintWriter autoWriter = new FTC7391PrintWriter("Auto", "telemetryNoWait");
 
     public void init(){
         telemetry.addData(TAG, "AutoOp Init");
@@ -68,6 +69,7 @@ public class AutoOpBase extends OpMode {
         public void init(){
             DriveTrainAuto.moveInches(inches,  power);
             stick.setDrivePosition();
+            autoWriter.printf("Move Inches %d /n", inches);
         }
 
         public boolean updateState(){
@@ -129,6 +131,7 @@ public class AutoOpBase extends OpMode {
         public void init (){
             DriveTrainAuto.rotateDegrees(degrees, power);
             stick.setDrivePosition();
+            autoWriter.printf("Rotate Degrees %d /n", degrees);
         }
 
         public boolean updateState(){
@@ -224,6 +227,11 @@ public class AutoOpBase extends OpMode {
         telemetry.addData("DriveTrain FrontLeft ", DriveTrainAuto.getPosition(DriveTrain.TestModes.MODE_MOVE_FRONT_LEFT));
         telemetry.addData("DriveTrain BackRight ", DriveTrainAuto.getPosition(DriveTrain.TestModes.MODE_MOVE_BACK_RIGHT));
         telemetry.addData("DriveTrain BackLeft  ", DriveTrainAuto.getPosition(DriveTrain.TestModes.MODE_MOVE_BACK_LEFT));
+        autoWriter.printf("fr:%s fl:%s br:%s bl:%s /n",
+                DriveTrainAuto.getPosition(DriveTrain.TestModes.MODE_MOVE_FRONT_RIGHT),
+                DriveTrainAuto.getPosition(DriveTrain.TestModes.MODE_MOVE_FRONT_LEFT),
+                DriveTrainAuto.getPosition(DriveTrain.TestModes.MODE_MOVE_BACK_RIGHT),
+                DriveTrainAuto.getPosition(DriveTrain.TestModes.MODE_MOVE_BACK_LEFT));
     }
 
 

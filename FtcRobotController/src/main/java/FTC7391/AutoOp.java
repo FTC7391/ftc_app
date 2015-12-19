@@ -18,11 +18,11 @@ public abstract class AutoOp extends AutoOpBase
         super.init();
         setRed();
         stepsList.add(new MoveState(-24, 1));
-        stepsList.add(new WaitState(0));
+        //stepsList.add(new WaitState(0));
         stepsList.add(new RotateState(60 * isRed, 1));
-        stepsList.add(new WaitState(0));
+        //stepsList.add(new WaitState(0));
         stepsList.add(new MoveState(-72, 1));
-        stepsList.add(new WaitState(0));
+        //stepsList.add(new WaitState(0));
         stepsList.add(new RotateState(58 * isRed, 1));
         stepsList.add(new WaitState(0));
         stepsList.add(new MoveState(-22, 1));
