@@ -91,6 +91,27 @@ public class AutoOpBase extends OpMode {
 
     }
 
+    protected class PauseState extends State {
+
+        private int counter = 0;
+
+        public PauseState(){
+
+        }
+
+        public void init(){
+            DriveTrainAuto.moveInches(0,0);
+            showTelemetryDrivetrain();
+        }
+
+        @Override
+        public boolean update(){
+            counter++;
+            return (counter == 1);
+        }
+
+    }
+
     protected class RotateState extends State {
 
         protected int degrees;

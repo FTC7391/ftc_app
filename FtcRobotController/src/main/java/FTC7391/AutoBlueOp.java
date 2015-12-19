@@ -11,6 +11,9 @@ public class AutoBlueOp extends AutoOp
     public void init()
     {
         super.init();
+    }
+
+    public void setRed(){
         isRed = -1;
     }
 
