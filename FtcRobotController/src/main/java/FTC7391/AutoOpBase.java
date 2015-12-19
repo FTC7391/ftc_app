@@ -19,7 +19,7 @@ public class AutoOpBase extends OpMode {
         DriveTrainAuto.init(hardwareMap);
         Lift.init(hardwareMap);
         showTelemetryDrivetrain();
-        showTelemetryDrivetrain();
+        showTelemetryLift();
         currentState = null;
         step = -1;
         stick = new Stick(hardwareMap);
@@ -39,7 +39,7 @@ public class AutoOpBase extends OpMode {
         currentState = new StopState();
     }
 
-    protected class State{
+    protected abstract class State{
 
         public void init(){
             //perform state action
@@ -47,8 +47,11 @@ public class AutoOpBase extends OpMode {
 
         public boolean update(){
             showTelemetryDrivetrain();
-            return DriveTrainAuto.isDone();
+            showTelemetryLift();
+            return (updateState());
         }
+
+        public abstract boolean updateState();
 
     }
 
@@ -67,6 +70,10 @@ public class AutoOpBase extends OpMode {
             stick.setDrivePosition();
         }
 
+        public boolean updateState(){
+            return DriveTrainAuto.isDone();
+        }
+
     }
 
     protected class WaitState extends State {
@@ -80,11 +87,9 @@ public class AutoOpBase extends OpMode {
 
         public void init(){
             DriveTrainAuto.moveInches(0,0);
-            showTelemetryDrivetrain();
         }
 
-        @Override
-        public boolean update(){
+        public boolean updateState(){
             counter++;
             return (counter == waitTime || gamepad1.a);
         }
@@ -101,11 +106,9 @@ public class AutoOpBase extends OpMode {
 
         public void init(){
             DriveTrainAuto.moveInches(0,0);
-            showTelemetryDrivetrain();
         }
 
-        @Override
-        public boolean update(){
+        public boolean updateState(){
             counter++;
             return (counter == 1);
         }
@@ -128,6 +131,10 @@ public class AutoOpBase extends OpMode {
             stick.setDrivePosition();
         }
 
+        public boolean updateState(){
+            return DriveTrainAuto.isDone();
+        }
+
     }
 
     protected class StopState extends State {
@@ -139,8 +146,7 @@ public class AutoOpBase extends OpMode {
             DriveTrainAuto.moveInches(0,0);
         }
 
-        @Override
-        public boolean update(){
+        public boolean updateState(){
             return false;
         }
 
@@ -160,8 +166,7 @@ public class AutoOpBase extends OpMode {
             stick.setDeployedPosition();
         }
 
-        @Override
-        public boolean update(){
+        public boolean updateState(){
             counter++;
             return (counter == waitTime || gamepad1.b);
         }
@@ -184,15 +189,20 @@ public class AutoOpBase extends OpMode {
             DriveTrainAuto.moveInches(inches, power);
         }
 
+        public boolean updateState(){
+            return DriveTrainAuto.isDone();
+        }
+
     }
 
     protected class ClimbPositionState extends State {
 
         public void init(){
             Lift.climbPosition();
+            stick.setDrivePosition();
 
         }
-        public boolean update(){
+        public boolean updateState(){
             return Lift.isDone();
         }
     }
@@ -201,8 +211,9 @@ public class AutoOpBase extends OpMode {
 
         public void init(){
             Lift.readyToHangPosition();
+            stick.setDrivePosition();
         }
-        public boolean update(){
+        public boolean updateState(){
             return Lift.isDone();
         }
     }
@@ -214,5 +225,14 @@ public class AutoOpBase extends OpMode {
         telemetry.addData("DriveTrain BackRight ", DriveTrainAuto.getPosition(DriveTrain.TestModes.MODE_MOVE_BACK_RIGHT));
         telemetry.addData("DriveTrain BackLeft  ", DriveTrainAuto.getPosition(DriveTrain.TestModes.MODE_MOVE_BACK_LEFT));
     }
+
+
+    private void showTelemetryLift() {
+        telemetry.addData("High", "original: " + Lift.originalTicksHigh + "|| end: " + Lift.getTicksLiftHigh());
+        telemetry.addData("Low", "original: " + Lift.originalTicksLow + "|| end: " + Lift.getTicksLiftLow());
+        telemetry.addData("Angle", "original: " + Lift.originalTicksAngle + "|| end: " + Lift.getTicksLiftAngle());
+        telemetry.addData("Hook", "original: " + Lift.originalTicksHook + "|| end: " + Lift.getTicksLiftHook());
+    }
+
 
 }
