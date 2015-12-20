@@ -13,7 +13,7 @@ public class AutoOpBase extends OpMode {
     protected int step;
     protected Stick stick;
     protected ArrayList<State> stepsList = new ArrayList<State> (20);
-    protected FTC7391PrintWriter autoWriter = new FTC7391PrintWriter("Auto", "telemetryNoWait");
+    protected FTC7391PrintWriter autoWriter = new FTC7391PrintWriter("Auto", "telemetryWait");
 
     public void init(){
         telemetry.addData(TAG, "AutoOp Init");
@@ -68,6 +68,7 @@ public class AutoOpBase extends OpMode {
 
         public void init(){
             showTelemetryDrivetrain();
+
             DriveTrainAuto.moveInches(inches,  power);
             stick.setDrivePosition();
             autoWriter.printf("Move Inches %d \n", inches);
