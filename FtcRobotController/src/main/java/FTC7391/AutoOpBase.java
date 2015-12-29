@@ -44,6 +44,8 @@ public class AutoOpBase extends OpMode {
 
         public void init(){
             //perform state action
+            showTelemetryDrivetrain();
+            showTelemetryLift();
         }
 
         public boolean update(){
@@ -67,12 +69,12 @@ public class AutoOpBase extends OpMode {
         }
 
         public void init(){
-            showTelemetryDrivetrain();
+            super.init();
 
             DriveTrainAuto.moveInches(inches,  power);
             stick.setDrivePosition();
             autoWriter.printf("Move Inches %d \n", inches);
-            showTelemetryDrivetrain();
+            //showTelemetryDrivetrain();
         }
 
         public boolean updateState(){
@@ -91,6 +93,7 @@ public class AutoOpBase extends OpMode {
         }
 
         public void init(){
+            super.init();
             DriveTrainAuto.moveInches(0,0);
         }
 
@@ -110,6 +113,7 @@ public class AutoOpBase extends OpMode {
         }
 
         public void init(){
+            super.init();
             DriveTrainAuto.moveInches(0,0);
         }
 
@@ -132,7 +136,7 @@ public class AutoOpBase extends OpMode {
         }
 
         public void init (){
-            showTelemetryDrivetrain();
+            super.init();
             DriveTrainAuto.rotateDegrees(degrees, power);
             stick.setDrivePosition();
             autoWriter.printf("Rotate Degrees %d \n", degrees);
@@ -151,6 +155,7 @@ public class AutoOpBase extends OpMode {
         }
 
         public void init(){
+            super.init();
             DriveTrainAuto.moveInches(0,0);
         }
 
@@ -170,6 +175,7 @@ public class AutoOpBase extends OpMode {
         }
 
         public void init(){
+            super.init();
             DriveTrainAuto.moveInches(0,0);
             stick.setDeployedPosition();
         }
@@ -194,6 +200,7 @@ public class AutoOpBase extends OpMode {
         }
 
         public void init(){
+            super.init();
             DriveTrainAuto.moveInches(inches, power);
         }
 
@@ -206,6 +213,7 @@ public class AutoOpBase extends OpMode {
     protected class ClimbPositionState extends State {
 
         public void init(){
+            super.init();
             Lift.climbPosition();
             stick.setDrivePosition();
 
@@ -218,6 +226,7 @@ public class AutoOpBase extends OpMode {
     protected class ReadyToHangPositionState extends State {
 
         public void init(){
+            super.init();
             Lift.readyToHangPosition();
             stick.setDrivePosition();
         }
