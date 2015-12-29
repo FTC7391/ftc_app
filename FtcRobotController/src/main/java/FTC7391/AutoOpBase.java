@@ -50,7 +50,7 @@ public class AutoOpBase extends OpMode {
 
         public boolean update(){
 //            showTelemetryDrivetrain();
-//            showTelemetryLift();
+            showTelemetryLift();
             return (updateState());
         }
 
@@ -250,10 +250,16 @@ public class AutoOpBase extends OpMode {
 
 
     private void showTelemetryLift() {
-        telemetry.addData("High", "original: " + Lift.originalTicksHigh + "|| end: " + Lift.getTicksLiftHigh());
-        telemetry.addData("Low", "original: " + Lift.originalTicksLow + "|| end: " + Lift.getTicksLiftLow());
+        telemetry.addData("High", "original: "  + Lift.originalTicksHigh + "|| end: " + Lift.getTicksLiftHigh());
+        telemetry.addData("Low", "original: "   + Lift.originalTicksLow + "|| end: " + Lift.getTicksLiftLow());
         telemetry.addData("Angle", "original: " + Lift.originalTicksAngle + "|| end: " + Lift.getTicksLiftAngle());
-        telemetry.addData("Hook", "original: " + Lift.originalTicksHook + "|| end: " + Lift.getTicksLiftHook());
+        telemetry.addData("Hook", "original: "  + Lift.originalTicksHook + "|| end: " + Lift.getTicksLiftHook());
+        autoWriter.printf("High %d %d    Low %d %d    Angle %d %d     Hook %d %d /n",
+                Lift.originalTicksHigh, Lift.getTicksLiftHigh(),
+                Lift.originalTicksLow, Lift.getTicksLiftLow(),
+                Lift.originalTicksAngle, Lift.getTicksLiftAngle(),
+                Lift.originalTicksHook, Lift.getTicksLiftHook()
+        );
     }
 
 
