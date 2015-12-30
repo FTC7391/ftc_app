@@ -87,14 +87,16 @@ public class DriveTrainAuto extends DriveTrain{
      */
     public static void rotateDegrees(double degrees, double power) {
         isRotating = true;
-
+        //I changed ticks to degrees and changed the thing under the first else
         //With no fudge factor,
         // for degrees> 0, get 235deg when want 360deg
         // for degress< 0, get -190deg when want -360deg
-        if (ticks > 0)
+        if (degrees > 0)
+           ticks = (int) (degrees * TICKS_PER_DEGREE * 1.825);
+        else {
+            //ticks = (int) (degrees * TICKS_PER_DEGREE * 1.5425);
             ticks = (int) (degrees * TICKS_PER_DEGREE * 1.825);
-        else
-            ticks = (int) (degrees * TICKS_PER_DEGREE * 1.5425);
+        }
         setMotorTargetPosition(ticks, -ticks, ticks, -ticks);
 
         if (degrees > 0) {
