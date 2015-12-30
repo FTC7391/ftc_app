@@ -121,7 +121,7 @@ public class TeleOp7391 extends OpMode {
 
 		axialPower = DriveTrainTele.scaleInput(gamepad1.left_stick_y);
 		rotatePower = DriveTrainTele.scaleInput(gamepad1.right_stick_x);
-		powerLift = -DriveTrainTele.scaleInput(gamepad2.left_stick_y);
+		powerLift = DriveTrainTele.scaleInput(gamepad2.left_stick_y);
 
 
 		/*
@@ -151,7 +151,7 @@ public class TeleOp7391 extends OpMode {
 
 		if (gamepad2.y) {
 			//DriveTrain.testRotateDegrees(positiveNumber);
-			Lift.setTestMode(Lift.TestModes.MODE_MOVE_HIGH, -powerLift);
+			Lift.setTestMode(Lift.TestModes.MODE_MOVE_HIGH, powerLift);
 		}
 		else{
 			Lift.liftHigh.setPower(0);

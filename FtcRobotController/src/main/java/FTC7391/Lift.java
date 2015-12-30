@@ -48,6 +48,8 @@ public class Lift {
     private static boolean angleDone = true;
 
 
+
+
     public static void init (HardwareMap hardwareMap) {
         if (initialized) return;
         initialized = true;
@@ -63,6 +65,10 @@ public class Lift {
         originalTicksLow = liftLow.getCurrentPosition();
         originalTicksHook = liftHook.getCurrentPosition();
         originalTicksAngle = liftAngle.getCurrentPosition();
+
+        liftLow.setDirection(DcMotor.Direction.REVERSE);
+        liftAngle.setDirection(DcMotor.Direction.REVERSE);
+        liftHook.setDirection(DcMotor.Direction.REVERSE);
     }
 
     protected static void resetEncoders(){
@@ -168,7 +174,6 @@ public class Lift {
                 highDone = true;
             }
         }
-
         else if(liftHigh.getPower() < 0) {
             if (liftHigh.getTargetPosition() >= liftHigh.getCurrentPosition()) {
                 liftHigh.setPower(0);
@@ -176,35 +181,38 @@ public class Lift {
             }
         }
 
+
+
         if(liftLow.getPower() > 0) {
-            if(liftLow.getTargetPosition() >= liftLow.getCurrentPosition()) {
-                liftLow.setPower(0);
-                lowDone = true;
-            }
-
-        }
-
-        else if(liftLow.getPower() < 0) {
             if(liftLow.getTargetPosition() <= liftLow.getCurrentPosition()) {
                 liftLow.setPower(0);
                 lowDone = true;
             }
+
         }
+        else if(liftLow.getPower() < 0) {
+            if(liftLow.getTargetPosition() >= liftLow.getCurrentPosition()) {
+                liftLow.setPower(0);
+                lowDone = true;
+            }
+        }
+
+
 
         if(liftAngle.getPower() > 0) {
-            if(liftAngle.getTargetPosition() >= liftAngle.getCurrentPosition()) {
-                liftAngle.setPower(0);
-                angleDone = true;
-            }
-
-        }
-
-        else if(liftAngle.getPower() < 0) {
             if(liftAngle.getTargetPosition() <= liftAngle.getCurrentPosition()) {
                 liftAngle.setPower(0);
                 angleDone = true;
             }
+
         }
+        else if(liftAngle.getPower() < 0) {
+            if(liftAngle.getTargetPosition() >= liftAngle.getCurrentPosition()) {
+                liftAngle.setPower(0);
+                angleDone = true;
+            }
+        }
+
 
         if(angleDone && lowDone && highDone)
             return true;
@@ -248,15 +256,16 @@ public class Lift {
     }
 
     public static void climbPosition(){
-        setMotorTargetPosition(721, -341, -7778);
+        setMotorTargetPosition(2215, 2228, 7778);
         setPowerOfMotors(0.25, 0.25, 0.25);
 
     }
 
     public static void readyToHangPosition(){
-        setMotorTargetPosition(11425, -11292, -8783);
+        setMotorTargetPosition(11425, 11292, 8783);
         setPowerOfMotors(0.25, 0.25, 0.25);
     }
 
 
 }
+8

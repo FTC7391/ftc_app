@@ -94,12 +94,16 @@ public class AutoOpBase extends OpMode {
 
         public void init(){
             super.init();
-            DriveTrainAuto.moveInches(0,0);
+            DriveTrainAuto.moveInches(0, 0);
         }
 
         public boolean updateState(){
             counter++;
-            return (counter == waitTime || gamepad1.a);
+            if(counter%2 == 1)
+                return (counter == waitTime || gamepad1.a);
+            else
+                return (counter == waitTime || gamepad1.b);
+
         }
 
     }
@@ -254,7 +258,7 @@ public class AutoOpBase extends OpMode {
         telemetry.addData("Low", "original: "   + Lift.originalTicksLow + "|| end: " + Lift.getTicksLiftLow());
         telemetry.addData("Angle", "original: " + Lift.originalTicksAngle + "|| end: " + Lift.getTicksLiftAngle());
         telemetry.addData("Hook", "original: "  + Lift.originalTicksHook + "|| end: " + Lift.getTicksLiftHook());
-        autoWriter.printf("High %d %d    Low %d %d    Angle %d %d     Hook %d %d /n",
+        autoWriter.printf("High %d %d    Low %d %d    Angle %d %d     Hook %d %d \n",
                 Lift.originalTicksHigh, Lift.getTicksLiftHigh(),
                 Lift.originalTicksLow, Lift.getTicksLiftLow(),
                 Lift.originalTicksAngle, Lift.getTicksLiftAngle(),
