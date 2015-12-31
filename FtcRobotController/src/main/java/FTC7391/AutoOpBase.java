@@ -19,7 +19,7 @@ public class AutoOpBase extends OpMode {
         telemetry.addData(TAG, "AutoOp Init");
         DriveTrainAuto.init(hardwareMap);
         Lift.init(hardwareMap);
-        showTelemetryDrivetrain();
+        //showTelemetryDrivetrain();
         showTelemetryLift();
         currentState = null;
         step = -1;
@@ -41,16 +41,20 @@ public class AutoOpBase extends OpMode {
     }
 
     protected abstract class State{
+        protected int cnt = 0;
 
         public void init(){
             //perform state action
-            showTelemetryDrivetrain();
+            //showTelemetryDrivetrain();
             showTelemetryLift();
         }
 
         public boolean update(){
-//            showTelemetryDrivetrain();
-            showTelemetryLift();
+            cnt++;
+            if (cnt%10 == 0) {
+                //showTelemetryDrivetrain();
+                showTelemetryLift();
+            }
             return (updateState());
         }
 
@@ -71,9 +75,10 @@ public class AutoOpBase extends OpMode {
         public void init(){
             super.init();
 
-            DriveTrainAuto.moveInches(inches,  power);
+            DriveTrainAuto.moveInches(inches, power);
             stick.setDrivePosition();
             autoWriter.printf("Move Inches %d \n", inches);
+            telemetry.addData(TAG, "Move Inches " + inches);
             //showTelemetryDrivetrain();
         }
 
@@ -99,10 +104,10 @@ public class AutoOpBase extends OpMode {
 
         public boolean updateState(){
             counter++;
-            if(counter%2 == 1)
+            //if(counter%2 == 1)
                 return (counter == waitTime || gamepad1.a);
-            else
-                return (counter == waitTime || gamepad1.b);
+            //else
+                //return (counter == waitTime || gamepad1.b);
 
         }
 
@@ -144,6 +149,7 @@ public class AutoOpBase extends OpMode {
             DriveTrainAuto.rotateDegrees(degrees, power);
             stick.setDrivePosition();
             autoWriter.printf("Rotate Degrees %d \n", degrees);
+            telemetry.addData(TAG, "Rotate Degrees " + degrees);
             showTelemetryDrivetrain();
         }
 
