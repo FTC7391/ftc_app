@@ -66,8 +66,8 @@ public class Lift {
         originalTicksHook = liftHook.getCurrentPosition();
         originalTicksAngle = liftAngle.getCurrentPosition();
 
-        liftLow.setDirection(DcMotor.Direction.REVERSE);
-        liftAngle.setDirection(DcMotor.Direction.REVERSE);
+        //liftLow.setDirection(DcMotor.Direction.REVERSE);
+        //liftAngle.setDirection(DcMotor.Direction.REVERSE);
         liftHook.setDirection(DcMotor.Direction.REVERSE);
     }
 
