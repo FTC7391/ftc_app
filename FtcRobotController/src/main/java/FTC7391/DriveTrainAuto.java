@@ -18,7 +18,7 @@ public class DriveTrainAuto extends DriveTrain{
 
     public static void init (HardwareMap hardwareMap) {
         DriveTrain.init(hardwareMap);
-        runUsingEncoders();
+        runToPosition();
     }
 
     public static String getPosition(TestModes mode){

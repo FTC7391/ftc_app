@@ -47,6 +47,14 @@ public class DriveTrain {
         motorBackLeft.setMode(DcMotorController.RunMode.RESET_ENCODERS);
     }
 
+    protected static void runToPosition(){
+        resetEncoders();
+        motorFrontRight.setMode(DcMotorController.RunMode.RUN_TO_POSITION);
+        motorFrontLeft.setMode(DcMotorController.RunMode.RUN_TO_POSITION);
+        motorBackRight.setMode(DcMotorController.RunMode.RUN_TO_POSITION);
+        motorBackLeft.setMode(DcMotorController.RunMode.RUN_TO_POSITION);
+    }
+
     protected static void runUsingEncoders(){
         resetEncoders();
         motorFrontRight.setMode(DcMotorController.RunMode.RUN_USING_ENCODERS);
