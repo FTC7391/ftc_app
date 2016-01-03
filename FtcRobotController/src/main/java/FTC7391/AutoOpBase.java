@@ -116,7 +116,7 @@ public class AutoOpBase extends OpMode {
         public void init(){
             super.init();
             DriveTrainAuto.moveInches(0, 0);
-            stateStr = "WAIT" + waitTime;
+           
         }
 
         public boolean updateState(){
