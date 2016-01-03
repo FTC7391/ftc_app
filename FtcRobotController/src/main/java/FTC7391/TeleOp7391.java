@@ -92,6 +92,7 @@ public class TeleOp7391 extends OpMode {
 	public void init() {
 		DriveTrainTele.init(hardwareMap);
 		Lift.init(hardwareMap);
+		Lift.runUsingEncoders();
 		driveJoystick = new DriveJoystick();
 		liftJoystick = new LiftJoystick();
 		stick = new Stick(hardwareMap);
