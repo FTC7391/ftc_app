@@ -62,6 +62,7 @@ public class LiftTest extends OpMode {
     @Override
     public void init() {
         Lift.init(hardwareMap);
+        Lift.runUsingEncoders();
         DriveTrain.init(hardwareMap);
         //DriveTrainAuto.moveInches(15, .5);
 		/*

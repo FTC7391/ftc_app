@@ -14,18 +14,18 @@ public class AutoTestOp extends AutoOpBase
         super.init();
         FTC7391PrintWriter data1Writer = new FTC7391PrintWriter("Alliance" , "color");
         data1Writer.print("red");
-        step++;
-
         int isRed = -1;
 
+        stepsList.add(new WaitState(0));
+        //stepsList.add(new TestPositionState());
         //stepsList.add(new WaitState(0));
-        //stepsList.add(new MoveState(24, 1));
-        //stepsList.add(new WaitState(0));
+        stepsList.add(new MoveState(24, 1));
+        stepsList.add(new WaitState(0));
         //stepsList.add(new MoveState(-24, 1));
-        //stepsList.add(new WaitState(0));
-        //stepsList.add(new MoveState(12, 1));
-        //stepsList.add(new WaitState(0));
-        //stepsList.add(new MoveState(-12, 1));
+        /*stepsList.add(new WaitState(0));
+        stepsList.add(new MoveState(12, 1));
+        stepsList.add(new WaitState(0));
+        stepsList.add(new MoveState(-12, 1));
         stepsList.add(new WaitState(0));
         stepsList.add(new RotateState(90 * isRed, 1));
         stepsList.add(new WaitState(0));
@@ -33,7 +33,7 @@ public class AutoTestOp extends AutoOpBase
         stepsList.add(new WaitState(0));
         stepsList.add(new RotateState(90 * isRed, 1));
         stepsList.add(new WaitState(0));
-        stepsList.add(new RotateState(90 * isRed, 1));
+        stepsList.add(new RotateState(90 * isRed, 1));*/
         //stepsList.add(new WaitState(0));
 
         /*
@@ -53,13 +53,6 @@ public class AutoTestOp extends AutoOpBase
         */
         stepsList.add(new StopState());
 
-    }
-
-    @Override
-    public void stop()
-    {
-        telemetry.addData(TAG, "Test Stopped");
-        currentState = new StopState();
     }
 
 }

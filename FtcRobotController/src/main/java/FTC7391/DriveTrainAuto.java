@@ -19,6 +19,7 @@ public class DriveTrainAuto extends DriveTrain{
     public static void init (HardwareMap hardwareMap) {
         DriveTrain.init(hardwareMap);
         runToPosition();
+        //runUsingEncoders();
     }
 
     public static String getPosition(TestModes mode){
@@ -118,7 +119,37 @@ public class DriveTrainAuto extends DriveTrain{
         motorBackLeft.setTargetPosition(motorBackLeft.getCurrentPosition() + backLeftPosition);
     }
 
-    public static boolean isDone() {
+    public static boolean isDone(){
+        return isAtPosition();
+        //return isEncoderDone();
+    }
+
+    public static boolean isAtPosition(){
+        boolean frDone = false, flDone = false, brDone = false, blDone = false;
+
+        if (!motorFrontRight.isBusy()){
+            motorFrontRight.setPower(0);
+            frDone = true;
+        }
+        if (!motorFrontLeft.isBusy()){
+            motorFrontLeft.setPower(0);
+            flDone = true;
+        }
+        if (!motorBackRight.isBusy()){
+            motorBackRight.setPower(0);
+            brDone = true;
+        }
+        if (!motorBackLeft.isBusy()){
+            motorBackLeft.setPower(0);
+            blDone = true;
+        }
+        if (frDone && flDone && brDone && blDone){
+            return true;
+        }
+        else return false;
+    }
+
+    public static boolean isEncoderDone() {
         if (isRotating &&
                 ( (ticks > 0 && motorBackLeft.getCurrentPosition() <= motorBackLeft.getTargetPosition()) ||
                         (ticks < 0 && motorBackRight.getCurrentPosition() <= motorBackRight.getTargetPosition()))   ) {

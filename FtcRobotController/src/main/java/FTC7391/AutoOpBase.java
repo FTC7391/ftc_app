@@ -19,7 +19,7 @@ public class AutoOpBase extends OpMode {
         telemetry.addData(TAG, "AutoOp Init");
         DriveTrainAuto.init(hardwareMap);
         Lift.init(hardwareMap);
-        //showTelemetryDrivetrain();
+        showTelemetryDrivetrain();
         showTelemetryLift();
         currentState = null;
         step = -1;
@@ -52,7 +52,7 @@ public class AutoOpBase extends OpMode {
         public boolean update(){
             cnt++;
             if (cnt%10 == 0) {
-                //showTelemetryDrivetrain();
+                showTelemetryDrivetrain();
                 showTelemetryLift();
             }
             return (updateState());
@@ -79,7 +79,7 @@ public class AutoOpBase extends OpMode {
             stick.setDrivePosition();
             autoWriter.printf("Move Inches %d \n", inches);
             telemetry.addData(TAG, "Move Inches " + inches);
-            //showTelemetryDrivetrain();
+            showTelemetryDrivetrain();
         }
 
         public boolean updateState(){
@@ -100,6 +100,7 @@ public class AutoOpBase extends OpMode {
         public void init(){
             super.init();
             DriveTrainAuto.moveInches(0, 0);
+            telemetry.addData(TAG, "Wait State");
         }
 
         public boolean updateState(){
@@ -217,6 +218,30 @@ public class AutoOpBase extends OpMode {
         public boolean updateState(){
             return DriveTrainAuto.isDone();
         }
+
+    }
+
+    protected class TestPositionState extends State {
+
+        public void init(){
+            super.init();
+            Lift.testPosition();
+            stick.setDrivePosition();
+            telemetry.addData(TAG, "TestPositionState");
+        }
+
+        public boolean updateState() { return Lift.isDone(); }
+    }
+
+    protected class DrivePositionState extends State {
+
+        public void init(){
+            super.init();
+            Lift.drivePosition();
+            stick.setDrivePosition();
+        }
+
+        public boolean updateState() { return Lift.isDone(); }
 
     }
 
