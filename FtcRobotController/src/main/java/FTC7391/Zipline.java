@@ -12,8 +12,8 @@ public class Zipline extends ServoAttachment {
 //    private final double DRIVE_POS = 10;
 //    private final double DEPLOYED_POS = 86;
 
-    public Zipline(HardwareMap hardwareMap, double drive, double deploy, String name) {
-        super(0.0, drive, deploy);
+    public Zipline(HardwareMap hardwareMap, double retracted, double drive, double deploy, String name) {
+        super(retracted, drive, deploy);
         servo = hardwareMap.servo.get(name);
     }
 }

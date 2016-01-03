@@ -8,32 +8,22 @@ import android.hardware.SensorManager;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 
 /**
- * TeleOp Mode
- * <p>
- *Enables control of the robot via the gamepad
+ * GyroOp Mode  (For testing orientiation)
+ *
  */
 
 public class GyroOp extends OpMode{
 
-    private SensorManager mSensorManager;
-    private Sensor mSensor;
-    private Context context;
-
-    private FTC7391PrintWriter dataWriter1;
-
     private static final String TAG = GyroOp.class.getSimpleName();
-
-    // Create a constant to convert nanoseconds to seconds.
-    private static final float NS2S = 1.0f / 1000000000.0f;
-    private final double[] deltaRotationVector = new double[4];
-    private double[] end = new double[3];
-
-    private float timestamp;
+    private FTC7391PrintWriter dataWriter1;
+    private Gyro gyro;
 
 
     public void init () {
-        dataWriter1 = new FTC7391PrintWriter("Gyro" , "TestFile1");
+        dataWriter1 = new FTC7391PrintWriter("Gyro" , "GyroOp");
         dataWriter1.print("INIT");
+        gyro = new Gyro(hardwareMap.appContext);
+        gyro.start();
     }
 
     public void update () {
@@ -41,55 +31,15 @@ public class GyroOp extends OpMode{
     }
 
     public void loop () {
-        dataWriter1.print("LOOP");
+        dataWriter1.print("LOOP ");
+    }
+
+    public void stop() {
+        gyro.stop();
     }
 
 
-    public void onSensorChanged(SensorEvent event) {
 
-        dataWriter1.print("Test");
-        // This timestep's delta rotation to be multiplied by the current rotation
-        // after computing it from the gyro sample data.
-        if (timestamp != 0) {
-            final float dT = (event.timestamp - timestamp) * NS2S;
-            // Axis of the rotation sample, not normalized yet.
-            float axisX = event.values[0];
-            float axisY = event.values[1];
-            float axisZ = event.values[2];
 
-            // Calculate the angular speed of the sample
-            double omegaMagnitude = Math.sqrt(axisX*axisX + axisY*axisY + axisZ*axisZ);
-
-            // Normalize the rotation vector if it's big enough to get the axis
-            // (that is, EPSILON should represent your maximum allowable margin of error)
-            if (omegaMagnitude > (Math.PI/30)) {
-                axisX /= omegaMagnitude;
-                axisY /= omegaMagnitude;
-                axisZ /= omegaMagnitude;
-            }
-
-            // Integrate around this axis with the angular speed by the timestep
-            // in order to get a delta rotation from this sample over the timestep
-            // We will convert this axis-angle representation of the delta rotation
-            // into a quaternion before turning it into the rotation matrix.
-            double thetaOverTwo = omegaMagnitude * dT / 2.0f;
-            double sinThetaOverTwo = Math.sin(thetaOverTwo);
-            double cosThetaOverTwo = Math.cos(thetaOverTwo);
-            deltaRotationVector[0] = sinThetaOverTwo * axisX;
-            deltaRotationVector[1] = sinThetaOverTwo * axisY;
-            deltaRotationVector[2] = sinThetaOverTwo * axisZ;
-            deltaRotationVector[3] = cosThetaOverTwo;
-        }
-        float[] drv = new float[deltaRotationVector.length];
-        for(int i = 0; i<drv.length; i++) {
-            drv[i] = (float)(deltaRotationVector[i]);
-        }
-        timestamp = event.timestamp;
-        float[] deltaRotationMatrix = new float[9];
-        SensorManager.getRotationMatrixFromVector(deltaRotationMatrix, drv);
-        // User code should concatenate the delta rotation we computed with the current rotation
-        // in order to get the updated rotation.
-        // rotationCurrent = rotationCurrent * deltaRotationMatrix;
-    }
 }
 

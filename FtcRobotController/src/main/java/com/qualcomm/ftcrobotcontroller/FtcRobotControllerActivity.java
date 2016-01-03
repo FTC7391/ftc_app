@@ -187,7 +187,7 @@ public class FtcRobotControllerActivity extends Activity {
     if (USE_DEVICE_EMULATION) { HardwareFactory.enableDeviceEmulation(); }
     camera=openFrontFacingCamera();
 
-    Gyro gyro = new Gyro();
+    Gyro gyro = new Gyro(context);
 
     SensorManager mSensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
 

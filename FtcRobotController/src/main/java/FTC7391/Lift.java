@@ -43,11 +43,10 @@ public class Lift {
     private int currentTicks2 = liftLow.getCurrentPosition();
     private int overallCurrent = currentTicks1 + currentTicks2;
 
-    private static boolean highDone = true;
-    private static boolean lowDone = true;
-    private static boolean angleDone = true;
-    private static boolean hookDone = true;
-
+    private static boolean highWasBusy = false;
+    private static boolean lowWasBusy = false;
+    private static boolean angleWasBusy = false;
+    private static boolean hookWasBusy = false;
 
 
 
@@ -187,28 +186,59 @@ public class Lift {
     }
 
     public static boolean isAtPosition(){
-        if (!liftHigh.isBusy()) {
-            liftHigh.setPower(0);
-            highDone = true;
+        boolean highDone = false;
+        boolean lowDone = false;
+        boolean angleDone = false;
+        boolean hookDone = false;
+
+        if (!liftHigh.isBusy()){
+            if (highWasBusy) {
+                liftHigh.setPower(0);
+                highDone = true;
+            }
         }
+        else
+            highWasBusy = true;
+
         if (!liftLow.isBusy()){
-             liftLow.setPower(0);
-            lowDone = true;
-         }
+            if (lowWasBusy) {
+                liftLow.setPower(0);
+                lowDone = true;
+            }
+        }
+        else
+            lowWasBusy = true;
+
         if (!liftAngle.isBusy()){
-            liftAngle.setPower(0);
-            angleDone = true;
+            if (angleWasBusy) {
+                liftHigh.setPower(0);
+                angleDone = true;
+            }
         }
-        if (!liftHook.isBusy()) {
-            liftHook.setPower(0);
-            hookDone = true;
+        else
+            angleWasBusy = true;
+
+
+        if (!liftHook.isBusy()){
+            if (hookWasBusy) {
+                liftHook.setPower(0);
+                hookDone = true;
+            }
         }
+        else
+            hookWasBusy = true;
+
         if (highDone && lowDone && angleDone && hookDone) return true;
         else return false;
 
     }
 
     public static boolean isEncoderDone() {
+
+        boolean highDone = false;
+        boolean lowDone = false;
+        boolean angleDone = false;
+        boolean hookDone = false;
 
 
         if(liftHigh.getPower() > 0) {
@@ -294,10 +324,11 @@ public class Lift {
         liftLow.setPower(liftLowPower);
         liftAngle.setPower(liftAnglePower);
         liftHook.setPower(liftHookPower);
-        angleDone = false;
-        lowDone = false;
-        highDone = false;
-        hookDone = false;
+
+        highWasBusy = false;
+        lowWasBusy = false;
+        angleWasBusy = false;
+        hookWasBusy = false;
 
     }
 

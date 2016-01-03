@@ -1,5 +1,7 @@
 package FTC7391;
 
+import android.util.Log;
+
 import java.util.ArrayList;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 
@@ -11,21 +13,34 @@ public class AutoOpBase extends OpMode {
     private static final String TAG = AutoOpBase.class.getSimpleName();
     protected State currentState;
     protected int step;
-    protected Stick stick;
-    protected ArrayList<State> stepsList = new ArrayList<State> (20);
+     protected ArrayList<State> stepsList = new ArrayList<State> (20);
     protected FTC7391PrintWriter autoWriter = new FTC7391PrintWriter("Auto", "telemetryWait");
+    private String stateStr = "";
+
+    protected Stick stick;
+    private Zipline ziplineBlue;
+    private Zipline ziplineRed;
+
 
     public void init(){
-        telemetry.addData(TAG, "AutoOp Init");
-        DriveTrainAuto.init(hardwareMap);
-        Lift.init(hardwareMap);
-        showTelemetryDrivetrain();
-        showTelemetryLift();
+        //telemetry.addData(TAG, "AutoOp Init");
         currentState = null;
         step = -1;
+
+        DriveTrainAuto.init(hardwareMap);
+        Lift.init(hardwareMap);
         stick = new Stick(hardwareMap);
         stick.setRetractedPosition();
+        ziplineBlue = new Zipline(hardwareMap,1, 1, .5, "zipline_blue");
+        ziplineRed = new Zipline(hardwareMap, 0, 0, .5, "zipline_red");
+        ziplineBlue.setRetractedPosition();
+        ziplineRed.setRetractedPosition();
+
+        stateStr = "INIT";
+        showTelemetry();
+
         //add steps to stepsList
+
     }
 
     public void loop(){
@@ -36,7 +51,8 @@ public class AutoOpBase extends OpMode {
     }
 
     public void stop(){
-        telemetry.addData(TAG, "Test Stopped");
+        //telemetry.addData(TAG, "Test Stopped")
+        stateStr = "STOP";
         currentState = new StopState();
     }
 
@@ -46,14 +62,13 @@ public class AutoOpBase extends OpMode {
         public void init(){
             //perform state action
             //showTelemetryDrivetrain();
-            showTelemetryLift();
+            showTelemetry();
         }
 
         public boolean update(){
             cnt++;
             if (cnt%10 == 0) {
-                showTelemetryDrivetrain();
-                showTelemetryLift();
+                showTelemetry();
             }
             return (updateState());
         }
@@ -72,14 +87,15 @@ public class AutoOpBase extends OpMode {
             power = p;
         }
 
-        public void init(){
+        public void init() {
             super.init();
 
             DriveTrainAuto.moveInches(inches, power);
             stick.setDrivePosition();
             autoWriter.printf("Move Inches %d \n", inches);
-            telemetry.addData(TAG, "Move Inches " + inches);
-            showTelemetryDrivetrain();
+            //telemetry.addData(TAG, "Move Inches " + inches);
+            stateStr = "MOVE INCHES" + inches;
+            showTelemetry();
         }
 
         public boolean updateState(){
@@ -100,7 +116,7 @@ public class AutoOpBase extends OpMode {
         public void init(){
             super.init();
             DriveTrainAuto.moveInches(0, 0);
-            telemetry.addData(TAG, "Wait State");
+            stateStr = "WAIT" + waitTime;
         }
 
         public boolean updateState(){
@@ -142,6 +158,8 @@ public class AutoOpBase extends OpMode {
         public RotateState(int d, double p){
             degrees = d;
             power = p;
+            stateStr = "ROTATE" + d + "degrees";
+
 
         }
 
@@ -167,7 +185,8 @@ public class AutoOpBase extends OpMode {
 
         public void init(){
             super.init();
-            DriveTrainAuto.moveInches(0,0);
+            DriveTrainAuto.moveInches(0, 0);
+            stateStr = "STOP";
         }
 
         public boolean updateState(){
@@ -187,8 +206,9 @@ public class AutoOpBase extends OpMode {
 
         public void init(){
             super.init();
-            DriveTrainAuto.moveInches(0,0);
+            DriveTrainAuto.moveInches(0, 0);
             stick.setDeployedPosition();
+            stateStr = "STICK";
         }
 
         public boolean updateState(){
@@ -213,6 +233,7 @@ public class AutoOpBase extends OpMode {
         public void init(){
             super.init();
             DriveTrainAuto.moveInches(inches, power);
+            stateStr = "STICK MOVE" + inches + "inches";
         }
 
         public boolean updateState(){
@@ -227,7 +248,7 @@ public class AutoOpBase extends OpMode {
             super.init();
             Lift.testPosition();
             stick.setDrivePosition();
-            telemetry.addData(TAG, "TestPositionState");
+            stateStr = "TEST POSITION";
         }
 
         public boolean updateState() { return Lift.isDone(); }
@@ -251,6 +272,7 @@ public class AutoOpBase extends OpMode {
             super.init();
             Lift.climbPosition();
             stick.setDrivePosition();
+            stateStr = "CLIMB POSITION";
 
         }
         public boolean updateState(){
@@ -264,12 +286,25 @@ public class AutoOpBase extends OpMode {
             super.init();
             Lift.readyToHangPosition();
             stick.setDrivePosition();
+            stateStr = "READY TO HANG POSITION";
         }
+
         public boolean updateState(){
             return Lift.isDone();
         }
     }
 
+
+    private void showTelemetry() {
+        showTelemetryDrivetrain();
+        showTelemetryLift();
+        showTelemetryState();
+     }
+
+    private void showTelemetryState() {
+        telemetry.addData("Auto STATE", stateStr);
+        Log.d("Auto STATE", stateStr);
+   }
 
     private void showTelemetryDrivetrain() {
         telemetry.addData("DriveTrain FrontRight", DriveTrainAuto.getPosition(DriveTrain.TestModes.MODE_MOVE_FRONT_RIGHT));
@@ -277,10 +312,16 @@ public class AutoOpBase extends OpMode {
         telemetry.addData("DriveTrain BackRight ", DriveTrainAuto.getPosition(DriveTrain.TestModes.MODE_MOVE_BACK_RIGHT));
         telemetry.addData("DriveTrain BackLeft  ", DriveTrainAuto.getPosition(DriveTrain.TestModes.MODE_MOVE_BACK_LEFT));
         autoWriter.printf("fr:%s fl:%s br:%s bl:%s \n",
-                DriveTrainAuto.getPosition(DriveTrain.TestModes.MODE_MOVE_FRONT_RIGHT),
-                DriveTrainAuto.getPosition(DriveTrain.TestModes.MODE_MOVE_FRONT_LEFT),
-                DriveTrainAuto.getPosition(DriveTrain.TestModes.MODE_MOVE_BACK_RIGHT),
-                DriveTrainAuto.getPosition(DriveTrain.TestModes.MODE_MOVE_BACK_LEFT));
+            DriveTrainAuto.getPosition(DriveTrain.TestModes.MODE_MOVE_FRONT_RIGHT),
+            DriveTrainAuto.getPosition(DriveTrain.TestModes.MODE_MOVE_FRONT_LEFT),
+            DriveTrainAuto.getPosition(DriveTrain.TestModes.MODE_MOVE_BACK_RIGHT),
+            DriveTrainAuto.getPosition(DriveTrain.TestModes.MODE_MOVE_BACK_LEFT));
+
+        Log.d("DriveTrain FrontRight", DriveTrainAuto.getPosition(DriveTrain.TestModes.MODE_MOVE_FRONT_RIGHT));
+        Log.d("DriveTrain FrontLeft ", DriveTrainAuto.getPosition(DriveTrain.TestModes.MODE_MOVE_FRONT_LEFT));
+        Log.d("DriveTrain BackRight ", DriveTrainAuto.getPosition(DriveTrain.TestModes.MODE_MOVE_BACK_RIGHT));
+        Log.d("DriveTrain BackLeft  ", DriveTrainAuto.getPosition(DriveTrain.TestModes.MODE_MOVE_BACK_LEFT));
+
     }
 
 
@@ -290,11 +331,17 @@ public class AutoOpBase extends OpMode {
         telemetry.addData("Angle", "original: " + Lift.originalTicksAngle + "|| end: " + Lift.getTicksLiftAngle());
         telemetry.addData("Hook", "original: "  + Lift.originalTicksHook + "|| end: " + Lift.getTicksLiftHook());
         autoWriter.printf("High %d %d    Low %d %d    Angle %d %d     Hook %d %d \n",
-                Lift.originalTicksHigh, Lift.getTicksLiftHigh(),
-                Lift.originalTicksLow, Lift.getTicksLiftLow(),
-                Lift.originalTicksAngle, Lift.getTicksLiftAngle(),
-                Lift.originalTicksHook, Lift.getTicksLiftHook()
+            Lift.originalTicksHigh, Lift.getTicksLiftHigh(),
+            Lift.originalTicksLow, Lift.getTicksLiftLow(),
+            Lift.originalTicksAngle, Lift.getTicksLiftAngle(),
+            Lift.originalTicksHook, Lift.getTicksLiftHook()
         );
+
+        Log.d("High", "original: "  + Lift.originalTicksHigh + "|| end: " + Lift.getTicksLiftHigh());
+        Log.d("Low", "original: "   + Lift.originalTicksLow + "|| end: " + Lift.getTicksLiftLow());
+        Log.d("Angle", "original: " + Lift.originalTicksAngle + "|| end: " + Lift.getTicksLiftAngle());
+        Log.d("Hook", "original: " + Lift.originalTicksHook + "|| end: " + Lift.getTicksLiftHook());
+
     }
 
 

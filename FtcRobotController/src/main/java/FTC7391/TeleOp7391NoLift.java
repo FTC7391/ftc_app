@@ -95,8 +95,8 @@ public class TeleOp7391NoLift extends OpMode {
 		liftJoystick = new LiftJoystick();
 		stick = new Stick(hardwareMap);
 		stick.setDrivePosition();
-		ziplineBlue = new Zipline(hardwareMap, .2, .7, "zipline_blue");
-		ziplineRed = new Zipline(hardwareMap, .8, .3, "zipline_red");
+		ziplineBlue = new Zipline(hardwareMap, 1,1,.5, "zipline_blue");
+		ziplineRed = new Zipline(hardwareMap, 0,0,.5, "zipline_red");
 		ziplineBlue.setDrivePosition();
 		ziplineRed.setDrivePosition();
 	}
