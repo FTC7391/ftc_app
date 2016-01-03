@@ -29,6 +29,7 @@ public class AutoOpBase extends OpMode {
 
         DriveTrainAuto.init(hardwareMap);
         Lift.init(hardwareMap);
+        Lift.runToPosition();
         stick = new Stick(hardwareMap);
         stick.setRetractedPosition();
         ziplineBlue = new Zipline(hardwareMap,1, 1, .5, "zipline_blue");
@@ -116,7 +117,6 @@ public class AutoOpBase extends OpMode {
         public void init(){
             super.init();
             DriveTrainAuto.moveInches(0, 0);
-           
         }
 
         public boolean updateState(){

@@ -59,7 +59,6 @@ public class Lift {
         liftHook = hardwareMap.dcMotor.get("motor_hook");
         liftAngle = hardwareMap.dcMotor.get("motor_angle");
 
-        runToPosition();
         //runUsingEncoders();
 
         originalTicksHigh = liftHigh.getCurrentPosition();
@@ -72,6 +71,8 @@ public class Lift {
         liftHook.setDirection(DcMotor.Direction.REVERSE);
     }
 
+
+
     protected static void resetEncoders(){
         liftHigh.setMode(DcMotorController.RunMode.RESET_ENCODERS);
         liftLow.setMode(DcMotorController.RunMode.RESET_ENCODERS);
@@ -80,7 +81,7 @@ public class Lift {
 
     }
 
-    protected static void runToPosition(){
+    public static void runToPosition(){
         resetEncoders();
         liftHigh.setMode(DcMotorController.RunMode.RUN_TO_POSITION);
         liftLow.setMode(DcMotorController.RunMode.RUN_TO_POSITION);
