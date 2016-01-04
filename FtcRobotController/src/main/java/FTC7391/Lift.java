@@ -1,5 +1,7 @@
 package FTC7391;
 
+import android.util.Log;
+
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorController;
 import com.qualcomm.robotcore.hardware.HardwareMap;
@@ -43,12 +45,6 @@ public class Lift {
     private int currentTicks2 = liftLow.getCurrentPosition();
     private int overallCurrent = currentTicks1 + currentTicks2;
 
-    private static boolean highWasBusy = false;
-    private static boolean lowWasBusy = false;
-    private static boolean angleWasBusy = false;
-    private static boolean hookWasBusy = false;
-
-
 
     public static void init (HardwareMap hardwareMap) {
         if (initialized) return;
@@ -68,7 +64,7 @@ public class Lift {
 
         liftLow.setDirection(DcMotor.Direction.REVERSE);
         liftAngle.setDirection(DcMotor.Direction.REVERSE);
-        liftHook.setDirection(DcMotor.Direction.REVERSE);
+       // liftHook.setDirection(DcMotor.Direction.REVERSE);
     }
 
 
@@ -192,55 +188,47 @@ public class Lift {
         boolean angleDone = false;
         boolean hookDone = false;
 
-        if (!liftHigh.isBusy()){
-            if (highWasBusy) {
+
+        if (!liftHigh.isBusy() && Math.abs(Math.abs(liftHigh.getCurrentPosition()) - liftHigh.getTargetPosition()) < 50 ){
                 liftHigh.setPower(0);
                 highDone = true;
-            }
+                Log.d("Auto", "High Done True");
         }
-        else
-            highWasBusy = true;
 
-        if (!liftLow.isBusy()){
-            if (lowWasBusy) {
+        Log.d("Auto", "High Busy" + liftHigh.getCurrentPosition() + " " + liftHigh.getTargetPosition());
+
+        if (!liftLow.isBusy() && Math.abs(liftLow.getCurrentPosition() - liftLow.getTargetPosition()) < 50){
                 liftLow.setPower(0);
                 lowDone = true;
-            }
+                Log.d("Auto", "Low Done True");
         }
-        else
-            lowWasBusy = true;
 
-        if (!liftAngle.isBusy()){
-            if (angleWasBusy) {
+
+        if (!liftAngle.isBusy() && Math.abs(liftAngle.getCurrentPosition() - liftAngle.getTargetPosition()) < 50){
                 liftHigh.setPower(0);
                 angleDone = true;
-            }
+                Log.d("Auto", "Angle Done True");
         }
-        else
-            angleWasBusy = true;
 
 
-        if (!liftHook.isBusy()){
-            if (hookWasBusy) {
-                liftHook.setPower(0);
+        if (!liftHook.isBusy() && Math.abs(liftHook.getCurrentPosition() - liftHook.getTargetPosition()) < 50){
+                //liftHook.setPower(0);
                 hookDone = true;
-            }
+                Log.d("Auto", "Hook Done True");
         }
-        else
-            hookWasBusy = true;
 
-        if (highDone && lowDone && angleDone && hookDone) return true;
+
+        if (highDone && lowDone && angleDone && hookDone) return true;                 
+
         else return false;
 
     }
 
     public static boolean isEncoderDone() {
-
         boolean highDone = false;
         boolean lowDone = false;
         boolean angleDone = false;
         boolean hookDone = false;
-
 
         if(liftHigh.getPower() > 0) {
             if (liftHigh.getTargetPosition() <= liftHigh.getCurrentPosition()) {
@@ -318,6 +306,9 @@ public class Lift {
         liftAngle.setTargetPosition(liftAngleDifference);
         liftHook.setTargetPosition(liftHookDifference);
 
+
+
+
     }
 
     public static void setPowerOfMotors(double liftHighPower, double liftLowPower, double liftAnglePower, double liftHookPower) {
@@ -326,11 +317,6 @@ public class Lift {
         liftAngle.setPower(liftAnglePower);
         liftHook.setPower(liftHookPower);
 
-        highWasBusy = false;
-        lowWasBusy = false;
-        angleWasBusy = false;
-        hookWasBusy = false;
-
     }
 
     public static void testPosition(){
@@ -338,9 +324,14 @@ public class Lift {
         setPowerOfMotors(1, 1, 1, 1);
     }
 
-    public static void drivePosition(){
-        setMotorTargetPosition(0, -884, 0, -7);
-        setPowerOfMotors(0, 1, 0, 1);
+    public static void drivePosition1(){
+        setMotorTargetPosition(800, 884, 0, 0);
+        setPowerOfMotors(1, 1, 1, 1);
+    }
+
+    public static void drivePosition2(){
+        setMotorTargetPosition(800, 884, 200, 80);
+        setPowerOfMotors(1, 1, 1, 1);
     }
 
     public static void climbPosition(){

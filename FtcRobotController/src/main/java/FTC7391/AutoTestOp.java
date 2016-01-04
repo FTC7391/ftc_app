@@ -17,30 +17,33 @@ public class AutoTestOp extends AutoOpBase
         int isRed = -1;
 
         stepsList.add(new WaitState(0));
-        stepsList.add(new DrivePositionState());
+        stepsList.add(new DrivePosition1State());
+        stepsList.add(new WaitState(0));
+        stepsList.add(new DrivePosition2State());
+
 
 
         stepsList.add(new WaitState(0));
         stepsList.add(new MoveState(24, 1));
         stepsList.add(new WaitState(0));
         stepsList.add(new MoveState(-24, 1));
-        stepsList.add(new WaitState(0));
-        stepsList.add(new MoveState(12, 1));
-        stepsList.add(new WaitState(0));
-        stepsList.add(new MoveState(-12, 1));
-        stepsList.add(new WaitState(0));
-        stepsList.add(new RotateState(-90 * isRed, 1));
-        stepsList.add(new WaitState(0));
-        stepsList.add(new RotateState(-90 * isRed, 1));
-        stepsList.add(new WaitState(0));
-        stepsList.add(new RotateState(90 * isRed, 1));
-        stepsList.add(new WaitState(0));
-        stepsList.add(new RotateState(90 * isRed, 1));
-
-        stepsList.add(new WaitState(0));
-        stepsList.add(new ClimbPositionState());
-        stepsList.add(new WaitState(0));
-        stepsList.add(new DrivePositionState());
+//        stepsList.add(new WaitState(0));
+//        stepsList.add(new MoveState(12, 1));
+//        stepsList.add(new WaitState(0));
+//        stepsList.add(new MoveState(-12, 1));
+//        stepsList.add(new WaitState(0));
+//        stepsList.add(new RotateState(-90 * isRed, 1));
+//        stepsList.add(new WaitState(0));
+//        stepsList.add(new RotateState(-90 * isRed, 1));
+//        stepsList.add(new WaitState(0));
+//        stepsList.add(new RotateState(90 * isRed, 1));
+//        stepsList.add(new WaitState(0));
+//        stepsList.add(new RotateState(90 * isRed, 1));
+//
+//        stepsList.add(new WaitState(0));
+//        stepsList.add(new ClimbPositionState());
+//        stepsList.add(new WaitState(0));
+        //stepsList.add(new DrivePositionState());
 
         //stepsList.add(new WaitState(0));
 

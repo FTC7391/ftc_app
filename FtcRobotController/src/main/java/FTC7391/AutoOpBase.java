@@ -254,16 +254,30 @@ public class AutoOpBase extends OpMode {
         public boolean updateState() { return Lift.isDone(); }
     }
 
-    protected class DrivePositionState extends State {
+    protected class DrivePosition1State extends State {
 
         public void init(){
             super.init();
-            Lift.drivePosition();
+            Lift.drivePosition1();
             stick.setDrivePosition();
+            stateStr = "DRIVE POSITION 1";
+
         }
 
         public boolean updateState() { return Lift.isDone(); }
 
+    }
+
+    protected class DrivePosition2State extends State {
+
+        public void init(){
+            super.init();
+            Lift.drivePosition2();
+            stateStr = "DRIVE POSITION 2";
+
+        }
+
+        public boolean updateState() { return Lift.isDone();}
     }
 
     protected class ClimbPositionState extends State {

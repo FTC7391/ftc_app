@@ -134,8 +134,7 @@ public class TeleOp7391 extends OpMode {
 
 
 		if (gamepad1.y){
-			stick.setDeployedPosition();
-		}
+			stick.setDeployedPosition();}
 
 		if (gamepad1.x){
 			//ziplineBlue.setDeployedPosition();
