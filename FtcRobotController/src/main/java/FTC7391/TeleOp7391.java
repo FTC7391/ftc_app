@@ -31,6 +31,8 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package FTC7391;
 
+import android.util.Log;
+
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.DcMotorController;
 
@@ -41,40 +43,22 @@ import com.qualcomm.robotcore.hardware.DcMotorController;
  */
 public class TeleOp7391 extends OpMode {
 
-
 	private static final String TAG = TeleOp7391.class.getSimpleName();
+	protected FTC7391PrintWriter dbgWriter = new FTC7391PrintWriter("Tele", "Debug");
+
 	private static double axialPower;
 	private static double rotatePower;
-	private static double powerLift;
+	private static double liftPower;
+
 	private Stick stick;
 	private Zipline ziplineBlue;
 	private Zipline ziplineRed;
 
-	/*
-	 * Note: the configuration of the servos is such that
-	 * as the arm servo approaches 0, the arm position moves up (away from the floor).
-	 * Also, as the claw servo approaches 0, the claw opens up (drops the game element).
-	 */
-	// TETRIX VALUES.
-	final static double ARM_MIN_RANGE  = 0.20;
-	final static double ARM_MAX_RANGE  = 0.90;
-	final static double CLAW_MIN_RANGE  = 0.20;
-	final static double CLAW_MAX_RANGE  = 0.7;
-
 	private DriveJoystick driveJoystick;
 	private LiftJoystick liftJoystick;
 
-	// position of the arm servo.
-	double armPosition;
+	private static int nTeleLoop = 0;
 
-	// amount to change the arm servo position.
-	double armDelta = 0.1;
-
-	// position of the claw servo
-	double clawPosition;
-
-	// amount to change the claw servo position by
-	double clawDelta = 0.1;
 
 	/**
 	 * Constructor
@@ -111,7 +95,11 @@ public class TeleOp7391 extends OpMode {
 	@Override
 	public void loop() {
 
-		telemetry.addData(TAG, "OpMode Started");
+		if (++ nTeleLoop == 10) {
+			nTeleLoop = 0;
+			showTelemetry();
+		}
+
 
 		/*
 		driveJoystick.update(gamepad1);
@@ -122,14 +110,14 @@ public class TeleOp7391 extends OpMode {
 
 		axialPower = DriveTrainTele.scaleInput(gamepad1.left_stick_y);
 		rotatePower = DriveTrainTele.scaleInput(gamepad1.right_stick_x);
-		powerLift = DriveTrainTele.scaleInput(gamepad2.left_stick_y);
+		liftPower = DriveTrainTele.scaleInput(gamepad2.left_stick_y);
 
 
+		/************ GAMEPAD 1 ***************************************/
 		/*
 		 * Gamepad 1
 		 *
-		 * Gamepad 1 controls the motors via the left stick, and it controls the
-		 * wrist/claw via the a,b, x, y buttons
+		 * Gamepad 1 controls the motors via the left stick, and it controls
 		 */
 
 
@@ -138,58 +126,16 @@ public class TeleOp7391 extends OpMode {
 
 		if (gamepad1.x){
 			//ziplineBlue.setDeployedPosition();
-			Lift.setTestMode(Lift.TestModes.MODE_MOVE_HOOK, -.25);
+			//Lift.setTestMode(Lift.TestModes.MODE_MOVE_HOOK_TO_POSITION, -.25);
 		}
 		if (gamepad1.b){
 			ziplineRed.setDeployedPosition();
+			ziplineBlue.setDrivePosition();
 		}
 		if (gamepad1.a){
 			ziplineRed.setDrivePosition();
-			ziplineBlue.setDrivePosition();
-			stick.setDrivePosition();
+			ziplineBlue.setDeployedPosition();
 		}
-
-		if (gamepad2.y) {
-			//DriveTrain.testRotateDegrees(positiveNumber);
-			Lift.setTestMode(Lift.TestModes.MODE_MOVE_HIGH, powerLift);
-		}
-		else{
-			Lift.liftHigh.setPower(0);
-		}
-
-
-		if (gamepad2.b) {
-			//DriveTrain.testRotateDegrees(negativeNumber);
-			Lift.setTestMode(Lift.TestModes.MODE_MOVE_LOW, powerLift);
-		}
-		else{
-			Lift.liftLow.setPower(0);
-		}
-
-
-		if (gamepad2.a) {
-			Lift.setTestMode(Lift.TestModes.MODE_MOVE_ANGLE, powerLift);
-		}
-		else{
-			Lift.liftAngle.setPower(0);
-		}
-
-
-		if (gamepad2.x) {
-			Lift.setTestMode(Lift.TestModes.MODE_MOVE_HOOK, powerLift);
-		}
-		else{
-			Lift.liftHook.setPower(0);
-		}
-
-
-		if(gamepad2.dpad_up) {
-			Lift.setTestMode(Lift.TestModes.MODE_MOVE_BOTH, powerLift);
-		}
-
-
-
-
 
 
 
@@ -208,6 +154,66 @@ public class TeleOp7391 extends OpMode {
 		} else {
 			DriveTrainTele.setTestMode(DriveTrainTele.TestModes.MODE_STOP, 0, 0);
 		}
+
+
+		/************ GAMEPAD 2 ***************************************/
+		if (gamepad2.left_bumper) {
+			if (gamepad2.y) {
+				Lift.setTestMode(Lift.TestModes.MODE_GOTO_DRIVE_POSITION1, 1);
+			}
+			if (gamepad2.x) {
+				Lift.setTestMode(Lift.TestModes.MODE_GOTO_DRIVE_POSITION2, 1);
+			}
+
+		}
+		else {
+
+
+//			if(gamepad2.dpad_up) {
+//				Lift.setTestMode(Lift.TestModes.MODE_MOVE_BOTH, liftPower);
+//			}
+//
+
+			if (gamepad2.y) {
+				//DriveTrain.testRotateDegrees(positiveNumber);
+				Lift.setTestMode(Lift.TestModes.MODE_MOVE_HIGH, liftPower);
+			}
+			else {
+				Lift.highRunToPosition();
+			}
+
+
+			if (gamepad2.b) {
+				//DriveTrain.testRotateDegrees(negativeNumber);
+				Lift.setTestMode(Lift.TestModes.MODE_MOVE_LOW, liftPower);
+			}
+			else {
+				Lift.lowRunToPosition();
+			}
+
+
+			if (gamepad2.a) {
+				Lift.setTestMode(Lift.TestModes.MODE_MOVE_ANGLE, liftPower);
+			}
+			else {
+				Lift.angleRunToPosition();
+			}
+
+
+			if (gamepad2.x) {
+				Lift.setTestMode(Lift.TestModes.MODE_MOVE_HOOK, liftPower/4);
+			}
+			else {
+				Lift.hookRunToPosition();
+			}
+
+		}
+
+
+
+
+
+
 	}
 
 	/*
@@ -219,4 +225,59 @@ public class TeleOp7391 extends OpMode {
 	public void stop() {
 
 	}
+
+
+	private void showTelemetry(){
+		showTelemetryPower();
+		showTelemetryDrivetrain();
+		showTelemetryLift();
+
+	}
+	private void showTelemetryPower() {
+		telemetry.addData("10  ", String.format("AxialPower  : %.2f", axialPower));
+		telemetry.addData("11  ", String.format("RotatePower : %.2f", rotatePower));
+		telemetry.addData("12 ", String.format("LiftPower   : %.2f", liftPower));
+
+	}
+
+	private void showTelemetryDrivetrain() {
+		telemetry.addData("20 " , String.format("DriveTrain FrontRight %s", DriveTrainAuto.getPosition(DriveTrain.TestModes.MODE_MOVE_FRONT_RIGHT)));
+		telemetry.addData("21 " , String.format("DriveTrain FrontLeft  %s", DriveTrainAuto.getPosition(DriveTrain.TestModes.MODE_MOVE_FRONT_LEFT)));
+		telemetry.addData("22 " , String.format("DriveTrain BackRight  %s", DriveTrainAuto.getPosition(DriveTrain.TestModes.MODE_MOVE_BACK_RIGHT)));
+		telemetry.addData("23 " , String.format("DriveTrain BackLeft   %s", DriveTrainAuto.getPosition(DriveTrain.TestModes.MODE_MOVE_BACK_LEFT)));
+		dbgWriter.printf("fr:%s fl:%s br:%s bl:%s \n",
+			DriveTrainAuto.getPosition(DriveTrain.TestModes.MODE_MOVE_FRONT_RIGHT),
+			DriveTrainAuto.getPosition(DriveTrain.TestModes.MODE_MOVE_FRONT_LEFT),
+			DriveTrainAuto.getPosition(DriveTrain.TestModes.MODE_MOVE_BACK_RIGHT),
+			DriveTrainAuto.getPosition(DriveTrain.TestModes.MODE_MOVE_BACK_LEFT));
+
+		Log.d("DriveTrain", "FrontRight" + DriveTrainAuto.getPosition(DriveTrain.TestModes.MODE_MOVE_FRONT_RIGHT));
+		Log.d("DriveTrain", "FrontLeft " + DriveTrainAuto.getPosition(DriveTrain.TestModes.MODE_MOVE_FRONT_LEFT));
+		Log.d("DriveTrain", "BackRight " + DriveTrainAuto.getPosition(DriveTrain.TestModes.MODE_MOVE_BACK_RIGHT));
+		Log.d("DriveTrain", "BackLeft  " + DriveTrainAuto.getPosition(DriveTrain.TestModes.MODE_MOVE_BACK_LEFT));
+
+	}
+
+	private void showTelemetryLift() {
+		telemetry.addData("30 " , String.format("High  : original: %d current: %d", Lift.originalTicksHigh, Lift.getTicksLiftHigh()));
+		telemetry.addData("31 " , String.format("Low   : original: %d current: %d", Lift.originalTicksLow, Lift.getTicksLiftLow()));
+		telemetry.addData("32 " , String.format("Angle : original: %d current: %d", Lift.originalTicksAngle, Lift.getTicksLiftAngle()));
+		telemetry.addData("33 " , String.format("Hook  : original: %d currnet: %d", Lift.originalTicksHook, Lift.getTicksLiftHook()));
+		dbgWriter.printf("High %d %d    Low %d %d    Angle %d %d     Hook %d %d \n",
+			Lift.originalTicksHigh, Lift.getTicksLiftHigh(),
+			Lift.originalTicksLow, Lift.getTicksLiftLow(),
+			Lift.originalTicksAngle, Lift.getTicksLiftAngle(),
+			Lift.originalTicksHook, Lift.getTicksLiftHook()
+		);
+
+		Log.d("Lift", "High  : original:" + Lift.originalTicksHigh + "|| end: " + Lift.getTicksLiftHigh());
+		Log.d("Lift", "Low   : original:" + Lift.originalTicksLow + "|| end: " + Lift.getTicksLiftLow());
+		Log.d("Lift", "Angle : original:" + Lift.originalTicksAngle + "|| end: " + Lift.getTicksLiftAngle());
+		Log.d("Lift", "Hook  : original:" + Lift.originalTicksHook + "|| end: " + Lift.getTicksLiftHook());
+
+	}
+
+
+
+
 }

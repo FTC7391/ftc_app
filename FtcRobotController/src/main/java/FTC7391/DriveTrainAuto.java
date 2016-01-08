@@ -15,16 +15,12 @@ public class DriveTrainAuto extends DriveTrain{
     private static int[] cummulativeError = {0,0,0,0};
     private static int ticks = 0;
     private static boolean isRotating = false;
-    private static boolean frWasBusy = false;
-    private static boolean flWasBusy = false;
-    private static boolean brWasBusy = false;
-    private static boolean blWasBusy = false;
 
     public static void init (HardwareMap hardwareMap) {
         DriveTrain.init(hardwareMap);
-        runToPosition();
-        //runUsingEncoders();
-    }
+
+        resetEncoders();
+     }
 
     public static String getPosition(TestModes mode){
 
@@ -50,7 +46,6 @@ public class DriveTrainAuto extends DriveTrain{
     public static void moveInches(int distance, double power) {
 
         isRotating = false;
-        frWasBusy = flWasBusy = brWasBusy = blWasBusy = false;
 
         power = Math.abs(power);
         ticks = (int) (distance * TICKS_PER_INCH);
@@ -94,7 +89,6 @@ public class DriveTrainAuto extends DriveTrain{
      */
     public static void rotateDegrees(double degrees, double power) {
         isRotating = true;
-        frWasBusy = flWasBusy = brWasBusy = blWasBusy = false;
         //I changed ticks to degrees and changed the thing under the first else
         //With no fudge factor,
         // for degrees> 0, get 235deg when want 360deg
@@ -120,6 +114,7 @@ public class DriveTrainAuto extends DriveTrain{
     }
 
     private static void setMotorTargetPosition(int frontRightPosition, int frontLeftPosition, int backRightPosition, int backLeftPosition) {
+        runToPosition();
         motorFrontRight.setTargetPosition(motorFrontRight.getCurrentPosition() + frontRightPosition);
         motorFrontLeft.setTargetPosition(motorFrontLeft.getCurrentPosition() + frontLeftPosition);
         motorBackRight.setTargetPosition(motorBackRight.getCurrentPosition() + backRightPosition);
@@ -134,41 +129,25 @@ public class DriveTrainAuto extends DriveTrain{
     public static boolean isAtPosition(){
         boolean frDone = false, flDone = false, brDone = false, blDone = false;
 
-        if (!motorFrontRight.isBusy()){
-            if (frWasBusy) {
-                motorFrontRight.setPower(0);
+        if (!motorFrontRight.isBusy() && Math.abs(motorFrontRight.getCurrentPosition() - motorFrontRight.getTargetPosition()) < 50 ){
+              motorFrontRight.setPower(0);
                 frDone = true;
-            }
-        }
-        else
-            frWasBusy = true;
+         }
 
-        if (!motorFrontLeft.isBusy() ){
-            if (flWasBusy) {
+        if (!motorFrontLeft.isBusy() && Math.abs(motorFrontLeft.getCurrentPosition() - motorFrontLeft.getTargetPosition()) < 50 ){
                 motorFrontLeft.setPower(0);
                 flDone = true;
-            }
-        }
-        else
-            flWasBusy = true;
+         }
 
-        if (!motorBackLeft.isBusy() ){
-            if (blWasBusy) {
-                motorFrontLeft.setPower(0);
+        if (!motorBackLeft.isBusy()  && Math.abs(motorBackLeft.getCurrentPosition() - motorBackLeft.getTargetPosition()) < 50 ){
+                 motorFrontLeft.setPower(0);
                 blDone = true;
-            }
         }
-        else
-            blWasBusy = true;
 
-        if (!motorBackRight.isBusy() ){
-            if (brWasBusy) {
+        if (!motorBackRight.isBusy() && Math.abs(motorBackRight.getCurrentPosition() - motorBackRight.getTargetPosition()) < 50 ){
                 motorBackRight.setPower(0);
                 brDone = true;
-            }
         }
-        else
-            brWasBusy = true;
 
          if (frDone && flDone && brDone && blDone){
             return true;
