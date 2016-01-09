@@ -16,30 +16,33 @@ public abstract class AutoOp extends AutoOpBase
     public void init()
     {
         super.init();
-        setRed();
+        
+        stepsList.add(new RunToPositionState(20));
         stepsList.add(new DrivePosition1State());
-        stepsList.add(new WaitState(0));
+        stepsList.add(new WaitState (0));
         stepsList.add(new DrivePosition2State());
         stepsList.add(new WaitState (0));
-        stepsList.add(new MoveState(-24, 1));
+        stepsList.add(new MoveState(24, 1));
         stepsList.add(new WaitState(0));
         stepsList.add(new RotateState(60 * isRed, 1));
         stepsList.add(new WaitState(0));
-        stepsList.add(new MoveState(-72, 1));
+        stepsList.add(new MoveState(75, 1));
         stepsList.add(new WaitState(0));
-        stepsList.add(new RotateState(58 * isRed, 1));
+        stepsList.add(new RotateState(40 * isRed, 1));
         stepsList.add(new WaitState(0));
-        stepsList.add(new MoveState(-22, 1));
+        stepsList.add(new StickLiftState());
+        stepsList.add(new WaitState(0));
+        stepsList.add(new MoveState(18, 1));
         stepsList.add(new WaitState(0));
         stepsList.add(new StickState());
         stepsList.add(new WaitState(0));
-        stepsList.add(new StickMoveState (6, 1));
+        stepsList.add(new StickMoveState (-6, 1));
         stepsList.add(new WaitState(0));
-        stepsList.add(new MoveState(48,1));
+        stepsList.add(new MoveState(-48,1));
         stepsList.add(new WaitState(0));
         stepsList.add(new RotateState(-130 * isRed, 1));
         stepsList.add(new WaitState(0));
-        stepsList.add(new MoveState(48, 1));
+        stepsList.add(new MoveState(-48, 1));
         stepsList.add(new StopState());
 
     }

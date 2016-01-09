@@ -26,10 +26,6 @@ public class AutoTestOp extends AutoOpBase
         stepsList.add(new DrivePosition1State());
         stepsList.add(new WaitState(0));
         stepsList.add(new DrivePosition2State());
-        stepsList.add(new WaitState(0));
-        stepsList.add(new StraightHook());
-
-
 
 
         stepsList.add(new WaitState(0));
@@ -41,9 +37,6 @@ public class AutoTestOp extends AutoOpBase
         stepsList.add(new WaitState(0));
         stepsList.add(new RotateState(-90 * isRed, 1));
         stepsList.add(new WaitState(0));
-        stepsList.add(new StraightHook());
-
-
 //        stepsList.add(new RotateState(90 * isRed, 1));
 //        stepsList.add(new WaitState(0));
 //        stepsList.add(new RotateState(90 * isRed, 1));

@@ -49,6 +49,7 @@ public class TeleOp7391 extends OpMode {
 	private static double axialPower;
 	private static double rotatePower;
 	private static double liftPower;
+	private static double liftLowPower;
 
 	private Stick stick;
 	private Zipline ziplineBlue;
@@ -111,6 +112,11 @@ public class TeleOp7391 extends OpMode {
 		axialPower = DriveTrainTele.scaleInput(gamepad1.left_stick_y);
 		rotatePower = DriveTrainTele.scaleInput(gamepad1.right_stick_x);
 		liftPower = DriveTrainTele.scaleInput(gamepad2.left_stick_y);
+		liftLowPower = DriveTrainTele.scaleInput(gamepad2.right_stick_y);
+
+		//Use right stick for low power for lift
+		if (liftPower == 0 && liftLowPower != 0)
+			liftPower = liftLowPower/8;
 
 
 		/************ GAMEPAD 1 ***************************************/
@@ -118,16 +124,22 @@ public class TeleOp7391 extends OpMode {
 		 * Gamepad 1
 		 *
 		 * Gamepad 1 controls the motors via the left stick, and it controls
+		 * the stick and ziplines
 		 */
 
 
-		if (gamepad1.y){
-			stick.setDeployedPosition();}
-
 		if (gamepad1.x){
+			stick.setDrivePosition();
+			ziplineRed.setDrivePosition();
+			ziplineBlue.setDrivePosition();
 			//ziplineBlue.setDeployedPosition();
 			//Lift.setTestMode(Lift.TestModes.MODE_MOVE_HOOK_TO_POSITION, -.25);
 		}
+
+		if (gamepad1.y){
+			stick.setDeployedPosition();
+		}
+
 		if (gamepad1.b){
 			ziplineRed.setDeployedPosition();
 			ziplineBlue.setDrivePosition();
@@ -204,7 +216,7 @@ public class TeleOp7391 extends OpMode {
 
 
 			if (gamepad2.x) {
-				Lift.setTestMode(Lift.TestModes.MODE_MOVE_HOOK, liftPower/4);
+				Lift.setTestMode(Lift.TestModes.MODE_MOVE_HOOK, liftPower);
 			}
 			else {
 				Lift.hookRunToPosition();

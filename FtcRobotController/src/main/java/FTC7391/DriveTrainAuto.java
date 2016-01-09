@@ -1,5 +1,7 @@
 package FTC7391;
 
+import android.util.Log;
+
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
@@ -15,6 +17,8 @@ public class DriveTrainAuto extends DriveTrain{
     private static int[] cummulativeError = {0,0,0,0};
     private static int ticks = 0;
     private static boolean isRotating = false;
+
+    private static final int MOTOR_POSITION_THESHOLD = 20;
 
     public static void init (HardwareMap hardwareMap) {
         DriveTrain.init(hardwareMap);
@@ -54,10 +58,10 @@ public class DriveTrainAuto extends DriveTrain{
             setPowerOfMotors(power, power, power, power);
         else if (distance < 0)
             setPowerOfMotors(-power, -power, -power, -power);
-        else
-            setPowerOfMotors(0.0, 0.0, 0.0, 0.0);
 
-    }
+//        else
+//            //setPowerOfMotors(0.0, 0.0, 0.0, 0.0);
+     }
 
     public static void moveLateralInches(boolean right, int distance, double power) {
         if (right) {
@@ -104,12 +108,12 @@ public class DriveTrainAuto extends DriveTrain{
         if (degrees > 0) {
             //Rotate to the left,frontRight & backRight postive
             setPowerOfMotors(power, -power, power, -power);
-        } else if (degrees < 0) {
+        } else if (degrees < 0)
             //Rotate to the right,frontLeft & backLeft postive
             setPowerOfMotors(-power, power, -power, power);
-        } else {
-            setPowerOfMotors(0.0, 0.0, 0.0, 0.0);
-        }
+//        } else {
+//            //setPowerOfMotors(0.0, 0.0, 0.0, 0.0);
+//        }
 
     }
 
@@ -129,32 +133,40 @@ public class DriveTrainAuto extends DriveTrain{
     public static boolean isAtPosition(){
         boolean frDone = false, flDone = false, brDone = false, blDone = false;
 
-        if (!motorFrontRight.isBusy() && Math.abs(motorFrontRight.getCurrentPosition() - motorFrontRight.getTargetPosition()) < 50 ){
-              motorFrontRight.setPower(0);
+        Log.v("Auto", "motorFR " + motorFrontRight.isBusy() + " " + motorFrontRight.getCurrentPosition() + " " + motorFrontRight.getTargetPosition());
+        Log.v("Auto", "motorFR " + motorFrontRight.isBusy() + " " + motorFrontRight.getCurrentPosition() + " " + motorFrontRight.getTargetPosition());
+        Log.v("Auto", "motorFL                          " + motorFrontLeft.isBusy() + " " + motorFrontLeft.getCurrentPosition() + " " + motorFrontLeft.getTargetPosition());
+        Log.v("Auto", "motorBR                                                    " + motorBackRight.isBusy() + " " + motorBackRight.getCurrentPosition() + " " + motorBackRight.getTargetPosition());
+        Log.v("Auto", "motorBL                                                                               " + motorBackLeft.isBusy() + " " + motorBackLeft.getCurrentPosition() + " " + motorBackLeft.getTargetPosition());
+
+        if (!motorFrontRight.isBusy() && Math.abs(motorFrontRight.getCurrentPosition() - motorFrontRight.getTargetPosition()) < MOTOR_POSITION_THESHOLD ){
+              //motorFrontRight.setPower(0);
                 frDone = true;
          }
 
-        if (!motorFrontLeft.isBusy() && Math.abs(motorFrontLeft.getCurrentPosition() - motorFrontLeft.getTargetPosition()) < 50 ){
-                motorFrontLeft.setPower(0);
+        if (!motorFrontLeft.isBusy() && Math.abs(motorFrontLeft.getCurrentPosition() - motorFrontLeft.getTargetPosition()) < MOTOR_POSITION_THESHOLD ){
+                //motorFrontLeft.setPower(0);
                 flDone = true;
          }
 
-        if (!motorBackLeft.isBusy()  && Math.abs(motorBackLeft.getCurrentPosition() - motorBackLeft.getTargetPosition()) < 50 ){
-                 motorFrontLeft.setPower(0);
-                blDone = true;
-        }
-
-        if (!motorBackRight.isBusy() && Math.abs(motorBackRight.getCurrentPosition() - motorBackRight.getTargetPosition()) < 50 ){
-                motorBackRight.setPower(0);
+        if (!motorBackRight.isBusy() && Math.abs(motorBackRight.getCurrentPosition() - motorBackRight.getTargetPosition()) < MOTOR_POSITION_THESHOLD ){
+                //motorBackRight.setPower(0);
                 brDone = true;
         }
 
-         if (frDone && flDone && brDone && blDone){
+        if (!motorBackLeft.isBusy()  && Math.abs(motorBackLeft.getCurrentPosition() - motorBackLeft.getTargetPosition()) < MOTOR_POSITION_THESHOLD ){
+            //motorFrontLeft.setPower(0);
+            blDone = true;
+        }
+
+
+        if (frDone && flDone && brDone && blDone){
             return true;
         }
         else return false;
     }
 
+    /* Not using this during Autonomous */
     public static boolean isEncoderDone() {
         if (isRotating &&
                 ( (ticks > 0 && motorBackLeft.getCurrentPosition() <= motorBackLeft.getTargetPosition()) ||
