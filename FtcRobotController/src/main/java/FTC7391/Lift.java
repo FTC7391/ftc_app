@@ -22,6 +22,13 @@ public class Lift {
     public static int originalTicksHook = 0; //to be added
     public static int originalTicksAngle = 0; //to be added
 
+    public static int liftHighTargetPosition = 0;
+    public static int liftLowTargetPosition = 0;
+    public static int liftAngleTargetPosition = 0;
+    public static int liftHookTargetPosition = 0;
+
+
+
     private static final int TOTAL_TICKS_PER_ROTATION = 1120;
     private static final int TOTAL_DEGREES = 360;
     private static final double DIAMETER= 1.0;
@@ -101,21 +108,33 @@ public class Lift {
         lowRunToPosition();
         angleRunToPosition();
         hookRunToPosition();
+        liftHigh.setMode(DcMotorController.RunMode.RUN_TO_POSITION);
+        liftLow.setMode(DcMotorController.RunMode.RUN_TO_POSITION);
+        liftAngle.setMode(DcMotorController.RunMode.RUN_TO_POSITION);
+        liftHook.setMode(DcMotorController.RunMode.RUN_TO_POSITION);
 
 //        liftHigh.setMode(DcMotorController.RunMode.RUN_TO_POSITION);
 //        liftLow.setMode(DcMotorController.RunMode.RUN_TO_POSITION);
 //        liftAngle.setMode(DcMotorController.RunMode.RUN_TO_POSITION);
 //        liftHook.setMode(DcMotorController.RunMode.RUN_TO_POSITION);
         isRunToPosition = true;
-//        setPowerOfMotors(1, 1, 1, 1);
+        isHighRunToPosition = true;
+        isLowRunToPosition = true;
+        isAngleRunToPosition = true;
+        isHookRunToPosition = true;
+
+
+        setPowerOfMotors(1, 1, 1, 1);
     }
 
     public static void highRunToPosition(){
         if (isHighRunToPosition == false) {
             isHighRunToPosition = true;
             liftHigh.setMode(DcMotorController.RunMode.RUN_TO_POSITION);
+            liftHighTargetPosition = liftHigh.getCurrentPosition();
+            liftHigh.setTargetPosition(liftHighTargetPosition); //OUT
             liftHigh.setPower(1);
-            liftHigh.setTargetPosition(liftHigh.getCurrentPosition());
+            Log.d("Auto", "highRunToPosition" + liftHigh.getCurrentPosition() );
         }
     }
 
@@ -123,8 +142,10 @@ public class Lift {
         if (isLowRunToPosition == false) {
             isLowRunToPosition = true;
             liftLow.setMode(DcMotorController.RunMode.RUN_TO_POSITION);
+            liftLowTargetPosition = liftLow.getCurrentPosition();
+            liftLow.setTargetPosition(liftLowTargetPosition);  //OUT
             liftLow.setPower(1);
-            liftLow.setTargetPosition(liftLow.getCurrentPosition());
+            Log.d("Auto", "lowRunToPosition" + liftLow.getCurrentPosition());
         }
     }
 
@@ -132,8 +153,10 @@ public class Lift {
         if (isAngleRunToPosition == false) {
             isAngleRunToPosition = true;
             liftAngle.setMode(DcMotorController.RunMode.RUN_TO_POSITION);
+            liftAngleTargetPosition = liftAngle.getCurrentPosition();
+            liftAngle.setTargetPosition(liftAngleTargetPosition); //OUT
             liftAngle.setPower(1);
-            liftAngle.setTargetPosition(liftAngle.getCurrentPosition());
+            Log.d("Auto", "angleRunToPosition" + liftAngle.getCurrentPosition());
         }
     }
 
@@ -141,8 +164,10 @@ public class Lift {
         if (isHookRunToPosition == false) {
             isHookRunToPosition = true;
             liftHook.setMode(DcMotorController.RunMode.RUN_TO_POSITION);
+            liftHookTargetPosition = liftHook.getCurrentPosition();
+            liftHook.setTargetPosition(liftHookTargetPosition); //OUT
             liftHook.setPower(1);
-            liftHook.setTargetPosition(liftHook.getCurrentPosition());
+            Log.d("Auto", "hookRunToPosition" + liftHook.getCurrentPosition());
         }
     }
 
@@ -222,20 +247,23 @@ public class Lift {
         boolean angleDone = false;
         boolean hookDone = false;
 
-        Log.i("Auto", "High " +  liftHigh.isBusy()   + " " + liftHigh.getCurrentPosition() + " " + liftHigh.getTargetPosition());
+        Log.v("Auto", "High " +  liftHigh.isBusy()   + " " + liftHigh.getCurrentPosition() + " " + liftHigh.getTargetPosition()  + " " + liftHighTargetPosition);
 
-        if (!liftHigh.isBusy() && Math.abs(liftHigh.getCurrentPosition() - liftHigh.getTargetPosition()) < 50 ){
+        if (liftHighTargetPosition != liftHigh.getTargetPosition()) {
+            liftHigh.setTargetPosition(liftHighTargetPosition);
+        }
+        else if (!liftHigh.isBusy() && Math.abs(liftHigh.getCurrentPosition() - liftHighTargetPosition) < 50 ){
                 //liftHigh.setPower(0);
                 highDone = true;
         }
 
-        if (!liftLow.isBusy() && Math.abs(liftLow.getCurrentPosition() - liftLow.getTargetPosition()) < 50){
+        if (!liftLow.isBusy() && Math.abs(liftLow.getCurrentPosition() - liftLowTargetPosition) < 50){
                 //liftLow.setPower(0);
                 lowDone = true;
                 //Log.d("Auto", "Low Done True");
         }
 
-        if (!liftAngle.isBusy() && Math.abs(liftAngle.getCurrentPosition() - liftAngle.getTargetPosition()) < 50){
+        if (!liftAngle.isBusy() && Math.abs(liftAngle.getCurrentPosition() - liftAngleTargetPosition) < 50){
                 //liftHigh.setPower(0);
                 angleDone = true;
                 //Log.d("Auto", "Angle Done True");
@@ -243,16 +271,16 @@ public class Lift {
 
 
 
-        if (!liftHook.isBusy() && Math.abs(liftHook.getCurrentPosition() - liftHook.getTargetPosition()) < 50){
+        if (!liftHook.isBusy() && Math.abs(liftHook.getCurrentPosition() - liftHookTargetPosition) < 50){
                 //liftHook.setPower(0);
                 hookDone = true;
                 //Log.d("Auto", "Hook Done True");
         }
         if (nLiftLoop == 0) {
-            Log.d("Auto", "High: Busy:" + liftHigh.isBusy() + " Curr:" + liftHigh.getCurrentPosition() + " Target:" + liftHigh.getTargetPosition());
-            Log.d("Auto", "Low: Busy:" + liftLow.isBusy() + " Curr:" + liftLow.getCurrentPosition() + " Target:" + liftLow.getTargetPosition());
-            Log.d("Auto", "Angle: Busy:" + liftAngle.isBusy() + " Curr:" + liftAngle.getCurrentPosition() + " Target:" + liftAngle.getTargetPosition());
-            Log.d("Auto", "Hook: Busy:" + liftHook.isBusy() + " Curr:" + liftHook.getCurrentPosition() + " Target:" + liftHook.getTargetPosition());
+            Log.d("Auto", "High: Busy:" + liftHigh.isBusy() + " Curr:" + liftHigh.getCurrentPosition() + " Target:" + liftHigh.getTargetPosition() + " " + liftHighTargetPosition);
+            Log.d("Auto", "Low: Busy:" + liftLow.isBusy() + " Curr:" + liftLow.getCurrentPosition() + " Target:" + liftLow.getTargetPosition()+ " " + liftLowTargetPosition);
+            Log.d("Auto", "Angle: Busy:" + liftAngle.isBusy() + " Curr:" + liftAngle.getCurrentPosition() + " Target:" + liftAngle.getTargetPosition()+ " " + liftAngleTargetPosition);
+            Log.d("Auto", "Hook: Busy:" + liftHook.isBusy() + " Curr:" + liftHook.getCurrentPosition() + " Target:" + liftHook.getTargetPosition()+ " " + liftHookTargetPosition);
             if (++nLiftLoop == 10)
                 nLiftLoop = 0;
         }
@@ -343,8 +371,9 @@ public class Lift {
 
 
     public static void setMotorTargetPosition(int liftHighDifference, int liftLowDifference, int liftAngleDifference, int liftHookDifference) {
-        if (isRunToPosition == false)
-            runToPosition();
+        Log.d("Auto","SetMotorTargetPostion");
+        //if (isRunToPosition == false)
+            //runToPosition();  //OUT
 
         setPowerOfMotors(1,1,1,1);
 
@@ -368,13 +397,16 @@ public class Lift {
 //        else
 //            liftAngle.setTargetPosition(liftAngle.getCurrentPosition());
 
+        Log.d("Auto", "SetMotorTargetPostion" + liftHighDifference + " " + liftLowDifference + " " + liftAngleDifference + " " + liftHookDifference + " ");
         liftHigh.setTargetPosition(liftHighDifference);
         liftLow.setTargetPosition(liftLowDifference);
         liftAngle.setTargetPosition(liftAngleDifference);
         liftHook.setTargetPosition(liftHookDifference);
 
-
-
+        liftHighTargetPosition   = liftHighDifference;
+        liftLowTargetPosition    = liftLowDifference;
+        liftAngleTargetPosition  = liftAngleDifference;
+        liftHookTargetPosition   = liftHookDifference;
 
     }
 
@@ -513,6 +545,12 @@ public class Lift {
     public static void drivePosition2(){
         Log.i("Auto", "drivePostion2 ");
         setMotorTargetPosition(1350, 1350, -550, -120);
+        setPowerOfMotors(1, 1, 1, 1);
+    }
+
+    public static void stickLift(){
+        Log.i("Auto", "stickLift");
+        setMotorTargetPosition(1700, 1700, -550, -120);
         setPowerOfMotors(1, 1, 1, 1);
     }
 

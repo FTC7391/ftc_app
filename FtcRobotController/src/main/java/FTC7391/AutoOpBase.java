@@ -13,7 +13,7 @@ public class AutoOpBase extends OpMode {
      private static final String TAG = AutoOpBase.class.getSimpleName();
     protected State currentState;
     protected int step;
-    protected ArrayList<State> stepsList = new ArrayList<State> (20);
+    protected ArrayList<State> stepsList = new ArrayList<State> (40);
     protected FTC7391PrintWriter dbgWriter = new FTC7391PrintWriter("Auto", "telemetryWait");
     private String stateStr = "";
 
@@ -23,6 +23,10 @@ public class AutoOpBase extends OpMode {
 
     private static int nAutoLoop = 0;
 
+//    public ArrayList<State>  getStepsList() {
+//        return stepsList;
+//    }
+//
 
     public void init(){
         //telemetry.addData(TAG, "AutoOp Init");
@@ -46,6 +50,7 @@ public class AutoOpBase extends OpMode {
 
     }
 
+
     public void loop(){
         nAutoLoop++;
         if (nAutoLoop == 10)
@@ -67,14 +72,12 @@ public class AutoOpBase extends OpMode {
 
         public void init(){
             //perform state action
-            //showTelemetryDrivetrain();
-            showTelemetry();
         }
 
         public boolean update(){
             cnt++;
-            if (cnt%10 == 0) {
-                showTelemetry();
+            if (cnt%100 == 0) {
+                showTelemetryStateInfo();
             }
             return (updateState());
         }
@@ -101,7 +104,7 @@ public class AutoOpBase extends OpMode {
             dbgWriter.printf("Move Inches %d \n", inches);
             //telemetry.addData(TAG, "Move Inches " + inches);
             stateStr = "MOVE INCHES" + inches;
-            showTelemetry();
+            showTelemetryStateInfo();
         }
 
         public boolean updateState(){
@@ -122,6 +125,8 @@ public class AutoOpBase extends OpMode {
         public void init(){
             super.init();
             DriveTrainAuto.moveInches(0, 0);
+            stateStr = "WAIT";
+            showTelemetryStateInfo();
         }
 
         public boolean updateState(){
@@ -130,6 +135,34 @@ public class AutoOpBase extends OpMode {
                 return (counter == waitTime || gamepad1.a);
             //else
                 //return (counter == waitTime || gamepad1.b);
+
+        }
+
+    }
+
+
+    protected class RunToPositionState extends State {
+
+        private int counter = 0;
+        private int waitTime;
+
+        public RunToPositionState(int seconds){
+            waitTime = (int)(seconds * 40);
+        }
+
+        public void init(){
+            super.init();
+            DriveTrainAuto.moveInches(0, 0);
+            stateStr = "RUN TO POSITION STATE";
+            showTelemetryStateInfo();
+        }
+
+        public boolean updateState(){
+            counter++;
+            //if(counter%2 == 1)
+            return (counter == waitTime || gamepad1.b);
+            //else
+            //return (counter == waitTime || gamepad1.b);
 
         }
 
@@ -145,7 +178,7 @@ public class AutoOpBase extends OpMode {
 
         public void init(){
             super.init();
-            DriveTrainAuto.moveInches(0,0);
+            DriveTrainAuto.moveInches(0, 0);
         }
 
         public boolean updateState(){
@@ -174,7 +207,7 @@ public class AutoOpBase extends OpMode {
             stick.setDrivePosition();
             dbgWriter.printf("Rotate Degrees %d \n", degrees);
             telemetry.addData(TAG, "Rotate Degrees " + degrees);
-            showTelemetryDrivetrain();
+            showTelemetryStateInfo();
         }
 
         public boolean updateState(){
@@ -200,6 +233,28 @@ public class AutoOpBase extends OpMode {
 
     }
 
+    protected class StickLiftState extends State {
+
+        private int counter = 0;
+        private int waitTime;
+
+        public StickLiftState(){
+            waitTime = 500;
+        }
+
+        public void init(){
+            super.init();
+            DriveTrainAuto.moveInches(0, 0);
+            Lift.stickLift();
+            stateStr = "STICK LIFT";
+        }
+
+        public boolean updateState(){
+            counter++;
+            return (counter == waitTime || gamepad1.b);
+        }
+
+    }
     protected class StickState extends State {
 
         private int counter = 0;
@@ -242,7 +297,7 @@ public class AutoOpBase extends OpMode {
         }
 
         public boolean updateState(){
-            return DriveTrainAuto.isDone();
+            return Lift.isDone();
         }
 
     }
@@ -263,7 +318,7 @@ public class AutoOpBase extends OpMode {
 
         public void init(){
             super.init();
-            Lift.drivePosition1();
+             Lift.drivePosition1();
             stick.setDrivePosition();
             stateStr = "DRIVE POSITION 1";
 
@@ -320,9 +375,13 @@ public class AutoOpBase extends OpMode {
         showTelemetryLift();
       }
 
+    private void showTelemetryStateInfo() {
+        telemetry.addData("10", String.format("Auto STATE %s", stateStr));
+        Log.i("Auto", "STATE:" + stateStr + "  step " + step);
+    }
      private void showTelemetryState() {
         telemetry.addData("10",String.format("Auto STATE %s", stateStr));
-         Log.d("Auto STATE", stateStr);
+         Log.d("Auto",  "STATE:" + stateStr + "  step " + step);
      }
 
     private void showTelemetryDrivetrain() {
