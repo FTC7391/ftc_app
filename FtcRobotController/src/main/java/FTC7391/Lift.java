@@ -373,7 +373,7 @@ public class Lift {
     public static void setMotorTargetPosition(int liftHighDifference, int liftLowDifference, int liftAngleDifference, int liftHookDifference) {
         Log.d("Auto","SetMotorTargetPostion");
         //if (isRunToPosition == false)
-            //runToPosition();  //OUT
+            runToPosition();  //OUT
 
         setPowerOfMotors(1,1,1,1);
 

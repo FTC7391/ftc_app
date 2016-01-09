@@ -16,12 +16,12 @@ public abstract class AutoOp extends AutoOpBase
     public void init()
     {
         super.init();
-        setRed();
-//        stepsList.add(new RunToPositionState(20));
-//        stepsList.add(new DrivePosition1State());
-//        stepsList.add(new WaitState (0));
-//        stepsList.add(new DrivePosition2State());
-//        stepsList.add(new WaitState (0));
+        
+        stepsList.add(new RunToPositionState(20));
+        stepsList.add(new DrivePosition1State());
+        stepsList.add(new WaitState (0));
+        stepsList.add(new DrivePosition2State());
+        stepsList.add(new WaitState (0));
         stepsList.add(new MoveState(24, 1));
         stepsList.add(new WaitState(0));
         stepsList.add(new RotateState(60 * isRed, 1));
