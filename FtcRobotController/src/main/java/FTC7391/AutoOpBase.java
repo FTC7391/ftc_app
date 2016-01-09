@@ -71,6 +71,7 @@ public class AutoOpBase extends OpMode {
         protected int cnt = 0;
 
         public void init(){
+            Lift.runToPosition();
             //perform state action
         }
 

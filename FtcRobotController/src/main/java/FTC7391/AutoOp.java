@@ -16,34 +16,52 @@ public abstract class AutoOp extends AutoOpBase
     public void init()
     {
         super.init();
-        
-        stepsList.add(new RunToPositionState(20));
+
+        FTC7391PrintWriter data1Writer = new FTC7391PrintWriter("Alliance" , "color");
+        data1Writer.print("red");
+        int isRed = -1;
+
+
+        // stepsList.add(new WaitState(0));
         stepsList.add(new DrivePosition1State());
-        stepsList.add(new WaitState (0));
-        stepsList.add(new DrivePosition2State());
-        stepsList.add(new WaitState (0));
-        stepsList.add(new MoveState(24, 1));
-        stepsList.add(new WaitState(0));
-        stepsList.add(new RotateState(60 * isRed, 1));
-        stepsList.add(new WaitState(0));
-        stepsList.add(new MoveState(75, 1));
-        stepsList.add(new WaitState(0));
-        stepsList.add(new RotateState(40 * isRed, 1));
-        stepsList.add(new WaitState(0));
-        stepsList.add(new StickLiftState());
-        stepsList.add(new WaitState(0));
-        stepsList.add(new MoveState(18, 1));
-        stepsList.add(new WaitState(0));
-        stepsList.add(new StickState());
-        stepsList.add(new WaitState(0));
-        stepsList.add(new StickMoveState (-6, 1));
-        stepsList.add(new WaitState(0));
-        stepsList.add(new MoveState(-48,1));
-        stepsList.add(new WaitState(0));
-        stepsList.add(new RotateState(-130 * isRed, 1));
-        stepsList.add(new WaitState(0));
-        stepsList.add(new MoveState(-48, 1));
-        stepsList.add(new StopState());
+        //stepsList.add(new WaitState(0));
+        //stepsList.add(new DrivePosition2State());
+        //stepsList.add(new WaitState(0));
+        stepsList.add(new MoveState(-95, 1));
+        //stepsList.add(new WaitState(0));
+        stepsList.add(new RotateState(45,1));
+        //stepsList.add(new WaitState(0));
+        //stepsList.add(new MoveState(-6, 1));
+        //stepsList.add(new WaitState(0));
+        stepsList.add(new RotateState(135, 1));
+        
+//        stepsList.add(new RunToPositionState(20));
+//        stepsList.add(new DrivePosition1State());
+//        stepsList.add(new WaitState (0));
+//        stepsList.add(new DrivePosition2State());
+//        stepsList.add(new WaitState (0));
+//        stepsList.add(new MoveState(24, 1));
+//        stepsList.add(new WaitState(0));
+//        stepsList.add(new RotateState(60 * isRed, 1));
+//        stepsList.add(new WaitState(0));
+//        stepsList.add(new MoveState(75, 1));
+//        stepsList.add(new WaitState(0));
+//        stepsList.add(new RotateState(40 * isRed, 1));
+//        stepsList.add(new WaitState(0));
+//        stepsList.add(new StickLiftState());
+//        stepsList.add(new WaitState(0));
+//        stepsList.add(new MoveState(18, 1));
+//        stepsList.add(new WaitState(0));
+//        stepsList.add(new StickState());
+//        stepsList.add(new WaitState(0));
+//        stepsList.add(new StickMoveState (-6, 1));
+//        stepsList.add(new WaitState(0));
+//        stepsList.add(new MoveState(-48,1));
+//        stepsList.add(new WaitState(0));
+//        stepsList.add(new RotateState(-130 * isRed, 1));
+//        stepsList.add(new WaitState(0));
+//        stepsList.add(new MoveState(-48, 1));
+//        stepsList.add(new StopState());
 
     }
 
