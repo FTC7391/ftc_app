@@ -164,6 +164,9 @@ public class TeleOp7391 extends OpMode {
 			if (gamepad2.x) {
 				Lift.setTestMode(Lift.TestModes.MODE_GOTO_DRIVE_POSITION2, 1);
 			}
+			if(gamepad2.b) {
+				Lift.setTestMode(Lift.TestModes.MODE_GOTO_STRAIGHT_HOOK, 1);
+			}
 
 		}
 		else {

@@ -313,6 +313,18 @@ public class AutoOpBase extends OpMode {
         }
     }
 
+    protected class StraightHook extends State {
+
+        public void init(){
+            super.init();
+            Lift.straightHook();
+            stick.setDrivePosition();
+            stateStr = "STRAIGHT HOOK";
+        }
+
+        public boolean updateState(){ return Lift.isDone(); }
+    }
+
 
     private void showTelemetry() {
         showTelemetryState();

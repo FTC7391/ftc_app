@@ -395,7 +395,7 @@ public class Lift {
 
         MODE_GOTO_DRIVE_POSITION1,
         MODE_GOTO_DRIVE_POSITION2,
-        MODE_GOTO_STAGE1,
+        MODE_GOTO_STRAIGHT_HOOK,
 
         MODE_STOP,
 
@@ -482,17 +482,20 @@ public class Lift {
                 drivePosition1();
                 break;
             case MODE_GOTO_DRIVE_POSITION2:
-                if (isRunToPosition == false)
                     runToPosition();
                 drivePosition2();
                 break;
+            case MODE_GOTO_STRAIGHT_HOOK:
+                //hookRunToPosition();
+                straightHook();
+
             case MODE_STOP:
                 //if (isRunToPosition == false)
                     runToPosition();
                 setMotorTargetPosition(liftHigh.getCurrentPosition(),
-                    liftLow.getCurrentPosition(),
-                    liftHook.getCurrentPosition(),
-                    liftAngle.getCurrentPosition());
+                        liftLow.getCurrentPosition(),
+                        liftHook.getCurrentPosition(),
+                        liftAngle.getCurrentPosition());
                 break;
 
         }
@@ -508,6 +511,13 @@ public class Lift {
         Log.i("Auto", "drivePostion1 ");
         setMotorTargetPosition(1350, 1350, 0, 0);
         setPowerOfMotors(1, 1, 1, 1);
+    }
+
+    public static void straightHook(){
+        Log.i("Auto", "straightHook ");
+        liftHook.setMode(DcMotorController.RunMode.RUN_TO_POSITION);
+        liftHook.setTargetPosition(921);
+        liftHook.setPower(1);
     }
 
     public static void drivePosition2(){
