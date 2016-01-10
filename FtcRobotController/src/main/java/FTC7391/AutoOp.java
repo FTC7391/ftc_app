@@ -18,10 +18,40 @@ public abstract class AutoOp extends AutoOpBase
         super.init();
 
         FTC7391PrintWriter data1Writer = new FTC7391PrintWriter("Alliance" , "color");
-        data1Writer.print("red");
-        int isRed = -1;
+        setRed();
 
 
+        // stepsList.add(new WaitState(0));
+        stepsList.add(new StickDrivePositionState());
+        stepsList.add(new WaitState(0));
+        stepsList.add(new DrivePosition1State());
+        stepsList.add(new WaitState(0));
+        //stepsList.add(new DrivePosition2State());
+        //stepsList.add(new WaitState(0));
+        stepsList.add(new MoveState(-95, 1));
+        stepsList.add(new WaitState(0));
+        stepsList.add(new RotateState(45,1));
+        stepsList.add(new WaitState(0));
+        stepsList.add(new MoveState(-15, 1));
+        stepsList.add(new WaitState(0));
+        stepsList.add(new RotateState(-90,1));
+        stepsList.add(new WaitState(0));
+
+        stepsList.add(new StickState());
+        stepsList.add(new WaitState(0));
+        stepsList.add(new StickMoveState (6, 1));
+        stepsList.add(new WaitState(0));
+        stepsList.add(new MoveState(-6, 1));
+        stepsList.add(new WaitState(0));
+
+        stepsList.add(new RotateState(-90,1));
+        stepsList.add(new WaitState(0));
+        stepsList.add(new StopState());
+
+
+
+
+/* End of 2016-01-08 Meeting
         // stepsList.add(new WaitState(0));
         stepsList.add(new DrivePosition1State());
         //stepsList.add(new WaitState(0));
@@ -34,7 +64,7 @@ public abstract class AutoOp extends AutoOpBase
         //stepsList.add(new MoveState(-6, 1));
         //stepsList.add(new WaitState(0));
         stepsList.add(new RotateState(135, 1));
-        
+ */
 //        stepsList.add(new RunToPositionState(20));
 //        stepsList.add(new DrivePosition1State());
 //        stepsList.add(new WaitState (0));

@@ -1,5 +1,7 @@
 package FTC7391;
 
+import android.util.Log;
+
 /**
  * Created by Allana on 10/3/2015.
  */
@@ -15,6 +17,7 @@ public class AutoBlueOp extends AutoOp
 
     public void setRed(){
         isRed = -1;
+        Log.i("Auto", "Blue");
     }
 
 }

@@ -256,13 +256,38 @@ public class AutoOpBase extends OpMode {
         }
 
     }
+    protected class StickDrivePositionState extends State {
+
+        private int counter = 0;
+        private int waitTime;
+
+        public StickDrivePositionState(){
+            waitTime = 100;
+        }
+
+        public void init(){
+            super.init();
+            DriveTrainAuto.moveInches(0, 0);
+            stick.setDrivePosition();
+            stateStr = "STICK DRIVE POSITION";
+        }
+
+        public boolean updateState(){
+            counter++;
+            return (counter == waitTime || gamepad1.b);
+        }
+
+    }
+
+
+
     protected class StickState extends State {
 
         private int counter = 0;
         private int waitTime;
 
         public StickState(){
-            waitTime = 500;
+            waitTime = 50;
         }
 
         public void init(){

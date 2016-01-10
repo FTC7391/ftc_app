@@ -10,7 +10,7 @@ import com.qualcomm.robotcore.hardware.Servo;
 public class Stick extends ServoAttachment {
 
     public Stick(HardwareMap hardwareMap){
-        super(0, 0, 0.4);
+        super(1, .8, 0);
         servo = hardwareMap.servo.get("stick");
     }
 

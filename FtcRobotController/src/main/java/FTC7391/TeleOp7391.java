@@ -140,7 +140,7 @@ public class TeleOp7391 extends OpMode {
 			stick.setDeployedPosition();
 		}
 
-		if (gamepad1.b){
+		if (gamepad1.b){stick.setRetractedPosition();
 			ziplineRed.setDeployedPosition();
 			ziplineBlue.setDrivePosition();
 		}

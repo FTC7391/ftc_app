@@ -12,13 +12,10 @@
         <Motor name="motor_front_left" port="1" />
         <Motor name="motor_back_left" port="2" />
     </MotorController>
-    <DeviceInterfaceModule name="Device Interface Module" serialNumber="AL00VF3K">
-        <OpticalDistanceSensor name="optical_distance" port="7" />
-    </DeviceInterfaceModule>
     <ServoController name="Servo Controller " serialNumber="AI02RMWJ">
         <Servo name="zipline_blue" port="1" />
-        <Servo name="zipline_red" port="5" />
-        <Servo name="stick" port="6" />
+        <Servo name="zipline_red" port="2" />
+        <Servo name="stick" port="4" />
     </ServoController>
     <MotorController name="Motor Controller Lift Low" serialNumber="AL00VGUM">
         <Motor name="motor_low" port="1" />

@@ -17,28 +17,19 @@ public class AutoTestOp extends AutoOpBase
         int isRed = -1;
 
 
+
         stepsList.add(new WaitState(0));
-        stepsList.add(new DrivePosition1State());
-        //stepsList.add(new WaitState(0));
-        //stepsList.add(new DrivePosition2State());
-        //stepsList.add(new WaitState(0));
-        stepsList.add(new MoveState(-95, 1));
-        //stepsList.add(new WaitState(0));
-        stepsList.add(new RotateState(45,1));
-        //stepsList.add(new WaitState(0));
-        //stepsList.add(new MoveState(-6, 1));
-        //stepsList.add(new WaitState(0));
-        stepsList.add(new RotateState(135, 1));
+        stepsList.add(new MoveState(12, 1));
+        stepsList.add(new WaitState(0));
+        stepsList.add(new MoveState(-12, 1));
+        stepsList.add(new WaitState(0));
+       stepsList.add(new MoveState(24, 1));
+        stepsList.add(new WaitState(0));
+        stepsList.add(new MoveState(-24, 1));
+       stepsList.add(new MoveState(48, 1));
+        stepsList.add(new WaitState(0));
+        stepsList.add(new MoveState(-48, 1));
 
-
-
-
-
-
-////        stepsList.add(new MoveState(24, 1));
-////        stepsList.add(new WaitState(0));
-////        stepsList.add(new MoveState(-24, 1));
-//
 
 //
 //
