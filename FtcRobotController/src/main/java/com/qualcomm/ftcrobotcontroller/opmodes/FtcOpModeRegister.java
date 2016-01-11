@@ -59,6 +59,7 @@ public class FtcOpModeRegister implements OpModeRegister {
      */
 
     manager.register("TeleOp7391", TeleOp7391.class);
+    manager.register("TeleOp7391NoStick", TeleOp7391NoStick.class);
     //manager.register("StabilityTest", StabilityTest.class);
     //manager.register("AutoOp", AutoOp.class);
     manager.register("AutoRedOp", AutoRedOp.class);

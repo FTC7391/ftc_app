@@ -22,30 +22,30 @@ public abstract class AutoOp extends AutoOpBase
 
 
         // stepsList.add(new WaitState(0));
-        stepsList.add(new StickDrivePositionState());
-        stepsList.add(new WaitState(0));
+        //stepsList.add(new StickDrivePositionState());
+        //stepsList.add(new WaitState(0));
         stepsList.add(new DrivePosition1State());
-        stepsList.add(new WaitState(0));
+        //stepsList.add(new WaitState(0));
         //stepsList.add(new DrivePosition2State());
         //stepsList.add(new WaitState(0));
-        stepsList.add(new MoveState(-95, 1));
-        stepsList.add(new WaitState(0));
-        stepsList.add(new RotateState(45,1));
-        stepsList.add(new WaitState(0));
-        stepsList.add(new MoveState(-15, 1));
-        stepsList.add(new WaitState(0));
-        stepsList.add(new RotateState(-90,1));
-        stepsList.add(new WaitState(0));
+        stepsList.add(new MoveState(-85, 1));
+        //stepsList.add(new WaitState(0));
+//        stepsList.add(new RotateState(45,1));
+//        stepsList.add(new WaitState(0));
+//        stepsList.add(new MoveState(-15, 1));
+//        stepsList.add(new WaitState(0));
+//        stepsList.add(new RotateState(-90,1));
+//        stepsList.add(new WaitState(0));
 
-        stepsList.add(new StickState());
-        stepsList.add(new WaitState(0));
-        stepsList.add(new StickMoveState (6, 1));
-        stepsList.add(new WaitState(0));
-        stepsList.add(new MoveState(-6, 1));
-        stepsList.add(new WaitState(0));
+       // stepsList.add(new StickState());
+        //stepsList.add(new WaitState(0));
+        //stepsList.add(new StickMoveState (6, 1));
+        //stepsList.add(new WaitState(0));
+        //stepsList.add(new MoveState(-6, 1));
+        //stepsList.add(new WaitState(0));
 
-        stepsList.add(new RotateState(-90,1));
-        stepsList.add(new WaitState(0));
+        //stepsList.add(new RotateState(-90,1));
+        //stepsList.add(new WaitState(0));
         stepsList.add(new StopState());
 
 

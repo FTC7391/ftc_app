@@ -14,8 +14,8 @@
     </MotorController>
     <ServoController name="Servo Controller " serialNumber="AI02RMWJ">
         <Servo name="zipline_blue" port="1" />
-        <Servo name="zipline_red" port="2" />
-        <Servo name="stick" port="4" />
+        <Servo name="zipline_red" port="5"/>
+        <Servo name="stick" port="6" />
     </ServoController>
     <MotorController name="Motor Controller Lift Low" serialNumber="AL00VGUM">
         <Motor name="motor_low" port="1" />
