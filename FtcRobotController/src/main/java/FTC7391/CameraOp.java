@@ -67,13 +67,13 @@ public class CameraOp extends OpMode {
      */
     @Override
     public void init() {
-        camera = ((FtcRobotControllerActivity)hardwareMap.appContext).camera;
+//        camera = ((FtcRobotControllerActivity)hardwareMap.appContext).camera;
         camera.setPreviewCallback(previewCallback);
 
         Camera.Parameters parameters = camera.getParameters();
         data = parameters.flatten();
 
-        ((FtcRobotControllerActivity) hardwareMap.appContext).initPreview(camera, this, previewCallback);
+  //      ((FtcRobotControllerActivity) hardwareMap.appContext).initPreview(camera, this, previewCallback);
     }
 
     /*
