@@ -47,7 +47,7 @@ public class DriveTrainAuto extends DriveTrain{
      * @param distance    Set distance negative to move backwards
      * @param power       Magnitude only so typically pass in a positive value.
      */
-    public static void moveInches(int distance, double power) {
+    public static void moveInches(double distance, double power) {
 
         isRotating = false;
 
