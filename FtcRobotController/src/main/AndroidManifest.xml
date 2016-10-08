@@ -2,6 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           xmlns:tools="http://schemas.android.com/tools"
           package="com.qualcomm.ftcrobotcontroller"
+<<<<<<< .merge_file_eeVXwQ
           android:versionCode="10"
           android:versionName="1.77">
 
@@ -34,17 +35,24 @@
     android:required="true" />
 
   <uses-feature android:name="android.hardware.usb.accessory" />
+=======
+          android:versionCode="14"
+          android:versionName="2.35">
+>>>>>>> .merge_file_UcwPDa
 
   <application
     android:allowBackup="true"
+    android:largeHeap="true"
     android:icon="@drawable/ic_launcher"
     android:label="@string/app_name"
     android:theme="@style/AppTheme" >
+
     <activity
-      android:name=".FtcRobotControllerActivity"
+      android:name="org.firstinspires.ftc.robotcontroller.internal.FtcRobotControllerActivity"
       android:configChanges="orientation|screenSize"
       android:label="@string/app_name"
       android:launchMode="singleTask" >
+
       <intent-filter>
         <action android:name="android.intent.action.MAIN" />
         <category android:name="android.intent.category.LAUNCHER" />
@@ -58,6 +66,7 @@
         android:name="android.hardware.usb.action.USB_DEVICE_ATTACHED"
         android:resource="@xml/device_filter" />
     </activity>
+<<<<<<< .merge_file_eeVXwQ
     <activity
       android:name="com.qualcomm.ftccommon.FtcRobotControllerSettingsActivity"
       android:label="@string/settings_activity" >
@@ -88,6 +97,13 @@
         <category android:name="android.intent.category.DEFAULT" />
       </intent-filter>
     </activity>
+=======
+
+    <service
+      android:name="com.qualcomm.ftccommon.FtcRobotControllerService"
+      android:enabled="true" />
+
+>>>>>>> .merge_file_UcwPDa
   </application>
 
 </manifest>
