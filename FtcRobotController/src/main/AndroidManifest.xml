@@ -2,9 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           xmlns:tools="http://schemas.android.com/tools"
           package="com.qualcomm.ftcrobotcontroller"
-<<<<<<< .merge_file_eeVXwQ
-          android:versionCode="10"
-          android:versionName="1.77">
+        android:versionCode="14"
+        android:versionName="2.35">
 
   <uses-permission
     android:name="android.permission.ACCESS_WIFI_STATE"
@@ -35,10 +34,6 @@
     android:required="true" />
 
   <uses-feature android:name="android.hardware.usb.accessory" />
-=======
-          android:versionCode="14"
-          android:versionName="2.35">
->>>>>>> .merge_file_UcwPDa
 
   <application
     android:allowBackup="true"
