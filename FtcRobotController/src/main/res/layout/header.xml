@@ -2,24 +2,18 @@
 
 <!--
 Copyright (c) 2014, 2015 Qualcomm Technologies Inc
-
 All rights reserved.
-
 Redistribution and use in source and binary forms, with or without modification,
 are permitted (subject to the limitations in the disclaimer below) provided that
 the following conditions are met:
-
 Redistributions of source code must retain the above copyright notice, this list
 of conditions and the following disclaimer.
-
 Redistributions in binary form must reproduce the above copyright notice, this
 list of conditions and the following disclaimer in the documentation and/or
 other materials provided with the distribution.
-
 Neither the name of Qualcomm Technologies Inc nor the names of its contributors
 may be used to endorse or promote products derived from this software without
 specific prior written permission.
-
 NO EXPRESS OR IMPLIED LICENSES TO ANY PARTY'S PATENT RIGHTS ARE GRANTED BY THIS
 LICENSE. THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
 "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
@@ -32,21 +26,8 @@ CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
 OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 -->
-<<<<<<< .merge_file_8zHvex
-
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/header"
-    android:layout_alignParentTop="true"
-    android:paddingLeft="8dp"
-    android:paddingRight="8dp"
-    android:paddingTop="2dp"
-    android:paddingBottom="2dp"
-    android:background="@color/medium_red_background"
-=======
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
->>>>>>> .merge_file_tOvnOy
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     >
@@ -60,19 +41,6 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
         android:background="@color/medium_red_background"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-<<<<<<< .merge_file_8zHvex
-        android:text="Active Configuration File:"
-        android:textColor="@color/white"
-        android:layout_weight="1"
-        android:textAppearance="?android:attr/textAppearanceSmall" />
-
-    <TextView
-        android:id="@+id/active_filename"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="@color/white"
-        android:textAppearance="?android:attr/textAppearanceSmall" />
-=======
         android:orientation="horizontal">
 
         <TextView
@@ -91,6 +59,5 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
             android:textAppearance="?android:attr/textAppearanceSmall" />
 
     </LinearLayout>
->>>>>>> .merge_file_tOvnOy
 
 </LinearLayout>
