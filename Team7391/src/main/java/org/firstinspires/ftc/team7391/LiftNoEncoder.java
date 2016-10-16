@@ -12,8 +12,8 @@ public class LiftNoEncoder {
 
     public static DcMotor liftHigh;
     public static DcMotor liftLow;
-    public static DcMotor liftHook;
-    public static DcMotor liftAngle;
+    public static DcMotor leftWrist;
+    public static DcMotor liftShoulder;
 
 
     private static int driveModeTicksHigh = 1575; //to be added
@@ -22,8 +22,8 @@ public class LiftNoEncoder {
 
     public static int originalTicksHigh = 0; //to be added
     public static int originalTicksLow = 0; //to be added
-    public static int originalTicksHook = 0; //to be added
-    public static int originalTicksAngle = 0; //to be added
+    public static int originalTicksWrist = 0; //to be added
+    public static int originalTicksShoulder = 0; //to be added
 
     private static final int TOTAL_TICKS = 1120;
     private static final int TOTAL_DEGREES = 360;
@@ -49,22 +49,22 @@ public class LiftNoEncoder {
 
         liftHigh = hardwareMap.dcMotor.get("motor_high");
         liftLow = hardwareMap.dcMotor.get("motor_low");
-        liftHook = hardwareMap.dcMotor.get("motor_hook");
-        liftAngle = hardwareMap.dcMotor.get("motor_angle");
+        leftWrist = hardwareMap.dcMotor.get("motor_hook");
+        liftShoulder = hardwareMap.dcMotor.get("motor_angle");
 
         //runUsingEncoders();
 
         //originalTicksHigh = liftHigh.getCurrentPosition();
         //originalTicksLow = liftLow.getCurrentPosition();
-        //originalTicksHook = liftHook.getCurrentPosition();
-        //originalTicksAngle = liftAngle.getCurrentPosition();
+        //originalTicksWrist = leftWrist.getCurrentPosition();
+        //originalTicksShoulder = liftShoulder.getCurrentPosition();
     }
 
     protected static void resetEncoders(){
         liftHigh.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         liftLow.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        liftAngle.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        liftHook.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        liftShoulder.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        leftWrist.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
     }
 
@@ -72,20 +72,20 @@ public class LiftNoEncoder {
         resetEncoders();
         liftHigh.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         liftLow.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        liftAngle.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        liftHook.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        liftShoulder.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        leftWrist.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
     }
 
 
    // public static int getTicksLiftHigh(){return liftHigh.getCurrentPosition();}
    // public static int getTicksLiftLow(){return liftLow.getCurrentPosition();}
-    //public static int getTicksLiftAngle(){return liftAngle.getCurrentPosition();}
-    //public static int getTicksLiftHook(){return liftHook.getCurrentPosition();}
+    //public static int getTicksliftShoulder(){return liftShoulder.getCurrentPosition();}
+    //public static int getTicksleftWrist(){return leftWrist.getCurrentPosition();}
 
 //    public static int getOriginalTicksHigh(){return originalTicksHigh;}
 //    public static int getOriginalTicksLow(){return originalTicksLow;}
-//    public static int getOriginalTicksAngle(){return originalTicksAngle;}
+//    public static int getoriginalTicksShoulder(){return originalTicksShoulder;}
 
 
 
@@ -162,14 +162,14 @@ public class LiftNoEncoder {
                     liftLow.setPower(1 * power);    //negative power = backwards
                 break;
             case MODE_MOVE_ANGLE:
-                liftAngle.setPower(1 * power);
+                liftShoulder.setPower(1 * power);
                 break;
             case MODE_MOVE_BOTH:
                 liftHigh.setPower(1 * power);
                 liftLow.setPower(1 * power);    //negative power = backwards
                 break;
             case MODE_MOVE_HOOK:
-                liftHook.setPower(1*power);
+                leftWrist.setPower(1*power);
                 break;
             case MODE_STOP:
                 LiftNoEncoder.setPowerOfMotors(0, 0);
