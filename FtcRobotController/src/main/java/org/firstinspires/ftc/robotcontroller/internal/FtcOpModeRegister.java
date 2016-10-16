@@ -37,29 +37,12 @@ import com.qualcomm.robotcore.eventloop.opmode.OpModeRegister;
 import com.qualcomm.robotcore.eventloop.opmode.AnnotatedOpModeRegistrar;
 import org.firstinspires.ftc.robotcontroller.external.samples.ConceptNullOp;
 
-import FTC7391.*;
-
 /**
  * {@link FtcOpModeRegister} is responsible for registering opmodes for use in an FTC game.
  * @see #register(OpModeManager)
  */
 public class FtcOpModeRegister implements OpModeRegister {
 
-<<<<<<< .merge_file_a5lDOl
-  /**
-   * The Op Mode Manager will call this method when it wants a list of all
-   * available op modes. Add your op mode to the list to enable it.
-   *
-   * @param manager op mode manager
-   */
-  public void register(OpModeManager manager) {
-
-    /*
-     * register your op modes here.
-     * The first parameter is the name of the op mode
-     * The second
-      * parameter is the op mode class property
-=======
     /**
      * {@link #register(OpModeManager)} is called by the SDK game in order to register
      * OpMode classes or instances that will participate in an FTC game.
@@ -73,7 +56,6 @@ public class FtcOpModeRegister implements OpModeRegister {
      *  method to include explicit calls to OpModeManager.register().
      *  This method of modifying this file directly is discouraged, as it
      *  makes updates to the SDK harder to integrate into your code.
->>>>>>> .merge_file_B9e7I3
      *
      * @param manager the object which contains methods for carrying out OpMode registrations
      *
@@ -92,31 +74,8 @@ public class FtcOpModeRegister implements OpModeRegister {
          */
         AnnotatedOpModeRegistrar.register(manager);
 
-<<<<<<< .merge_file_a5lDOl
-    manager.register("TeleOp7391", TeleOp7391.class);
-    manager.register("TeleOp7391NoStick", TeleOp7391NoStick.class);
-    //manager.register("StabilityTest", StabilityTest.class);
-    //manager.register("AutoOp", AutoOp.class);
-    manager.register("AutoRedOp", AutoRedOp.class);
-    manager.register("AutoBlueOp", AutoBlueOp.class);
-    //manager.register("LiftTest", LiftTest.class);
-    //manager.register("CameraOp", CameraOp.class);
-    manager.register("AutoTestOp", AutoTestOp.class);
-    manager.register("DriveTrainTest", DriveTrainTest.class);
-    //manager.register("GyroOp", GyroOp.class);
-    //manager.register("StickTest", StickTest.class);
-    //manager.register("ZiplineTest", ZiplineTest.class);
-    //manager.register("AutoLiftTestOp", AutoLiftTestOp.class);
-    //manager.register("TeleOp7391NoLift", TeleOp7391NoLift.class);
-    //manager.register("TeleOp7391NoEncoder", TeleOp7391NoEncoder.class);
-
-
-  }
-}
-=======
         /**
          * Any manual OpMode class registrations should go here.
          */
     }
 }
->>>>>>> .merge_file_B9e7I3

@@ -1,10 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-
-<!--
-
-strings.xml in FtcRobotController
-
-Copyright (c) 2014, 2015 Qualcomm Technologies Inc
+/* Copyright (c) 2014 Qualcomm Technologies Inc
 
 All rights reserved.
 
@@ -33,30 +27,55 @@ DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
 SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
 CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
 OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
--->
+OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
-<resources>
+package org.firstinspires.ftc.team7391;
 
-  <string name="app_name">FTC Robot Controller</string>
+import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 
-  <!-- Menu -->
-  <string name="inspection_mode_menu_item">Self Inspect</string>
-  <string name="programming_mode_menu_item">Programming Mode</string>
-  <string name="blocks_menu_item">Blocks</string>
-  <string name="settings_menu_item">Settings</string>
-  <string name="restart_robot_menu_item">Restart Robot</string>
-  <string name="configure_robot_menu_item">Configure Robot</string>
-  <string name="about_menu_item">About</string>
-  <string name="exit_menu_item">Exit</string>
+/**
+ * TeleOp Mode
+ * <p>
+ * Enables control of the robot via the gamepad
+ */
+public class StickTest extends OpMode {
 
-  <!-- Preferences -->
-  <string name="pref_view_logs">View Logs</string>
-  <string name="pref_sound_on_off_title">Sound</string>
+    private Stick stick;
 
-  <!-- Toast messages -->  
-  <string name="toastWifiConfigurationComplete">Configuration Complete</string>
-  <string name="toastRestartingRobot">Restarting Robot</string>
-  <string name="toastConfigureRobotBeforeProgrammingMode">You must Configure Robot before starting Programming Mode.</string>
+    private static final String TAG = Stick.class.getSimpleName();
 
-</resources>
+    @Override
+    public void init() {
+        stick = new Stick(hardwareMap);
+
+    }
+
+    @Override
+    public void loop() {
+
+        telemetry.addData(TAG, "OpMode Started");
+
+
+        if (gamepad1.a) {
+
+            stick.setRetractedPosition();
+        }
+        if (gamepad1.b) {
+
+            stick.setDrivePosition();
+        }
+        if (gamepad1.y) {
+
+            stick.setDeployedPosition();
+        }
+
+    }
+
+    @Override
+    public void stop() {
+
+    }
+
+
+
+}
