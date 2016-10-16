@@ -31,11 +31,8 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package org.firstinspires.ftc.robotcontroller.external.samples;
 
-<<<<<<< .merge_file_Aj1XBM
-=======
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
->>>>>>> .merge_file_sPwmag
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
@@ -53,17 +50,6 @@ public class ConceptNullOp extends OpMode {
 
   @Override
   public void init() {
-<<<<<<< .merge_file_Aj1XBM
-  }
-
-  /*
-     * Code to run when the op mode is first enabled goes here
-     * @see com.qualcomm.robotcore.eventloop.opmode.OpMode#start()
-     */
-  @Override
-  public void init_loop() {
-    startDate = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss").format(new Date());
-=======
     telemetry.addData("Status", "Initialized");
   }
 
@@ -81,9 +67,7 @@ public class ConceptNullOp extends OpMode {
    */
   @Override
   public void start() {
->>>>>>> .merge_file_sPwmag
     runtime.reset();
-    telemetry.addData("Null Op Init Loop", runtime.toString());
   }
 
   /*
@@ -92,11 +76,6 @@ public class ConceptNullOp extends OpMode {
    */
   @Override
   public void loop() {
-<<<<<<< .merge_file_Aj1XBM
-    telemetry.addData("1 Start", "NullOp started at " + startDate);
-    telemetry.addData("2 Status", "running for " + runtime.toString());
-=======
     telemetry.addData("Status", "Run Time: " + runtime.toString());
->>>>>>> .merge_file_sPwmag
   }
 }

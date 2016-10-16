@@ -32,21 +32,8 @@ CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
 OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 -->
-<<<<<<< .merge_file_8zHvex
-
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/header"
-    android:layout_alignParentTop="true"
-    android:paddingLeft="8dp"
-    android:paddingRight="8dp"
-    android:paddingTop="2dp"
-    android:paddingBottom="2dp"
-    android:background="@color/medium_red_background"
-=======
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
->>>>>>> .merge_file_tOvnOy
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     >
@@ -60,19 +47,6 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
         android:background="@color/medium_red_background"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-<<<<<<< .merge_file_8zHvex
-        android:text="Active Configuration File:"
-        android:textColor="@color/white"
-        android:layout_weight="1"
-        android:textAppearance="?android:attr/textAppearanceSmall" />
-
-    <TextView
-        android:id="@+id/active_filename"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="@color/white"
-        android:textAppearance="?android:attr/textAppearanceSmall" />
-=======
         android:orientation="horizontal">
 
         <TextView
@@ -91,6 +65,5 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
             android:textAppearance="?android:attr/textAppearanceSmall" />
 
     </LinearLayout>
->>>>>>> .merge_file_tOvnOy
 
 </LinearLayout>

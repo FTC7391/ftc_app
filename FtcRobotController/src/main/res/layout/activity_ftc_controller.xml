@@ -46,20 +46,6 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
     android:layout_width="fill_parent"
     android:layout_height="80dp"
     android:background="@color/black">
-<<<<<<< .merge_file_Z5abpd
-    <ImageView
-      android:id="@+id/robotIcon"
-      android:layout_width="40dp"
-      android:layout_height="wrap_content"
-      android:adjustViewBounds="true"
-      android:layout_margin="5dp"
-      android:layout_centerVertical="true"
-      android:background="@drawable/icon_robotcontroller"/>
-
-    <TextView
-      android:id="@+id/textDeviceName"
-      android:layout_toRightOf="@id/robotIcon"
-=======
 
     <ImageView
       android:id="@+id/robotIcon"
@@ -71,26 +57,16 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
     <TextView
       android:id="@+id/textDeviceName"
->>>>>>> .merge_file_qiiOk0
       android:layout_toEndOf="@id/robotIcon"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:textColor="@color/white"
-<<<<<<< .merge_file_Z5abpd
-      android:padding="8dp"
-      android:textSize="16sp"
-=======
       android:textAppearance="?android:attr/textAppearanceMedium"
       android:padding="8dp"
->>>>>>> .merge_file_qiiOk0
       android:textStyle="bold"/>
 
     <ImageButton
       android:id="@+id/menu_buttons"
-<<<<<<< .merge_file_Z5abpd
-      android:contentDescription="menu_buttons"
-=======
->>>>>>> .merge_file_qiiOk0
       android:scaleType="fitXY"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
@@ -98,10 +74,6 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
       android:background="@color/black"
       android:padding="15dp"
       android:adjustViewBounds="true"
-<<<<<<< .merge_file_Z5abpd
-      android:layout_alignParentRight="true"
-=======
->>>>>>> .merge_file_qiiOk0
       android:layout_alignParentEnd="true"
       android:layout_centerInParent="true"
       android:layout_centerHorizontal="true"
@@ -150,13 +122,6 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       android:layout_below="@+id/textOpMode"
-<<<<<<< .merge_file_Z5abpd
-      android:textColor="#990000"
-      android:textStyle="bold"
-      android:minLines="2"
-      android:maxLines="6"
-      android:text="" />
-=======
       android:layout_above="@+id/textGamepad1">
 
       <LinearLayout
@@ -181,32 +146,19 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
             android:textStyle="bold"/>
 
     </FrameLayout>
->>>>>>> .merge_file_qiiOk0
 
     <TextView
       android:id="@+id/textGamepad1"
       android:layout_width="match_parent"
-<<<<<<< .merge_file_Z5abpd
-      android:layout_height="50dp"
-      android:layout_above="@+id/textGamepad2"
-      android:layout_marginBottom="10dp"
-      android:minLines="3"
-=======
       android:layout_height="wrap_content"
       android:layout_above="@+id/textGamepad2"
       android:visibility="invisible"
->>>>>>> .merge_file_qiiOk0
       android:text="" />
 
     <TextView
       android:id="@+id/textGamepad2"
       android:layout_width="match_parent"
-<<<<<<< .merge_file_Z5abpd
-      android:layout_height="50dp"
-      android:minLines="3"
-=======
       android:layout_height="wrap_content"
->>>>>>> .merge_file_qiiOk0
       android:layout_alignParentBottom="true"
       android:visibility="invisible"
       android:text="" />
@@ -222,14 +174,6 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
       android:textStyle="bold"
       android:visibility="invisible"
       android:text="" />
-
-    <FrameLayout
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_below="@+id/textErrorMessage"
-        android:layout_centerHorizontal="true"
-        android:id="@+id/previewLayout">
-    </FrameLayout>
 
   </RelativeLayout>
 
