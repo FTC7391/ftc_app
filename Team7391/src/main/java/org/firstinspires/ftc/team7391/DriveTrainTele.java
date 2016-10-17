@@ -33,7 +33,7 @@ public class DriveTrainTele extends DriveTrain{
     }
 
     public static String getPosition(){
-        return "Current: " + motorFrontRight.getCurrentPosition() + " Target: " + motorFrontRight.getTargetPosition() + " Current: " + motorFrontLeft.getCurrentPosition();
+        return "Current: " + motorRight.getCurrentPosition() + " Target: " + motorRight.getTargetPosition() + " Current: " + motorLeft.getCurrentPosition();
     }
 
     public static void setTestMode(TestModes mode, double power, double lateralPower) {
@@ -72,36 +72,36 @@ public class DriveTrainTele extends DriveTrain{
                 rotate(1 * power);    //negative power = counter clockwise
                 break;
             case MODE_STOP:
-                setPowerOfMotors(0.0,0.0,0.0,0.0);
+                setPowerOfMotors(0.0,0.0);
                 break;
         }
     }
 
     public static void moveAxial(double power) {
-        setPowerOfMotors(power,power,power,power);
+        setPowerOfMotors(power,power);
     }
     public static void moveLateral(double power) {
-        setPowerOfMotors(power, -power, -power, power);
+        setPowerOfMotors(power, -power);
     }
 
     //angle is angle counterclockwise from right
     public static void moveDiagonal(double angle){
         double frontLeft = (Math.cos(angle) + Math.sin(angle)) / (Math.sqrt(2));
         double frontRight = (Math.sin(angle) - Math.cos(angle)) / (Math.sqrt(2));
-        setPowerOfMotors(frontRight, frontLeft, frontLeft, frontRight);
+        setPowerOfMotors(frontRight, frontLeft);
     }
     public static void moveArc(double axialPower, double rotatePower) {
         if (rotatePower > 0) {
-            setPowerOfMotors(axialPower, rotatePower, axialPower, rotatePower);
+            setPowerOfMotors(axialPower, rotatePower);
         }
         else {
-            setPowerOfMotors(axialPower, rotatePower, axialPower, rotatePower);
+            setPowerOfMotors(axialPower, rotatePower);
         }
     }
 
     public static void rotate(double power) {
         //Positive power, rotate to the left, frontRight & backRight postive
-        setPowerOfMotors(power, -power, power, -power);
+        setPowerOfMotors(power, -power);
     }
 
     /*

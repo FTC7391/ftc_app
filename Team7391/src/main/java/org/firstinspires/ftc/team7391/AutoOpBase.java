@@ -423,20 +423,14 @@ public class AutoOpBase extends OpMode {
      }
 
     private void showTelemetryDrivetrain() {
-        telemetry.addData("20 " , String.format("DriveTrain FrontRight %s", DriveTrainAuto.getPosition(DriveTrain.TestModes.MODE_MOVE_FRONT_RIGHT)));
-        telemetry.addData("21 " , String.format("DriveTrain FrontLeft  %s", DriveTrainAuto.getPosition(DriveTrain.TestModes.MODE_MOVE_FRONT_LEFT)));
-        telemetry.addData("22 " , String.format("DriveTrain BackRight  %s", DriveTrainAuto.getPosition(DriveTrain.TestModes.MODE_MOVE_BACK_RIGHT)));
-        telemetry.addData("23 " , String.format("DriveTrain BackLeft   %s", DriveTrainAuto.getPosition(DriveTrain.TestModes.MODE_MOVE_BACK_LEFT)));
-        dbgWriter.printf("fr:%s fl:%s br:%s bl:%s \n",
-            DriveTrainAuto.getPosition(DriveTrain.TestModes.MODE_MOVE_FRONT_RIGHT),
-            DriveTrainAuto.getPosition(DriveTrain.TestModes.MODE_MOVE_FRONT_LEFT),
-            DriveTrainAuto.getPosition(DriveTrain.TestModes.MODE_MOVE_BACK_RIGHT),
-            DriveTrainAuto.getPosition(DriveTrain.TestModes.MODE_MOVE_BACK_LEFT));
+        telemetry.addData("20 " , String.format("DriveTrain Right %s", DriveTrainAuto.getPosition(DriveTrain.TestModes.MODE_MOVE_RIGHT)));
+        telemetry.addData("21 " , String.format("DriveTrain Left  %s", DriveTrainAuto.getPosition(DriveTrain.TestModes.MODE_MOVE_LEFT)));
+        dbgWriter.printf("r:%s l:%s \n",
+            DriveTrainAuto.getPosition(DriveTrain.TestModes.MODE_MOVE_RIGHT),
+            DriveTrainAuto.getPosition(DriveTrain.TestModes.MODE_MOVE_LEFT));
 
-        Log.d("DriveTrain", "FrontRight" + DriveTrainAuto.getPosition(DriveTrain.TestModes.MODE_MOVE_FRONT_RIGHT));
-        Log.d("DriveTrain", "FrontLeft " + DriveTrainAuto.getPosition(DriveTrain.TestModes.MODE_MOVE_FRONT_LEFT));
-        Log.d("DriveTrain", "BackRight " + DriveTrainAuto.getPosition(DriveTrain.TestModes.MODE_MOVE_BACK_RIGHT));
-        Log.d("DriveTrain", "BackLeft  " + DriveTrainAuto.getPosition(DriveTrain.TestModes.MODE_MOVE_BACK_LEFT));
+        Log.d("DriveTrain", "Right" + DriveTrainAuto.getPosition(DriveTrain.TestModes.MODE_MOVE_RIGHT));
+        Log.d("DriveTrain", "Left " + DriveTrainAuto.getPosition(DriveTrain.TestModes.MODE_MOVE_LEFT));
 
     }
 

@@ -82,27 +82,27 @@ public class DriveTrainTest extends OpMode {
 
         if (gamepad1.y) {
             telemetry.addData(TAG, "Y Button Pressed.");
-            telemetry.addData(TAG, "MODE_MOVE_FRONT_RIGHT Power:" + String.format("%.2f", power));
-            DriveTrain.setTestMode(DriveTrain.TestModes.MODE_MOVE_FRONT_RIGHT, power);
+            telemetry.addData(TAG, "MODE_MOVE_RIGHT Power:" + String.format("%.2f", power));
+            DriveTrain.setTestMode(DriveTrain.TestModes.MODE_MOVE_RIGHT, power);
         }
 
         else if (gamepad1.x) {
             telemetry.addData(TAG, "X Button Pressed.");
-            telemetry.addData(TAG, "MODE_MOVE_FRONT_LEFT Power:" + String.format("%.2f", power));
-            DriveTrain.setTestMode(DriveTrain.TestModes.MODE_MOVE_FRONT_LEFT, power);
+            telemetry.addData(TAG, "MODE_MOVE_LEFT Power:" + String.format("%.2f", power));
+            DriveTrain.setTestMode(DriveTrain.TestModes.MODE_MOVE_LEFT, power);
         }
 
-        else if (gamepad1.b) {
-            telemetry.addData(TAG, "B Button Pressed.");
-            telemetry.addData(TAG, "MODE_MOVE_BACK_RIGHT Power:" + String.format("%.2f", power));
-            DriveTrain.setTestMode(DriveTrain.TestModes.MODE_MOVE_BACK_RIGHT, power);
-        }
-
-        else if (gamepad1.a) {
-            telemetry.addData(TAG, "A Button Pressed.");
-            telemetry.addData(TAG, "MODE_MOVE_BACK_LEFT Power:" + String.format("%.2f", power));
-            DriveTrain.setTestMode(DriveTrain.TestModes.MODE_MOVE_BACK_LEFT, power);
-        }
+//        else if (gamepad1.b) {
+//            telemetry.addData(TAG, "B Button Pressed.");
+//            telemetry.addData(TAG, "MODE_MOVE_BACK_RIGHT Power:" + String.format("%.2f", power));
+//            DriveTrain.setTestMode(DriveTrain.TestModes.MODE_MOVE_BACK_RIGHT, power);
+//        }
+//
+//        else if (gamepad1.a) {
+//            telemetry.addData(TAG, "A Button Pressed.");
+//            telemetry.addData(TAG, "MODE_MOVE_BACK_LEFT Power:" + String.format("%.2f", power));
+//            DriveTrain.setTestMode(DriveTrain.TestModes.MODE_MOVE_BACK_LEFT, power);
+//        }
 
 
         else if (gamepad1.dpad_up) {
