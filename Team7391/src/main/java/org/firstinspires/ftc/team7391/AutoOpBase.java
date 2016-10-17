@@ -437,19 +437,19 @@ public class AutoOpBase extends OpMode {
     private void showTelemetryLift() {
         telemetry.addData("30 " , String.format("High  : original: %d current: %d", Lift.originalTicksHigh, Lift.getTicksLiftHigh()));
         telemetry.addData("31 " , String.format("Low   : original: %d current: %d", Lift.originalTicksLow, Lift.getTicksLiftLow()));
-        telemetry.addData("32 " , String.format("Angle : original: %d current: %d", Lift.originalTicksAngle, Lift.getTicksLiftAngle()));
-        telemetry.addData("33 " , String.format("Hook  : original: %d currnet: %d", Lift.originalTicksHook, Lift.getTicksLiftHook()));
+        telemetry.addData("32 " , String.format("Angle : original: %d current: %d", Lift.originalTicksShoulder, Lift.getTicksliftShoulder()));
+        telemetry.addData("33 " , String.format("Hook  : original: %d currnet: %d", Lift.originalTicksWrist, Lift.getTicksleftWrist()));
         dbgWriter.printf("High %d %d    Low %d %d    Angle %d %d     Hook %d %d \n",
             Lift.originalTicksHigh, Lift.getTicksLiftHigh(),
             Lift.originalTicksLow, Lift.getTicksLiftLow(),
-            Lift.originalTicksAngle, Lift.getTicksLiftAngle(),
-            Lift.originalTicksHook, Lift.getTicksLiftHook()
+            Lift.originalTicksShoulder, Lift.getTicksliftShoulder(),
+            Lift.originalTicksWrist, Lift.getTicksleftWrist()
         );
 
         Log.d("Lift", "High  : original:" + Lift.originalTicksHigh + "|| end: " + Lift.getTicksLiftHigh());
         Log.d("Lift", "Low   : original:" + Lift.originalTicksLow + "|| end: " + Lift.getTicksLiftLow());
-        Log.d("Lift", "Angle : original:" + Lift.originalTicksAngle + "|| end: " + Lift.getTicksLiftAngle());
-        Log.d("Lift", "Hook  : original:" + Lift.originalTicksHook + "|| end: " + Lift.getTicksLiftHook());
+        Log.d("Lift", "Angle : original:" + Lift.originalTicksShoulder + "|| end: " + Lift.getTicksliftShoulder());
+        Log.d("Lift", "Hook  : original:" + Lift.originalTicksWrist + "|| end: " + Lift.getTicksleftWrist());
 
     }
 

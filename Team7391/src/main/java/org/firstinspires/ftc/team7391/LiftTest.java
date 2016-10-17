@@ -148,7 +148,7 @@ public class LiftTest extends OpMode {
             Lift.setTestMode(Lift.TestModes.MODE_MOVE_ANGLE, powerLift);
         }
         else{
-            Lift.liftAngle.setPower(0);
+            Lift.liftShoulder.setPower(0);
         }
 
 
@@ -156,7 +156,7 @@ public class LiftTest extends OpMode {
             Lift.setTestMode(Lift.TestModes.MODE_MOVE_HOOK, powerLift/3);
         }
         else{
-            Lift.liftHook.setPower(0);
+            Lift.leftWrist.setPower(0);
         }
 
 
@@ -175,8 +175,8 @@ public class LiftTest extends OpMode {
 
         telemetry.addData("High", "original: " + Lift.originalTicksHigh + "|| end: " + Lift.getTicksLiftHigh());
         telemetry.addData("Low", "original: " + Lift.originalTicksLow + "|| end: " + Lift.getTicksLiftLow());
-        telemetry.addData("Angle", "original: " + Lift.originalTicksAngle + "|| end: " + Lift.getTicksLiftAngle());
-        telemetry.addData("Hook", "original: " + Lift.originalTicksHook + "|| end: " + Lift.getTicksLiftHook());
+        telemetry.addData("Angle", "original: " + Lift.originalTicksShoulder + "|| end: " + Lift.getTicksliftShoulder());
+        telemetry.addData("Hook", "original: " + Lift.originalTicksWrist + "|| end: " + Lift.getTicksleftWrist());
 
         // clip the position values so that they never exceed their allowed range.
         // armPosition = Range.clip(armPosition, ARM_MIN_RANGE, ARM_MAX_RANGE);
