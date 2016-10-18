@@ -28,8 +28,8 @@ public class DriveTrain {
         initialized = true;
 
 
-        motorRight = hardwareMap.dcMotor.get("motor_front_right");
-        motorLeft = hardwareMap.dcMotor.get("motor_front_left");
+        motorRight = hardwareMap.dcMotor.get("motor_right");
+        motorLeft = hardwareMap.dcMotor.get("motor_left");
 
 //        motorBackLeft.setDirection(DcMotor.Direction.REVERSE);
 //        motorLeft.setDirection(DcMotor.Direction.REVERSE);
