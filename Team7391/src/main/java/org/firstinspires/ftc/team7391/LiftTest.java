@@ -31,7 +31,9 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package org.firstinspires.ftc.team7391;
 
+import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
+import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.Servo;
@@ -42,6 +44,8 @@ import com.qualcomm.robotcore.util.Range;
  * <p>
  * Enables control of the robot via the gamepad
  */
+@TeleOp(name = "LiftTest" + "", group = "Practice")
+//@Disabled
 public class LiftTest extends OpMode {
 
     private static final String TAG = Lift.class.getSimpleName();
@@ -128,7 +132,7 @@ public class LiftTest extends OpMode {
 
         if (gamepad1.y) {
             //DriveTrain.testRotateDegrees(positiveNumber);
-            Lift.setTestMode(Lift.TestModes.MODE_MOVE_HIGH, -powerLift);
+            Lift.setTestMode(Lift.TestModes.MODE_MOVE_HIGH, powerLift);
         }
         else{
             Lift.liftHigh.setPower(0);
@@ -144,34 +148,34 @@ public class LiftTest extends OpMode {
         }
 
 
-        if (gamepad1.a) {
-            Lift.setTestMode(Lift.TestModes.MODE_MOVE_ANGLE, powerLift);
+        if (gamepad1.x) {
+            Lift.setTestMode(Lift.TestModes.MODE_MOVE_ANGLE, -powerLift/3);
         }
         else{
             Lift.liftShoulder.setPower(0);
         }
 
 
-        if (gamepad1.x) {
-            Lift.setTestMode(Lift.TestModes.MODE_MOVE_HOOK, powerLift/3);
+        if (gamepad1.a) {
+            Lift.setTestMode(Lift.TestModes.MODE_MOVE_HOOK, -powerLift/3);
         }
         else{
             Lift.leftWrist.setPower(0);
         }
 
 
-        if(gamepad1.dpad_up) {
-            Lift.setTestMode(Lift.TestModes.MODE_MOVE_BOTH, powerLift);
-        }
-
-
-
-        if(gamepad1.dpad_down){
-
-        }
-       // if(powerDriveTrain != 0) {
-            DriveTrainTele.moveAxial(powerDriveTrain);
-       // }
+//        if(gamepad1.dpad_up) {
+//            Lift.setTestMode(Lift.TestModes.MODE_MOVE_BOTH, powerLift);
+//        }
+//
+//
+//
+//        if(gamepad1.dpad_down){
+//
+//        }
+//       // if(powerDriveTrain != 0) {
+//            DriveTrainTele.moveAxial(powerDriveTrain);
+//       // }
 
         telemetry.addData("High", "original: " + Lift.originalTicksHigh + "|| end: " + Lift.getTicksLiftHigh());
         telemetry.addData("Low", "original: " + Lift.originalTicksLow + "|| end: " + Lift.getTicksLiftLow());
