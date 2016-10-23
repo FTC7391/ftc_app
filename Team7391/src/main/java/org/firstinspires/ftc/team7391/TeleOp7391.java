@@ -58,6 +58,7 @@ public class TeleOp7391 extends OpMode {
 	private Stick stick;
 	private Zipline ziplineBlue;
 	private Zipline ziplineRed;
+	private Claw claw;
 
 	private DriveJoystick driveJoystick;
 	private LiftJoystick liftJoystick;
@@ -88,6 +89,7 @@ public class TeleOp7391 extends OpMode {
 		stick.setRetractedPosition();
 		ziplineBlue = new Zipline(hardwareMap, 1,1, .5, "zipline_blue");
 		ziplineRed = new Zipline(hardwareMap, 0,0, .5, "zipline_red");
+		claw = new Claw(hardwareMap,.2,.5, .8, "claw");
 		ziplineBlue.setDrivePosition();
 		ziplineRed.setDrivePosition();
 	}

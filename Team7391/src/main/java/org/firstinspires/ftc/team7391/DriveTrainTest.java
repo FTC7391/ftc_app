@@ -29,9 +29,13 @@ CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
 OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
+
+
 package org.firstinspires.ftc.team7391;
 
+import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
+import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 
 /**
@@ -39,6 +43,7 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
  * <p>
  * Enables control of the robot via the gamepad
  */
+@TeleOp(name = "TeleOp: DriveTest" , group = "Practice")
 public class DriveTrainTest extends OpMode {
 
     private static final String TAG = DriveTrainTest.class.getSimpleName();
