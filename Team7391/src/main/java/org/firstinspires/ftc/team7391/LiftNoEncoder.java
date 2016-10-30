@@ -12,7 +12,7 @@ public class LiftNoEncoder {
 
     public static DcMotor liftHigh;
     public static DcMotor liftLow;
-    public static DcMotor leftWrist;
+    public static DcMotor liftWrist;
     public static DcMotor liftShoulder;
 
 
@@ -49,14 +49,14 @@ public class LiftNoEncoder {
 
         liftHigh = hardwareMap.dcMotor.get("motor_high");
         liftLow = hardwareMap.dcMotor.get("motor_low");
-        leftWrist = hardwareMap.dcMotor.get("motor_hook");
+        liftWrist = hardwareMap.dcMotor.get("motor_hook");
         liftShoulder = hardwareMap.dcMotor.get("motor_angle");
 
         //runUsingEncoders();
 
         //originalTicksHigh = liftHigh.getCurrentPosition();
         //originalTicksLow = liftLow.getCurrentPosition();
-        //originalTicksWrist = leftWrist.getCurrentPosition();
+        //originalTicksWrist = liftWrist.getCurrentPosition();
         //originalTicksShoulder = liftShoulder.getCurrentPosition();
     }
 
@@ -64,7 +64,7 @@ public class LiftNoEncoder {
         liftHigh.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         liftLow.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         liftShoulder.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        leftWrist.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        liftWrist.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
     }
 
@@ -73,7 +73,7 @@ public class LiftNoEncoder {
         liftHigh.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         liftLow.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         liftShoulder.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        leftWrist.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        liftWrist.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
     }
 
@@ -81,7 +81,7 @@ public class LiftNoEncoder {
    // public static int getTicksLiftHigh(){return liftHigh.getCurrentPosition();}
    // public static int getTicksLiftLow(){return liftLow.getCurrentPosition();}
     //public static int getTicksliftShoulder(){return liftShoulder.getCurrentPosition();}
-    //public static int getTicksleftWrist(){return leftWrist.getCurrentPosition();}
+    //public static int getTicksliftWrist(){return liftWrist.getCurrentPosition();}
 
 //    public static int getOriginalTicksHigh(){return originalTicksHigh;}
 //    public static int getOriginalTicksLow(){return originalTicksLow;}
@@ -169,7 +169,7 @@ public class LiftNoEncoder {
                 liftLow.setPower(1 * power);    //negative power = backwards
                 break;
             case MODE_MOVE_HOOK:
-                leftWrist.setPower(1*power);
+                liftWrist.setPower(1*power);
                 break;
             case MODE_STOP:
                 LiftNoEncoder.setPowerOfMotors(0, 0);

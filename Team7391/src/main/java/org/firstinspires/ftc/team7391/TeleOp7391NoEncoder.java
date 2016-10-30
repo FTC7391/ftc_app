@@ -182,7 +182,7 @@ public class TeleOp7391NoEncoder extends OpMode {
 
 		}
 		//else{
-			//LiftNoEncoder.leftWrist.setPower(0);
+			//LiftNoEncoder.liftWrist.setPower(0);
 		//}
 
 

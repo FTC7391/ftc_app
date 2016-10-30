@@ -186,7 +186,7 @@ public class TeleOp7391NoLift extends OpMode {
 			ziplineBlue.setDrivePosition();
 		}
 		else{
-			Lift.leftWrist.setPower(0);
+			Lift.liftWrist.setPower(0);
 		}
 
 
