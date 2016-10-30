@@ -5,7 +5,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 /**
  * Created by nikashkhanna on 10/23/2016.
  */
-@Autonomous(name = "Auto: DriveTest" + "", group = "Practice")
+//@Autonomous(name = "Auto: DriveTest" + "", group = "Practice")
 public class AutoDriveTestOp extends AutoOpBase
 {
     private static final String TAG = AutoDriveTestOp.class.getSimpleName();

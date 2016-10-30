@@ -11,7 +11,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 /**
  * Created by Allana on 10/3/2015.
  */
-@Autonomous(name = "Auto: Blue" + "", group = "Tournament")
+//@Autonomous(name = "Auto: Blue" + "", group = "Tournament")
 //@Disabled
 public class AutoBlueOp extends AutoOp
 {

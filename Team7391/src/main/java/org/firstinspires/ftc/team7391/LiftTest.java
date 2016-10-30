@@ -133,6 +133,12 @@ public class LiftTest extends OpMode {
         if (gamepad1.y) {
             //DriveTrain.testRotateDegrees(positiveNumber);
             Lift.setTestMode(Lift.TestModes.MODE_MOVE_HIGH, powerLift);
+            if (gamepad1.dpad_left) {
+                Lift.liftHigh.setPower(0);
+                Lift.liftLow.setPower(0);
+                Lift.liftShoulder.setPower(0);
+                Lift.liftWrist.setPower(0);
+            }
         }
         else{
             Lift.liftHigh.setPower(0);
@@ -142,6 +148,12 @@ public class LiftTest extends OpMode {
         if (gamepad1.b) {
             //DriveTrain.testRotateDegrees(negativeNumber);
             Lift.setTestMode(Lift.TestModes.MODE_MOVE_LOW, powerLift);
+            if (gamepad1.dpad_left) {
+                Lift.liftLow.setPower(0);
+                Lift.liftHigh.setPower(0);
+                Lift.liftShoulder.setPower(0);
+                Lift.liftWrist.setPower(0);
+            }
         }
         else{
             Lift.liftLow.setPower(0);
@@ -149,7 +161,13 @@ public class LiftTest extends OpMode {
 
 
         if (gamepad1.x) {
-            Lift.setTestMode(Lift.TestModes.MODE_MOVE_ANGLE, -powerLift/3);
+            Lift.setTestMode(Lift.TestModes.MODE_MOVE_ANGLE, powerLift/3);
+            if (gamepad1.dpad_left) {
+                Lift.liftShoulder.setPower(0);
+                Lift.liftHigh.setPower(0);
+                Lift.liftLow.setPower(0);
+                Lift.liftWrist.setPower(0);
+            }
         }
         else{
             Lift.liftShoulder.setPower(0);
@@ -157,10 +175,20 @@ public class LiftTest extends OpMode {
 
 
         if (gamepad1.a) {
-            Lift.setTestMode(Lift.TestModes.MODE_MOVE_HOOK, -powerLift/3);
+            Lift.setTestMode(Lift.TestModes.MODE_MOVE_HOOK, powerLift/3);
+            if (gamepad1.dpad_left) {
+                Lift.liftWrist.setPower(0);
+                Lift.liftHigh.setPower(0);
+                Lift.liftLow.setPower(0);
+                Lift.liftShoulder.setPower(0);
+            }
         }
         else{
             Lift.liftWrist.setPower(0);
+        }
+
+        if(gamepad1.dpad_up){
+            Lift.setTestMode(Lift.TestModes.MODE_GO_TO_INIT, powerLift);
         }
 
 
@@ -179,8 +207,8 @@ public class LiftTest extends OpMode {
 
         telemetry.addData("High", "original: " + Lift.originalTicksHigh + "|| end: " + Lift.getTicksLiftHigh());
         telemetry.addData("Low", "original: " + Lift.originalTicksLow + "|| end: " + Lift.getTicksLiftLow());
-        telemetry.addData("Angle", "original: " + Lift.originalTicksShoulder + "|| end: " + Lift.getTicksliftShoulder());
-        telemetry.addData("Hook", "original: " + Lift.originalTicksWrist + "|| end: " + Lift.getTicksliftWrist());
+        telemetry.addData("Shoulder", "original: " + Lift.originalTicksShoulder + "|| end: " + -Lift.getTicksliftShoulder());
+        telemetry.addData("Wrist", "original: " + Lift.originalTicksWrist + "|| end: " + Lift.getTicksliftWrist());
 
         // clip the position values so that they never exceed their allowed range.
         // armPosition = Range.clip(armPosition, ARM_MIN_RANGE, ARM_MAX_RANGE);
