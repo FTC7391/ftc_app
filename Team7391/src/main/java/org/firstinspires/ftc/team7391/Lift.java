@@ -17,10 +17,6 @@ public class Lift {
     public static DcMotor liftWrist;
     public static DcMotor liftShoulder;
 
-//    liftHigh.setDirection(DcMotor.Direction.REVERSE);
-//    liftShoulder.setDirection(DcMotor.Direction.REVERSE);
-//    liftWrist.setDirection(DcMotor.Direction.REVERSE);
-
 
 
     public static int originalTicksHigh = 0; //to be added
@@ -92,7 +88,8 @@ public class Lift {
         originalTicksWrist = liftWrist.getCurrentPosition();
         originalTicksShoulder = liftShoulder.getCurrentPosition();
 
-        liftLow.setDirection(DcMotor.Direction.REVERSE);
+        liftHigh.setDirection(DcMotor.Direction.REVERSE);
+        //liftLow.setDirection(DcMotor.Direction.REVERSE);
         liftShoulder.setDirection(DcMotor.Direction.REVERSE);
        // liftWrist.setDirection(DcMotor.Direction.REVERSE);
 
@@ -443,22 +440,25 @@ public class Lift {
         MODE_MOVE_BOTH,
         MODE_MOVE_HOOK,
 
+        MODE_GO_TO_INIT,
+
     }
 
     /* Called during TeleOp */
     public static void setTestMode(TestModes mode, double power) {
+        power = -power; //when pushing up on joystick negative power is given
         switch (mode) {
             case MODE_MOVE_HIGH:
 
-//               if (power > 0 && liftHigh.getCurrentPosition() > LIFT_HIGH_MAX ||
-//                    power < 0 && liftHigh.getCurrentPosition() < LIFT_HIGH_MIN ){
-//
+               if (power > 0 && liftHigh.getCurrentPosition() > 3000 ||
+                    power < 0 && liftHigh.getCurrentPosition() < 0 ){
+                    liftHigh.setPower(0);
 //                   highRunToPosition();
-//               }
-//               else{
+               }
+               else{
                    highRunUsingEncoders();
                    liftHigh.setPower(1 * power);
-//               }
+              }
 
                 break;
             case MODE_MOVE_LOW:
@@ -513,6 +513,10 @@ public class Lift {
             case MODE_RUN_USING_ENCODERS:
                 //if (isRunToPosition == true)
                     runUsingEncoders();
+                break;
+            case MODE_GO_TO_INIT:
+                setMotorTargetPosition(1000, 1000, 0, 0);
+                runToPosition();
                 break;
             case MODE_GOTO_DRIVE_POSITION1:
                 //if (isRunToPosition == false)
@@ -588,6 +592,7 @@ public class Lift {
         setMotorTargetPosition(8035, 6164, 4444, 1);
         setPowerOfMotors(1, 1, 1, 1);
     }
+
 
 
 //    private static int driveModeTicksHigh = 1575; //to be added

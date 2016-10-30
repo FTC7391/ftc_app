@@ -43,7 +43,7 @@ import com.qualcomm.robotcore.hardware.DcMotorController;
  * <p>
  * Enables control of the robot via the gamepad
  */
-@TeleOp(name="Tournament", group="TeleOpTournament")
+//@TeleOp(name="Tournament", group="TeleOpTournament")
 //@Disabled
 public class TeleOp7391 extends OpMode {
 

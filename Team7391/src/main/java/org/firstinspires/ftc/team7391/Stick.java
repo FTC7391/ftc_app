@@ -11,7 +11,7 @@ public class Stick extends ServoAttachment {
 
     public Stick(HardwareMap hardwareMap){
         super(1, .8, 0);
-        servo = hardwareMap.servo.get("stick");
+        servo = hardwareMap.servo.get("Claw");
     }
 
 }

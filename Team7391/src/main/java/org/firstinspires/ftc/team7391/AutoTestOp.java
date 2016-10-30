@@ -6,7 +6,7 @@ package org.firstinspires.ftc.team7391;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
-@Autonomous(name = "Auto: TestOp" + "", group = "Test")
+//@Autonomous(name = "Auto: TestOp" + "", group = "Test")
 //@Disabled
 public class AutoTestOp extends AutoOpBase
 {
