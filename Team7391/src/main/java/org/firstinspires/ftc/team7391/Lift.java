@@ -428,6 +428,7 @@ public class Lift {
         MODE_RUN_TO_POSITION,
         MODE_RUN_USING_ENCODERS,
 
+        MODE_GOTO_INIT,
         MODE_GOTO_DRIVE_POSITION1,
         MODE_GOTO_DRIVE_POSITION2,
         MODE_GOTO_STRAIGHT_HOOK,
@@ -440,7 +441,7 @@ public class Lift {
         MODE_MOVE_BOTH,
         MODE_MOVE_HOOK,
 
-        MODE_GO_TO_INIT,
+
 
     }
 
@@ -450,14 +451,14 @@ public class Lift {
         switch (mode) {
             case MODE_MOVE_HIGH:
 
-               if (power > 0 && liftHigh.getCurrentPosition() > 3000 ||
-                    power < 0 && liftHigh.getCurrentPosition() < 0 ){
-                    liftHigh.setPower(0);
-//                   highRunToPosition();
-               }
-               else{
+               if (power < 0 && liftHigh.getCurrentPosition() <= 3000 ||
+                    power > 0 && liftHigh.getCurrentPosition() >= 0 ){
                    highRunUsingEncoders();
                    liftHigh.setPower(1 * power);
+               }
+               else{
+                   liftHigh.setPower(0);
+                   highRunToPosition();
               }
 
                 break;
@@ -514,7 +515,7 @@ public class Lift {
                 //if (isRunToPosition == true)
                     runUsingEncoders();
                 break;
-            case MODE_GO_TO_INIT:
+            case MODE_GOTO_INIT:
                 setMotorTargetPosition(1000, 1000, 0, 0);
                 runToPosition();
                 break;

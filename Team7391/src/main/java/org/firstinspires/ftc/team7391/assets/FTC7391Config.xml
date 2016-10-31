@@ -8,9 +8,9 @@
         <Motor name="motor_right" port="1" />
         <Motor name="motor_left" port="2" />
     </MotorController>
-    <!--<ServoController name="Servo Controller " serialNumber="AI02RMWJ">-->
-        <!--<Servo name="claw_left" port="1" />-->
-        <!--<Servo name="claw_right" port="2" />-->
+    <ServoController name="Servo Controller " serialNumber="AI02RMWJ"/>
+       <Servo name="claw_left" port="1" />
+        <Servo name="claw_right" port="2" />
     <!--</ServoController>-->
     <!--<DeviceInterfaceModule name="Device Interface Module" serialNumber="AL00VF3K">-->
         <!--<Sensor_Color name="color_sensor" port="7" />-->

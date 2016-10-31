@@ -130,66 +130,63 @@ public class LiftTest extends OpMode {
         powerLift = scaleInput(gamepad1.left_stick_y);
         powerDriveTrain = scaleInput(gamepad1.right_stick_y);
 
-        if (gamepad1.y) {
-            //DriveTrain.testRotateDegrees(positiveNumber);
-            Lift.setTestMode(Lift.TestModes.MODE_MOVE_HIGH, powerLift);
-            if (gamepad1.dpad_left) {
-                Lift.liftHigh.setPower(0);
-                Lift.liftLow.setPower(0);
-                Lift.liftShoulder.setPower(0);
-                Lift.liftWrist.setPower(0);
-            }
-        }
-        else{
-            Lift.liftHigh.setPower(0);
-        }
-
-
-        if (gamepad1.b) {
-            //DriveTrain.testRotateDegrees(negativeNumber);
-            Lift.setTestMode(Lift.TestModes.MODE_MOVE_LOW, powerLift);
-            if (gamepad1.dpad_left) {
-                Lift.liftLow.setPower(0);
-                Lift.liftHigh.setPower(0);
-                Lift.liftShoulder.setPower(0);
-                Lift.liftWrist.setPower(0);
-            }
-        }
-        else{
-            Lift.liftLow.setPower(0);
-        }
-
-
-        if (gamepad1.x) {
-            Lift.setTestMode(Lift.TestModes.MODE_MOVE_ANGLE, powerLift/3);
-            if (gamepad1.dpad_left) {
-                Lift.liftShoulder.setPower(0);
-                Lift.liftHigh.setPower(0);
-                Lift.liftLow.setPower(0);
-                Lift.liftWrist.setPower(0);
-            }
-        }
-        else{
-            Lift.liftShoulder.setPower(0);
-        }
-
-
-        if (gamepad1.a) {
-            Lift.setTestMode(Lift.TestModes.MODE_MOVE_HOOK, powerLift/3);
-            if (gamepad1.dpad_left) {
-                Lift.liftWrist.setPower(0);
-                Lift.liftHigh.setPower(0);
-                Lift.liftLow.setPower(0);
-                Lift.liftShoulder.setPower(0);
-            }
-        }
-        else{
-            Lift.liftWrist.setPower(0);
-        }
-
         if(gamepad1.dpad_up){
-            Lift.setTestMode(Lift.TestModes.MODE_GO_TO_INIT, powerLift);
+            Lift.setTestMode(Lift.TestModes.MODE_GOTO_INIT, powerLift);
+
         }
+
+        else {
+            if (gamepad1.y) {
+                //DriveTrain.testRotateDegrees(positiveNumber);
+                Lift.setTestMode(Lift.TestModes.MODE_MOVE_HIGH, powerLift);
+
+            }
+            else{
+
+                Lift.liftHigh.setPower(0);
+            }
+
+
+            if (gamepad1.b) {
+                //DriveTrain.testRotateDegrees(negativeNumber);
+                Lift.setTestMode(Lift.TestModes.MODE_MOVE_LOW, powerLift);
+
+            }
+            else{
+                Lift.liftLow.setPower(0);
+            }
+
+
+            if (gamepad1.x) {
+                Lift.setTestMode(Lift.TestModes.MODE_MOVE_ANGLE, powerLift/3);
+
+            }
+            else{
+                Lift.liftShoulder.setPower(0);
+            }
+
+
+            if (gamepad1.a) {
+                Lift.setTestMode(Lift.TestModes.MODE_MOVE_HOOK, powerLift/3);
+
+            }
+            else{
+                Lift.liftWrist.setPower(0);
+            }
+            if (gamepad1.dpad_left) {
+                Claw claw = new Claw(hardwareMap,0.5,0.5,0.5, "claw_left");
+                claw.setRetractedPosition();
+            }
+            if (gamepad1.dpad_right) {
+                Claw claw = new Claw(hardwareMap,0.5,0.5,0.5, "claw_right");
+                claw.setRetractedPosition();
+            }
+        }
+
+
+
+
+
 
 
 //        if(gamepad1.dpad_up) {
