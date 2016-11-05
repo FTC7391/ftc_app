@@ -43,10 +43,10 @@ public class Lift {
 //    private static double angle = 180 - (Math.atan(h/d) + (Math.acos(((f*f) - (x*x) + (h*h) + (d*d)) / (2*f*Math.sqrt((h*h)+(d*d))))));
 //
 
-    private static final int LIFT_HIGH_MAX = 11937;
+    private static final int LIFT_HIGH_MAX = 12250;
     private static final int LIFT_HIGH_MIN = 0;
 
-    private static final int LIFT_LOW_MAX = 10382;
+    private static final int LIFT_LOW_MAX = 12250;
     private static final int LIFT_LOW_MIN = 0;
 
 
@@ -64,6 +64,7 @@ public class Lift {
     private static boolean isLowRunToPosition = false;
     private static boolean isShoulderRunToPosition = false;
     private static boolean isWristRunToPosition = false;
+    private static boolean bLimits = true;
 
     private int currentTicks1 = liftHigh.getCurrentPosition();
     private int currentTicks2 = liftLow.getCurrentPosition();
@@ -428,6 +429,7 @@ public class Lift {
         MODE_RUN_TO_POSITION,
         MODE_RUN_USING_ENCODERS,
 
+        MODE_GOTO_INIT,
         MODE_GOTO_DRIVE_POSITION1,
         MODE_GOTO_DRIVE_POSITION2,
         MODE_GOTO_STRAIGHT_HOOK,
@@ -440,20 +442,23 @@ public class Lift {
         MODE_MOVE_BOTH,
         MODE_MOVE_HOOK,
 
-        MODE_GO_TO_INIT,
+    }
 
+    public static void runWithoutLimits(){
+        bLimits = false;
     }
 
     /* Called during TeleOp */
     public static void setTestMode(TestModes mode, double power) {
         power = -power; //when pushing up on joystick negative power is given
+        Log.i("Lift", "Power:" + power + "Current High" + liftHigh.getCurrentPosition() + "Current Low" + liftLow.getCurrentPosition());
         switch (mode) {
             case MODE_MOVE_HIGH:
 
-               if (power > 0 && liftHigh.getCurrentPosition() > 3000 ||
-                    power < 0 && liftHigh.getCurrentPosition() < 0 ){
+               if (bLimits && (power > 0 && liftHigh.getCurrentPosition() > LIFT_HIGH_MAX ||
+                    power < 0 && liftHigh.getCurrentPosition() <= LIFT_HIGH_MIN )){
                     liftHigh.setPower(0);
-//                   highRunToPosition();
+                   highRunToPosition();
                }
                else{
                    highRunUsingEncoders();
@@ -462,22 +467,22 @@ public class Lift {
 
                 break;
             case MODE_MOVE_LOW:
-//
-//               if (power > 0 && liftHigh.getCurrentPosition() > LIFT_LOW_MAX ||
-//                    power < 0 && liftHigh.getCurrentPosition() < LIFT_LOW_MIN ){
-//
-//                   lowRunToPosition();
-//               }
-//               else{
+
+               if (bLimits && (power > 0 && liftHigh.getCurrentPosition() > LIFT_LOW_MAX ||
+                    power < 0 && liftHigh.getCurrentPosition() < LIFT_LOW_MIN )){
+                    liftLow.setPower(0);
+                   lowRunToPosition();
+               }
+               else{
                    lowRunUsingEncoders();
                    liftLow.setPower(1 * power);    //negative power = backwards
-//               }
+               }
                 break;
             case MODE_MOVE_ANGLE:
 //
 //               if (power > 0 && liftHigh.getCurrentPosition() > LIFT_SHOULDER_MAX ||
 //                       power < 0 && liftHigh.getCurrentPosition() < LIFT_SHOULDER_MIN ){
-//
+//                     liftShoulder.setPower(0);
 //                     shoulderRunToPosition();
 //               }
 //               else {
@@ -486,10 +491,12 @@ public class Lift {
 //               }
                 break;
             case MODE_MOVE_HOOK:
-
-              //  if (power > 0 && liftWrist.getCurrentPosition() > LIFT_ELBOW_MAX)
-               //     wristRunToPosition();
-              //  else {
+//                if (power > 0 && liftHigh.getCurrentPosition() > LIFT_SHOULDER_MAX ||
+//                       power < 0 && liftHigh.getCurrentPosition() < LIFT_SHOULDER_MIN ){
+//                     liftHook.setPower(0);
+//                     hookRunToPosition();
+//               }
+//               else {
                     hookRunUsingEncoders();
                     liftWrist.setPower(1 * power);
                 //}
@@ -514,7 +521,7 @@ public class Lift {
                 //if (isRunToPosition == true)
                     runUsingEncoders();
                 break;
-            case MODE_GO_TO_INIT:
+            case MODE_GOTO_INIT:
                 setMotorTargetPosition(1000, 1000, 0, 0);
                 runToPosition();
                 break;

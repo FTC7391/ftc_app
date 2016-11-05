@@ -83,13 +83,13 @@ public class TeleOp7391 extends OpMode {
 		DriveTrainTele.init(hardwareMap);
 		Lift.init(hardwareMap);
 		Lift.runUsingEncoders();
+		Claw.init(hardwareMap);
 		driveJoystick = new DriveJoystick();
 		liftJoystick = new LiftJoystick();
 		stick = new Stick(hardwareMap);
 		stick.setRetractedPosition();
 		ziplineBlue = new Zipline(hardwareMap, 1,1, .5, "zipline_blue");
 		ziplineRed = new Zipline(hardwareMap, 0,0, .5, "zipline_red");
-		claw = new Claw(hardwareMap,.2,.5, .8, "claw");
 		ziplineBlue.setDrivePosition();
 		ziplineRed.setDrivePosition();
 	}

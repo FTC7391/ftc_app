@@ -44,9 +44,9 @@ import com.qualcomm.robotcore.util.Range;
  * <p>
  * Enables control of the robot via the gamepad
  */
-@TeleOp(name = "LiftTest" + "", group = "Practice")
+@TeleOp(name = "LiftTestNoLimits" + "", group = "Practice")
 //@Disabled
-public class LiftTest extends OpMode {
+public class LiftTestNoLimits extends OpMode {
 
     private static final String TAG = Lift.class.getSimpleName();
     private double powerLift = 0;
@@ -54,7 +54,7 @@ public class LiftTest extends OpMode {
     /**
      * Constructor
      */
-    public LiftTest() {
+    public LiftTestNoLimits() {
 
     }
 
@@ -67,6 +67,7 @@ public class LiftTest extends OpMode {
     public void init() {
         Lift.init(hardwareMap);
         Lift.runUsingEncoders();
+        Lift.runWithoutLimits();
         Claw.init(hardwareMap);
         DriveTrain.init(hardwareMap);
         //DriveTrainAuto.moveInches(15, .5);
@@ -75,13 +76,13 @@ public class LiftTest extends OpMode {
 		 * that the names of the devices must match the names used when you
 		 * configured your robot and created the configuration file.
 		 */
-		
+
 		/*
 		 * For the demo Tetrix K9 bot we assume the following,
 		 *   There are two motors "motor_1" and "motor_2"
 		 *   "motor_1" is on the right side of the bot.
 		 *   "motor_2" is on the left side of the bot and reversed.
-		 *   
+		 *
 		 * We also assume that there are two servos "servo_1" and "servo_6"
 		 *    "servo_1" controls the arm joint of the manipulator.
 		 *    "servo_6" controls the claw joint of the manipulator.
@@ -103,7 +104,7 @@ public class LiftTest extends OpMode {
 
 		/*
 		 * Gamepad 1
-		 * 
+		 *
 		 * Gamepad 1 controls the motors via the left stick, and it controls the
 		 * wrist/claw via the a,b, x, y buttons
 		 */
@@ -229,17 +230,17 @@ public class LiftTest extends OpMode {
 
         // get the corresponding index for the scaleInput array.
         int index = (int) (dVal * 16.0);
-            if (index < 0) {
-                index = -index;
-            } else if (index > 16) {
-                index = 16;
-            }
+        if (index < 0) {
+            index = -index;
+        } else if (index > 16) {
+            index = 16;
+        }
 
-            double dScale = 0.0;
-            if (dVal < 0) {
-                dScale = -scaleArray[index];
-            } else {
-                dScale = scaleArray[index];
+        double dScale = 0.0;
+        if (dVal < 0) {
+            dScale = -scaleArray[index];
+        } else {
+            dScale = scaleArray[index];
         }
 
         return dScale;

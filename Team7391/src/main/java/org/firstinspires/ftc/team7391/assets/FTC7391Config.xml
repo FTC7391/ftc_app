@@ -1,5 +1,9 @@
 <?xml version='1.0' encoding='UTF-8' standalone='yes' ?>
 <Robot>
+    <MotorController name="Motor Controller Lift High and Low" serialNumber="AL00VGUM">
+        <Motor name="motor_low" port="1" />
+        <Motor name="motor_high" port="2" />
+    </MotorController>
     <MotorController name="Motor Controller Lift Shoulder and Wrist" serialNumber="AL00XTK5">
         <Motor name="motor_shoulder" port="1" />
         <Motor name="motor_wrist" port="2" />
@@ -8,17 +12,13 @@
         <Motor name="motor_right" port="1" />
         <Motor name="motor_left" port="2" />
     </MotorController>
-    <!--<ServoController name="Servo Controller " serialNumber="AI02RMWJ">-->
-        <!--<Servo name="claw_left" port="1" />-->
-        <!--<Servo name="claw_right" port="2" />-->
-    <!--</ServoController>-->
-    <!--<DeviceInterfaceModule name="Device Interface Module" serialNumber="AL00VF3K">-->
-        <!--<Sensor_Color name="color_sensor" port="7" />-->
-    <!--</DeviceInterfaceModule>-->
-    <MotorController name="Motor Controller Lift" serialNumber="AL00VGUM">
-        <Motor name="motor_low" port="1" />
-        <Motor name="motor_high" port="2" />
-    </MotorController>
+    <ServoController name="Servo Controller " serialNumber="AI02RMWJ">
+        <Servo name="claw_left" port="1" />
+        <Servo name="claw_right" port="2" />
+    </ServoController>
+    <DeviceInterfaceModule name="Device Interface Module" serialNumber="AL00VF3K">
+        <Sensor_Color name="color_sensor" port="7" />
+    </DeviceInterfaceModule>
     <!--<MotorController name="Motor Controller Left" serialNumber="AL00VCAK">-->
         <!--<Motor name="motor_front_left" port="1" />-->
         <!--<Motor name="motor_back_left" port="2" />-->
