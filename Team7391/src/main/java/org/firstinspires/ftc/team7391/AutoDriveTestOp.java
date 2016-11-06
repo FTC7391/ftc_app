@@ -15,7 +15,6 @@ public class AutoDriveTestOp extends AutoOpBase
     public void init()
     {
         super.init();
-        stick.setDrivePosition();
         stepsList.add(new WaitState(0));//press a on gamepad 1
         stepsList.add(new MoveState(24,25));
         stepsList.add(new WaitState(0));//press a on gamepad 1

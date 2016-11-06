@@ -17,7 +17,6 @@ public class AutoOpBase extends OpMode {
     protected FTC7391PrintWriter dbgWriter = new FTC7391PrintWriter("Auto", "telemetryWait");
     private String stateStr = "";
 
-    protected Stick stick;
     private Zipline ziplineBlue;
     private Zipline ziplineRed;
 
@@ -36,8 +35,6 @@ public class AutoOpBase extends OpMode {
         DriveTrainAuto.init(hardwareMap);
         Lift.init(hardwareMap);
         Lift.resetEncoders();
-        stick = new Stick(hardwareMap);
-        stick.setRetractedPosition();
         ziplineBlue = new Zipline(hardwareMap,1, 1, .5, "zipline_blue");
         ziplineRed = new Zipline(hardwareMap, 0, 0, .5, "zipline_red");
         ziplineBlue.setRetractedPosition();
@@ -101,7 +98,6 @@ public class AutoOpBase extends OpMode {
             super.init();
 
             DriveTrainAuto.moveInches(inches, power);
-            stick.setDrivePosition();
             dbgWriter.printf("Move Inches %d \n", inches);
             //telemetry.addData(TAG, "Move Inches " + inches);
             stateStr = "MOVE INCHES" + inches;
@@ -205,7 +201,6 @@ public class AutoOpBase extends OpMode {
         public void init (){
             super.init();
             DriveTrainAuto.rotateDegrees(degrees, power);
-            stick.setDrivePosition();
             dbgWriter.printf("Rotate Degrees %d \n", degrees);
             telemetry.addData(TAG, "Rotate Degrees " + degrees);
             showTelemetryStateInfo();
@@ -268,7 +263,6 @@ public class AutoOpBase extends OpMode {
         public void init(){
             super.init();
             DriveTrainAuto.moveInches(0, 0);
-            stick.setDrivePosition();
             stateStr = "STICK DRIVE POSITION";
         }
 
@@ -293,7 +287,6 @@ public class AutoOpBase extends OpMode {
         public void init(){
             super.init();
             DriveTrainAuto.moveInches(0, 0);
-            stick.setDeployedPosition();
             stateStr = "STICK";
         }
 
@@ -333,7 +326,6 @@ public class AutoOpBase extends OpMode {
         public void init(){
             super.init();
             Lift.testPosition();
-            stick.setDrivePosition();
             stateStr = "TEST POSITION";
         }
 
@@ -344,8 +336,7 @@ public class AutoOpBase extends OpMode {
 
         public void init(){
             super.init();
-             Lift.drivePosition1();
-            stick.setDrivePosition();
+            Lift.drivePosition1();
             stateStr = "DRIVE POSITION 1";
 
         }
@@ -371,7 +362,6 @@ public class AutoOpBase extends OpMode {
         public void init(){
             super.init();
             Lift.climbPosition();
-            stick.setDrivePosition();
             stateStr = "CLIMB POSITION";
 
         }
@@ -385,7 +375,6 @@ public class AutoOpBase extends OpMode {
         public void init(){
             super.init();
             Lift.readyToHangPosition();
-            stick.setDrivePosition();
             stateStr = "READY TO HANG POSITION";
         }
 
@@ -399,7 +388,6 @@ public class AutoOpBase extends OpMode {
         public void init(){
             super.init();
             Lift.straightHook();
-            stick.setDrivePosition();
             stateStr = "STRAIGHT HOOK";
         }
 

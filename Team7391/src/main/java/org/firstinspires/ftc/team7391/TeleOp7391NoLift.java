@@ -45,7 +45,6 @@ public class TeleOp7391NoLift extends OpMode {
 	private static double axialPower;
 	private static double rotatePower;
 	private static double powerLift;
-	private Stick stick;
 	private Zipline ziplineBlue;
 	private Zipline ziplineRed;
 
@@ -93,8 +92,6 @@ public class TeleOp7391NoLift extends OpMode {
 		//Lift.init(hardwareMap);
 		driveJoystick = new DriveJoystick();
 		liftJoystick = new LiftJoystick();
-		stick = new Stick(hardwareMap);
-		stick.setDrivePosition();
 		ziplineBlue = new Zipline(hardwareMap, 1,1,.5, "zipline_blue");
 		ziplineRed = new Zipline(hardwareMap, 0,0,.5, "zipline_red");
 		ziplineBlue.setDrivePosition();
@@ -133,7 +130,7 @@ public class TeleOp7391NoLift extends OpMode {
 
 
 		if (gamepad1.y){
-			stick.setDeployedPosition();
+			//stick.setDeployedPosition();
 		}
 
 		if (gamepad1.x){
