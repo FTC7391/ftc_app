@@ -67,6 +67,7 @@ public class LiftTest extends OpMode {
     public void init() {
         Lift.init(hardwareMap);
         Lift.runUsingEncoders();
+        Claw.init(hardwareMap);
         DriveTrain.init(hardwareMap);
         //DriveTrainAuto.moveInches(15, .5);
 		/*
@@ -132,17 +133,12 @@ public class LiftTest extends OpMode {
 
         if(gamepad1.dpad_up){
             Lift.setTestMode(Lift.TestModes.MODE_GOTO_INIT, powerLift);
-
         }
-
         else {
             if (gamepad1.y) {
                 //DriveTrain.testRotateDegrees(positiveNumber);
                 Lift.setTestMode(Lift.TestModes.MODE_MOVE_HIGH, powerLift);
-
-            }
-            else{
-
+            } else {
                 Lift.liftHigh.setPower(0);
             }
 
@@ -150,43 +146,31 @@ public class LiftTest extends OpMode {
             if (gamepad1.b) {
                 //DriveTrain.testRotateDegrees(negativeNumber);
                 Lift.setTestMode(Lift.TestModes.MODE_MOVE_LOW, powerLift);
-
-            }
-            else{
+            } else {
                 Lift.liftLow.setPower(0);
             }
 
 
             if (gamepad1.x) {
-                Lift.setTestMode(Lift.TestModes.MODE_MOVE_ANGLE, powerLift/3);
-
-            }
-            else{
+                Lift.setTestMode(Lift.TestModes.MODE_MOVE_ANGLE, powerLift / 3);
+            } else {
                 Lift.liftShoulder.setPower(0);
             }
 
 
             if (gamepad1.a) {
-                Lift.setTestMode(Lift.TestModes.MODE_MOVE_HOOK, powerLift/3);
-
-            }
-            else{
+                Lift.setTestMode(Lift.TestModes.MODE_MOVE_HOOK, powerLift / 3);
+            } else {
                 Lift.liftWrist.setPower(0);
             }
-            if (gamepad1.dpad_left) {
-                Claw claw = new Claw(hardwareMap,0.5,0.5,0.5, "claw_left");
-                claw.setRetractedPosition();
+            if (gamepad1.dpad_left){
+                Claw.setRetractedPosition();
             }
-            if (gamepad1.dpad_right) {
-                Claw claw = new Claw(hardwareMap,0.5,0.5,0.5, "claw_right");
-                claw.setRetractedPosition();
+            if (gamepad1.dpad_right){
+                Claw.setDeployedPosition();
             }
+
         }
-
-
-
-
-
 
 
 //        if(gamepad1.dpad_up) {
