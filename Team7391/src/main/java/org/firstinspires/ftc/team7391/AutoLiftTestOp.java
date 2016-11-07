@@ -6,7 +6,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 /**
  * Created by Allana on 10/3/2015.
  */
-//@TeleOp(name = "TeleOp: LiftTest" , group = "Practice")
+@Autonomous(name = "Auto: LiftTest" , group = "Practice")
 public class AutoLiftTestOp extends AutoOpBase
 {
     private static final String TAG = AutoLiftTestOp.class.getSimpleName();

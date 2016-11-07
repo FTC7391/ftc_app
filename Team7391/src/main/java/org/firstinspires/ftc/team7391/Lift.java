@@ -50,11 +50,11 @@ public class Lift {
     private static final int LIFT_LOW_MIN = 0;
 
 
-    private static final int LIFT_SHOULDER_MAX = 10000;
+    private static final int LIFT_SHOULDER_MAX = 3100;
     private static final int LIFT_SHOULDER_MIN = 0;
 
-    private static final int LIFT_ELBOW_MAX = 500; //(int)(Math.round((.5 * (double)TOTAL_TICKS_PER_ROTATION)));
-    private static final int LIFT_ELBOW_MIN = 0;
+    private static final int LIFT_WRIST_MAX = 1000;      // ????    //(int)(Math.round((.5 * (double)TOTAL_TICKS_PER_ROTATION)));
+    private static final int LIFT_WRIST_MIN = 0;         //???
 
 
     protected static boolean initialized = false;
@@ -91,8 +91,8 @@ public class Lift {
 
         liftHigh.setDirection(DcMotor.Direction.REVERSE);
         //liftLow.setDirection(DcMotor.Direction.REVERSE);
-        liftShoulder.setDirection(DcMotor.Direction.REVERSE);
-       // liftWrist.setDirection(DcMotor.Direction.REVERSE);
+        //liftShoulder.setDirection(DcMotor.Direction.REVERSE);
+        liftWrist.setDirection(DcMotor.Direction.REVERSE);
 
         resetEncoders();
     }
@@ -201,13 +201,13 @@ public class Lift {
         isLowRunToPosition = false;
     }
 
-    public static void angleRunUsingEncoders(){
+    public static void shoulderRunUsingEncoders(){
         //resetEncoders();
         liftShoulder.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         isShoulderRunToPosition = false;
     }
 
-    public static void hookRunUsingEncoders(){
+    public static void wristRunUsingEncoders(){
         //resetEncoders();
         liftWrist.setMode(DcMotor.RunMode.RUN_USING_ENCODER); //!!!!! Override, Hook should run to postion.
         isWristRunToPosition = false;
@@ -251,7 +251,7 @@ public class Lift {
         boolean angleDone = false;
         boolean hookDone = false;
 
-        Log.v("Auto", "High " +  liftHigh.isBusy()   + " " + liftHigh.getCurrentPosition() + " " + liftHigh.getTargetPosition()  + " " + liftHighTargetPosition);
+        Log.v("Lift", "High " +  liftHigh.isBusy()   + " " + liftHigh.getCurrentPosition() + " " + liftHigh.getTargetPosition()  + " " + liftHighTargetPosition);
 
         if (liftHighTargetPosition != liftHigh.getTargetPosition()) {
             liftHigh.setTargetPosition(liftHighTargetPosition);
@@ -264,13 +264,13 @@ public class Lift {
         if (!liftLow.isBusy() && Math.abs(liftLow.getCurrentPosition() - liftLowTargetPosition) < 50){
                 //liftLow.setPower(0);
                 lowDone = true;
-                //Log.d("Auto", "Low Done True");
+                //Log.d("Lift", "Low Done True");
         }
 
         if (!liftShoulder.isBusy() && Math.abs(liftShoulder.getCurrentPosition() - liftShoulderTargetPosition) < 50){
                 //liftHigh.setPower(0);
                 angleDone = true;
-                //Log.d("Auto", "Angle Done True");
+                //Log.d("Lift", "Angle Done True");
         }
 
 
@@ -278,13 +278,13 @@ public class Lift {
         if (!liftWrist.isBusy() && Math.abs(liftWrist.getCurrentPosition() - liftWristTargetPosition) < 50){
                 //liftWrist.setPower(0);
                 hookDone = true;
-                //Log.d("Auto", "Hook Done True");
+                //Log.d("Lift", "Hook Done True");
         }
         if (nLiftLoop == 0) {
-            Log.d("Auto", "High: Busy:" + liftHigh.isBusy() + " Curr:" + liftHigh.getCurrentPosition() + " Target:" + liftHigh.getTargetPosition() + " " + liftHighTargetPosition);
-            Log.d("Auto", "Low: Busy:" + liftLow.isBusy() + " Curr:" + liftLow.getCurrentPosition() + " Target:" + liftLow.getTargetPosition()+ " " + liftLowTargetPosition);
-            Log.d("Auto", "Angle: Busy:" + liftShoulder.isBusy() + " Curr:" + liftShoulder.getCurrentPosition() + " Target:" + liftShoulder.getTargetPosition()+ " " + liftShoulderTargetPosition);
-            Log.d("Auto", "Hook: Busy:" + liftWrist.isBusy() + " Curr:" + liftWrist.getCurrentPosition() + " Target:" + liftWrist.getTargetPosition()+ " " + liftWristTargetPosition);
+            Log.d("Lift", "High: Busy:" + liftHigh.isBusy() + " Curr:" + liftHigh.getCurrentPosition() + " Target:" + liftHigh.getTargetPosition() + " " + liftHighTargetPosition);
+            Log.d("Lift", "Low: Busy:" + liftLow.isBusy() + " Curr:" + liftLow.getCurrentPosition() + " Target:" + liftLow.getTargetPosition()+ " " + liftLowTargetPosition);
+            Log.d("Lift", "Angle: Busy:" + liftShoulder.isBusy() + " Curr:" + liftShoulder.getCurrentPosition() + " Target:" + liftShoulder.getTargetPosition()+ " " + liftShoulderTargetPosition);
+            Log.d("Lift", "Hook: Busy:" + liftWrist.isBusy() + " Curr:" + liftWrist.getCurrentPosition() + " Target:" + liftWrist.getTargetPosition()+ " " + liftWristTargetPosition);
             if (++nLiftLoop == 10)
                 nLiftLoop = 0;
         }
@@ -362,9 +362,9 @@ public class Lift {
         if (!liftWrist.isBusy() && Math.abs(liftWrist.getCurrentPosition() - liftWrist.getTargetPosition()) < 50){
             //liftWrist.setPower(0);
             hookDone = true;
-            Log.d("Auto", "Hook Done True");
+            Log.d("Lift", "Hook Done True");
         }
-        Log.d("Auto", "Hook: Busy:" + liftWrist.isBusy() + " Curr:" + liftWrist.getCurrentPosition() + " Target:" + liftWrist.getTargetPosition());
+        Log.d("Lift", "Hook: Busy:" + liftWrist.isBusy() + " Curr:" + liftWrist.getCurrentPosition() + " Target:" + liftWrist.getTargetPosition());
 
         if (hookDone) return true;
 
@@ -375,14 +375,14 @@ public class Lift {
 
 
     public static void setMotorTargetPosition(int liftHighDifference, int liftLowDifference, int liftShoulderDifference, int liftWristDifference) {
-        Log.d("Auto","SetMotorTargetPostion");
+        Log.d("Lift","SetMotorTargetPostion");
         //if (isRunToPosition == false)
             runToPosition();  //OUT
 
         setPowerOfMotors(1,1,1,1);
 
 
-        Log.i("Auto", "setMotorTargetPostion" + liftHighDifference + " " + liftLowDifference +" " +  liftShoulderDifference  +" " + liftWristDifference);
+        Log.i("Lift", "setMotorTargetPostion" + liftHighDifference + " " + liftLowDifference +" " +  liftShoulderDifference  +" " + liftWristDifference);
 
 //        if(liftHigh.getCurrentPosition() + liftHighDifference > 0)
 //            liftHigh.setTargetPosition(liftHigh.getCurrentPosition() + liftHighDifference);
@@ -401,7 +401,7 @@ public class Lift {
 //        else
 //            liftShoulder.setTargetPosition(liftShoulder.getCurrentPosition());
 
-        Log.d("Auto", "SetMotorTargetPostion" + liftHighDifference + " " + liftLowDifference + " " + liftShoulderDifference + " " + liftWristDifference + " ");
+        Log.d("Lift", "SetMotorTargetPostion" + liftHighDifference + " " + liftLowDifference + " " + liftShoulderDifference + " " + liftWristDifference + " ");
         liftHigh.setTargetPosition(liftHighDifference);
         liftLow.setTargetPosition(liftLowDifference);
         liftShoulder.setTargetPosition(liftShoulderDifference);
@@ -451,7 +451,9 @@ public class Lift {
     /* Called during TeleOp */
     public static void setTestMode(TestModes mode, double power) {
         power = -power; //when pushing up on joystick negative power is given
-        Log.i("Lift", "Power:" + power + "Current High" + liftHigh.getCurrentPosition() + "Current Low" + liftLow.getCurrentPosition());
+        if (power !=0) {
+            Log.i("Lift", "Power:" + power + "Current High" + liftHigh.getCurrentPosition() + "Current Low" + liftLow.getCurrentPosition());
+        }
         switch (mode) {
             case MODE_MOVE_HIGH:
 
@@ -468,8 +470,8 @@ public class Lift {
                 break;
             case MODE_MOVE_LOW:
 
-               if (bLimits && (power > 0 && liftHigh.getCurrentPosition() > LIFT_LOW_MAX ||
-                    power < 0 && liftHigh.getCurrentPosition() < LIFT_LOW_MIN )){
+               if (bLimits && (power > 0 && liftLow.getCurrentPosition() > LIFT_LOW_MAX ||
+                    power < 0 && liftLow.getCurrentPosition() < LIFT_LOW_MIN )){
                     liftLow.setPower(0);
                    lowRunToPosition();
                }
@@ -479,28 +481,27 @@ public class Lift {
                }
                 break;
             case MODE_MOVE_ANGLE:
-//
-//               if (power > 0 && liftHigh.getCurrentPosition() > LIFT_SHOULDER_MAX ||
-//                       power < 0 && liftHigh.getCurrentPosition() < LIFT_SHOULDER_MIN ){
-//                     liftShoulder.setPower(0);
-//                     shoulderRunToPosition();
-//               }
-//               else {
-                   angleRunUsingEncoders();
-                   liftShoulder.setPower(1 * power);
-//               }
+
+                if (bLimits && (power > 0 && liftShoulder.getCurrentPosition() > LIFT_SHOULDER_MAX ||
+                        power < 0 && liftShoulder.getCurrentPosition() < LIFT_SHOULDER_MIN )){
+                    liftShoulder.setPower(0);
+                    shoulderRunToPosition();
+                }
+                else{
+                    shoulderRunUsingEncoders();
+                    liftShoulder.setPower(1 * power);    //negative power = backwards
+                }
                 break;
             case MODE_MOVE_HOOK:
-//                if (power > 0 && liftHigh.getCurrentPosition() > LIFT_SHOULDER_MAX ||
-//                       power < 0 && liftHigh.getCurrentPosition() < LIFT_SHOULDER_MIN ){
-//                     liftHook.setPower(0);
-//                     hookRunToPosition();
-//               }
-//               else {
-                    hookRunUsingEncoders();
-                    liftWrist.setPower(1 * power);
-                //}
-
+                if (bLimits && (power > 0 && liftWrist.getCurrentPosition() > LIFT_WRIST_MAX ||
+                        power < 0 && liftWrist.getCurrentPosition() < LIFT_WRIST_MIN )){
+                    liftWrist.setPower(0);
+                    wristRunToPosition();
+                }
+                else{
+                    wristRunUsingEncoders();
+                    liftWrist.setPower(1 * power);    //negative power = backwards
+                }
                 break;
 
             case MODE_MOVE_BOTH:
@@ -522,7 +523,7 @@ public class Lift {
                     runUsingEncoders();
                 break;
             case MODE_GOTO_INIT:
-                setMotorTargetPosition(1000, 1000, 0, 0);
+                setMotorTargetPosition(0, 1000, 1000, 500);
                 runToPosition();
                 break;
             case MODE_GOTO_DRIVE_POSITION1:
@@ -557,45 +558,45 @@ public class Lift {
     }
 
     public static void drivePosition1(){
-        Log.i("Auto", "drivePostion1 ");
+        Log.i("Lift", "drivePostion1 ");
         setMotorTargetPosition(1350, 1350, 0, 0);
         setPowerOfMotors(1, 1, 1, 1);
     }
 
     public static void straightHook(){
-        Log.i("Auto", "straightHook ");
+        Log.i("Lift", "straightHook ");
         liftWrist.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         liftWrist.setTargetPosition(921);
         liftWrist.setPower(1);
     }
 
     public static void drivePosition2(){
-        Log.i("Auto", "drivePostion2 ");
+        Log.i("Lift", "drivePostion2 ");
         setMotorTargetPosition(1350, 1350, -550, -120);
         setPowerOfMotors(1, 1, 1, 1);
     }
 
     public static void stickLift(){
-        Log.i("Auto", "stickLift");
+        Log.i("Lift", "stickLift");
         setMotorTargetPosition(1700, 1700, -550, -120);
         setPowerOfMotors(1, 1, 1, 1);
     }
 
     public static void climbPosition(){
-        Log.i("Auto", "climbPosition ");
+        Log.i("Lift", "climbPosition ");
         //setMotorTargetPosition(2215, 2228, 7778);
         setPowerOfMotors(1, 1, 1, 1);
 
     }
 
     public static void readyToHangPosition(){
-        Log.i("Auto", "climbPosition 1, 1, 1,1");
+        Log.i("Lift", "climbPosition 1, 1, 1,1");
         //setMotorTargetPosition(11425, 11292, 8783);
         setPowerOfMotors(1, 1, 1, 1);
     }
 
     public static void menBasketPosition(){
-        Log.i("Auto", "menBasketPosition 8035, 6164, 4444, 1");
+        Log.i("Lift", "menBasketPosition 8035, 6164, 4444, 1");
         setMotorTargetPosition(8035, 6164, 4444, 1);
         setPowerOfMotors(1, 1, 1, 1);
     }

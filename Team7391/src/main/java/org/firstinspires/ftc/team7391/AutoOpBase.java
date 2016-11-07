@@ -34,9 +34,10 @@ public class AutoOpBase extends OpMode {
 
         DriveTrainAuto.init(hardwareMap);
         Lift.init(hardwareMap);
+        Claw.init(hardwareMap);
         Lift.resetEncoders();
-        ziplineBlue = new Zipline(hardwareMap,1, 1, .5, "zipline_blue");
-        ziplineRed = new Zipline(hardwareMap, 0, 0, .5, "zipline_red");
+        ziplineBlue = new Zipline(hardwareMap,1, 1, .5, "pusher_left");
+        ziplineRed = new Zipline(hardwareMap, 0, 0, .5, "pusher_right");
         ziplineBlue.setRetractedPosition();
         ziplineRed.setRetractedPosition();
 
@@ -99,7 +100,7 @@ public class AutoOpBase extends OpMode {
 
             DriveTrainAuto.moveInches(inches, power);
             dbgWriter.printf("Move Inches %d \n", inches);
-            //telemetry.addData(TAG, "Move Inches " + inches);
+            telemetry.addData(TAG, "Move Inches " + inches);
             stateStr = "MOVE INCHES" + inches;
             showTelemetryStateInfo();
         }

@@ -5,7 +5,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 /**
  * Created by nikashkhanna on 10/23/2016.
  */
-//@Autonomous(name = "Auto: DriveTest" + "", group = "Practice")
+@Autonomous(name = "Auto: DriveTest" + "", group = "Practice")
 public class AutoDriveTestOp extends AutoOpBase
 {
     private static final String TAG = AutoDriveTestOp.class.getSimpleName();
@@ -16,9 +16,9 @@ public class AutoDriveTestOp extends AutoOpBase
     {
         super.init();
         stepsList.add(new WaitState(0));//press a on gamepad 1
-        stepsList.add(new MoveState(24,25));
+        stepsList.add(new MoveState(24,.25));
         stepsList.add(new WaitState(0));//press a on gamepad 1
-        stepsList.add(new MoveState(24,50));
+        stepsList.add(new MoveState(24,.50));
 
     }
 

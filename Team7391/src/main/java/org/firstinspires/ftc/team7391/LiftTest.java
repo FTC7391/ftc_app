@@ -151,14 +151,14 @@ public class LiftTest extends OpMode {
             }
 
 
-            if (gamepad1.x) {
+            if (gamepad1.a) {
                 Lift.setTestMode(Lift.TestModes.MODE_MOVE_ANGLE, powerLift / 3);
             } else {
                 Lift.liftShoulder.setPower(0);
             }
 
 
-            if (gamepad1.a) {
+            if (gamepad1.x) {
                 Lift.setTestMode(Lift.TestModes.MODE_MOVE_HOOK, powerLift / 3);
             } else {
                 Lift.liftWrist.setPower(0);
@@ -168,6 +168,9 @@ public class LiftTest extends OpMode {
             }
             if (gamepad1.dpad_right){
                 Claw.setDeployedPosition();
+            }
+            if (gamepad1.dpad_down) {
+                Claw.setDrivePosition();
             }
 
         }
