@@ -143,9 +143,9 @@ public class LiftNoEncoder {
     public enum TestModes {
         MODE_MOVE_HIGH,
         MODE_MOVE_LOW,
-        MODE_MOVE_ANGLE,
+        MODE_MOVE_SHOULDER,
         MODE_MOVE_BOTH,
-        MODE_MOVE_HOOK,
+        MODE_MOVE_WRIST,
         MODE_LIFT_STAGE1,
         MODE_STOP,
     }
@@ -161,14 +161,14 @@ public class LiftNoEncoder {
                 //while(liftLow.getCurrentPosition() > -5500)
                     liftLow.setPower(1 * power);    //negative power = backwards
                 break;
-            case MODE_MOVE_ANGLE:
+            case MODE_MOVE_SHOULDER:
                 liftShoulder.setPower(1 * power);
                 break;
             case MODE_MOVE_BOTH:
                 liftHigh.setPower(1 * power);
                 liftLow.setPower(1 * power);    //negative power = backwards
                 break;
-            case MODE_MOVE_HOOK:
+            case MODE_MOVE_WRIST:
                 liftWrist.setPower(1*power);
                 break;
             case MODE_STOP:

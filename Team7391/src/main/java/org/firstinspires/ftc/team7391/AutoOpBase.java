@@ -14,7 +14,7 @@ public class AutoOpBase extends OpMode {
     protected State currentState;
     protected int step;
     protected ArrayList<State> stepsList = new ArrayList<State> (40);
-    protected FTC7391PrintWriter dbgWriter = new FTC7391PrintWriter("Auto", "telemetryWait");
+    protected FTC7391PrintWriter dbgWriter = new FTC7391PrintWriter("Autonomous", "telemetryWait");
     private String stateStr = "";
 
     private Zipline ziplineBlue;
@@ -87,19 +87,21 @@ public class AutoOpBase extends OpMode {
 
     protected class MoveState extends State {
 
-        private int inches;
+        private double inches;
         private double power;
 
-        public MoveState(int i, double p){
+        public MoveState(double i, double p){
             inches = i;
             power = p;
+            Log.d("Autonomous", "MoveState constructor  inches:" + inches + " power:" + power + " i:" + i + " p:" + p);
         }
 
         public void init() {
             super.init();
 
+            Log.d("Autonomous", "MoveState init  inches:" + inches + " power:" + power );
             DriveTrainAuto.moveInches(inches, power);
-            dbgWriter.printf("Move Inches %d \n", inches);
+            dbgWriter.printf("Move Inches %.2f \n", inches);
             telemetry.addData(TAG, "Move Inches " + inches);
             stateStr = "MOVE INCHES" + inches;
             showTelemetryStateInfo();
@@ -116,8 +118,10 @@ public class AutoOpBase extends OpMode {
         private int counter = 0;
         private int waitTime;
 
-        public WaitState(int seconds){
+        public WaitState(int seconds)
+        {
             waitTime = (int)(seconds * 40);
+            Log.i("Autonomous", "WaitTime constructor " + "waitTime:" + waitTime);
         }
 
         public void init(){
@@ -130,7 +134,10 @@ public class AutoOpBase extends OpMode {
         public boolean updateState(){
             counter++;
             //if(counter%2 == 1)
-                return (counter == waitTime || gamepad1.a);
+            if (counter%1 == 0)
+                Log.d("Autonomous", "WaitSate counter:" + counter  + " waitTime:" + waitTime + " gamepad1.a:" + gamepad1.a);
+
+            return (counter == waitTime || gamepad1.a);
             //else
                 //return (counter == waitTime || gamepad1.b);
 
@@ -404,11 +411,11 @@ public class AutoOpBase extends OpMode {
 
     private void showTelemetryStateInfo() {
         telemetry.addData("10", String.format("Auto STATE %s", stateStr));
-        Log.i("Auto", "STATE:" + stateStr + "  step " + step);
+        Log.i("Autonomous", "STATE:" + stateStr + "  step " + step);
     }
      private void showTelemetryState() {
         telemetry.addData("10",String.format("Auto STATE %s", stateStr));
-         Log.d("Auto",  "STATE:" + stateStr + "  step " + step);
+         Log.d("Autonomous",  "STATE:" + stateStr + "  step " + step);
      }
 
     private void showTelemetryDrivetrain() {
@@ -418,8 +425,8 @@ public class AutoOpBase extends OpMode {
             DriveTrainAuto.getPosition(DriveTrain.TestModes.MODE_MOVE_RIGHT),
             DriveTrainAuto.getPosition(DriveTrain.TestModes.MODE_MOVE_LEFT));
 
-        Log.d("DriveTrain", "Right" + DriveTrainAuto.getPosition(DriveTrain.TestModes.MODE_MOVE_RIGHT));
-        Log.d("DriveTrain", "Left " + DriveTrainAuto.getPosition(DriveTrain.TestModes.MODE_MOVE_LEFT));
+        Log.d("Autonomous", "Right:" + DriveTrainAuto.getPosition(DriveTrain.TestModes.MODE_MOVE_RIGHT));
+        Log.d("Autonomous", "Left :" + DriveTrainAuto.getPosition(DriveTrain.TestModes.MODE_MOVE_LEFT));
 
     }
 
@@ -435,10 +442,10 @@ public class AutoOpBase extends OpMode {
             Lift.originalTicksWrist, Lift.getTicksliftWrist()
         );
 
-        Log.d("Lift", "High  : original:" + Lift.originalTicksHigh + "|| end: " + Lift.getTicksLiftHigh());
-        Log.d("Lift", "Low   : original:" + Lift.originalTicksLow + "|| end: " + Lift.getTicksLiftLow());
-        Log.d("Lift", "Angle : original:" + Lift.originalTicksShoulder + "|| end: " + Lift.getTicksliftShoulder());
-        Log.d("Lift", "Hook  : original:" + Lift.originalTicksWrist + "|| end: " + Lift.getTicksliftWrist());
+        Log.d("Autonomous", "High     : original:" + Lift.originalTicksHigh + "|| end: " + Lift.getTicksLiftHigh());
+        Log.d("Autonomous", "Low      : original:" + Lift.originalTicksLow + "|| end: " + Lift.getTicksLiftLow());
+        Log.d("Autonomous", "Shoulder : original:" + Lift.originalTicksShoulder + "|| end: " + Lift.getTicksliftShoulder());
+        Log.d("Autonomous", "Wrist    : original:" + Lift.originalTicksWrist + "|| end: " + Lift.getTicksliftWrist());
 
     }
 

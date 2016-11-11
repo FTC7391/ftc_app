@@ -47,6 +47,8 @@ public class DriveTrainAuto extends DriveTrain{
 
         isRotating = false;
 
+        Log.i("Autonomous", "moveInches:" + "inches:" + distance + " power:" + power);
+
         power = Math.abs(power);
         ticks = (int) (distance * TICKS_PER_INCH);
         setMotorTargetPosition(ticks, ticks, ticks, ticks);
@@ -127,9 +129,9 @@ public class DriveTrainAuto extends DriveTrain{
     public static boolean isAtPosition(){
         boolean frDone = false, flDone = false, brDone = false, blDone = false;
 
-        Log.v("Auto", "motorR " + motorRight.isBusy() + " " + motorRight.getCurrentPosition() + " " + motorRight.getTargetPosition());
+        Log.v("DriveTrain", "motorR " + motorRight.isBusy() + " " + motorRight.getCurrentPosition() + " " + motorRight.getTargetPosition());
         //Log.v("Auto", "motorFR " + motorRight.isBusy() + " " + motorRight.getCurrentPosition() + " " + motorRight.getTargetPosition());
-        Log.v("Auto", "motorL                          " + motorLeft.isBusy() + " " + motorLeft.getCurrentPosition() + " " + motorLeft.getTargetPosition());
+        Log.v("DriveTrain", "motorL                          " + motorLeft.isBusy() + " " + motorLeft.getCurrentPosition() + " " + motorLeft.getTargetPosition());
 
         if (!motorRight.isBusy() && Math.abs(motorRight.getCurrentPosition() - motorRight.getTargetPosition()) < MOTOR_POSITION_THESHOLD ){
               //motorRight.setPower(0);

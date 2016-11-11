@@ -17,7 +17,23 @@ public class Lift {
     public static DcMotor liftWrist;
     public static DcMotor liftShoulder;
 
+    private static final int LIFT_HIGH_MAX = 12250;
+    private static final int LIFT_HIGH_MIN = 0;
 
+    private static final int LIFT_LOW_MAX = 12250;
+    private static final int LIFT_LOW_MIN = 0;
+
+    private static final int LIFT_SHOULDER_MAX = 3100;
+    private static final int LIFT_SHOULDER_MIN = 0;
+
+    private static final int LIFT_WRIST_MAX = 0;      //AJE Wrist is engaged from initially up (at 0) to down position (negative)
+    private static final int LIFT_WRIST_MIN = -1000;  //AJE
+
+    private static final double WRIST_MAX_POWER = 1.0;
+
+    protected static boolean initialized = false;
+    private static boolean bLimits = true;
+    private static int nLiftLoop = 0;
 
     public static int originalTicksHigh = 0; //to be added
     public static int originalTicksLow = 0; //to be added
@@ -29,199 +45,11 @@ public class Lift {
     public static int liftShoulderTargetPosition = 0;
     public static int liftWristTargetPosition = 0;
 
-
-
-    private static final int TOTAL_TICKS_PER_ROTATION = 1680;
-    private static final int TOTAL_DEGREES = 360;
-    private static final double DIAMETER= 1.0;
-    private static final int OFFSET = (int) (TOTAL_TICKS_PER_ROTATION / (Math.PI * DIAMETER));
-
-//    private static final double f = 1;
-//    private static final double h = 1;
-//    private static final double d = 1;
-//    private static double x = 1;
-//    private static double angle = 180 - (Math.atan(h/d) + (Math.acos(((f*f) - (x*x) + (h*h) + (d*d)) / (2*f*Math.sqrt((h*h)+(d*d))))));
-//
-
-    private static final int LIFT_HIGH_MAX = 12250;
-    private static final int LIFT_HIGH_MIN = 0;
-
-    private static final int LIFT_LOW_MAX = 12250;
-    private static final int LIFT_LOW_MIN = 0;
-
-
-    private static final int LIFT_SHOULDER_MAX = 3100;
-    private static final int LIFT_SHOULDER_MIN = 0;
-
-    private static final int LIFT_WRIST_MAX = 1000;      // ????    //(int)(Math.round((.5 * (double)TOTAL_TICKS_PER_ROTATION)));
-    private static final int LIFT_WRIST_MIN = 0;         //???
-
-
-    protected static boolean initialized = false;
-
     private static boolean isRunToPosition = false;
     private static boolean isHighRunToPosition = false;
     private static boolean isLowRunToPosition = false;
     private static boolean isShoulderRunToPosition = false;
     private static boolean isWristRunToPosition = false;
-    private static boolean bLimits = true;
-
-    private int currentTicks1 = liftHigh.getCurrentPosition();
-    private int currentTicks2 = liftLow.getCurrentPosition();
-    private int overallCurrent = currentTicks1 + currentTicks2;
-
-    private static int nLiftLoop = 0;
-
-
-    public static void init (HardwareMap hardwareMap) {
-        if (initialized) return;
-        initialized = true;
-
-        liftHigh = hardwareMap.dcMotor.get("motor_high");
-        liftLow = hardwareMap.dcMotor.get("motor_low");
-        liftWrist = hardwareMap.dcMotor.get("motor_wrist");
-        liftShoulder = hardwareMap.dcMotor.get("motor_shoulder");
-
-        //runUsingEncoders();
-
-        originalTicksHigh = liftHigh.getCurrentPosition();
-        originalTicksLow = liftLow.getCurrentPosition();
-        originalTicksWrist = liftWrist.getCurrentPosition();
-        originalTicksShoulder = liftShoulder.getCurrentPosition();
-
-        liftHigh.setDirection(DcMotor.Direction.REVERSE);
-        //liftLow.setDirection(DcMotor.Direction.REVERSE);
-        //liftShoulder.setDirection(DcMotor.Direction.REVERSE);
-        liftWrist.setDirection(DcMotor.Direction.REVERSE);
-
-        resetEncoders();
-    }
-
-
-
-    protected static void resetEncoders(){
-        liftHigh.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        liftLow.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        liftShoulder.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        liftWrist.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-      }
-
-    public static void runToPosition(){
-       //resetEncoders();
-        highRunToPosition();
-        lowRunToPosition();
-        shoulderRunToPosition();
-        wristRunToPosition();
-        liftHigh.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        liftLow.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        liftShoulder.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        liftWrist.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-
-//        liftHigh.setMode(DcMotorController.RunMode.RUN_TO_POSITION);
-//        liftLow.setMode(DcMotorController.RunMode.RUN_TO_POSITION);
-//        liftShoulder.setMode(DcMotorController.RunMode.RUN_TO_POSITION);
-//        liftWrist.setMode(DcMotorController.RunMode.RUN_TO_POSITION);
-        isRunToPosition = true;
-        isHighRunToPosition = true;
-        isLowRunToPosition = true;
-        isShoulderRunToPosition = true;
-        isWristRunToPosition = true;
-
-
-        setPowerOfMotors(1, 1, 1, 1);
-    }
-
-    public static void highRunToPosition(){
-        if (isHighRunToPosition == false) {
-            isHighRunToPosition = true;
-            liftHigh.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            liftHighTargetPosition = liftHigh.getCurrentPosition();
-            liftHigh.setTargetPosition(liftHighTargetPosition); //OUT
-            liftHigh.setPower(1);
-            Log.d("Auto", "highRunToPosition" + liftHigh.getCurrentPosition() );
-        }
-    }
-
-    public static void lowRunToPosition(){
-        if (isLowRunToPosition == false) {
-            isLowRunToPosition = true;
-            liftLow.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            liftLowTargetPosition = liftLow.getCurrentPosition();
-            liftLow.setTargetPosition(liftLowTargetPosition);  //OUT
-            liftLow.setPower(1);
-            Log.d("Auto", "lowRunToPosition" + liftLow.getCurrentPosition());
-        }
-    }
-
-    public static void shoulderRunToPosition(){
-        if (isShoulderRunToPosition == false) {
-            isShoulderRunToPosition = true;
-            liftShoulder.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            liftShoulderTargetPosition = liftShoulder.getCurrentPosition();
-            liftShoulder.setTargetPosition(liftShoulderTargetPosition); //OUT
-            liftShoulder.setPower(1);
-            Log.d("Auto", "shoulderRunToPosition" + liftShoulder.getCurrentPosition());
-        }
-    }
-
-    public static void wristRunToPosition(){
-        if (isWristRunToPosition == false) {
-            isWristRunToPosition = true;
-            liftWrist.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            liftWristTargetPosition = liftWrist.getCurrentPosition();
-            liftWrist.setTargetPosition(liftWristTargetPosition); //OUT
-            liftWrist.setPower(1);
-            Log.d("Auto", "wristRunToPosition" + liftWrist.getCurrentPosition());
-        }
-    }
-
-    public static void runUsingEncoders(){
-        //resetEncoders();
-        liftHigh.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        liftLow.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        liftShoulder.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        liftWrist.setMode(DcMotor.RunMode.RUN_USING_ENCODER); //!!!!! Override, Hook should run to postion.
-        isRunToPosition = false;
-        isHighRunToPosition = false;
-        isLowRunToPosition = false;
-        isShoulderRunToPosition = false;
-        isWristRunToPosition = false;
-
-    }
-
-    public static void highRunUsingEncoders(){
-        //resetEncoders();
-        liftHigh.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        isHighRunToPosition = false;
-    }
-
-    public static void lowRunUsingEncoders(){
-        //resetEncoders();
-        liftLow.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        isLowRunToPosition = false;
-    }
-
-    public static void shoulderRunUsingEncoders(){
-        //resetEncoders();
-        liftShoulder.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        isShoulderRunToPosition = false;
-    }
-
-    public static void wristRunUsingEncoders(){
-        //resetEncoders();
-        liftWrist.setMode(DcMotor.RunMode.RUN_USING_ENCODER); //!!!!! Override, Hook should run to postion.
-        isWristRunToPosition = false;
-    }
-
-
-    public static void runWithoutEncoders(){
-        liftHigh.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        liftLow.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        liftShoulder.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        liftWrist.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        isRunToPosition = false;
-    }
-
 
     public static int getTicksLiftHigh(){return liftHigh.getCurrentPosition();}
     public static int getTicksLiftLow(){return liftLow.getCurrentPosition();}
@@ -232,12 +60,211 @@ public class Lift {
 //    public static int getOriginalTicksLow(){return originalTicksLow;}
 //    public static int getoriginalTicksShoulder(){return originalTicksShoulder;}
 
+    //   public Lift(){}
 
 
 
-    public Lift(){}
+    public static void init (HardwareMap hardwareMap) {
+        if (initialized) {
+            //Bug in FTC Code.  Reinits for FORWARD when Init forthe same Opmode or different Opmode is run
+            liftHigh.setDirection(DcMotor.Direction.REVERSE);
+            liftLow.setDirection(DcMotor.Direction.FORWARD);
+            liftShoulder.setDirection(DcMotor.Direction.FORWARD);
+            liftWrist.setDirection(DcMotor.Direction.REVERSE);
+            return;
+        }
+
+        initialized = true;
+
+        liftHigh = hardwareMap.dcMotor.get("motor_high");
+        liftLow = hardwareMap.dcMotor.get("motor_low");
+        liftWrist = hardwareMap.dcMotor.get("motor_wrist");
+        liftShoulder = hardwareMap.dcMotor.get("motor_shoulder");
+
+        //Log.i ("Lift", "REVERSE/FORWARD" + " H:" + liftHigh.get)
+        liftHigh.setDirection(DcMotor.Direction.REVERSE);
+        liftLow.setDirection(DcMotor.Direction.FORWARD);  //AJE
+        liftShoulder.setDirection(DcMotor.Direction.FORWARD); //AJE
+        liftWrist.setDirection(DcMotor.Direction.REVERSE);
 
 
+        liftHigh.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE); //AJE
+        liftLow.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        liftShoulder.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        liftWrist.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+
+        resetEncoders();
+        runUsingEncoders(); //AJE  ?? Which ways should it be??? Encoders or ToPosition
+         //runToPosition(); //AJE
+
+        originalTicksHigh = liftHigh.getCurrentPosition();
+        originalTicksLow = liftLow.getCurrentPosition();
+        originalTicksShoulder = liftShoulder.getCurrentPosition();
+        originalTicksWrist = liftWrist.getCurrentPosition();
+        Log.i("Lift", "INIT Complete  originalTicksWrist" + originalTicksWrist);
+    }
+
+    public static boolean isModeRunToPosition() {
+        return (isRunToPosition);
+    }
+    public static String getStrMode() {
+        if (isRunToPosition)
+            return "RUN TO POSITION";
+        else
+            return "RUN USING ENCODERS";
+    }
+
+
+
+
+
+    // --------------- RESET ENCODERS ---------------
+    protected static void resetEncoders() {
+        liftHigh.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        liftLow.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        liftShoulder.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        liftWrist.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
+        setPowerOfMotors(0, 0, 0, 0); //AJE
+
+        Log.i("Lift", "RESET ENCODERS   All power= 0");
+    }
+
+    // --------------- RUN USING ENCODERS ---------------
+    public static void runUsingEncoders(){
+        Log.i("Lift", "RUN USING ENCODERS ");
+        //resetEncoders();
+        highRunUsingEncoders();
+        lowRunUsingEncoders();
+        shoulderRunUsingEncoders();
+        wristRunUsingEncoders();
+
+        isRunToPosition = false;
+        setPowerOfMotors(0, 0, 0, 0); //AJE
+
+    }
+
+    public static void highRunUsingEncoders(){
+        //resetEncoders();
+        liftHigh.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        isHighRunToPosition = false;
+        Log.i("Lift", "highRunUsingEncoders  flag FALSE ");
+    }
+
+    public static void lowRunUsingEncoders(){
+        //resetEncoders();
+        liftLow.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        isLowRunToPosition = false;
+        Log.i("Lift", "lowRunUsingEncoders  flag FALSE ");
+    }
+
+    public static void shoulderRunUsingEncoders(){
+        //resetEncoders();
+        liftShoulder.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        isShoulderRunToPosition = false;
+        Log.i("Lift", "shoulderRunUsingEncoders  flag FALSE ");
+    }
+
+    public static void wristRunUsingEncoders(){
+        //resetEncoders();
+        liftWrist.setMode(DcMotor.RunMode.RUN_USING_ENCODER); //!!!!! Override, Hook should run to postion.
+        isWristRunToPosition = false;
+        Log.i("Lift", "wristRunUsingEncoders  flag FALSE ");
+    }
+
+
+    // --------------- RUN TO POSITION ---------------
+    public static void runToPosition(){
+        Log.i("Lift", "RUN TO POSITION  Target = Current All power= MAX");
+       //resetEncoders();
+
+        highRunToPosition();
+        lowRunToPosition();
+        shoulderRunToPosition();
+        wristRunToPosition();
+
+        isRunToPosition = true;
+
+    }
+
+    public static void highRunToPosition(){
+        if (isHighRunToPosition == false) {
+            isHighRunToPosition = true;
+            liftHigh.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+//            liftHighTargetPosition = liftHigh.getCurrentPosition();
+//            liftHigh.setTargetPosition(liftHighTargetPosition); //OUT
+            liftHigh.setPower(1);
+            Log.i("Lift", "highRunToPosition"  );
+        }
+    }
+
+    public static void lowRunToPosition(){
+        if (isLowRunToPosition == false) {
+            isLowRunToPosition = true;
+            liftLow.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+//            liftLowTargetPosition = liftLow.getCurrentPosition();
+//            liftLow.setTargetPosition(liftLowTargetPosition);  //OUT
+            liftLow.setPower(1);
+            Log.i("Lift", "lowRunToPosition" );
+        }
+    }
+
+    public static void shoulderRunToPosition(){
+        if (isShoulderRunToPosition == false) {
+            isShoulderRunToPosition = true;
+            liftShoulder.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+//            liftShoulderTargetPosition = liftShoulder.getCurrentPosition();
+//            liftShoulder.setTargetPosition(liftShoulderTargetPosition); //OUT
+            liftShoulder.setPower(1);
+            Log.i("Lift", "shoulderRunToPosition" );
+        }
+    }
+
+    public static void wristRunToPosition(){
+        if (isWristRunToPosition == false) {
+            isWristRunToPosition = true;
+            liftWrist.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+//            liftWristTargetPosition = liftWrist.getCurrentPosition();
+//            liftWrist.setTargetPosition(liftWristTargetPosition); //OUT
+
+ //           liftWrist.setPower(WRIST_MAX_POWER); //AJE ????
+            liftWrist.setPower(1);
+
+            Log.i("Lift", "wristRunToPosition" );
+        }
+    }
+
+
+    // --------------- SET POWER ---------------
+    public static void setPowerOfMotors(double liftHighPower, double liftLowPower, double liftShoulderPower, double liftWristPower) {
+        Log.i("Lift", "SET POWER " + " H:" + liftHighPower + " L:" + liftLowPower +
+                                     " S:" + liftShoulderPower + " W:" + WRIST_MAX_POWER*liftWristPower);
+        liftHigh.setPower(liftHighPower);
+        liftLow.setPower(liftLowPower);
+        liftShoulder.setPower(liftShoulderPower);
+        liftWrist.setPower(WRIST_MAX_POWER * liftWristPower);
+
+    }
+
+    // --------------- SET MOTOR TARGET POSITION ---------------
+    public static void setMotorTargetPosition(int liftHighDifference, int liftLowDifference, int liftShoulderDifference, int liftWristDifference) {
+        Log.i("Lift","SetMotorTargetPostion");
+
+        runToPosition();
+
+        Log.i("Lift", "SET TARGET POSITION" + " H:" +liftHighDifference + " L:" + liftLowDifference +
+                                              " S:" + liftShoulderDifference + " W:" + liftWristDifference + " ");
+        liftHigh.setTargetPosition(liftHighDifference);
+        liftLow.setTargetPosition(liftLowDifference);
+        liftShoulder.setTargetPosition(liftShoulderDifference);
+        liftWrist.setTargetPosition(liftWristDifference);
+
+        liftHighTargetPosition   = liftHighDifference;
+        liftLowTargetPosition    = liftLowDifference;
+        liftShoulderTargetPosition  = liftShoulderDifference;
+        liftWristTargetPosition   = liftWristDifference;
+
+    }
 
 
     public static boolean isDone(){
@@ -264,13 +291,13 @@ public class Lift {
         if (!liftLow.isBusy() && Math.abs(liftLow.getCurrentPosition() - liftLowTargetPosition) < 50){
                 //liftLow.setPower(0);
                 lowDone = true;
-                //Log.d("Lift", "Low Done True");
+                //Log.i("Lift", "Low Done True");
         }
 
         if (!liftShoulder.isBusy() && Math.abs(liftShoulder.getCurrentPosition() - liftShoulderTargetPosition) < 50){
                 //liftHigh.setPower(0);
                 angleDone = true;
-                //Log.d("Lift", "Angle Done True");
+                //Log.i("Lift", "Angle Done True");
         }
 
 
@@ -278,7 +305,7 @@ public class Lift {
         if (!liftWrist.isBusy() && Math.abs(liftWrist.getCurrentPosition() - liftWristTargetPosition) < 50){
                 //liftWrist.setPower(0);
                 hookDone = true;
-                //Log.d("Lift", "Hook Done True");
+                //Log.i("Lift", "Hook Done True");
         }
         if (nLiftLoop == 0) {
             Log.d("Lift", "High: Busy:" + liftHigh.isBusy() + " Curr:" + liftHigh.getCurrentPosition() + " Target:" + liftHigh.getTargetPosition() + " " + liftHighTargetPosition);
@@ -295,153 +322,26 @@ public class Lift {
 
     }
 
-    public static boolean isEncoderDone() {
-        boolean highDone = false;
-        boolean lowDone = false;
-        boolean angleDone = false;
-        boolean hookDone = false;
 
-        if(liftHigh.getPower() > 0) {
-            if (liftHigh.getTargetPosition() <= liftHigh.getCurrentPosition()) {
-
-                   liftHigh.setPower(0); highDone = true;
-            }
-        }
-        else if(liftHigh.getPower() < 0) {
-            if (liftHigh.getTargetPosition() >= liftHigh.getCurrentPosition()) {
-                liftHigh.setPower(0);
-                highDone = true;
-            }
-        }
-
-
-
-        if(liftLow.getPower() > 0) {
-            if(liftLow.getTargetPosition() >= liftLow.getCurrentPosition()) {
-                liftLow.setPower(0);
-                lowDone = true;
-            }
-
-        }
-        else if(liftLow.getPower() < 0) {
-            if(liftLow.getTargetPosition() <= liftLow.getCurrentPosition()) {
-                liftLow.setPower(0);
-                lowDone = true;
-            }
-        }
-
-
-
-        if(liftShoulder.getPower() > 0) {
-            if(liftShoulder.getTargetPosition() >= liftShoulder.getCurrentPosition()) {
-                liftShoulder.setPower(0);
-                angleDone = true;
-            }
-
-        }
-        else if(liftShoulder.getPower() < 0) {
-            if(liftShoulder.getTargetPosition() <= liftShoulder.getCurrentPosition()) {
-                liftShoulder.setPower(0);
-                angleDone = true;
-            }
-        }
-
-
-        if(angleDone && lowDone && highDone)
-            return true;
-
-        return false;
-
-    }
-
-
-    public static boolean isHookAtPosition(){
-
-         boolean hookDone = false;
-
-        if (!liftWrist.isBusy() && Math.abs(liftWrist.getCurrentPosition() - liftWrist.getTargetPosition()) < 50){
-            //liftWrist.setPower(0);
-            hookDone = true;
-            Log.d("Lift", "Hook Done True");
-        }
-        Log.d("Lift", "Hook: Busy:" + liftWrist.isBusy() + " Curr:" + liftWrist.getCurrentPosition() + " Target:" + liftWrist.getTargetPosition());
-
-        if (hookDone) return true;
-
-        else return false;
-
-    }
-
-
-
-    public static void setMotorTargetPosition(int liftHighDifference, int liftLowDifference, int liftShoulderDifference, int liftWristDifference) {
-        Log.d("Lift","SetMotorTargetPostion");
-        //if (isRunToPosition == false)
-            runToPosition();  //OUT
-
-        setPowerOfMotors(1,1,1,1);
-
-
-        Log.i("Lift", "setMotorTargetPostion" + liftHighDifference + " " + liftLowDifference +" " +  liftShoulderDifference  +" " + liftWristDifference);
-
-//        if(liftHigh.getCurrentPosition() + liftHighDifference > 0)
-//            liftHigh.setTargetPosition(liftHigh.getCurrentPosition() + liftHighDifference);
-//        else
-//            liftHigh.setTargetPosition(liftHigh.getCurrentPosition());
-//
-//
-//        if(liftLow.getCurrentPosition() + liftLowDifference < 0)
-//            liftLow.setTargetPosition(liftLow.getCurrentPosition() + liftLowDifference);
-//        else
-//            liftLow.setTargetPosition(liftLow.getCurrentPosition());
-//
-//
-//        if(liftShoulder.getCurrentPosition() + liftShoulderDifference < 0)
-//            liftShoulder.setTargetPosition(liftShoulder.getCurrentPosition() + liftShoulderDifference);
-//        else
-//            liftShoulder.setTargetPosition(liftShoulder.getCurrentPosition());
-
-        Log.d("Lift", "SetMotorTargetPostion" + liftHighDifference + " " + liftLowDifference + " " + liftShoulderDifference + " " + liftWristDifference + " ");
-        liftHigh.setTargetPosition(liftHighDifference);
-        liftLow.setTargetPosition(liftLowDifference);
-        liftShoulder.setTargetPosition(liftShoulderDifference);
-        liftWrist.setTargetPosition(liftWristDifference);
-
-        liftHighTargetPosition   = liftHighDifference;
-        liftLowTargetPosition    = liftLowDifference;
-        liftShoulderTargetPosition  = liftShoulderDifference;
-        liftWristTargetPosition   = liftWristDifference;
-
-    }
-
-    public static void setPowerOfMotors(double liftHighPower, double liftLowPower, double liftShoulderPower, double liftWristPower) {
-        liftHigh.setPower(liftHighPower);
-        liftLow.setPower(liftLowPower);
-        liftShoulder.setPower(liftShoulderPower);
-        liftWrist.setPower(liftWristPower);
-
-    }
-
-
-
+    // --------------- SET CURRENT MODE or POSITION ---------------
 
     public enum TestModes {
+        MODE_MOVE_HIGH,
+        MODE_MOVE_LOW,
+        MODE_MOVE_SHOULDER,
+        MODE_MOVE_BOTH,
+        MODE_MOVE_WRIST,
+
         MODE_RUN_TO_POSITION,
         MODE_RUN_USING_ENCODERS,
 
         MODE_GOTO_INIT,
+        MODE_GOTO_TEST_POSITION,
         MODE_GOTO_DRIVE_POSITION1,
         MODE_GOTO_DRIVE_POSITION2,
         MODE_GOTO_STRAIGHT_HOOK,
 
-        MODE_STOP,
-
-        MODE_MOVE_HIGH,
-        MODE_MOVE_LOW,
-        MODE_MOVE_ANGLE,
-        MODE_MOVE_BOTH,
-        MODE_MOVE_HOOK,
-
+         MODE_STOP
     }
 
     public static void runWithoutLimits(){
@@ -451,21 +351,30 @@ public class Lift {
     /* Called during TeleOp */
     public static void setTestMode(TestModes mode, double power) {
         power = -power; //when pushing up on joystick negative power is given
+
+
+        // clip the position values so that they never exceed their allowed range.
+        // armPosition = Range.clip(armPosition, ARM_MIN_RANGE, ARM_MAX_RANGE);
+        //clawPosition = Range.clip(clawPosition, CLAW_MIN_RANGE, CLAW_MAX_RANGE);
+
+
         if (power !=0) {
-            Log.i("Lift", "Power:" + power + "Current High" + liftHigh.getCurrentPosition() + "Current Low" + liftLow.getCurrentPosition());
+            Log.d("Lift", "Power:" + power + "Current High" + liftHigh.getCurrentPosition() + "Current Low" + liftLow.getCurrentPosition());
         }
         switch (mode) {
             case MODE_MOVE_HIGH:
 
                if (bLimits && (power > 0 && liftHigh.getCurrentPosition() > LIFT_HIGH_MAX ||
                     power < 0 && liftHigh.getCurrentPosition() <= LIFT_HIGH_MIN )){
-                    liftHigh.setPower(0);
-                   highRunToPosition();
+                   liftHigh.setPower(0);  //
+                   Log.d("Lift", "high power = 0" );
+                   //highRunToPosition();
                }
                else{
-                   highRunUsingEncoders();
+                   //highRunUsingEncoders();
                    liftHigh.setPower(1 * power);
               }
+
 
                 break;
             case MODE_MOVE_LOW:
@@ -473,34 +382,38 @@ public class Lift {
                if (bLimits && (power > 0 && liftLow.getCurrentPosition() > LIFT_LOW_MAX ||
                     power < 0 && liftLow.getCurrentPosition() < LIFT_LOW_MIN )){
                     liftLow.setPower(0);
-                   lowRunToPosition();
+                    Log.d("Lift", "low power = 0" );
+                   //lowRunToPosition();
                }
                else{
-                   lowRunUsingEncoders();
+                   //lowRunUsingEncoders();
                    liftLow.setPower(1 * power);    //negative power = backwards
                }
                 break;
-            case MODE_MOVE_ANGLE:
+            case MODE_MOVE_SHOULDER:
 
                 if (bLimits && (power > 0 && liftShoulder.getCurrentPosition() > LIFT_SHOULDER_MAX ||
                         power < 0 && liftShoulder.getCurrentPosition() < LIFT_SHOULDER_MIN )){
                     liftShoulder.setPower(0);
-                    shoulderRunToPosition();
+                    Log.d("Lift", "shoulder power = 0" );
+                    //shoulderRunToPosition();
                 }
                 else{
-                    shoulderRunUsingEncoders();
+                    //shoulderRunUsingEncoders();
                     liftShoulder.setPower(1 * power);    //negative power = backwards
                 }
                 break;
-            case MODE_MOVE_HOOK:
+            case MODE_MOVE_WRIST:
                 if (bLimits && (power > 0 && liftWrist.getCurrentPosition() > LIFT_WRIST_MAX ||
                         power < 0 && liftWrist.getCurrentPosition() < LIFT_WRIST_MIN )){
                     liftWrist.setPower(0);
-                    wristRunToPosition();
+                    Log.d("Lift", "wrist power = 0" );
+                    //wristRunToPosition();  //AJE Shouldn't need to do this
                 }
                 else{
-                    wristRunUsingEncoders();
-                    liftWrist.setPower(1 * power);    //negative power = backwards
+                    //wristRunUsingEncoders();
+                    liftWrist.setPower(WRIST_MAX_POWER * power);    //negative power = backwards
+                    Log.v("Lift", "WRIST_MAX_POWER" );
                 }
                 break;
 
@@ -522,46 +435,59 @@ public class Lift {
                 //if (isRunToPosition == true)
                     runUsingEncoders();
                 break;
+
             case MODE_GOTO_INIT:
-                setMotorTargetPosition(0, 1000, 1000, 500);
-                runToPosition();
+                 initPosition();
+                break;
+            case MODE_GOTO_TEST_POSITION:
+                testPosition();
                 break;
             case MODE_GOTO_DRIVE_POSITION1:
-                //if (isRunToPosition == false)
-                    runToPosition();
                 drivePosition1();
                 break;
             case MODE_GOTO_DRIVE_POSITION2:
-                    runToPosition();
-                drivePosition2();
+                 drivePosition2();
                 break;
             case MODE_GOTO_STRAIGHT_HOOK:
                 //wristRunToPosition();
                 straightHook();
 
             case MODE_STOP:
-                //if (isRunToPosition == false)
-                    runToPosition();
-                setMotorTargetPosition(liftHigh.getCurrentPosition(),
+                Log.i("Lift", "stop ");
+                //runToPosition();
+                setMotorTargetPosition(
+                        liftHigh.getCurrentPosition(),
                         liftLow.getCurrentPosition(),
-                        liftWrist.getCurrentPosition(),
-                        liftShoulder.getCurrentPosition());
+                        liftShoulder.getCurrentPosition(),
+                        liftWrist.getCurrentPosition()
+                        );
                 break;
 
         }
     }
 
 
+    public static void initPosition(){
+        Log.i("Lift", "initPosition ");
+        //runToPosition();  //Done in setMotorTargetPosition();
+        setMotorTargetPosition(0, 0, 0, 0);
+     }
+
     public static void testPosition(){
-        setMotorTargetPosition(100, 100, 100, 100);
-        setPowerOfMotors(1, 1, 1, 1);
-    }
+        //runToPosition();
+        setMotorTargetPosition(3000, 3000, 500, -500);
+     }
 
     public static void drivePosition1(){
         Log.i("Lift", "drivePostion1 ");
-        setMotorTargetPosition(1350, 1350, 0, 0);
-        setPowerOfMotors(1, 1, 1, 1);
-    }
+        //runToPosition();
+        setMotorTargetPosition(1150, 1150, 0, 0);
+     }
+
+     public static void drivePosition2(){
+        Log.i("Lift", "drivePostion2 ");
+        setMotorTargetPosition(850, 850, 550, -120);
+     }
 
     public static void straightHook(){
         Log.i("Lift", "straightHook ");
@@ -570,64 +496,28 @@ public class Lift {
         liftWrist.setPower(1);
     }
 
-    public static void drivePosition2(){
-        Log.i("Lift", "drivePostion2 ");
-        setMotorTargetPosition(1350, 1350, -550, -120);
-        setPowerOfMotors(1, 1, 1, 1);
-    }
-
     public static void stickLift(){
         Log.i("Lift", "stickLift");
         setMotorTargetPosition(1700, 1700, -550, -120);
-        setPowerOfMotors(1, 1, 1, 1);
     }
 
     public static void climbPosition(){
         Log.i("Lift", "climbPosition ");
         //setMotorTargetPosition(2215, 2228, 7778);
-        setPowerOfMotors(1, 1, 1, 1);
 
     }
 
     public static void readyToHangPosition(){
         Log.i("Lift", "climbPosition 1, 1, 1,1");
         //setMotorTargetPosition(11425, 11292, 8783);
-        setPowerOfMotors(1, 1, 1, 1);
     }
 
     public static void menBasketPosition(){
         Log.i("Lift", "menBasketPosition 8035, 6164, 4444, 1");
         setMotorTargetPosition(8035, 6164, 4444, 1);
-        setPowerOfMotors(1, 1, 1, 1);
     }
 
 
-
-//    private static int driveModeTicksHigh = 1575; //to be added
-//    private static int driveModeTicksLow = -657;
-
-
-    //    public void setDriveMode(){
-//
-//        if(liftHigh.getCurrentPosition() < driveModeTicksHigh){
-//            while(!isDone()) {
-//                liftHigh.setPower(0.5);
-//            }
-//        }
-//        else{
-//            while(!isDone()) {
-//                liftHigh.setPower(-0.5);
-//            }
-//        }
-//
-//        if(liftLow.getCurrentPosition() < driveModeTicksHigh){
-//            while(!isDone()) {
-//                liftLow.setPower
-//            }
-//        }
-//
-//
-//    }
 
 
 }
