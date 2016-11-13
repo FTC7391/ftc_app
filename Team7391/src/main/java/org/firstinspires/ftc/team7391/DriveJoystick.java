@@ -15,8 +15,8 @@ public class DriveJoystick {
     private static double axialPower;
     private static double rotatePower;
 
-    private static Zipline ziplineBlue;
-    private static Zipline ziplineRed;
+    private static Zipline pusher_left;
+    private static Zipline pusher_right;
     private Claw claw;
 
     private DriveJoystick driveJoystick;
@@ -25,10 +25,10 @@ public class DriveJoystick {
     private static int nTeleLoop = 0;
 
     public DriveJoystick(HardwareMap hardwareMap) {
-        ziplineBlue = new Zipline(hardwareMap, 1,1, .5, "pusher_left");
-        ziplineRed = new Zipline(hardwareMap, 0,0, .5, "pusher_right");
-        ziplineBlue.setRetractedPosition();
-        ziplineRed.setRetractedPosition();
+        pusher_left = new Zipline(hardwareMap, 1,1, .5, "pusher_left");
+        pusher_right = new Zipline(hardwareMap, 0,0, .5, "pusher_right");
+        pusher_left.setRetractedPosition();
+        pusher_right.setRetractedPosition();
     }
 
     public static void update(Gamepad gamepad1) {
@@ -111,16 +111,16 @@ public class DriveJoystick {
 
 
         if (gamepad1.dpad_right){
-            ziplineRed.setDeployedPosition();
-            ziplineBlue.setDrivePosition();
+            pusher_right.setDeployedPosition();
+            pusher_left.setDrivePosition();
         }
         if (gamepad1.dpad_left) {
-            ziplineRed.setDrivePosition();
-            ziplineBlue.setDeployedPosition();
+            pusher_right.setDrivePosition();
+            pusher_left.setDeployedPosition();
         }
         if (gamepad1.dpad_up){
-            ziplineRed.setDrivePosition();
-            ziplineBlue.setDrivePosition();
+            pusher_right.setDrivePosition();
+            pusher_left.setDrivePosition();
         }
 
 
