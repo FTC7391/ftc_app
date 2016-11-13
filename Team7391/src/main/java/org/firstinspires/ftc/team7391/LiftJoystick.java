@@ -99,6 +99,7 @@ public class LiftJoystick {
         }
         if (gamepad2.dpad_down){
             Claw.setDeployedPosition();
+            //Lift.setTestMode(Lift.TestModes.MODE_MOVE_WRIST_TO_POSITION, -.25);
         }
         if (gamepad2.dpad_left) {
             Claw.setDrivePosition();

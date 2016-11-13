@@ -43,7 +43,7 @@ import com.qualcomm.robotcore.hardware.DcMotorController;
  * <p>
  * Enables control of the robot via the gamepad
  */
-@TeleOp(name="Tournament", group="TeleOpTournament")
+@TeleOp(name="Tournament: TeleOp7391", group="TeleOpTournament")
 //@Disabled
 public class TeleOp7391 extends OpMode {
 
@@ -95,6 +95,10 @@ public class TeleOp7391 extends OpMode {
 	@Override
 	public void loop() {
 
+		if (++nTeleLoop == 10) {
+			nTeleLoop = 0;
+			showTelemetry();
+		}
 		DriveJoystick.update(gamepad1);
 		LiftJoystick.update(gamepad2);
 

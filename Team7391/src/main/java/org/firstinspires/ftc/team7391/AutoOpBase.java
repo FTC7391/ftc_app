@@ -21,6 +21,8 @@ public class AutoOpBase extends OpMode {
     private Zipline ziplineBlue;
     private Zipline ziplineRed;
 
+    private ColorSensor colorSensor;
+
     private static int nAutoLoop = 0;
 
 //    public ArrayList<State>  getStepsList() {
@@ -33,14 +35,21 @@ public class AutoOpBase extends OpMode {
         currentState = null;
         step = -1;
 
+        Log.i("FTC7391", "Auto: " + "AutoOpBase init:"+ "  step " + step);
+
         DriveTrainAuto.init(hardwareMap);
         Lift.init(hardwareMap);
         Claw.init(hardwareMap);
         Lift.resetEncoders();
+        //public Zipline(HardwareMap hardwareMap, double retracted, double drive, double deploy, String name)
         ziplineBlue = new Zipline(hardwareMap,1, 1, .5, "pusher_left");
         ziplineRed = new Zipline(hardwareMap, 0, 0, .5, "pusher_right");
         ziplineBlue.setRetractedPosition();
         ziplineRed.setRetractedPosition();
+
+        colorSensor = hardwareMap.colorSensor.get("sensor_color");
+        colorSensor.enableLed(false);
+
 
         stateStr = "INIT";
         showTelemetry();
@@ -56,6 +65,7 @@ public class AutoOpBase extends OpMode {
             nAutoLoop = 0;
         if (currentState != null && !currentState.update()) return;
         step++;
+        Log.d("FTC7391", "Auto: " + "AutoOpBase loop:"+ "  step " + step);
         currentState = stepsList.get(step);
         currentState.init();
     }
@@ -76,7 +86,7 @@ public class AutoOpBase extends OpMode {
 
         public boolean update(){
             cnt++;
-            if (cnt%100 == 0) {
+            if (cnt%300 == 0) {
                 showTelemetryStateInfo();
             }
             return (updateState());
@@ -94,13 +104,13 @@ public class AutoOpBase extends OpMode {
         public MoveState(double i, double p){
             inches = i;
             power = p;
-            Log.d("Autonomous", "MoveState constructor  inches:" + inches + " power:" + power + " i:" + i + " p:" + p);
+            Log.i("FTC7391", "Auto: " + "MoveState constructor  inches:" + inches + " power:" + power + " i:" + i + " p:" + p);
         }
 
         public void init() {
             super.init();
 
-            Log.d("Autonomous", "MoveState init  inches:" + inches + " power:" + power );
+            Log.i("FTC7391", "Auto: " + "MoveState init  inches:" + inches + " power:" + power );
             DriveTrainAuto.moveInches(inches, power);
             dbgWriter.printf("Move Inches %.2f \n", inches);
             telemetry.addData(TAG, "Move Inches " + inches);
@@ -116,28 +126,32 @@ public class AutoOpBase extends OpMode {
 
     protected class ColorState extends State {
 
-
-        ColorSensor colorSensor;
-
         public ColorState(){
 
         }
 
         public void init() {
             super.init();
-            colorSensor = hardwareMap.colorSensor.get("sensor_color");
+            telemetry.addData(TAG, "Color State ");
+            stateStr = "COLOR";
 
             showTelemetryStateInfo();
         }
 
         public boolean updateState(){
 
-            Log.d("Clear","" + colorSensor.alpha());
-            Log.d("Red  ", "" + colorSensor.red());
-            Log.d("Green", "" + colorSensor.green());
-            Log.d("Blue ", "" + colorSensor.blue());
+            if (cnt%300 == 0) {
+                showTelemetryStateInfo();
+                Log.d("FTC7391", "COLOR: " + "Clear(Alpha)" + "" + colorSensor.alpha());
+                Log.d("FTC7391", "COLOR: " + "Red         " + "" + colorSensor.red());
+                Log.d("FTC7391", "COLOR: " + "Green       " + "" + colorSensor.green());
+                Log.d("FTC7391", "COLOR: " + "Blue        " + "" + colorSensor.blue());
+            }
 
-            return  gamepad1.a;
+            if (cnt%700 == 0)
+                return true;
+            //return  gamepad1.a;
+            return  false;
         }
 
     }
@@ -150,7 +164,7 @@ public class AutoOpBase extends OpMode {
         public WaitState(int seconds)
         {
             waitTime = (int)(seconds * 40);
-            Log.i("Autonomous", "WaitTime constructor " + "waitTime:" + waitTime);
+            Log.i("FTC7391", "Auto: " + "WaitTime constructor " + "waitTime:" + waitTime);
         }
 
         public void init(){
@@ -163,8 +177,8 @@ public class AutoOpBase extends OpMode {
         public boolean updateState(){
             counter++;
             //if(counter%2 == 1)
-            if (counter%1 == 0)
-                Log.d("Autonomous", "WaitSate counter:" + counter  + " waitTime:" + waitTime + " gamepad1.a:" + gamepad1.a);
+            if (counter%100 == 0)
+                Log.d("FTC7391", "Auto: " + "WaitSate counter:" + counter  + " waitTime:" + waitTime + " gamepad1.a:" + gamepad1.a);
 
             return (counter == waitTime || gamepad1.a);
             //else
@@ -440,11 +454,11 @@ public class AutoOpBase extends OpMode {
 
     private void showTelemetryStateInfo() {
         telemetry.addData("10", String.format("Auto STATE %s", stateStr));
-        Log.i("Autonomous", "STATE:" + stateStr + "  step " + step);
+        Log.i("FTC7391", "Auto: " + "STATE:" + stateStr + "  step " + step);
     }
      private void showTelemetryState() {
-        telemetry.addData("10",String.format("Auto STATE %s", stateStr));
-         Log.d("Autonomous",  "STATE:" + stateStr + "  step " + step);
+        telemetry.addData("12",String.format("Auto STATE %s", stateStr));
+         Log.d("FTC7391", "Auto: " +  "STATE:" + stateStr + "  step " + step);
      }
 
     private void showTelemetryDrivetrain() {
@@ -454,8 +468,8 @@ public class AutoOpBase extends OpMode {
             DriveTrainAuto.getPosition(DriveTrain.TestModes.MODE_MOVE_RIGHT),
             DriveTrainAuto.getPosition(DriveTrain.TestModes.MODE_MOVE_LEFT));
 
-        Log.d("Autonomous", "Right:" + DriveTrainAuto.getPosition(DriveTrain.TestModes.MODE_MOVE_RIGHT));
-        Log.d("Autonomous", "Left :" + DriveTrainAuto.getPosition(DriveTrain.TestModes.MODE_MOVE_LEFT));
+        Log.d("FTC7391", "Auto: " + "Right:" + DriveTrainAuto.getPosition(DriveTrain.TestModes.MODE_MOVE_RIGHT));
+        Log.d("FTC7391", "Auto: " + "Left :" + DriveTrainAuto.getPosition(DriveTrain.TestModes.MODE_MOVE_LEFT));
 
     }
 
@@ -471,10 +485,10 @@ public class AutoOpBase extends OpMode {
             Lift.originalTicksWrist, Lift.getTicksliftWrist()
         );
 
-        Log.d("Autonomous", "High     : original:" + Lift.originalTicksHigh + "|| end: " + Lift.getTicksLiftHigh());
-        Log.d("Autonomous", "Low      : original:" + Lift.originalTicksLow + "|| end: " + Lift.getTicksLiftLow());
-        Log.d("Autonomous", "Shoulder : original:" + Lift.originalTicksShoulder + "|| end: " + Lift.getTicksliftShoulder());
-        Log.d("Autonomous", "Wrist    : original:" + Lift.originalTicksWrist + "|| end: " + Lift.getTicksliftWrist());
+        Log.d("FTC7391", "Auto: " + "High     : original:" + Lift.originalTicksHigh + "|| end: " + Lift.getTicksLiftHigh());
+        Log.d("FTC7391", "Auto: " + "Low      : original:" + Lift.originalTicksLow + "|| end: " + Lift.getTicksLiftLow());
+        Log.d("FTC7391", "Auto: " + "Shoulder : original:" + Lift.originalTicksShoulder + "|| end: " + Lift.getTicksliftShoulder());
+        Log.d("FTC7391", "Auto: " + "Wrist    : original:" + Lift.originalTicksWrist + "|| end: " + Lift.getTicksliftWrist());
 
     }
 

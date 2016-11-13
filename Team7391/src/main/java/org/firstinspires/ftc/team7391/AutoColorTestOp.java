@@ -17,6 +17,34 @@ public class AutoColorTestOp extends AutoOpBase
         super.init();
 
         stepsList.add(new ColorState());
+        stepsList.add(new WaitState(0));//press a on gamepad 1
+
+        stepsList.add(new ColorState());
+        stepsList.add(new WaitState(0));//press a on gamepad 1
+        stepsList.add(new ColorState());
+        stepsList.add(new WaitState(0));//press a on gamepad 1
+        stepsList.add(new ColorState());
+        stepsList.add(new WaitState(0));//press a on gamepad 1
+
+        stepsList.add(new ColorState());
+        stepsList.add(new WaitState(0));//press a on gamepad 1
+        stepsList.add(new ColorState());
+        stepsList.add(new WaitState(0));//press a on gamepad 1
+        stepsList.add(new ColorState());
+        stepsList.add(new WaitState(0));//press a on gamepad 1
+        stepsList.add(new ColorState());
+        stepsList.add(new WaitState(0));//press a on gamepad 1
+        stepsList.add(new ColorState());
+        stepsList.add(new WaitState(0));//press a on gamepad 1
+        stepsList.add(new ColorState());
+        stepsList.add(new WaitState(0));//press a on gamepad 1
+        stepsList.add(new ColorState());
+        stepsList.add(new WaitState(0));//press a on gamepad 1
+        stepsList.add(new ColorState());
+        stepsList.add(new WaitState(0));//press a on gamepad 1
+
+        stepsList.add(new StopState());
+
 
     }
 

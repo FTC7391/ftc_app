@@ -96,10 +96,6 @@ public class DriveJoystick {
         }
 
         if (gamepad1.x){
-            ziplineRed.setDrivePosition();
-            ziplineBlue.setDrivePosition();
-            //ziplineBlue.setDeployedPosition();
-            //Lift.setTestMode(Lift.TestModes.MODE_MOVE_WRIST_TO_POSITION, -.25);
         }
 
         if (gamepad1.y){
@@ -107,13 +103,27 @@ public class DriveJoystick {
         }
 
         if (gamepad1.b){
+        }
+        if (gamepad1.a){
+
+        }
+
+
+
+        if (gamepad1.dpad_right){
             ziplineRed.setDeployedPosition();
             ziplineBlue.setDrivePosition();
         }
-        if (gamepad1.a){
+        if (gamepad1.dpad_left) {
             ziplineRed.setDrivePosition();
             ziplineBlue.setDeployedPosition();
         }
+        if (gamepad1.dpad_up){
+            ziplineRed.setDrivePosition();
+            ziplineBlue.setDrivePosition();
+        }
+
+
     }
 
     private static double scaleInput(double dVal) {

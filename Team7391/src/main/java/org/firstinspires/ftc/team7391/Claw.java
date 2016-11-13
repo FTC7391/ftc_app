@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.team7391;
 
+import android.util.Log;
+
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 /**
@@ -22,20 +24,25 @@ public class Claw{
 
 
     public static void init(HardwareMap hardwareMap){
-        if (!bInitialFlag) {
+        Log.i("FTC7391", "Claw: setRetractedPosition" + bInitialFlag);
+
+        //if (!bInitialFlag) {  //== true first time for some unknown reasone
             bInitialFlag = true;
 
+            Log.i("FTC7391", "Claw: setRetractedPosition" + bInitialFlag);
             clawLeft = new ServoAttachment(LEFT_RETRACTED_POS, LEFT_DRIVE_POS, LEFT_DEPLOYED_POS);
             clawLeft.servo = hardwareMap.servo.get("claw_left");
 
             clawRight = new ServoAttachment(RIGHT_RETRACTED_POS, RIGHT_DRIVE_POS, RIGHT_DEPLOYED_POS);
             clawRight.servo = hardwareMap.servo.get("claw_right");
             setRetractedPosition();
-        }
+        //}
 
     }
 
     public static void setRetractedPosition(){
+
+        Log.i("FTC7391", "Claw: setRetractedPosition");
 
         clawLeft.setRetractedPosition();
         clawRight.setRetractedPosition();
@@ -43,11 +50,15 @@ public class Claw{
 
     public static void setDrivePosition(){
 
+        Log.i("FTC7391", "Claw: setDrivePosition");
+
         clawLeft.setDrivePosition();
         clawRight.setDrivePosition();
     }
 
     public static void setDeployedPosition(){
+
+        Log.i("FTC7391", "Claw: setDeployedPosition");
 
         clawLeft.setDeployedPosition();
         clawRight.setDeployedPosition();
