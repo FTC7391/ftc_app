@@ -4,6 +4,7 @@ import android.util.Log;
 
 import java.util.ArrayList;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
+import com.qualcomm.robotcore.hardware.ColorSensor;
 
 /**
  * Created by Allana Evans on 9/26/15.
@@ -109,6 +110,34 @@ public class AutoOpBase extends OpMode {
 
         public boolean updateState(){
             return DriveTrainAuto.isDone();
+        }
+
+    }
+
+    protected class ColorState extends State {
+
+
+        ColorSensor colorSensor;
+
+        public ColorState(){
+
+        }
+
+        public void init() {
+            super.init();
+            colorSensor = hardwareMap.colorSensor.get("sensor_color");
+
+            showTelemetryStateInfo();
+        }
+
+        public boolean updateState(){
+
+            Log.d("Clear","" + colorSensor.alpha());
+            Log.d("Red  ", "" + colorSensor.red());
+            Log.d("Green", "" + colorSensor.green());
+            Log.d("Blue ", "" + colorSensor.blue());
+
+            return  gamepad1.a;
         }
 
     }
