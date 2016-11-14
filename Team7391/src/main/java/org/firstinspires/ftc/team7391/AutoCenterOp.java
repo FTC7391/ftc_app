@@ -18,17 +18,20 @@ public abstract class AutoCenterOp extends AutoOpBase
         FTC7391PrintWriter data1Writer = new FTC7391PrintWriter("Alliance" , "color");
         setRed();
 
+        stepsList.add(new WaitState(0));
+        stepsList.add(new MoveState(60, 0.4));
+        stepsList.add(new WaitState(0));
 
-        stepsList.add(new WaitState(0));
-        //stepsList.add(new StickDrivePositionState());
-        //stepsList.add(new WaitState(0));
-        stepsList.add(new DrivePosition1State());
-        stepsList.add(new WaitState(0));
-        //stepsList.add(new DrivePosition2State());
-        //stepsList.add(new WaitState(0));
-        stepsList.add(new MoveState(24, 0.4));
-        stepsList.add(new WaitState(0));
-        stepsList.add(new MoveState(-24, 0.4));
+//        stepsList.add(new WaitState(0));
+//        //stepsList.add(new StickDrivePositionState());
+//        //stepsList.add(new WaitState(0));
+//        stepsList.add(new DrivePosition1State());
+//        stepsList.add(new WaitState(0));
+//        //stepsList.add(new DrivePosition2State());
+//        //stepsList.add(new WaitState(0));
+//        stepsList.add(new MoveState(24, 0.4));
+//        stepsList.add(new WaitState(0));
+//        stepsList.add(new MoveState(-24, 0.4));
 //        stepsList.add(new RotateState(45,1));
 //        stepsList.add(new WaitState(0));
 //        stepsList.add(new MoveState(-15, 1));
