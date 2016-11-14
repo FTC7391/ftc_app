@@ -48,7 +48,7 @@ public class LiftJoystick {
                     nLoop = 5;
                 }
                 if (gamepad2.b) {
-                    Lift.setTestMode(Lift.TestModes.MODE_GOTO_TEST_POSITION, 1);
+                    Lift.setTestMode(Lift.TestModes.MODE_GOTO_GRABPOSITION, 1);
                     nLoop = 5;
                 }
                 if (gamepad2.x) {

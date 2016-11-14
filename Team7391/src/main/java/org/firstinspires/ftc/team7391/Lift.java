@@ -346,7 +346,7 @@ public class Lift {
         MODE_GOTO_INIT,
         MODE_GOTO_TEST_POSITION,
         MODE_GOTO_DRIVE_POSITION1,
-        MODE_GOTO_DRIVE_POSITION2,
+        MODE_GOTO_GRABPOSITION,
         MODE_GOTO_STRAIGHT_HOOK,
 
          MODE_STOP
@@ -453,7 +453,7 @@ public class Lift {
             case MODE_GOTO_DRIVE_POSITION1:
                 drivePosition1();
                 break;
-            case MODE_GOTO_DRIVE_POSITION2:
+            case MODE_GOTO_GRABPOSITION:
                  drivePosition2();
                 break;
             case MODE_GOTO_STRAIGHT_HOOK:
@@ -489,7 +489,7 @@ public class Lift {
     public static void drivePosition1(){
         Log.i("FTC7391", "Lift: " + "drivePostion1 ");
         //runToPosition();
-        setMotorTargetPosition(1150, 1150, 0, 0);
+        setMotorTargetPosition(800, 700, 0, 0);
      }
 
      public static void drivePosition2(){
