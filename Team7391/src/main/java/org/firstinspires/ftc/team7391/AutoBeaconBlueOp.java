@@ -2,9 +2,14 @@ package org.firstinspires.ftc.team7391;
 
 import android.util.Log;
 
+import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+
 /**
  * Created by Ishaan on 11/13/2016.
  */
+
+@Autonomous(name = "Tournament: Blue Beacon" + "", group = "Tournament")
+//@Disabled
 public class AutoBeaconBlueOp extends AutoBeaconOp{
     private static final String TAG = AutoBlueOp.class.getSimpleName();
 
@@ -16,7 +21,7 @@ public class AutoBeaconBlueOp extends AutoBeaconOp{
 
     public void setRed(){
         isRed = -1;
-        Log.i("Auto", "Blue");
+        Log.i("FTC7391","Auto: " + "Blue Beacon");
     }
 
 }

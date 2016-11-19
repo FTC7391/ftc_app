@@ -43,7 +43,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
  * <p>
  * Enables control of the robot via the gamepad
  */
-@TeleOp(name = "TeleOp: DriveTest" , group = "Practice")
+//@TeleOp(name = "TeleOp: DriveTest" , group = "Practice")
 public class DriveTrainTest extends OpMode {
 
     private static final String TAG = DriveTrainTest.class.getSimpleName();

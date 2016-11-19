@@ -19,8 +19,11 @@ public abstract class AutoCenterOp extends AutoOpBase
         setRed();
 
         stepsList.add(new WaitState(0));
-        stepsList.add(new MoveState(60, 0.4));
+        stepsList.add(new PusherState(isRed));
         stepsList.add(new WaitState(0));
+        stepsList.add(new MoveState(60, 0.8));
+        stepsList.add(new WaitState(10));
+
 
 //        stepsList.add(new WaitState(0));
 //        //stepsList.add(new StickDrivePositionState());

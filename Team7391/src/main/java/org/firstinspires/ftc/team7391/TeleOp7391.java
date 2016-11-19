@@ -142,6 +142,7 @@ public class TeleOp7391 extends OpMode {
 	}
 
 	private void showTelemetryLift() {
+		telemetry.addData("29 " , "MODE: " + Lift.getStrMode());
 		telemetry.addData("30 " , String.format("High  : original: %d current: %d", Lift.originalTicksHigh, Lift.getTicksLiftHigh()));
 		telemetry.addData("31 " , String.format("Low   : original: %d current: %d", Lift.originalTicksLow, Lift.getTicksLiftLow()));
 		telemetry.addData("32 " , String.format("Angle : original: %d current: %d", Lift.originalTicksShoulder, Lift.getTicksliftShoulder()));

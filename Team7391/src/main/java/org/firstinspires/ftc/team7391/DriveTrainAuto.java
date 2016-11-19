@@ -127,25 +127,25 @@ public class DriveTrainAuto extends DriveTrain{
     }
 
     public static boolean isAtPosition(){
-        boolean frDone = false, flDone = false, brDone = false, blDone = false;
+        boolean frDone = false, flDone = false;
 
-        Log.v("FTC7391", "Auto: " + "DriveTrain " + "motorR " + motorRight.isBusy() + " " + motorRight.getCurrentPosition() + " " + motorRight.getTargetPosition());
-        //Log.v("Auto", "motorFR " + motorRight.isBusy() + " " + motorRight.getCurrentPosition() + " " + motorRight.getTargetPosition());
-        Log.v("FTC7391", "Auto: " + "DriveTrain " + "motorL                          " + motorLeft.isBusy() + " " + motorLeft.getCurrentPosition() + " " + motorLeft.getTargetPosition());
+        Log.v("FTC7391", "Auto: " + "DriveTrain " + "         motorR " + motorRight.isBusy() + " " + motorRight.getCurrentPosition() + " " + motorRight.getTargetPosition() +
+              "        motorL " + motorLeft.isBusy() + " " + motorLeft.getCurrentPosition() + " " + motorLeft.getTargetPosition());
 
         if (!motorRight.isBusy() && Math.abs(motorRight.getCurrentPosition() - motorRight.getTargetPosition()) < MOTOR_POSITION_THESHOLD ){
+        //if ( Math.abs(motorRight.getCurrentPosition() - motorRight.getTargetPosition()) < MOTOR_POSITION_THESHOLD ){
               //motorRight.setPower(0);
                 frDone = true;
          }
-
         if (!motorLeft.isBusy() && Math.abs(motorLeft.getCurrentPosition() - motorLeft.getTargetPosition()) < MOTOR_POSITION_THESHOLD ){
+        //if ( Math.abs(motorLeft.getCurrentPosition() - motorLeft.getTargetPosition()) < MOTOR_POSITION_THESHOLD ){
                 //motorLeft.setPower(0);
                 flDone = true;
          }
 
 
-        if (frDone && flDone && brDone && blDone){
-            return true;
+        if (frDone && flDone){
+             return true;
         }
         else return false;
     }

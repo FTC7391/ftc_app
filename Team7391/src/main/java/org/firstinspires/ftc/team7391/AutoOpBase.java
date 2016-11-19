@@ -11,15 +11,15 @@ import com.qualcomm.robotcore.hardware.ColorSensor;
  */
 public class AutoOpBase extends OpMode {
 
-     private static final String TAG = AutoOpBase.class.getSimpleName();
+    private static final String TAG = AutoOpBase.class.getSimpleName();
     protected State currentState;
     protected int step;
     protected ArrayList<State> stepsList = new ArrayList<State> (40);
     protected FTC7391PrintWriter dbgWriter = new FTC7391PrintWriter("Autonomous", "telemetryWait");
     private String stateStr = "";
 
-    private Zipline ziplineBlue;
-    private Zipline ziplineRed;
+    protected static Zipline pusher_left;
+    protected static Zipline pusher_right;
 
     private ColorSensor colorSensor;
 
@@ -40,12 +40,13 @@ public class AutoOpBase extends OpMode {
         DriveTrainAuto.init(hardwareMap);
         Lift.init(hardwareMap);
         Claw.init(hardwareMap);
-        Lift.resetEncoders();
+        //Lift.resetEncoders();
+
         //public Zipline(HardwareMap hardwareMap, double retracted, double drive, double deploy, String name)
-        ziplineBlue = new Zipline(hardwareMap,1, 1, .5, "pusher_left");
-        ziplineRed = new Zipline(hardwareMap, 0, 0, .5, "pusher_right");
-        ziplineBlue.setRetractedPosition();
-        ziplineRed.setRetractedPosition();
+        pusher_left = new Zipline(hardwareMap, 1,1, .35, "pusher_left"); //.5?
+        pusher_right = new Zipline(hardwareMap, 0,0, .7, "pusher_right"); //.5?
+        pusher_left.setRetractedPosition();
+        pusher_right.setRetractedPosition();
 
         colorSensor = hardwareMap.colorSensor.get("sensor_color");
         colorSensor.enableLed(false);
@@ -61,9 +62,15 @@ public class AutoOpBase extends OpMode {
 
     public void loop(){
         nAutoLoop++;
-        if (nAutoLoop == 10)
+        if (nAutoLoop == 10)  {
+
             nAutoLoop = 0;
-        if (currentState != null && !currentState.update()) return;
+
+            //Log.v("FTC7391", "update");
+        }
+
+        if (currentState != null && !currentState.update())
+            return;
         step++;
         Log.d("FTC7391", "Auto: " + "AutoOpBase loop:"+ "  step " + step);
         currentState = stepsList.get(step);
@@ -176,8 +183,8 @@ public class AutoOpBase extends OpMode {
 
         public boolean updateState(){
             counter++;
-            //if(counter%2 == 1)
-            if (counter%100 == 0)
+            if(counter%2 == 1)
+            //if (counter%100 == 0)
                 Log.d("FTC7391", "Auto: " + "WaitSate counter:" + counter  + " waitTime:" + waitTime + " gamepad1.a:" + gamepad1.a);
 
             return (counter == waitTime || gamepad1.a);
@@ -326,6 +333,38 @@ public class AutoOpBase extends OpMode {
 
 
 
+    protected class PusherState extends State {
+
+        private int isRed;
+        private int waitTime;
+        private int counter;
+
+        public PusherState(int _isRed){
+            isRed = _isRed;
+            waitTime = 40;
+            counter = 0;
+        }
+
+        public void init(){
+            super.init();
+            if(isRed==1) {
+                pusher_right.setDeployedPosition();
+                pusher_left.setRetractedPosition();
+            }
+            else {
+                pusher_left.setDeployedPosition();
+                pusher_right.setRetractedPosition();
+            }
+            stateStr = "PUSHER";
+        }
+
+        public boolean updateState(){
+            counter++;
+            return counter==waitTime;
+        }
+
+    }
+
     protected class StickState extends State {
 
         private int counter = 0;
@@ -392,7 +431,9 @@ public class AutoOpBase extends OpMode {
 
         }
 
-        public boolean updateState() { return Lift.isDone(); }
+        public boolean updateState() {
+            Log.v("FTC7391", "Lift DrivePosition1 State update");
+            return Lift.isDone(); }
 
     }
 
@@ -447,6 +488,7 @@ public class AutoOpBase extends OpMode {
 
 
     private void showTelemetry() {
+        Log.i("FTC7391", "showTelemetry");
         showTelemetryState();
         showTelemetryDrivetrain();
         showTelemetryLift();

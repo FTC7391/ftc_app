@@ -1,6 +1,8 @@
 package org.firstinspires.ftc.team7391;
 
 
+import android.util.Log;
+
 import com.qualcomm.robotcore.hardware.*;
 
 /**
@@ -17,16 +19,19 @@ public class DriveJoystick {
 
     private static Zipline pusher_left;
     private static Zipline pusher_right;
-    private Claw claw;
-
-    private DriveJoystick driveJoystick;
-    private LiftJoystick liftJoystick;
 
     private static int nTeleLoop = 0;
 
+
+    static double positionR  = 0;
+    static double positionL  = 1.0;
+    static boolean bNewCommand = true;
+
+
+
     public DriveJoystick(HardwareMap hardwareMap) {
-        pusher_left = new Zipline(hardwareMap, 1,1, .5, "pusher_left");
-        pusher_right = new Zipline(hardwareMap, 0,0, .5, "pusher_right");
+        pusher_left = new Zipline(hardwareMap, 1,1, .35, "pusher_left"); //.5?
+        pusher_right = new Zipline(hardwareMap, 0,0, .7, "pusher_right"); //.5?
         pusher_left.setRetractedPosition();
         pusher_right.setRetractedPosition();
     }
@@ -88,9 +93,9 @@ public class DriveJoystick {
         } else if (axialPower < 0) {
             DriveTrainTele.setTestMode(DriveTrainTele.TestModes.MODE_MOVE_BACKWARD, -axialPower, 0);
         } else if (rotatePower > 0) {
-            DriveTrainTele.setTestMode(DriveTrainTele.TestModes.MODE_ROTATE_RIGHT, -rotatePower, 0);
+            DriveTrainTele.setTestMode(DriveTrainTele.TestModes.MODE_ROTATE_RIGHT, rotatePower, 0);
         } else if (rotatePower < 0) {
-            DriveTrainTele.setTestMode(DriveTrainTele.TestModes.MODE_ROTATE_LEFT, rotatePower, 0);
+            DriveTrainTele.setTestMode(DriveTrainTele.TestModes.MODE_ROTATE_LEFT, -rotatePower, 0);
         } else {
             DriveTrainTele.setTestMode(DriveTrainTele.TestModes.MODE_STOP, 0, 0);
         }
@@ -108,13 +113,13 @@ public class DriveJoystick {
 
         }
 
-
-
-        if (gamepad1.dpad_right){
+        if (gamepad1.dpad_right) {
+            Log.i("FTC7391", "PUSHER: right: " + "DEPLOYED");
             pusher_right.setDeployedPosition();
             pusher_left.setDrivePosition();
         }
         if (gamepad1.dpad_left) {
+            Log.i("FTC7391", "PUSHER: left: " + "DEPLOYED");
             pusher_right.setDrivePosition();
             pusher_left.setDeployedPosition();
         }
@@ -122,6 +127,36 @@ public class DriveJoystick {
             pusher_right.setDrivePosition();
             pusher_left.setDrivePosition();
         }
+
+
+    /* ---   To test  pusher positions ----
+        if (gamepad1.dpad_down) {
+            bNewCommand = true;
+        }
+
+        if (gamepad1.dpad_right) {
+            if (bNewCommand) {
+                positionR = positionR + .05;
+                pusher_right.setPosition(positionR);
+                bNewCommand = false;
+                Log.i("FTC7391", "PUSHER: right: " + positionR);
+            }
+
+            //pusher_right.setDeployedPosition();
+            //pusher_left.setDrivePosition();
+        }
+        if (gamepad1.dpad_left) {
+            if (bNewCommand) {
+                positionL = positionL - .05;
+                pusher_left.setPosition(positionL);
+                bNewCommand = false;
+                Log.i("FTC7391", "PUSHER: left: " + positionL);
+            }
+            //pusher_right.setDrivePosition();
+            //pusher_left.setDeployedPosition();
+        }
+
+     */
 
 
     }
@@ -145,6 +180,6 @@ public class DriveJoystick {
             dScale = scaleArray[index];
         }
 
-        return dScale;
+        return -dScale;
     }
 }

@@ -43,7 +43,7 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
  * <p>
  * Enables control of the robot via the gamepad
  */
-@TeleOp(name = "LiftTest" + "", group = "Practice")
+//@TeleOp(name = "LiftTest" + "", group = "Practice")
 //@Disabled
 public class LiftTest extends OpMode {
 

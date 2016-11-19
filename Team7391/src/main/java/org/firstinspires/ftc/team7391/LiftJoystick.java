@@ -23,73 +23,96 @@ public class LiftJoystick {
         // Here add, the if statements
         // the scale input method is used to get the adjusted  power.
         liftPower =scaleInput(gamepad2.left_stick_y);
-        liftLowPower = scaleInput(gamepad2.right_stick_y);
+        liftLowPower = scaleInput(gamepad2.right_stick_y) / 8;
         if (liftPower == 0 && liftLowPower !=0) {
             liftPower = liftLowPower;
         }
 
        // Log.i("Lift", "gamepad2.left_stick_y" + gamepad2.left_stick_y + " liftPower"+ liftPower);
 
-        //if (nLoop == 0 || --nLoop == 0)
-        if (nLoop < 10 ) {
+         //Choose RUN_TO_POSITON or RUN_USING_ECODER mode
+        if (gamepad2.right_bumper) {
+            Lift.setTestMode(Lift.TestModes.MODE_STOP, 1); //runToPostion mode
+        } else if (gamepad2.left_bumper) {
+            Lift.runUsingEncoders();
+        }
 
-            //Choose RUN_TO_POSITON or RUN_USING_ECODER mode
-            if (gamepad2.right_bumper) {
-                Lift.setTestMode(Lift.TestModes.MODE_STOP, 1); //runToPostion mode
-                nLoop = 5;
-            } else if (gamepad2.left_bumper) {
-                Lift.runUsingEncoders();
-                nLoop = 5;
-            }
+        if (Lift.isModeRunToPosition()) {
 
-            if (Lift.isModeRunToPosition()) {
+            if (gamepad2.back)
+                Lift.stop();
+
+            if (gamepad2.dpad_up) {
                 if (gamepad2.y) {
-                    Lift.setTestMode(Lift.TestModes.MODE_GOTO_INIT, 1);
-                    nLoop = 5;
+                    //Lift.raiseBallPosition3();
+                    Lift.setMotorTargetPosition(3000, 3000, 500, -500);
                 }
                 if (gamepad2.b) {
-                    Lift.setTestMode(Lift.TestModes.MODE_GOTO_TEST_POSITION, 1);
-                    nLoop = 5;
-                }
-                if (gamepad2.x) {
-                    Lift.setTestMode(Lift.TestModes.MODE_GOTO_DRIVE_POSITION1, 1);
-                    nLoop = 5;
+                    //Lift.raiseBallPosition2();
+                    Lift.setMotorTargetPosition(3000, 3000, 500, -500);
                 }
                 if (gamepad2.a) {
-                    Lift.setTestMode(Lift.TestModes.MODE_STOP, 1);
-                    nLoop = 5;
+                    //Lift.raiseBallPosition1();
+                    Lift.setMotorTargetPosition(3000, 3000, 500, -500);
                 }
+                if (gamepad2.x) {
+                    //Lift.raiseBallPosition4();
+                    Lift.setMotorTargetPosition(3000, 3000, 500, -500);
+                }
+
+            }
+            else {
+
+                if (gamepad2.y) {
+                    //Lift.setTestMode(Lift.TestModes.MODE_GOTO_INIT, 1);
+                    Lift.setMotorTargetPosition(0, 0, 0, 0);
+                }
+                if (gamepad2.x) {
+                    //Lift.setTestMode(Lift.TestModes.MODE_GOTO_DRIVE_POSITION1, 1);
+                    Lift.setMotorTargetPosition(700, 900, 0, 0);
+                }
+                if (gamepad2.b) {
+                    //Lift.setTestMode(Lift.TestModes.MODE_GOTO_GRABPOSITION, 1);
+                    Lift.setMotorTargetPosition(850, 850, 550, -340);
+                }
+                if (gamepad2.a) {
+                    //Lift.driveBallPosition();
+                    Lift.setMotorTargetPosition(850, 850, 550, -120); //drivePosition2
+                }
+            }
+
+
+        }
+        else {
+            if (gamepad2.y) {
+                //DriveTrain.testRotateDegrees(positiveNumber);
+                Lift.setTestMode(Lift.TestModes.MODE_MOVE_HIGH, liftPower);
             } else {
-                if (gamepad2.y) {
-                    //DriveTrain.testRotateDegrees(positiveNumber);
-                    Lift.setTestMode(Lift.TestModes.MODE_MOVE_HIGH, liftPower);
-                } else {
-                    Lift.setTestMode(Lift.TestModes.MODE_MOVE_HIGH, 0);
-                }
-
-                if (gamepad2.b) {
-                    Lift.setTestMode(Lift.TestModes.MODE_MOVE_LOW, liftPower);
-                } else {
-                    Lift.setTestMode(Lift.TestModes.MODE_MOVE_LOW, 0);
-                }
-
-                if (gamepad2.a) {
-                    Lift.setTestMode(Lift.TestModes.MODE_MOVE_SHOULDER, liftPower);
-                } else {
-                    Lift.setTestMode(Lift.TestModes.MODE_MOVE_SHOULDER, 0);
-                }
-
-                if (gamepad2.x) {
-                    Lift.setTestMode(Lift.TestModes.MODE_MOVE_WRIST, liftPower);
-                } else {
-                    Lift.setTestMode(Lift.TestModes.MODE_MOVE_WRIST, 0);
-                }
-
+                Lift.setTestMode(Lift.TestModes.MODE_MOVE_HIGH, 0);
             }
+
+            if (gamepad2.b) {
+                Lift.setTestMode(Lift.TestModes.MODE_MOVE_LOW, liftPower);
+            } else {
+                Lift.setTestMode(Lift.TestModes.MODE_MOVE_LOW, 0);
+            }
+
+            if (gamepad2.a) {
+                Lift.setTestMode(Lift.TestModes.MODE_MOVE_SHOULDER, liftPower);
+            } else {
+                Lift.setTestMode(Lift.TestModes.MODE_MOVE_SHOULDER, 0);
+            }
+
+            if (gamepad2.x) {
+                Lift.setTestMode(Lift.TestModes.MODE_MOVE_WRIST, liftPower);
+            } else {
+                Lift.setTestMode(Lift.TestModes.MODE_MOVE_WRIST, 0);
+            }
+
         }
 
 
-//        if(gamepad2.dpad_up) {
+//        if(gamepad2.dpad_up) { //See ABOVE
 //            Lift.setTestMode(Lift.TestModes.MODE_MOVE_BOTH, liftPower);
 //        }
 
@@ -105,8 +128,9 @@ public class LiftJoystick {
             Claw.setDrivePosition();
         }
 
-
     }
+
+
 
 
     // throttle: left_stick_y ranges from -1 to 1, where -1 is full up, and
