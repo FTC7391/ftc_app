@@ -19,6 +19,8 @@ public class DriveJoystick {
 
     private static Zipline pusher_left;
     private static Zipline pusher_right;
+    private static ColorSensor colorRight;
+    private static ColorSensor colorLeft;
 
     private static int nTeleLoop = 0;
 
@@ -28,18 +30,22 @@ public class DriveJoystick {
     static boolean bNewCommand = true;
 
 
-
     public DriveJoystick(HardwareMap hardwareMap) {
         pusher_left = new Zipline(hardwareMap, 1,1, .35, "pusher_left"); //.5?
         pusher_right = new Zipline(hardwareMap, 0,0, .7, "pusher_right"); //.5?
         pusher_left.setRetractedPosition();
         pusher_right.setRetractedPosition();
+
+        colorRight = hardwareMap.colorSensor.get("color_right");
+        colorRight.enableLed(false);
+        colorLeft = hardwareMap.colorSensor.get("color_left");
+        colorLeft.enableLed(false);
     }
 
     public static void update(Gamepad gamepad1) {
 
-        axialPower = scaleInput(gamepad1.left_stick_y);
-        rotatePower = scaleInput(gamepad1.right_stick_x);
+        axialPower = scaleInput(gamepad1.left_stick_y)/2;
+        rotatePower = scaleInput(gamepad1.right_stick_x)/2;
 
 		/*
 		 * Gamepad 1
@@ -74,9 +80,12 @@ public class DriveJoystick {
         }
         */
 
-        if (++ nTeleLoop == 10) {
-            nTeleLoop = 0;
+        if (++ nTeleLoop%100 == 0) {
             //showTelemetry();
+            Log.d("FTC7391", "COLOR: " + "Clear(Alpha)" + "" + colorLeft.alpha() + "   " + colorRight.alpha());
+            Log.d("FTC7391", "COLOR: " + "Red         " + "" + colorLeft.red() + "   " + colorRight.red());
+            Log.d("FTC7391", "COLOR: " + "Green       " + "" + colorLeft.green() + "   " + colorRight.green());
+            Log.d("FTC7391", "COLOR: " + "Blue        " + "" + colorLeft.blue() + "   " + colorRight.blue());
         }
 
 		/*

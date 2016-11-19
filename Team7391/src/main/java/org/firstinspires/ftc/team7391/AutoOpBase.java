@@ -21,7 +21,8 @@ public class AutoOpBase extends OpMode {
     protected static Zipline pusher_left;
     protected static Zipline pusher_right;
 
-    private ColorSensor colorSensor;
+    private ColorSensor colorRight;
+    private ColorSensor colorLeft;
 
     private static int nAutoLoop = 0;
 
@@ -48,9 +49,10 @@ public class AutoOpBase extends OpMode {
         pusher_left.setRetractedPosition();
         pusher_right.setRetractedPosition();
 
-        colorSensor = hardwareMap.colorSensor.get("sensor_color");
-        colorSensor.enableLed(false);
-
+        colorRight = hardwareMap.colorSensor.get("color_right");
+        colorRight.enableLed(false);
+        colorLeft = hardwareMap.colorSensor.get("color_left");
+        colorLeft.enableLed(false);
 
         stateStr = "INIT";
         showTelemetry();
@@ -131,6 +133,38 @@ public class AutoOpBase extends OpMode {
 
     }
 
+    protected class ColorTestState extends State {
+
+        public ColorTestState(){
+
+        }
+
+        public void init() {
+            super.init();
+            telemetry.addData(TAG, "Color Test State ");
+            stateStr = "COLOR TEST";
+
+            showTelemetryStateInfo();
+        }
+
+        public boolean updateState(){
+
+            if (cnt%300 == 0) {
+                showTelemetryStateInfo();
+                Log.d("FTC7391", "COLOR: " + "Clear(Alpha)" + "" + colorLeft.alpha() + "   " + colorRight.alpha());
+                Log.d("FTC7391", "COLOR: " + "Red         " + "" + colorLeft.red() + "   " + colorRight.red());
+                Log.d("FTC7391", "COLOR: " + "Green       " + "" + colorLeft.green() + "   " + colorRight.green());
+                Log.d("FTC7391", "COLOR: " + "Blue        " + "" + colorLeft.blue() + "   " + colorRight.blue());
+            }
+
+            if (cnt%700 == 0)
+                return true;
+            //return  gamepad1.a;
+            return  false;
+        }
+
+    }
+
     protected class ColorState extends State {
 
         public ColorState(){
@@ -149,10 +183,10 @@ public class AutoOpBase extends OpMode {
 
             if (cnt%300 == 0) {
                 showTelemetryStateInfo();
-                Log.d("FTC7391", "COLOR: " + "Clear(Alpha)" + "" + colorSensor.alpha());
-                Log.d("FTC7391", "COLOR: " + "Red         " + "" + colorSensor.red());
-                Log.d("FTC7391", "COLOR: " + "Green       " + "" + colorSensor.green());
-                Log.d("FTC7391", "COLOR: " + "Blue        " + "" + colorSensor.blue());
+                Log.d("FTC7391", "COLOR: " + "Clear(Alpha)" + "" + colorLeft.alpha() + "   " + colorRight.alpha());
+                Log.d("FTC7391", "COLOR: " + "Red         " + "" + colorLeft.red() + "   " + colorRight.red());
+                Log.d("FTC7391", "COLOR: " + "Green       " + "" + colorLeft.green() + "   " + colorRight.green());
+                Log.d("FTC7391", "COLOR: " + "Blue        " + "" + colorLeft.blue() + "   " + colorRight.blue());
             }
 
             if (cnt%700 == 0)

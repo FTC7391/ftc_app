@@ -21,7 +21,10 @@
         <Servo name="pusher_right" port="2" />
     </ServoController>
     <DeviceInterfaceModule name="Device Interface Module" serialNumber="AL00VF3K">
-        <ColorSensor name="sensor_color" port="0" />
+        <ColorSensor name="color_right" port="0" />
+        <ColorSensor name="color_left" port="1" />
+        <ColorSensor name="color_right_bottom" port="2" />
+        <ColorSensor name="color_left_bottom" port="3" />
     </DeviceInterfaceModule>
 
     <!--<MotorController name="Motor Controller Left" serialNumber="AL00VCAK">-->

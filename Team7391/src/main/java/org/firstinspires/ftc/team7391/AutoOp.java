@@ -27,7 +27,7 @@ public abstract class AutoOp extends AutoOpBase
        //stepsList.add(new DrivePosition1State());
         //stepsList.add(new WaitState(0));
         //stepsList.add(new DrivePosition2State());
-        stepsList.add(new ColorState());
+        stepsList.add(new ColorTestState());
         //stepsList.add(new WaitState(0));
         //stepsList.add(new MoveState(-85, 1));
         //stepsList.add(new WaitState(0));
