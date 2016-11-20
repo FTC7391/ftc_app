@@ -101,7 +101,7 @@ public class DriveTrainTele extends DriveTrain{
 
     public static void rotate(double power) {
         //Positive power, rotate to the left, frontRight & backRight postive
-        setPowerOfMotors(power, -power);
+        setPowerOfMotors(-power, power);
     }
 
     /*

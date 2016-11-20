@@ -204,7 +204,7 @@ public class AutoOpBase extends OpMode {
 
         public WaitState(int seconds)
         {
-            waitTime = (int)(seconds * 40);
+            waitTime = (int)(seconds * 160);
             Log.i("FTC7391", "Auto: " + "WaitTime constructor " + "waitTime:" + waitTime);
         }
 
@@ -381,7 +381,7 @@ public class AutoOpBase extends OpMode {
 
         public void init(){
             super.init();
-            if(isRed==1) {
+            if(isRed==-1) {
                 pusher_right.setDeployedPosition();
                 pusher_left.setRetractedPosition();
             }

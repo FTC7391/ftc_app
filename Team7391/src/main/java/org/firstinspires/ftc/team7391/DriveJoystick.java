@@ -80,7 +80,7 @@ public class DriveJoystick {
         }
         */
 
-        if (++ nTeleLoop%100 == 0) {
+        if (++ nTeleLoop%1000 == 0) {
             //showTelemetry();
             Log.d("FTC7391", "COLOR: " + "Clear(Alpha)" + "" + colorLeft.alpha() + "   " + colorRight.alpha());
             Log.d("FTC7391", "COLOR: " + "Red         " + "" + colorLeft.red() + "   " + colorRight.red());

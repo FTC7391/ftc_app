@@ -96,19 +96,19 @@ public class DriveTrainAuto extends DriveTrain{
         // for degrees> 0, get 235deg when want 360deg
         // for degress< 0, get -190deg when want -360deg
         if (degrees > 0)
-           ticks = (int) (degrees * TICKS_PER_DEGREE * 1.825);
+           ticks = (int) (degrees * TICKS_PER_DEGREE);
         else {
             //ticks = (int) (degrees * TICKS_PER_DEGREE * 1.5425);
-            ticks = (int) (degrees * TICKS_PER_DEGREE * 1.825);
+            ticks = (int) (degrees * TICKS_PER_DEGREE);
         }
         setMotorTargetPosition(ticks, -ticks, ticks, -ticks);
 
         if (degrees > 0) {
             //Rotate to the left,frontRight & backRight postive
-            setPowerOfMotors(power, -power);
+            setPowerOfMotors(-power, power);
         } else if (degrees < 0)
             //Rotate to the right,frontLeft & backLeft postive
-            setPowerOfMotors(-power, power);
+            setPowerOfMotors(power, -power);
 //        } else {
 //            //setPowerOfMotors(0.0, 0.0, 0.0, 0.0);
 //        }
