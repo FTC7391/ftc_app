@@ -16,16 +16,16 @@
         <!--<Servo name="claw_left" port="1" />-->
         <!--<Servo name="claw_right" port="2" />-->
     <!--</ServoController>-->
-    <ServoController name="Servo Controller 2" serialNumber="AL026GCV">
-        <Servo name="pusher_left" port="1" />
-        <Servo name="pusher_right" port="2" />
-    </ServoController>
-    <DeviceInterfaceModule name="Device Interface Module" serialNumber="AL00VF3K">
-        <ColorSensor name="color_right" port="0" />
-        <ColorSensor name="color_left" port="1" />
-        <ColorSensor name="color_right_bottom" port="2" />
-        <ColorSensor name="color_left_bottom" port="3" />
-    </DeviceInterfaceModule>
+    <!--<ServoController name="Servo Controller 2" serialNumber="AL026GCV">-->
+        <!--<Servo name="pusher_left" port="1" />-->
+        <!--<Servo name="pusher_right" port="2" />-->
+    <!--</ServoController>-->
+    <!--<DeviceInterfaceModule name="Device Interface Module" serialNumber="AL00VF3K">-->
+        <!--<ColorSensor name="color_right" port="0" />-->
+        <!--<ColorSensor name="color_left" port="1" />-->
+        <!--<ColorSensor name="color_right_bottom" port="2" />-->
+        <!--<ColorSensor name="color_left_bottom" port="3" />-->
+    <!--</DeviceInterfaceModule>-->
 
     <!--<MotorController name="Motor Controller Left" serialNumber="AL00VCAK">-->
     <!--<Motor name="motor_front_left" port="1" />-->
