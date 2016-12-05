@@ -5,6 +5,9 @@ import android.util.Log;
 import java.util.ArrayList;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.ColorSensor;
+import com.qualcomm.robotcore.hardware.I2cAddressableDevice;
+import com.qualcomm.robotcore.hardware.I2cAddr;
+
 
 /**
  * Created by Allana Evans on 9/26/15.
@@ -39,8 +42,8 @@ public class AutoOpBase extends OpMode {
         Log.i("FTC7391", "Auto: " + "AutoOpBase init:"+ "  step " + step);
 
         DriveTrainAuto.init(hardwareMap);
-        Lift.init(hardwareMap);
-        Claw.init(hardwareMap);
+        //Lift.init(hardwareMap);
+        //Claw.init(hardwareMap);
         //Lift.resetEncoders();
 
         //public Zipline(HardwareMap hardwareMap, double retracted, double drive, double deploy, String name)
@@ -49,10 +52,16 @@ public class AutoOpBase extends OpMode {
         pusher_left.setRetractedPosition();
         pusher_right.setRetractedPosition();
 
-        colorRight = hardwareMap.colorSensor.get("color_right");
+        colorRight = hardwareMap.colorSensor.get("color_right"); // 0X38 Default
+       // colorRight.setI2cAddress(I2cAddr.create8bit(0X3C));
         colorRight.enableLed(false);
         colorLeft = hardwareMap.colorSensor.get("color_left");
+       // colorLeft.setI2cAddress(I2cAddr.create8bit(0X38));
         colorLeft.enableLed(false);
+
+        Log.i("FTC7391", "Auto: " + " Color Left Address: " + colorLeft.getI2cAddress().get8Bit());
+        Log.i("FTC7391", "Auto: " + " Color Right Address: " + colorRight.getI2cAddress().get8Bit());
+
 
         stateStr = "INIT";
         showTelemetry();
@@ -89,7 +98,7 @@ public class AutoOpBase extends OpMode {
         protected int cnt = 0;
 
         public void init(){
-            Lift.runToPosition();
+//            Lift.runToPosition();
             //perform state action
         }
 
@@ -157,10 +166,10 @@ public class AutoOpBase extends OpMode {
                 Log.d("FTC7391", "COLOR: " + "Blue        " + "" + colorLeft.blue() + "   " + colorRight.blue());
             }
 
-            if (cnt%700 == 0)
-                return true;
-            //return  gamepad1.a;
-            return  false;
+//            if (cnt%700 == 0)
+//                return true;
+            return  gamepad1.a;
+            //return false;
         }
 
     }
@@ -523,9 +532,9 @@ public class AutoOpBase extends OpMode {
 
     private void showTelemetry() {
         Log.i("FTC7391", "showTelemetry");
-        showTelemetryState();
-        showTelemetryDrivetrain();
-        showTelemetryLift();
+        //showTelemetryState();
+        //showTelemetryDrivetrain();
+        //showTelemetryLift();
       }
 
     private void showTelemetryStateInfo() {
