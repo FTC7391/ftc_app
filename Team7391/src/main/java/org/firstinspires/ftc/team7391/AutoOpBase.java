@@ -24,8 +24,10 @@ public class AutoOpBase extends OpMode {
     protected static Zipline pusher_left;
     protected static Zipline pusher_right;
 
+    private ColorSensor colorSensor;
     private ColorSensor colorRight;
     private ColorSensor colorLeft;
+    private int lastColor; //RED = 1, BLUE = -1; need to change to enum
 
     private static int nAutoLoop = 0;
 
@@ -174,14 +176,17 @@ public class AutoOpBase extends OpMode {
 
     }
 
+    protected int getLastColor() { return lastColor; }
+
     protected class ColorState extends State {
 
         public ColorState(int isRed){
             if(isRed == 1){
-                //red value >blue value is desired
+                colorSensor = colorLeft;
             }
-            else if(isRed == -1){
-                //red value <blue value is desired
+            else //if(isRed == -1)
+            {
+                colorSensor = colorRight;
             }
         }
 
@@ -189,21 +194,39 @@ public class AutoOpBase extends OpMode {
             super.init();
             telemetry.addData(TAG, "Color State ");
             stateStr = "COLOR";
+            lastColor = 0;
 
             showTelemetryStateInfo();
         }
 
         public boolean updateState(){
 
-            if (cnt%300 == 0) {
-                showTelemetryStateInfo();
-                Log.d("FTC7391", "COLOR: " + "Clear(Alpha)" + "" + colorLeft.alpha() + "   " + colorRight.alpha());
-                Log.d("FTC7391", "COLOR: " + "Red         " + "" + colorLeft.red() + "   " + colorRight.red());
-                Log.d("FTC7391", "COLOR: " + "Green       " + "" + colorLeft.green() + "   " + colorRight.green());
-                Log.d("FTC7391", "COLOR: " + "Blue        " + "" + colorLeft.blue() + "   " + colorRight.blue());
+            showTelemetryStateInfo();
+            int alpha = colorSensor.alpha();
+            int red = colorSensor.red();
+            int green = colorSensor.green();
+            int blue = colorSensor.blue();
+
+            Log.d("FTC7391", "COLOR: " + "Clear(Alpha)" + "" + alpha);
+            Log.d("FTC7391", "COLOR: " + "Red         " + "" + red);
+            Log.d("FTC7391", "COLOR: " + "Green       " + "" + green);
+            Log.d("FTC7391", "COLOR: " + "Blue        " + "" + blue);
+
+            if(red>blue){
+                lastColor = 1;
+                Log.d("FTC7391", "COLOR: RED");
+            }
+            else if(blue>red){
+                lastColor = -1;
+                Log.d("FTC7391", "COLOR: BLUE");
+            }
+            else{
+                lastColor = 0;
+                Log.d("FTC7391", "COLOR: UNKNOWN");
             }
 
-            if (cnt%700 == 0)
+            //if(lastColor!=0 || cnt%100 == 0)
+            if(cnt%700 == 0)
                 return true;
             //return  gamepad1.a;
             return  false;
