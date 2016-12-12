@@ -35,17 +35,19 @@ import com.qualcomm.hardware.modernrobotics.ModernRoboticsUsbDeviceInterfaceModu
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DeviceInterfaceModule;
 import com.qualcomm.robotcore.hardware.I2cAddr;
 import com.qualcomm.robotcore.util.RobotLog;
 import com.qualcomm.robotcore.util.TypeConversion;
+
 
 import java.util.concurrent.locks.Lock;
 
 /**
  * An example of a linear op mode that shows how to change the I2C address.
  */
-@TeleOp(name = "Concept: I2c Address Change", group = "Utility")
+@TeleOp(name = "Utility: I2c Address Change", group = "Utility")
 //@Disabled
 public class UtilityI2cAddressChange extends LinearOpMode {
 
@@ -104,7 +106,8 @@ public class UtilityI2cAddressChange extends LinearOpMode {
   public void runOpMode() {
 
     // set up the hardware devices we are going to use
-    dim = hardwareMap.deviceInterfaceModule.get(deviceName);
+    //dim = hardwareMap.deviceInterfaceModule.get(deviceName);
+    dim = (DeviceInterfaceModule)hardwareMap.colorSensor.get(deviceName);
 
     readCache = dim.getI2cReadCache(port);
     readLock = dim.getI2cReadCacheLock(port);

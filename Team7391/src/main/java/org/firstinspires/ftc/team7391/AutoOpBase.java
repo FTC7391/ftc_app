@@ -53,10 +53,10 @@ public class AutoOpBase extends OpMode {
         pusher_right.setRetractedPosition();
 
         colorRight = hardwareMap.colorSensor.get("color_right"); // 0X38 Default
-       // colorRight.setI2cAddress(I2cAddr.create8bit(0X3C));
+        colorRight.setI2cAddress(I2cAddr.create8bit(0X3C));
         colorRight.enableLed(false);
         colorLeft = hardwareMap.colorSensor.get("color_left");
-       // colorLeft.setI2cAddress(I2cAddr.create8bit(0X38));
+        colorLeft.setI2cAddress(I2cAddr.create8bit(0X4C));
         colorLeft.enableLed(false);
 
         Log.i("FTC7391", "Auto: " + " Color Left Address: " + colorLeft.getI2cAddress().get8Bit());
@@ -176,8 +176,13 @@ public class AutoOpBase extends OpMode {
 
     protected class ColorState extends State {
 
-        public ColorState(){
-
+        public ColorState(int isRed){
+            if(isRed == 1){
+                //red value >blue value is desired
+            }
+            else if(isRed == -1){
+                //red value <blue value is desired
+            }
         }
 
         public void init() {
