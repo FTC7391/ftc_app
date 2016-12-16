@@ -27,7 +27,7 @@ public class AutoOpBase extends OpMode {
     private ColorSensor colorSensor;
     private ColorSensor colorRight;
     private ColorSensor colorLeft;
-    private int lastColor; //RED = 1, BLUE = -1; need to change to enum
+    private int isLastColorRed; //RED = 1, BLUE = -1; need to change to enum
 
     private static int nAutoLoop = 0;
 
@@ -176,7 +176,7 @@ public class AutoOpBase extends OpMode {
 
     }
 
-    protected int getLastColor() { return lastColor; }
+    protected int getlastColor() { return isLastColorRed; }
 
     protected class ColorState extends State {
 
@@ -194,7 +194,7 @@ public class AutoOpBase extends OpMode {
             super.init();
             telemetry.addData(TAG, "Color State ");
             stateStr = "COLOR";
-            lastColor = 0;
+            isLastColorRed = 0;
 
             showTelemetryStateInfo();
         }
@@ -213,19 +213,19 @@ public class AutoOpBase extends OpMode {
             Log.d("FTC7391", "COLOR: " + "Blue        " + "" + blue);
 
             if(red>blue){
-                lastColor = 1;
+                isLastColorRed = 1;
                 Log.d("FTC7391", "COLOR: RED");
             }
             else if(blue>red){
-                lastColor = -1;
+                isLastColorRed = -1;
                 Log.d("FTC7391", "COLOR: BLUE");
             }
             else{
-                lastColor = 0;
+                isLastColorRed = 0;
                 Log.d("FTC7391", "COLOR: UNKNOWN");
             }
 
-            //if(lastColor!=0 || cnt%100 == 0)
+            //if(isLastColorRed!=0 || cnt%100 == 0)
             if(cnt%700 == 0)
                 return true;
             //return  gamepad1.a;
@@ -233,7 +233,85 @@ public class AutoOpBase extends OpMode {
         }
 
     }
+    
+    protected class MoveToColor extends State {
 
+        private double inches;
+        private double power;
+        private boolean isMoving;
+        private int isRed;
+        
+        public MoveToColor(int isRed, double inches, double power){
+            this.isRed = isRed;
+            this.inches = inches;
+            this.power = power;
+            isMoving = false;
+            
+            
+            if(isRed == 1){
+                colorSensor = colorLeft;
+            }
+            else //if(isRed == -1)
+            {
+                colorSensor = colorRight;
+            }
+        }
+
+        public void init() {
+            super.init();
+            telemetry.addData(TAG, "MoveToColor State ");
+            stateStr = "MOVE_TO_COLOR";
+            isLastColorRed = 0;
+
+            showTelemetryStateInfo();
+        }
+
+        public boolean updateState(){
+            if(!isMoving){
+                int alpha = colorSensor.alpha();
+                int red = colorSensor.red();
+                int green = colorSensor.green();
+                int blue = colorSensor.blue();
+
+                Log.d("FTC7391", "COLOR: " + "Clear(Alpha)" + "" + alpha);
+                Log.d("FTC7391", "COLOR: " + "Red         " + "" + red);
+                Log.d("FTC7391", "COLOR: " + "Green       " + "" + green);
+                Log.d("FTC7391", "COLOR: " + "Blue        " + "" + blue);
+
+                //might need to add filter or read value more than once
+                if(red>blue){
+                    isLastColorRed = 1;
+                    Log.d("FTC7391", "COLOR: RED");
+                }
+                else if(blue>red){
+                    isLastColorRed = -1;
+                    Log.d("FTC7391", "COLOR: BLUE");
+                }
+                else{
+                    isLastColorRed = 0;
+                    Log.d("FTC7391", "COLOR: UNKNOWN");
+                }
+
+                showTelemetryStateInfo();
+
+                if(isLastColorRed == isRed){  //check if color is our alliance color
+                    return true;
+                }
+                else{  //move to other half of beacon
+                    Log.i("FTC7391", "Auto: " + "MoveState init  inches:" + inches + " power:" + power );
+                    DriveTrainAuto.moveInches(inches, power);
+                    isMoving = true;
+                    return false;
+                }
+            }
+            else{ //isMoving == true
+                return DriveTrainAuto.isDone();
+            }
+
+        }
+
+    }
+    
     protected class WaitState extends State {
 
         private int counter = 0;
