@@ -64,16 +64,16 @@ public class LiftJoystick {
             else {
 
                 if (gamepad2.y) {
-                    //Lift.setTestMode(Lift.TestModes.MODE_GOTO_INIT, 1);
-                    Lift.setMotorTargetPosition(0, 0, 0, 0);
+                    Lift.setTestMode(Lift.TestModes.MODE_GOTO_INIT, 1);
+                    //Lift.setMotorTargetPosition(0, 0, 0, 0);
                 }
                 if (gamepad2.x) {
-                    //Lift.setTestMode(Lift.TestModes.MODE_GOTO_DRIVE_POSITION1, 1);
-                    Lift.setMotorTargetPosition(700, 900, 0, 0);
+                    Lift.setTestMode(Lift.TestModes.MODE_GOTO_DRIVE_POSITION1, 1);
+                    //Lift.setMotorTargetPosition(700, 900, 0, 0);
                 }
                 if (gamepad2.b) {
-                    //Lift.setTestMode(Lift.TestModes.MODE_GOTO_GRABPOSITION, 1);
-                    Lift.setMotorTargetPosition(850, 850, 550, -340);
+                    Lift.setTestMode(Lift.TestModes.MODE_GOTO_GRABPOSITION, 1);
+                    //Lift.setMotorTargetPosition(850, 850, 550, -340);
                 }
                 if (gamepad2.a) {
                     //Lift.driveBallPosition();

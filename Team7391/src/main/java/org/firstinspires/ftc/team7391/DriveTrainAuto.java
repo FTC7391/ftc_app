@@ -132,12 +132,12 @@ public class DriveTrainAuto extends DriveTrain{
         Log.v("FTC7391", "Auto: " + "DriveTrain " + "         motorR " + motorRight.isBusy() + " " + motorRight.getCurrentPosition() + " " + motorRight.getTargetPosition() +
               "        motorL " + motorLeft.isBusy() + " " + motorLeft.getCurrentPosition() + " " + motorLeft.getTargetPosition());
 
-        if (!motorRight.isBusy() && Math.abs(motorRight.getCurrentPosition() - motorRight.getTargetPosition()) < MOTOR_POSITION_THESHOLD ){
+        if (/*!motorRight.isBusy() &&*/ Math.abs(motorRight.getCurrentPosition() - motorRight.getTargetPosition()) < MOTOR_POSITION_THESHOLD ){
         //if ( Math.abs(motorRight.getCurrentPosition() - motorRight.getTargetPosition()) < MOTOR_POSITION_THESHOLD ){
               //motorRight.setPower(0);
                 frDone = true;
          }
-        if (!motorLeft.isBusy() && Math.abs(motorLeft.getCurrentPosition() - motorLeft.getTargetPosition()) < MOTOR_POSITION_THESHOLD ){
+        if (/*!motorLeft.isBusy() &&*/ Math.abs(motorLeft.getCurrentPosition() - motorLeft.getTargetPosition()) < MOTOR_POSITION_THESHOLD ){
         //if ( Math.abs(motorLeft.getCurrentPosition() - motorLeft.getTargetPosition()) < MOTOR_POSITION_THESHOLD ){
                 //motorLeft.setPower(0);
                 flDone = true;

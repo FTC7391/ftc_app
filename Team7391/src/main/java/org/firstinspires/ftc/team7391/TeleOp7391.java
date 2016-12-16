@@ -80,11 +80,11 @@ public class TeleOp7391 extends OpMode {
 	@Override
 	public void init() {
 		DriveTrainTele.init(hardwareMap);
-		Lift.init(hardwareMap);
-		Lift.runUsingEncoders();
-		Claw.init(hardwareMap);
+		//Lift.init(hardwareMap);
+		//Lift.runUsingEncoders();
+		//Claw.init(hardwareMap);
 		driveJoystick = new DriveJoystick(hardwareMap);
-		liftJoystick = new LiftJoystick();
+		//liftJoystick = new LiftJoystick();
 	}
 
 	/*
@@ -100,7 +100,7 @@ public class TeleOp7391 extends OpMode {
 			showTelemetry();
 		}
 		DriveJoystick.update(gamepad1);
-		LiftJoystick.update(gamepad2);
+		//LiftJoystick.update(gamepad2);
 
 
 	}
@@ -119,7 +119,7 @@ public class TeleOp7391 extends OpMode {
 	private void showTelemetry(){
 		showTelemetryPower();
 		showTelemetryDrivetrain();
-		showTelemetryLift();
+		//showTelemetryLift();
 
 	}
 	private void showTelemetryPower() {

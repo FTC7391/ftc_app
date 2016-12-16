@@ -4,6 +4,7 @@ import android.util.Log;
 
 import java.util.ArrayList;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
+import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.I2cAddressableDevice;
 import com.qualcomm.robotcore.hardware.I2cAddr;
@@ -36,6 +37,24 @@ public class AutoOpBase extends OpMode {
 //    }
 //
 
+    //If LinearOpMode need this
+//    public void runOpMode() {
+//        team7391_init();
+//        waitForStart();
+//
+//        while(opModeIsActive()) {
+//            loop();
+//            idle();
+//        }
+//        stop();
+//    }
+//
+    //Else need this for OpMode (not LinearOpMode)
+//    public void init() {
+//        team7391_init();
+//    }
+//
+    //public void team7391_init(){
     public void init(){
         //telemetry.addData(TAG, "AutoOp Init");
         currentState = null;
