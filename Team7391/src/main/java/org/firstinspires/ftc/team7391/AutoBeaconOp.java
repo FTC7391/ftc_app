@@ -20,7 +20,23 @@ public abstract class AutoBeaconOp extends AutoOpBase
 
 
         stepsList.add(new WaitState(0));
-        stepsList.add(new MoveToColor(isRed, 5.5, 0.4));
+        stepsList.add(new MoveState(8.6, 0.4));
+        stepsList.add(new WaitState(0));
+        stepsList.add(new RotateState(-40*isRed,0.5));
+        stepsList.add(new WaitState(0));
+        stepsList.add(new MoveState(77.77, 0.4));
+        stepsList.add(new WaitState(0));
+        stepsList.add(new RotateState(31*isRed,0.5));
+        stepsList.add(new WaitState(0));
+        stepsList.add(new MoveState(-16.37, 0.4));
+        stepsList.add(new WaitState(0));
+        stepsList.add(new MoveToColor(isRed, -5.5, 0.4));
+        stepsList.add(new MoveState(-3, 0.4));
+        stepsList.add(new WaitState(0));
+        stepsList.add(new PusherState(isRed));
+        stepsList.add(new WaitState(0));
+        stepsList.add(new MoveState(-5, 0.4));
+
         //stepsList.add(new StickDrivePositionState());
         stepsList.add(new WaitState(0));
         //stepsList.add(new DrivePosition1State());
