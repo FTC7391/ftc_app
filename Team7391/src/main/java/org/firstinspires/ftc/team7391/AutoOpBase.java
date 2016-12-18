@@ -29,6 +29,7 @@ public class AutoOpBase extends OpMode {
     private ColorSensor colorRight;
     private ColorSensor colorLeft;
     private int isLastColorRed; //RED = 1, BLUE = -1; need to change to enum
+    protected static double distMovedToColor;
 
     private static int nAutoLoop = 0;
 
@@ -281,6 +282,7 @@ public class AutoOpBase extends OpMode {
             telemetry.addData(TAG, "MoveToColor State ");
             stateStr = "MOVE_TO_COLOR";
             isLastColorRed = 0;
+            distMovedToColor = 0;
 
             showTelemetryStateInfo();
         }
@@ -320,6 +322,7 @@ public class AutoOpBase extends OpMode {
                     Log.i("FTC7391", "Auto: " + "MoveState init  inches:" + inches + " power:" + power );
                     DriveTrainAuto.moveInches(inches, power);
                     isMoving = true;
+                    distMovedToColor = inches;
                     return false;
                 }
             }
@@ -413,10 +416,10 @@ public class AutoOpBase extends OpMode {
 
     protected class RotateState extends State {
 
-        protected int degrees;
+        protected double degrees;
         protected double power;
 
-        public RotateState(int d, double p){
+        public RotateState(double d, double p){
             degrees = d;
             power = p;
             stateStr = "ROTATE" + d + "degrees";
@@ -427,7 +430,7 @@ public class AutoOpBase extends OpMode {
         public void init (){
             super.init();
             DriveTrainAuto.rotateDegrees(degrees, power);
-            dbgWriter.printf("Rotate Degrees %d \n", degrees);
+            dbgWriter.printf("Rotate Degrees %f \n", degrees);
             telemetry.addData(TAG, "Rotate Degrees " + degrees);
             showTelemetryStateInfo();
         }
@@ -504,23 +507,34 @@ public class AutoOpBase extends OpMode {
     protected class PusherState extends State {
 
         private int isRed;
-        private int waitTime;
+        private long waitTime;
         private int counter;
+        private long finalTime;
+        private boolean toBeDeployed;
 
-        public PusherState(int _isRed){
-            isRed = _isRed;
-            waitTime = 40;
+        public PusherState(int isRed, boolean toBeDeployed){
+            this.isRed = isRed;
+            this.toBeDeployed = toBeDeployed;
+
+            waitTime = 250;  //milliseconds
             counter = 0;
+            finalTime = 0;
         }
 
         public void init(){
             super.init();
-            if(isRed==-1) {
-                pusher_right.setDeployedPosition();
-                pusher_left.setRetractedPosition();
+            finalTime = System.currentTimeMillis() + waitTime;
+            if(toBeDeployed) {
+                if (isRed == -1) {
+                    pusher_right.setDeployedPosition();
+                    pusher_left.setRetractedPosition();
+                } else {
+                    pusher_left.setDeployedPosition();
+                    pusher_right.setRetractedPosition();
+                }
             }
-            else {
-                pusher_left.setDeployedPosition();
+            else{
+                pusher_left.setRetractedPosition();
                 pusher_right.setRetractedPosition();
             }
             stateStr = "PUSHER";

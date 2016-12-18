@@ -31,11 +31,13 @@ public abstract class AutoBeaconOp extends AutoOpBase
         stepsList.add(new MoveState(-16.37, 0.4));
         stepsList.add(new WaitState(0));
         stepsList.add(new MoveToColor(isRed, -5.5, 0.4));
-        stepsList.add(new MoveState(-3, 0.4));
-        stepsList.add(new WaitState(0));
-        stepsList.add(new PusherState(isRed));
-        stepsList.add(new WaitState(0));
-        stepsList.add(new MoveState(-5, 0.4));
+        stepsList.add(new MoveState(-3, 0.4));  //move past first button before deploying pusher
+        //stepsList.add(new WaitState(0));
+        stepsList.add(new PusherState(isRed, true));   //true = deploy
+        //stepsList.add(new WaitState(0));
+        stepsList.add(new MoveState(-5, 0.2));
+        //stepsList.add(new WaitState(0));
+        stepsList.add(new PusherState(isRed, false));   //false = retract
 
         //stepsList.add(new StickDrivePositionState());
         stepsList.add(new WaitState(0));
