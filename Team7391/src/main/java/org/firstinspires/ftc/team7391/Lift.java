@@ -13,13 +13,14 @@ public class Lift {
 
     class Stage{
         private DcMotor motor;
-        private final int MAX_TICKS;
+        private int MAX_TICKS;
         private int MIN_TICKS;
         private double MAX_POWER = 1.0;
 
     }
 
-    private static Stage[] stages;
+    private static Stage[] stages = new Stage[5];
+    private static final int NUM_STAGES = 5;
 
     public static DcMotor liftHigh;
     public static DcMotor liftLow;
@@ -89,7 +90,7 @@ public class Lift {
         initialized = true;
 
         for(int i=0; i<NUM_STAGES; i++){
-            
+            //stages[i] = new Stage();
         }
 
         liftHigh = hardwareMap.dcMotor.get("motor_high");
