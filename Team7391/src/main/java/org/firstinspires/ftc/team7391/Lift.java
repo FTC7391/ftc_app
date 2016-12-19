@@ -11,6 +11,15 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
  */
 public class Lift {
 
+    class Stage{
+        private DcMotor motor;
+        private final int MAX_TICKS;
+        private int MIN_TICKS;
+        private double MAX_POWER = 1.0;
+
+    }
+
+    private static Stage[] stages;
 
     public static DcMotor liftHigh;
     public static DcMotor liftLow;
@@ -78,6 +87,10 @@ public class Lift {
         }
 
         initialized = true;
+
+        for(int i=0; i<NUM_STAGES; i++){
+            
+        }
 
         liftHigh = hardwareMap.dcMotor.get("motor_high");
         liftLow = hardwareMap.dcMotor.get("motor_low");
@@ -539,7 +552,5 @@ public class Lift {
         Log.i("FTC7391", "Lift: " + "menBasketPosition 8035, 6164, 4444, 1");
         setMotorTargetPosition(8035, 6164, 4444, 1);
     }
-
-
 
 }
