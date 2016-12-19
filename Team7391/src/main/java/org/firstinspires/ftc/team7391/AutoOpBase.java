@@ -596,7 +596,7 @@ public class AutoOpBase extends OpMode {
             this.isRed = isRed;
             this.toBeDeployed = toBeDeployed;
 
-            waitTime = 250;  //milliseconds
+            waitTime = 1000;  //milliseconds
             counter = 0;
             finalTime = 0;
         }
@@ -756,7 +756,7 @@ public class AutoOpBase extends OpMode {
         private double power;
 
         public MoveToSecondState(){
-            inches = -36.5+distMovedToColor;
+            inches = -34.5+distMovedToColor;
             power = 0.4;
             Log.i("FTC7391", "Auto: " + "MoveState constructor  inches:" + inches + " power:" + power );
         }

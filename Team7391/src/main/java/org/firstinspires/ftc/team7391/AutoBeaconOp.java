@@ -28,9 +28,9 @@ public abstract class AutoBeaconOp extends AutoOpBase
         stepsList.add(new WaitState(0));
         stepsList.add(new RotateState(31*isRed,0.5));
         stepsList.add(new WaitState(0));
-        stepsList.add(new MoveState(31.5, 0.4));
+        stepsList.add(new MoveState(26, 0.4));
         stepsList.add(new WaitState(0));
-        stepsList.add(new MoveToColor(isRed, -5.5, 0.4));
+        stepsList.add(new MoveToColor(isRed, 5.5, 0.4));
         stepsList.add(new MoveState(-3, 0.4));  //move past first button before deploying pusher
         //stepsList.add(new WaitState(0));
         stepsList.add(new PusherState(isRed, true));   //true = deploy
