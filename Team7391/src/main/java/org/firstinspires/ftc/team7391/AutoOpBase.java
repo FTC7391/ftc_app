@@ -668,6 +668,36 @@ public class AutoOpBase extends OpMode {
         public boolean updateState(){ return Lift.isDone(); }
     }
 
+    protected class MoveToSecondState extends State {
+
+
+
+        private double inches;
+        private double power;
+
+        public MoveToSecondState(){
+            inches = -36.5+distMovedToColor;
+            power = 0.4;
+            Log.i("FTC7391", "Auto: " + "MoveState constructor  inches:" + inches + " power:" + power );
+        }
+
+        public void init() {
+            super.init();
+
+            Log.i("FTC7391", "Auto: " + "MoveState init  inches:" + inches + " power:" + power );
+            DriveTrainAuto.moveInches(inches, power);
+            dbgWriter.printf("Move Inches %.2f \n", inches);
+            telemetry.addData(TAG, "Move Inches " + inches);
+            stateStr = "MOVE INCHES" + inches;
+            showTelemetryStateInfo();
+        }
+
+        public boolean updateState(){
+            return DriveTrainAuto.isDone();
+        }
+
+    }
+
 
     private void showTelemetry() {
         Log.i("FTC7391", "showTelemetry");
