@@ -86,10 +86,10 @@ public class AutoOpBase extends OpMode {
         colorLeft.enableLed(false);
         colorRightBottom = hardwareMap.colorSensor.get("color_right_bottom");
         colorRightBottom.setI2cAddress(I2cAddr.create8bit(0X5C));
-        colorRight.enableLed(false);
+        colorRightBottom.enableLed(false);
         colorLeftBottom = hardwareMap.colorSensor.get("color_left_bottom");
         colorLeftBottom.setI2cAddress(I2cAddr.create8bit(0X6C));
-        colorLeft.enableLed(false);
+        colorLeftBottom.enableLed(false);
 
         Log.i("FTC7391", "Auto: " + " Color Left Address: " + colorLeft.getI2cAddress().get8Bit());
         Log.i("FTC7391", "Auto: " + " Color Right Address: " + colorRight.getI2cAddress().get8Bit());
@@ -367,10 +367,10 @@ public class AutoOpBase extends OpMode {
 
         public boolean updateState(){
             if(!isMoving){
-                int alpha = colorSensor.alpha();
-                int red = colorSensor.red();
-                int green = colorSensor.green();
-                int blue = colorSensor.blue();
+                int alpha = (colorRightBottom.alpha() + colorLeftBottom.alpha())/2;
+                int red = (colorRightBottom.red() + colorLeftBottom.red())/2;
+                int green = (colorRightBottom.green() + colorLeftBottom.green())/2;
+                int blue = (colorRightBottom.blue() + colorLeftBottom.blue())/2;
 
                 Log.d("FTC7391", "COLOR: " + "Clear(Alpha)" + "" + alpha);
                 Log.d("FTC7391", "COLOR: " + "Red         " + "" + red);
@@ -378,11 +378,11 @@ public class AutoOpBase extends OpMode {
                 Log.d("FTC7391", "COLOR: " + "Blue        " + "" + blue);
 
                 //ADD THE CONDITIONS FOR WHITE LINE
-                if(red>blue){
+                if(alpha>40){
                     isWhite = true;
                     Log.d("FTC7391", "COLOR: WHITE");
                 }
-                else if(blue>red){
+                else if(alpha<30){
                     isWhite = false;
                     Log.d("FTC7391", "COLOR: NONWHITE");
                 }
