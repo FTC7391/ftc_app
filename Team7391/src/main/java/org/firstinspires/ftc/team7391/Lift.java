@@ -17,6 +17,17 @@ public class Lift {
         private int MIN_TICKS;
         private double MAX_POWER = 1.0;
 
+        private double currentPower;
+
+        public Stage(int max, int min){
+            this(max, min, 1.0);
+        }
+
+        public Stage(int max, int min, double power){
+            MAX_TICKS = max;
+            MIN_TICKS = min;
+            MAX_POWER = power;
+        }
     }
 
     private static Stage[] stages = new Stage[5];
