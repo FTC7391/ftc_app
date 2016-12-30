@@ -11,7 +11,7 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
  */
 public class Lift {
 
-    class Stage{
+    private static class Stage{
         private DcMotor motor;
         private int MAX_TICKS;
         private int MIN_TICKS;
@@ -30,7 +30,13 @@ public class Lift {
         }
     }
 
-    private static Stage[] stages = new Stage[5];
+    private static Stage[] stages = {
+            new Stage(12500, 0),
+            new Stage(12500, 0),
+            new Stage(500,100, 1.0)
+    };
+
+
     private static final int NUM_STAGES = 5;
 
     public static DcMotor liftHigh;
