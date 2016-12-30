@@ -19,30 +19,6 @@ public class AutoWhiteLineTestOp extends AutoOpBase
         stepsList.add(new MoveToWhiteLineState(-50, 0.2));
         stepsList.add(new WaitState(0));//press a on gamepad 1
 
-        stepsList.add(new ColorTestState());
-        stepsList.add(new WaitState(0));//press a on gamepad 1
-        stepsList.add(new ColorTestState());
-        stepsList.add(new WaitState(0));//press a on gamepad 1
-        stepsList.add(new ColorTestState());
-        stepsList.add(new WaitState(0));//press a on gamepad 1
-
-        stepsList.add(new ColorTestState());
-        stepsList.add(new WaitState(0));//press a on gamepad 1
-        stepsList.add(new ColorTestState());
-        stepsList.add(new WaitState(0));//press a on gamepad 1
-        stepsList.add(new ColorTestState());
-        stepsList.add(new WaitState(0));//press a on gamepad 1
-        stepsList.add(new ColorTestState());
-        stepsList.add(new WaitState(0));//press a on gamepad 1
-        stepsList.add(new ColorTestState());
-        stepsList.add(new WaitState(0));//press a on gamepad 1
-        stepsList.add(new ColorTestState());
-        stepsList.add(new WaitState(0));//press a on gamepad 1
-        stepsList.add(new ColorTestState());
-        stepsList.add(new WaitState(0));//press a on gamepad 1
-        stepsList.add(new ColorTestState());
-        stepsList.add(new WaitState(0));//press a on gamepad 1
-
         stepsList.add(new StopState());
 
 

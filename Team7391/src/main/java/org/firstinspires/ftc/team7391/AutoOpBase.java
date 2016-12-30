@@ -366,7 +366,8 @@ public class AutoOpBase extends OpMode {
         }
 
         public boolean updateState(){
-            if(!isMoving){
+            DriveTrainAuto.moveInches(inches, power);
+            if(!(DriveTrainAuto.isDone())){
                 int alpha = (colorRightBottom.alpha() + colorLeftBottom.alpha())/2;
                 int red = (colorRightBottom.red() + colorLeftBottom.red())/2;
                 int green = (colorRightBottom.green() + colorLeftBottom.green())/2;
@@ -377,7 +378,6 @@ public class AutoOpBase extends OpMode {
                 Log.d("FTC7391", "COLOR: " + "Green       " + "" + green);
                 Log.d("FTC7391", "COLOR: " + "Blue        " + "" + blue);
 
-                //ADD THE CONDITIONS FOR WHITE LINE
                 if(alpha>40){
                     isWhite = true;
                     Log.d("FTC7391", "COLOR: WHITE");
@@ -393,14 +393,12 @@ public class AutoOpBase extends OpMode {
 
                 showTelemetryStateInfo();
 
-                if(isWhite){
+                if(isWhite || (distMovedToColor == inches))//keep going until white is detected or distance is reached 
+                {
                     return true;
                 }
                 else{
                     Log.i("FTC7391", "Auto: " + "MoveState init  inches:" + inches + " power:" + power );
-                    DriveTrainAuto.moveInches(inches, power);
-                    isMoving = true;
-                    distMovedToColor = inches;
                     return false;
                 }
             }
