@@ -394,6 +394,7 @@ public class AutoOpBase extends OpMode {
                 showTelemetryStateInfo();
 
                 if(isWhite){
+                    Log.d("FTC7391", "FOUND WHITE");
                     return true;
                 }
                 else{
