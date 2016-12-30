@@ -405,7 +405,39 @@ public class AutoOpBase extends OpMode {
                 }
             }
             else{ //isMoving == true
-                return DriveTrainAuto.isDone();
+                int alpha = (colorRightBottom.alpha() + colorLeftBottom.alpha())/2;
+                int red = (colorRightBottom.red() + colorLeftBottom.red())/2;
+                int green = (colorRightBottom.green() + colorLeftBottom.green())/2;
+                int blue = (colorRightBottom.blue() + colorLeftBottom.blue())/2;
+
+                Log.d("FTC7391", "COLOR: " + "Clear(Alpha)" + "" + alpha);
+                Log.d("FTC7391", "COLOR: " + "Red         " + "" + red);
+                Log.d("FTC7391", "COLOR: " + "Green       " + "" + green);
+                Log.d("FTC7391", "COLOR: " + "Blue        " + "" + blue);
+
+                //ADD THE CONDITIONS FOR WHITE LINE
+                if(alpha>40){
+                    isWhite = true;
+                    Log.d("FTC7391", "COLOR: WHITE");
+                }
+                else if(alpha<30){
+                    isWhite = false;
+                    Log.d("FTC7391", "COLOR: NONWHITE");
+                }
+                else{
+                    isWhite = false;
+                    Log.d("FTC7391", "COLOR: UNKNOWN");
+                }
+
+                showTelemetryStateInfo();
+
+                if(isWhite){
+                    DriveTrainAuto.resetEncoders();
+                    return true;
+                }
+                    return false;
+
+
             }
 
         }
