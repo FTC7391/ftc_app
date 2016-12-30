@@ -80,16 +80,16 @@ public class AutoOpBase extends OpMode {
 
         colorRight = hardwareMap.colorSensor.get("color_right"); // 0X38 Default
         colorRight.setI2cAddress(I2cAddr.create8bit(0X3C));
-        colorRight.enableLed(false);
+        //colorRight.enableLed(true);
         colorLeft = hardwareMap.colorSensor.get("color_left");
         colorLeft.setI2cAddress(I2cAddr.create8bit(0X4C));
-        colorLeft.enableLed(false);
+        //colorLeft.enableLed(true);
         colorRightBottom = hardwareMap.colorSensor.get("color_right_bottom");
         colorRightBottom.setI2cAddress(I2cAddr.create8bit(0X5C));
-        colorRightBottom.enableLed(false);
+        //colorRightBottom.enableLed(true);
         colorLeftBottom = hardwareMap.colorSensor.get("color_left_bottom");
         colorLeftBottom.setI2cAddress(I2cAddr.create8bit(0X6C));
-        colorLeftBottom.enableLed(false);
+        //colorLeftBottom.enableLed(true);
 
         Log.i("FTC7391", "Auto: " + " Color Left Address: " + colorLeft.getI2cAddress().get8Bit());
         Log.i("FTC7391", "Auto: " + " Color Right Address: " + colorRight.getI2cAddress().get8Bit());
@@ -361,49 +361,76 @@ public class AutoOpBase extends OpMode {
             super.init();
             telemetry.addData(TAG, "MoveToColor State ");
             stateStr = "MOVE_TO_WHITELINE";
+            colorRightBottom.enableLed(true);
+            colorLeftBottom.enableLed(true);
+            showTelemetryStateInfo();
+        }
+
+        private void checkWhite(){
+            int alpha = (colorRightBottom.alpha() + colorLeftBottom.alpha())/2;
+            int red = (colorRightBottom.red() + colorLeftBottom.red())/2;
+            int green = (colorRightBottom.green() + colorLeftBottom.green())/2;
+            int blue = (colorRightBottom.blue() + colorLeftBottom.blue())/2;
+
+            Log.d("FTC7391", "COLOR: " + "Clear(Alpha)" + "" + alpha);
+            Log.d("FTC7391", "COLOR: " + "Red         " + "" + red);
+            Log.d("FTC7391", "COLOR: " + "Green       " + "" + green);
+            Log.d("FTC7391", "COLOR: " + "Blue        " + "" + blue);
+
+            if(alpha>40){
+                isWhite = true;
+                Log.d("FTC7391", "COLOR: WHITE");
+            }
+            else if(alpha<30){
+                isWhite = false;
+                Log.d("FTC7391", "COLOR: NONWHITE");
+            }
+            else{
+                isWhite = false;
+                Log.d("FTC7391", "COLOR: UNKNOWN");
+            }
 
             showTelemetryStateInfo();
         }
 
         public boolean updateState(){
-            DriveTrainAuto.moveInches(inches, power);
-            if(!(DriveTrainAuto.isDone())){
-                int alpha = (colorRightBottom.alpha() + colorLeftBottom.alpha())/2;
-                int red = (colorRightBottom.red() + colorLeftBottom.red())/2;
-                int green = (colorRightBottom.green() + colorLeftBottom.green())/2;
-                int blue = (colorRightBottom.blue() + colorLeftBottom.blue())/2;
+            if(!isMoving){
 
-                Log.d("FTC7391", "COLOR: " + "Clear(Alpha)" + "" + alpha);
-                Log.d("FTC7391", "COLOR: " + "Red         " + "" + red);
-                Log.d("FTC7391", "COLOR: " + "Green       " + "" + green);
-                Log.d("FTC7391", "COLOR: " + "Blue        " + "" + blue);
+                checkWhite();
 
-                if(alpha>40){
-                    isWhite = true;
-                    Log.d("FTC7391", "COLOR: WHITE");
-                }
-                else if(alpha<30){
-                    isWhite = false;
-                    Log.d("FTC7391", "COLOR: NONWHITE");
-                }
-                else{
-                    isWhite = false;
-                    Log.d("FTC7391", "COLOR: UNKNOWN");
-                }
-
-                showTelemetryStateInfo();
-
-                if(isWhite || (distMovedToColor == inches))//keep going until white is detected or distance is reached 
+                if(isWhite)//keep going until white is detected or distance is reached
                 {
+                    Log.d("FTC7391", "WHITE FOUND BEFORE MOVING");
+                    colorRightBottom.enableLed(false);
+                    colorLeftBottom.enableLed(false);
                     return true;
                 }
                 else{
                     Log.i("FTC7391", "Auto: " + "MoveState init  inches:" + inches + " power:" + power );
+                    DriveTrainAuto.moveInches(inches, power);
+                    isMoving = true;
                     return false;
                 }
             }
             else{ //isMoving == true
-                return DriveTrainAuto.isDone();
+
+                checkWhite();
+
+                if(isWhite)//keep going until white is detected or distance is reached
+                {
+                    DriveTrainAuto.stop();
+                    Log.d("FTC7391", "WHITE FOUND SO STOPPED");
+                    colorRightBottom.enableLed(false);
+                    colorLeftBottom.enableLed(false);
+                    return true;
+                }
+                else if(DriveTrainAuto.isDone()){
+                    Log.d("FTC7391", "MAX DISTANCE MOVED, WHITE NOT FOUND");
+                    colorRightBottom.enableLed(false);
+                    colorLeftBottom.enableLed(false);
+                    return true;
+                }
+                return false;
             }
 
         }
@@ -594,7 +621,7 @@ public class AutoOpBase extends OpMode {
             this.isRed = isRed;
             this.toBeDeployed = toBeDeployed;
 
-            waitTime = 1000;  //milliseconds
+            waitTime = 400;  //milliseconds
             counter = 0;
             finalTime = 0;
         }

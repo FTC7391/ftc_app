@@ -15,7 +15,7 @@ public class AutoWhiteLineTestOp extends AutoOpBase
     public void init()
     {
         super.init();
-
+        stepsList.add(new WaitState(0));//press a on gamepad 1
         stepsList.add(new MoveToWhiteLineState(-50, 0.2));
         stepsList.add(new WaitState(0));//press a on gamepad 1
 

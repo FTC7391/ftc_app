@@ -26,6 +26,11 @@ public class DriveTrainAuto extends DriveTrain{
         resetEncoders();
      }
 
+    public static void stop(){
+        DriveTrain.resetEncoders();
+        DriveTrainAuto.setPowerOfMotors(0, 0);
+    }
+
     public static String getPosition(TestModes mode){
 
         switch (mode) {
