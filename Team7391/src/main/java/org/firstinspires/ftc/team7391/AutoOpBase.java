@@ -80,16 +80,16 @@ public class AutoOpBase extends OpMode {
 
         colorRight = hardwareMap.colorSensor.get("color_right"); // 0X38 Default
         colorRight.setI2cAddress(I2cAddr.create8bit(0X3C));
-        //colorRight.enableLed(true);
+        colorRight.enableLed(true);
         colorLeft = hardwareMap.colorSensor.get("color_left");
         colorLeft.setI2cAddress(I2cAddr.create8bit(0X4C));
-        //colorLeft.enableLed(true);
+        colorLeft.enableLed(true);
         colorRightBottom = hardwareMap.colorSensor.get("color_right_bottom");
         colorRightBottom.setI2cAddress(I2cAddr.create8bit(0X5C));
-        //colorRightBottom.enableLed(true);
+        colorRightBottom.enableLed(true);
         colorLeftBottom = hardwareMap.colorSensor.get("color_left_bottom");
         colorLeftBottom.setI2cAddress(I2cAddr.create8bit(0X6C));
-        //colorLeftBottom.enableLed(true);
+        colorLeftBottom.enableLed(true);
 
         Log.i("FTC7391", "Auto: " + " Color Left Address: " + colorLeft.getI2cAddress().get8Bit());
         Log.i("FTC7391", "Auto: " + " Color Right Address: " + colorRight.getI2cAddress().get8Bit());
@@ -326,6 +326,7 @@ public class AutoOpBase extends OpMode {
                 showTelemetryStateInfo();
 
                 if(isLastColorRed == isRed){  //check if color is our alliance color
+
                     return true;
                 }
                 else{  //move to other half of beacon
@@ -459,9 +460,9 @@ public class AutoOpBase extends OpMode {
 
         public boolean updateState(){
             counter++;
-            if(counter%2 == 1)
+            //if(counter%2 == 1)
             //if (counter%100 == 0)
-                Log.d("FTC7391", "Auto: " + "WaitSate counter:" + counter  + " waitTime:" + waitTime + " gamepad1.a:" + gamepad1.a);
+               // Log.d("FTC7391", "Auto: " + "WaitSate counter:" + counter  + " waitTime:" + waitTime + " gamepad1.a:" + gamepad1.a);
 
             return (counter == waitTime || gamepad1.a);
             //else
@@ -621,7 +622,7 @@ public class AutoOpBase extends OpMode {
             this.isRed = isRed;
             this.toBeDeployed = toBeDeployed;
 
-            waitTime = 400;  //milliseconds
+            waitTime = 100;  //milliseconds
             counter = 0;
             finalTime = 0;
         }
@@ -781,14 +782,14 @@ public class AutoOpBase extends OpMode {
         private double power;
 
         public MoveToSecondState(){
-            inches = -34.5+distMovedToColor;
-            power = 0.4;
+
             Log.i("FTC7391", "Auto: " + "MoveState constructor  inches:" + inches + " power:" + power );
         }
 
         public void init() {
             super.init();
-
+            inches = -35-distMovedToColor;
+            power = 0.4;
             Log.i("FTC7391", "Auto: " + "MoveState init  inches:" + inches + " power:" + power );
             DriveTrainAuto.moveInches(inches, power);
             dbgWriter.printf("Move Inches %.2f \n", inches);
