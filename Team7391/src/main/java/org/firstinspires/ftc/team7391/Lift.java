@@ -63,6 +63,7 @@ public class Lift {
     public static int getOriginalTicksMid(){return stages[1].originalTicks;}
     public static int getOriginalTicksWrist(){return stages[3].originalTicks;}
 
+
 //    public static int getOriginalTicksHigh(){return originalTicksHigh;}
 //    public static int getOriginalTicksLow(){return originalTicksLow;}
 //    public static int getoriginalTicksMid(){return originalTicksMid;}
@@ -78,10 +79,7 @@ public class Lift {
             //Bug in FTC Code.  Reinits for FORWARD when Init forthe same Opmode or different Opmode is run
             //what should these directions be set to?
 
-            stages[0].motor.setDirection(DcMotor.Direction.FORWARD);
-            stages[1].motor.setDirection(DcMotor.Direction.FORWARD);
-            stages[2].motor.setDirection(DcMotor.Direction.REVERSE);
-            stages[3].motor.setDirection(DcMotor.Direction.REVERSE);
+            setMotorDirection();
             return;
         }
 
@@ -97,10 +95,8 @@ public class Lift {
         stages[3].motor = hardwareMap.dcMotor.get("motor_wrist");
 
         //Log.i ("FTC7391", "Lift: " + "REVERSE/FORWARD" + " H:" + liftHigh.get())
-        stages[0].motor.setDirection(DcMotor.Direction.FORWARD);
-        stages[1].motor.setDirection(DcMotor.Direction.FORWARD);
-        stages[2].motor.setDirection(DcMotor.Direction.REVERSE);
-        stages[3].motor.setDirection(DcMotor.Direction.REVERSE);
+        setMotorDirection();
+
 
         resetEncoders();
         runUsingEncoders();
@@ -486,6 +482,13 @@ public class Lift {
     public static void menBasketPosition(){
         Log.i("FTC7391", "Lift: " + "menBasketPosition 8035, 6164, 4444, 1");
         setMotorTargetPosition(8035, 6164, 4444, 1);
+    }
+
+    public static void setMotorDirection(){
+        stages[0].motor.setDirection(DcMotor.Direction.FORWARD);
+        stages[1].motor.setDirection(DcMotor.Direction.FORWARD);
+        stages[2].motor.setDirection(DcMotor.Direction.REVERSE);
+        stages[3].motor.setDirection(DcMotor.Direction.REVERSE);
     }
 
 
