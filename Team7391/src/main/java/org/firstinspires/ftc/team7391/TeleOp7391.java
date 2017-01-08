@@ -143,21 +143,21 @@ public class TeleOp7391 extends OpMode {
 
 	private void showTelemetryLift() {
 		telemetry.addData("29 " , "MODE: " + Lift.getStrMode());
-		telemetry.addData("30 " , String.format("High  : original: %d current: %d", Lift.originalTicksHigh, Lift.getTicksLiftHigh()));
-		telemetry.addData("31 " , String.format("Low   : original: %d current: %d", Lift.originalTicksLow, Lift.getTicksLiftLow()));
-		telemetry.addData("32 " , String.format("Angle : original: %d current: %d", Lift.originalTicksShoulder, Lift.getTicksliftShoulder()));
-		telemetry.addData("33 " , String.format("Hook  : original: %d currnet: %d", Lift.originalTicksWrist, Lift.getTicksliftWrist()));
+		telemetry.addData("30 " , String.format("High  : original: %d current: %d", Lift.getOriginalTicksHigh(), Lift.getTicksLiftHigh()));
+		telemetry.addData("31 " , String.format("Low   : original: %d current: %d", Lift.getOriginalTicksLow(), Lift.getTicksLiftLow()));
+		telemetry.addData("32 " , String.format("Angle : original: %d current: %d", Lift.getOriginalTicksMid(), Lift.getTicksLiftMid()));
+		telemetry.addData("33 " , String.format("Hook  : original: %d currnet: %d", Lift.getOriginalTicksWrist(), Lift.getTicksLiftWrist()));
 		dbgWriter.printf("High %d %d    Low %d %d    Angle %d %d     Hook %d %d \n",
-			Lift.originalTicksHigh, Lift.getTicksLiftHigh(),
-			Lift.originalTicksLow, Lift.getTicksLiftLow(),
-			Lift.originalTicksShoulder, Lift.getTicksliftShoulder(),
-			Lift.originalTicksWrist, Lift.getTicksliftWrist()
+			Lift.getOriginalTicksHigh(), Lift.getTicksLiftHigh(),
+			Lift.getOriginalTicksLow(), Lift.getTicksLiftLow(),
+			Lift.getOriginalTicksMid(), Lift.getTicksLiftMid(),
+			Lift.getOriginalTicksWrist(), Lift.getTicksLiftWrist()
 		);
 
-		Log.d("Lift", "High  : original:" + Lift.originalTicksHigh + "|| end: " + Lift.getTicksLiftHigh());
-		Log.d("Lift", "Low   : original:" + Lift.originalTicksLow + "|| end: " + Lift.getTicksLiftLow());
-		Log.d("Lift", "Angle : original:" + Lift.originalTicksShoulder + "|| end: " + Lift.getTicksliftShoulder());
-		Log.d("Lift", "Hook  : original:" + Lift.originalTicksWrist + "|| end: " + Lift.getTicksliftWrist());
+		Log.d("Lift", "High  : original:" + Lift.getOriginalTicksHigh() + "|| end: " + Lift.getTicksLiftHigh());
+		Log.d("Lift", "Low   : original:" + Lift.getOriginalTicksLow() + "|| end: " + Lift.getTicksLiftLow());
+		Log.d("Lift", "Angle : original:" + Lift.getOriginalTicksMid() + "|| end: " + Lift.getTicksLiftMid());
+		Log.d("Lift", "Hook  : original:" + Lift.getOriginalTicksWrist() + "|| end: " + Lift.getTicksLiftWrist());
 
 	}
 

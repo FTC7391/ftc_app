@@ -64,7 +64,7 @@ public class Lift {
     public static int getOriginalTicksWrist(){return stages[3].originalTicks;}
 
 
-//    public static int getOriginalTicksHigh(){return originalTicksHigh;}
+//    public static int getgetOriginalTicksHigh(){return getOriginalTicksHigh;}
 //    public static int getOriginalTicksLow(){return originalTicksLow;}
 //    public static int getoriginalTicksMid(){return originalTicksMid;}
 
@@ -289,7 +289,7 @@ public class Lift {
     public enum TestModes {
         MODE_MOVE_HIGH,
         MODE_MOVE_LOW,
-        MODE_MOVE_Mid,
+        MODE_MOVE_MID,
         MODE_MOVE_BOTH,
         MODE_MOVE_WRIST,
 
@@ -351,7 +351,7 @@ public class Lift {
                    stages[0].motor.setPower(1 * power);    //negative power = backwards
                }
                 break;
-            case MODE_MOVE_Mid:
+            case MODE_MOVE_MID:
 
                 if (bLimits && (power > 0 && stages[1].motor.getCurrentPosition() > stages[1].MAX_TICKS ||
                         power < 0 && stages[1].motor.getCurrentPosition() < stages[1].MIN_TICKS )){
