@@ -4,13 +4,16 @@
         <Motor name="motor_right" port="1" />
         <Motor name="motor_left" port="2" />
     </MotorController>
-    <MotorController name="Motor Controller Lift High and Low" serialNumber="AL00VGUM">
-        <Motor name="motor_low" port="1" />
-        <Motor name="motor_high" port="2" />
+    <MotorController name="Motor Controller Lift 0" serialNumber="AL00VGUM">
+        <Motor name="stage_0" port="1" />
+        <Motor name="stage_1" port="2" />
     </MotorController>
-    <MotorController name="Motor Controller Lift Shoulder and Wrist" serialNumber="AL00XTK5">
-        <Motor name="motor_wrist" port="1" />
-        <Motor name="motor_shoulder" port="2" />
+    <MotorController name="Motor Controller Lift 1" serialNumber="AI02RMWJ">
+        <Motor name="stage_2" port="1" />
+    </MotorController>
+    <MotorController name="Motor Controller Lift 2" serialNumber="AL00XTK5">
+        <Motor name="stage_3" port="1" />
+        <Motor name="stage_4" port="2" />
     </MotorController>
     <ServoController name="Servo Controller 1 " serialNumber="AI02RMWJ">
         <Servo name="claw_left" port="1" />
