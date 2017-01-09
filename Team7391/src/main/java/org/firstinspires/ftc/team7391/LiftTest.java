@@ -64,7 +64,7 @@ public class LiftTest extends OpMode {
     public void init() {
         Lift.init(hardwareMap);
         Lift.runUsingEncoders();
-        Claw.init(hardwareMap);
+        //Claw.init(hardwareMap);
         DriveTrain.init(hardwareMap);
     }
 

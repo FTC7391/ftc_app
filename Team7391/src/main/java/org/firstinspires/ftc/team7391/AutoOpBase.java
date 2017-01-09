@@ -68,9 +68,9 @@ public class AutoOpBase extends OpMode {
         Log.i("FTC7391", "Auto: " + "AutoOpBase init:"+ "  step " + step);
 
         DriveTrainAuto.init(hardwareMap);
-        //Lift.init(hardwareMap);
+        Lift.init(hardwareMap);
         //Claw.init(hardwareMap);
-        //Lift.resetEncoders();
+        Lift.resetEncoders();
 
         //public Zipline(HardwareMap hardwareMap, double retracted, double drive, double deploy, String name)
         pusher_left = new Zipline(hardwareMap, 1,1, .35, "pusher_left"); //.5?
@@ -79,10 +79,10 @@ public class AutoOpBase extends OpMode {
         pusher_right.setRetractedPosition();
 
         colorRight = hardwareMap.colorSensor.get("color_right"); // 0X38 Default
-        colorRight.setI2cAddress(I2cAddr.create8bit(0X3C));
+        colorRight.setI2cAddress(I2cAddr.create8bit(0X4C));
         colorRight.enableLed(false);
         colorLeft = hardwareMap.colorSensor.get("color_left");
-        colorLeft.setI2cAddress(I2cAddr.create8bit(0X4C));
+        colorLeft.setI2cAddress(I2cAddr.create8bit(0X3C));
         colorLeft.enableLed(false);
         colorRightBottom = hardwareMap.colorSensor.get("color_right_bottom");
         colorRightBottom.setI2cAddress(I2cAddr.create8bit(0X5C));
