@@ -5,7 +5,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 /**
  * Created by Allana on 10/3/2015.
  */
-@Autonomous(name = "Auto: ColorTest" , group = "Practice")
+@Autonomous(name = "Auto: WhiteLineTest" , group = "Practice")
 public class AutoWhiteLineTestOp extends AutoOpBase
 {
     private static final String TAG = AutoWhiteLineTestOp.class.getSimpleName();
