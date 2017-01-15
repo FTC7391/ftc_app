@@ -68,9 +68,9 @@ public class AutoOpBase extends OpMode {
         Log.i("FTC7391", "Auto: " + "AutoOpBase init:"+ "  step " + step);
 
         DriveTrainAuto.init(hardwareMap);
-        //Lift.init(hardwareMap);
+        Lift.init(hardwareMap);
         //Claw.init(hardwareMap);
-        //Lift.resetEncoders();
+        Lift.resetEncoders();
 
         //public Zipline(HardwareMap hardwareMap, double retracted, double drive, double deploy, String name)
         pusher_left = new Zipline(hardwareMap, 1,1, .35, "pusher_left"); //.5?
@@ -79,17 +79,17 @@ public class AutoOpBase extends OpMode {
         pusher_right.setRetractedPosition();
 
         colorRight = hardwareMap.colorSensor.get("color_right"); // 0X38 Default
-        colorRight.setI2cAddress(I2cAddr.create8bit(0X3C));
-        colorRight.enableLed(true);
+        colorRight.setI2cAddress(I2cAddr.create8bit(0X4C));
+        colorRight.enableLed(false);
         colorLeft = hardwareMap.colorSensor.get("color_left");
-        colorLeft.setI2cAddress(I2cAddr.create8bit(0X4C));
-        colorLeft.enableLed(true);
+        colorLeft.setI2cAddress(I2cAddr.create8bit(0X3C));
+        colorLeft.enableLed(false);
         colorRightBottom = hardwareMap.colorSensor.get("color_right_bottom");
         colorRightBottom.setI2cAddress(I2cAddr.create8bit(0X5C));
-        colorRightBottom.enableLed(true);
+        colorRight.enableLed(false);
         colorLeftBottom = hardwareMap.colorSensor.get("color_left_bottom");
         colorLeftBottom.setI2cAddress(I2cAddr.create8bit(0X6C));
-        colorLeftBottom.enableLed(true);
+        colorLeft.enableLed(false);
 
         Log.i("FTC7391", "Auto: " + " Color Left Address: " + colorLeft.getI2cAddress().get8Bit());
         Log.i("FTC7391", "Auto: " + " Color Right Address: " + colorRight.getI2cAddress().get8Bit());
@@ -834,21 +834,21 @@ public class AutoOpBase extends OpMode {
     }
 
     private void showTelemetryLift() {
-        telemetry.addData("30 " , String.format("High  : original: %d current: %d", Lift.originalTicksHigh, Lift.getTicksLiftHigh()));
-        telemetry.addData("31 " , String.format("Low   : original: %d current: %d", Lift.originalTicksLow, Lift.getTicksLiftLow()));
-        telemetry.addData("32 " , String.format("Angle : original: %d current: %d", Lift.originalTicksShoulder, Lift.getTicksliftShoulder()));
-        telemetry.addData("33 " , String.format("Hook  : original: %d currnet: %d", Lift.originalTicksWrist, Lift.getTicksliftWrist()));
+        telemetry.addData("30 " , String.format("High  : original: %d current: %d", Lift.getOriginalTicksHigh(), Lift.getTicksLiftHigh()));
+        telemetry.addData("31 " , String.format("Low   : original: %d current: %d", Lift.getOriginalTicksLow(), Lift.getTicksLiftLow()));
+        telemetry.addData("32 " , String.format("Angle : original: %d current: %d", Lift.getOriginalTicksMid(), Lift.getTicksLiftMid()));
+        telemetry.addData("33 " , String.format("Hook  : original: %d currnet: %d", Lift.getOriginalTicksWrist(), Lift.getTicksLiftWrist()));
         dbgWriter.printf("High %d %d    Low %d %d    Angle %d %d     Hook %d %d \n",
-            Lift.originalTicksHigh, Lift.getTicksLiftHigh(),
-            Lift.originalTicksLow, Lift.getTicksLiftLow(),
-            Lift.originalTicksShoulder, Lift.getTicksliftShoulder(),
-            Lift.originalTicksWrist, Lift.getTicksliftWrist()
+            Lift.getOriginalTicksHigh(), Lift.getTicksLiftHigh(),
+            Lift.getOriginalTicksLow(), Lift.getTicksLiftLow(),
+            Lift.getOriginalTicksMid(), Lift.getTicksLiftMid(),
+            Lift.getOriginalTicksWrist(), Lift.getTicksLiftWrist()
         );
 
-        Log.d("FTC7391", "Auto: " + "High     : original:" + Lift.originalTicksHigh + "|| end: " + Lift.getTicksLiftHigh());
-        Log.d("FTC7391", "Auto: " + "Low      : original:" + Lift.originalTicksLow + "|| end: " + Lift.getTicksLiftLow());
-        Log.d("FTC7391", "Auto: " + "Shoulder : original:" + Lift.originalTicksShoulder + "|| end: " + Lift.getTicksliftShoulder());
-        Log.d("FTC7391", "Auto: " + "Wrist    : original:" + Lift.originalTicksWrist + "|| end: " + Lift.getTicksliftWrist());
+        Log.d("FTC7391", "Auto: " + "High     : original:" + Lift.getOriginalTicksHigh() + "|| end: " + Lift.getTicksLiftHigh());
+        Log.d("FTC7391", "Auto: " + "Low      : original:" + Lift.getOriginalTicksLow()+ "|| end: " + Lift.getTicksLiftLow());
+        Log.d("FTC7391", "Auto: " + "Mid : original:" + Lift.getOriginalTicksMid() + "|| end: " + Lift.getTicksLiftMid());
+        Log.d("FTC7391", "Auto: " + "Wrist    : original:" + Lift.getOriginalTicksWrist() + "|| end: " + Lift.getTicksLiftWrist());
 
     }
 

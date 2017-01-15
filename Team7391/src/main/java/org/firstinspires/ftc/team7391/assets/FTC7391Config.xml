@@ -4,27 +4,26 @@
         <Motor name="motor_right" port="1" />
         <Motor name="motor_left" port="2" />
     </MotorController>
-    <MotorController name="Motor Controller Lift High and Low" serialNumber="AL00VGUM">
-        <Motor name="motor_low" port="1" />
-        <Motor name="motor_high" port="2" />
+    <MotorController name="Motor Controller Lift 0" serialNumber="AL00VGUM">
+        <Motor name="stage0" port="1" />
+        <Motor name="stage1" port="2" />
     </MotorController>
-    <MotorController name="Motor Controller Lift Shoulder and Wrist" serialNumber="AL00XTK5">
-        <Motor name="motor_wrist" port="1" />
-        <Motor name="motor_shoulder" port="2" />
+    <MotorController name="Motor Controller Lift 1" serialNumber="AL00XTK5">
+        <Motor name="stage2" port="1" />
+        <Motor name="stage3" port="2" />
     </MotorController>
-    <ServoController name="Servo Controller 1 " serialNumber="AI02RMWJ">
-        <Servo name="claw_left" port="1" />
-        <Servo name="claw_right" port="2" />
-    </ServoController>
+    <!--<MotorController name="Motor Controller Lift 2" serialNumber="AI02RMWJ">-->
+    <!--   <Motor name="stage4" port="1" />-->
+    <!--</MotorController>-->
     <ServoController name="Servo Controller 2" serialNumber="AL026GCV">
         <Servo name="pusher_left" port="1" />
         <Servo name="pusher_right" port="2" />
     </ServoController>
     <DeviceInterfaceModule name="Device Interface Module" serialNumber="AL00VF3K">
-        <ColorSensor name="color_right" port="0" />
+        <ColorSensor name="color_right" port="5" />
         <ColorSensor name="color_left" port="1" />
-        <ColorSensor name="color_right_bottom" port="2" />
-        <ColorSensor name="color_left_bottom" port="3" />
+        <ColorSensor name="color_right_bottom" port="4" />
+        <ColorSensor name="color_left_bottom" port="0" />
     </DeviceInterfaceModule>
 
     <!--<MotorController name="Motor Controller Left" serialNumber="AL00VCAK">-->

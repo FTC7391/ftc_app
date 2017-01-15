@@ -98,9 +98,9 @@ public class LiftJoystick {
             }
 
             if (gamepad2.a) {
-                Lift.setTestMode(Lift.TestModes.MODE_MOVE_SHOULDER, liftPower);
+                Lift.setTestMode(Lift.TestModes.MODE_MOVE_MID, liftPower);
             } else {
-                Lift.setTestMode(Lift.TestModes.MODE_MOVE_SHOULDER, 0);
+                Lift.setTestMode(Lift.TestModes.MODE_MOVE_MID, 0);
             }
 
             if (gamepad2.x) {

@@ -80,11 +80,11 @@ public class TeleOp7391 extends OpMode {
 	@Override
 	public void init() {
 		DriveTrainTele.init(hardwareMap);
-		//Lift.init(hardwareMap);
-		//Lift.runUsingEncoders();
+		Lift.init(hardwareMap);
+		Lift.runUsingEncoders();
 		//Claw.init(hardwareMap);
 		driveJoystick = new DriveJoystick(hardwareMap);
-		//liftJoystick = new LiftJoystick();
+		liftJoystick = new LiftJoystick();
 	}
 
 	/*
@@ -100,7 +100,7 @@ public class TeleOp7391 extends OpMode {
 			showTelemetry();
 		}
 		DriveJoystick.update(gamepad1);
-		//LiftJoystick.update(gamepad2);
+		LiftJoystick.update(gamepad2);
 
 
 	}
@@ -119,7 +119,7 @@ public class TeleOp7391 extends OpMode {
 	private void showTelemetry(){
 		showTelemetryPower();
 		showTelemetryDrivetrain();
-		//showTelemetryLift();
+		showTelemetryLift();
 
 	}
 	private void showTelemetryPower() {
@@ -143,21 +143,21 @@ public class TeleOp7391 extends OpMode {
 
 	private void showTelemetryLift() {
 		telemetry.addData("29 " , "MODE: " + Lift.getStrMode());
-		telemetry.addData("30 " , String.format("High  : original: %d current: %d", Lift.originalTicksHigh, Lift.getTicksLiftHigh()));
-		telemetry.addData("31 " , String.format("Low   : original: %d current: %d", Lift.originalTicksLow, Lift.getTicksLiftLow()));
-		telemetry.addData("32 " , String.format("Angle : original: %d current: %d", Lift.originalTicksShoulder, Lift.getTicksliftShoulder()));
-		telemetry.addData("33 " , String.format("Hook  : original: %d currnet: %d", Lift.originalTicksWrist, Lift.getTicksliftWrist()));
+		telemetry.addData("30 " , String.format("High  : original: %d current: %d", Lift.getOriginalTicksHigh(), Lift.getTicksLiftHigh()));
+		telemetry.addData("31 " , String.format("Low   : original: %d current: %d", Lift.getOriginalTicksLow(), Lift.getTicksLiftLow()));
+		telemetry.addData("32 " , String.format("Angle : original: %d current: %d", Lift.getOriginalTicksMid(), Lift.getTicksLiftMid()));
+		telemetry.addData("33 " , String.format("Hook  : original: %d currnet: %d", Lift.getOriginalTicksWrist(), Lift.getTicksLiftWrist()));
 		dbgWriter.printf("High %d %d    Low %d %d    Angle %d %d     Hook %d %d \n",
-			Lift.originalTicksHigh, Lift.getTicksLiftHigh(),
-			Lift.originalTicksLow, Lift.getTicksLiftLow(),
-			Lift.originalTicksShoulder, Lift.getTicksliftShoulder(),
-			Lift.originalTicksWrist, Lift.getTicksliftWrist()
+			Lift.getOriginalTicksHigh(), Lift.getTicksLiftHigh(),
+			Lift.getOriginalTicksLow(), Lift.getTicksLiftLow(),
+			Lift.getOriginalTicksMid(), Lift.getTicksLiftMid(),
+			Lift.getOriginalTicksWrist(), Lift.getTicksLiftWrist()
 		);
 
-		Log.d("Lift", "High  : original:" + Lift.originalTicksHigh + "|| end: " + Lift.getTicksLiftHigh());
-		Log.d("Lift", "Low   : original:" + Lift.originalTicksLow + "|| end: " + Lift.getTicksLiftLow());
-		Log.d("Lift", "Angle : original:" + Lift.originalTicksShoulder + "|| end: " + Lift.getTicksliftShoulder());
-		Log.d("Lift", "Hook  : original:" + Lift.originalTicksWrist + "|| end: " + Lift.getTicksliftWrist());
+		Log.d("Lift", "High  : original:" + Lift.getOriginalTicksHigh() + "|| end: " + Lift.getTicksLiftHigh());
+		Log.d("Lift", "Low   : original:" + Lift.getOriginalTicksLow() + "|| end: " + Lift.getTicksLiftLow());
+		Log.d("Lift", "Angle : original:" + Lift.getOriginalTicksMid() + "|| end: " + Lift.getTicksLiftMid());
+		Log.d("Lift", "Hook  : original:" + Lift.getOriginalTicksWrist() + "|| end: " + Lift.getTicksLiftWrist());
 
 	}
 

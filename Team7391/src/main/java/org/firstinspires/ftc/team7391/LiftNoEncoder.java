@@ -20,7 +20,7 @@ public class LiftNoEncoder {
     private static int driveModeTicksLow = -657;
 
 
-    public static int originalTicksHigh = 0; //to be added
+    public static int getOriginalTicksHigh = 0; //to be added
     public static int originalTicksLow = 0; //to be added
     public static int originalTicksWrist = 0; //to be added
     public static int originalTicksShoulder = 0; //to be added
@@ -54,7 +54,7 @@ public class LiftNoEncoder {
 
         //runUsingEncoders();
 
-        //originalTicksHigh = liftHigh.getCurrentPosition();
+        //getOriginalTicksHigh = liftHigh.getCurrentPosition();
         //originalTicksLow = liftLow.getCurrentPosition();
         //originalTicksWrist = liftWrist.getCurrentPosition();
         //originalTicksShoulder = liftShoulder.getCurrentPosition();
@@ -83,7 +83,7 @@ public class LiftNoEncoder {
     //public static int getTicksliftShoulder(){return liftShoulder.getCurrentPosition();}
     //public static int getTicksliftWrist(){return liftWrist.getCurrentPosition();}
 
-//    public static int getOriginalTicksHigh(){return originalTicksHigh;}
+//    public static int getgetOriginalTicksHigh(){return getOriginalTicksHigh;}
 //    public static int getOriginalTicksLow(){return originalTicksLow;}
 //    public static int getoriginalTicksShoulder(){return originalTicksShoulder;}
 
