@@ -1,34 +1,29 @@
 <?xml version='1.0' encoding='UTF-8' standalone='yes' ?>
 <Robot type="FirstInspires-FTC">
     <MotorController name="Motor Controller Drive Train" serialNumber="AL00XUAK">
-        <Motor name="motor_right" port="1" />
-        <Motor name="motor_left" port="2" />
+        <Motor name="motor_left" port="1" />
+        <Motor name="motor_right" port="2" />
     </MotorController>
-    <MotorController name="Motor Controller Lift 0" serialNumber="AL00VGUM">
+    <MotorController name="Motor Controller Lift A" serialNumber="AL00VGUM">
         <Motor name="stage0" port="1" />
         <Motor name="stage1" port="2" />
     </MotorController>
-    <MotorController name="Motor Controller Lift 1" serialNumber="AL00XTK5">
+    <MotorController name="Motor Controller Lift B" serialNumber="AL00XTK5">
         <Motor name="stage2" port="1" />
         <Motor name="stage3" port="2" />
     </MotorController>
-    <!--<MotorController name="Motor Controller Lift 2" serialNumber="AI02RMWJ">-->
-    <!--   <Motor name="stage4" port="1" />-->
-    <!--</MotorController>-->
+    <MotorController name="Motor Controller Lift C" serialNumber="ALOOVSBL">
+       <Motor name="stage4" port="1" />
+    </MotorController>
     <ServoController name="Servo Controller 2" serialNumber="AL026GCV">
-        <Servo name="pusher_left" port="1" />
-        <Servo name="pusher_right" port="2" />
+        <Servo name="pusher_right" port="1" />
+        <Servo name="pusher_left" port="2" />
     </ServoController>
     <DeviceInterfaceModule name="Device Interface Module" serialNumber="AL00VF3K">
-        <ColorSensor name="color_right" port="5" />
+        <ColorSensor name="color_left_bottom" port="0" />
         <ColorSensor name="color_left" port="1" />
         <ColorSensor name="color_right_bottom" port="4" />
-        <ColorSensor name="color_left_bottom" port="0" />
+        <ColorSensor name="color_right" port="5" />
     </DeviceInterfaceModule>
-
-    <!--<MotorController name="Motor Controller Left" serialNumber="AL00VCAK">-->
-    <!--<Motor name="motor_front_left" port="1" />-->
-    <!--<Motor name="motor_back_left" port="2" />-->
-    <!--</MotorController>-->
 
 </Robot>

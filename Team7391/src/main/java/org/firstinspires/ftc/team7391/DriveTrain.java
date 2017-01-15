@@ -8,8 +8,8 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
  */
 public class DriveTrain {
 
-    protected static DcMotor motorRight;
     protected static DcMotor motorLeft;
+    protected static DcMotor motorRight;
 
     protected static boolean initialized = false;
 
@@ -28,46 +28,46 @@ public class DriveTrain {
     public static void init (HardwareMap hardwareMap) {
         if (initialized) {
             //Bug in FTC Code.  Reinits for FORWARD when Init forthe same Opmode or different Opmode is run
-            motorRight.setDirection(DcMotor.Direction.FORWARD);
-            motorLeft.setDirection(DcMotor.Direction.REVERSE);
+            motorLeft.setDirection(DcMotor.Direction.FORWARD);
+            motorRight.setDirection(DcMotor.Direction.REVERSE);
             return;
         }
         initialized = true;
 
 
-        motorRight = hardwareMap.dcMotor.get("motor_right");
         motorLeft = hardwareMap.dcMotor.get("motor_left");
+        motorRight = hardwareMap.dcMotor.get("motor_right");
 
-        motorRight.setDirection(DcMotor.Direction.FORWARD);
-        motorLeft.setDirection(DcMotor.Direction.REVERSE);
+        motorLeft.setDirection(DcMotor.Direction.FORWARD);
+        motorRight.setDirection(DcMotor.Direction.REVERSE);
 
         resetEncoders();
 
     }
 
     protected static void resetEncoders(){
-        motorRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         motorLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        motorRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
     }
 
     protected static void runToPosition(){
-        motorRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         motorLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        motorRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
     }
 
     protected static void runUsingEncoders(){
-        motorRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         motorLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        motorRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
     }
 
     protected static void runWithoutEncoders(){
-        motorRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         motorLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        motorRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
     }
 
     protected static void setPowerOfMotors(double rightPower, double leftPower) {
-        motorRight.setPower(rightPower);
-        motorLeft.setPower(leftPower);
+        motorLeft.setPower(rightPower);
+        motorRight.setPower(leftPower);
     }
 
 

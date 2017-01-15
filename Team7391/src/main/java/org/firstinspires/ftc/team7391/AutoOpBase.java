@@ -22,8 +22,8 @@ public class AutoOpBase extends OpMode {
     protected FTC7391PrintWriter dbgWriter = new FTC7391PrintWriter("Autonomous", "telemetryWait");
     private String stateStr = "";
 
-    protected static Zipline pusher_left;
     protected static Zipline pusher_right;
+    protected static Zipline pusher_left;
 
     private ColorSensor colorSensor;
     private ColorSensor colorRight;
@@ -73,10 +73,10 @@ public class AutoOpBase extends OpMode {
         Lift.resetEncoders();
 
         //public Zipline(HardwareMap hardwareMap, double retracted, double drive, double deploy, String name)
-        pusher_left = new Zipline(hardwareMap, 1,1, .35, "pusher_left"); //.5?
-        pusher_right = new Zipline(hardwareMap, 0,0, .7, "pusher_right"); //.5?
-        pusher_left.setRetractedPosition();
+        pusher_right = new Zipline(hardwareMap, 1,1, .35, "pusher_right"); //.5?
+        pusher_left = new Zipline(hardwareMap, 0,0, .7, "pusher_left"); //.5?
         pusher_right.setRetractedPosition();
+        pusher_left.setRetractedPosition();
 
         colorRight = hardwareMap.colorSensor.get("color_right"); // 0X38 Default
         colorRight.setI2cAddress(I2cAddr.create8bit(0X4C));
@@ -632,16 +632,16 @@ public class AutoOpBase extends OpMode {
             finalTime = System.currentTimeMillis() + waitTime;
             if(toBeDeployed) {
                 if (isRed == -1) {
-                    pusher_right.setDeployedPosition();
-                    pusher_left.setRetractedPosition();
-                } else {
                     pusher_left.setDeployedPosition();
                     pusher_right.setRetractedPosition();
+                } else {
+                    pusher_right.setDeployedPosition();
+                    pusher_left.setRetractedPosition();
                 }
             }
             else{
-                pusher_left.setRetractedPosition();
                 pusher_right.setRetractedPosition();
+                pusher_left.setRetractedPosition();
             }
             stateStr = "PUSHER";
         }
