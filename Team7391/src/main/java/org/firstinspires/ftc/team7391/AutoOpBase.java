@@ -576,7 +576,7 @@ public class AutoOpBase extends OpMode {
         public void init(){
             super.init();
             DriveTrainAuto.moveInches(0, 0);
-            Lift.stickLift();
+            //Lift.stickLift();
             stateStr = "STICK LIFT";
         }
 
@@ -725,54 +725,54 @@ public class AutoOpBase extends OpMode {
 
     }
 
-    protected class DrivePosition2State extends State {
-
-        public void init(){
-            super.init();
-            Lift.drivePosition2();
-            stateStr = "DRIVE POSITION 2";
-
-        }
-
-        public boolean updateState() { return Lift.isDone();}
-    }
-
-    protected class ClimbPositionState extends State {
-
-        public void init(){
-            super.init();
-            Lift.climbPosition();
-            stateStr = "CLIMB POSITION";
-
-        }
-        public boolean updateState(){
-            return Lift.isDone();
-        }
-    }
-
-    protected class ReadyToHangPositionState extends State {
-
-        public void init(){
-            super.init();
-            Lift.readyToHangPosition();
-            stateStr = "READY TO HANG POSITION";
-        }
-
-        public boolean updateState(){
-            return Lift.isDone();
-        }
-    }
-
-    protected class StraightHook extends State {
-
-        public void init(){
-            super.init();
-            Lift.straightHook();
-            stateStr = "STRAIGHT HOOK";
-        }
-
-        public boolean updateState(){ return Lift.isDone(); }
-    }
+//    protected class DrivePosition2State extends State {
+//
+//        public void init(){
+//            super.init();
+//            Lift.drivePosition2();
+//            stateStr = "DRIVE POSITION 2";
+//
+//        }
+//
+//        public boolean updateState() { return Lift.isDone();}
+//    }
+//
+//    protected class ClimbPositionState extends State {
+//
+//        public void init(){
+//            super.init();
+//            Lift.climbPosition();
+//            stateStr = "CLIMB POSITION";
+//
+//        }
+//        public boolean updateState(){
+//            return Lift.isDone();
+//        }
+//    }
+//
+//    protected class ReadyToHangPositionState extends State {
+//
+//        public void init(){
+//            super.init();
+//            Lift.readyToHangPosition();
+//            stateStr = "READY TO HANG POSITION";
+//        }
+//
+//        public boolean updateState(){
+//            return Lift.isDone();
+//        }
+//    }
+//
+//    protected class StraightHook extends State {
+//
+//        public void init(){
+//            super.init();
+//            Lift.straightHook();
+//            stateStr = "STRAIGHT HOOK";
+//        }
+//
+//        public boolean updateState(){ return Lift.isDone(); }
+//    }
 
     protected class MoveToSecondState extends State {
 
