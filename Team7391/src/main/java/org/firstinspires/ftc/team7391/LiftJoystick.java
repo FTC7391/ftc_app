@@ -12,6 +12,8 @@ public class LiftJoystick {
     private static double liftPower = 0;
     private static double liftLowPower = 0;
 
+    public static double getLiftPower() { return liftPower;}
+
     public static void update(Gamepad gamepad2) {
         /*
 		 * Gamepad 2
@@ -112,23 +114,6 @@ public class LiftJoystick {
                 Lift.setTestMode(Lift.TestModes.MODE_MOVE_WRIST, 0);
             }
 
-        }
-
-
-//        if(gamepad2.dpad_up) { //See ABOVE
-//            Lift.setTestMode(Lift.TestModes.MODE_MOVE_BOTH, liftPower);
-//        }
-
-
-        if (gamepad2.dpad_right){
-            Claw.setRetractedPosition();
-        }
-        if (gamepad2.dpad_down){
-            Claw.setDeployedPosition();
-            //Lift.setTestMode(Lift.TestModes.MODE_MOVE_WRIST_TO_POSITION, -.25);
-        }
-        if (gamepad2.dpad_left) {
-            Claw.setDrivePosition();
         }
 
     }

@@ -73,8 +73,8 @@ public class AutoOpBase extends OpMode {
         Lift.resetEncoders();
 
         //public Zipline(HardwareMap hardwareMap, double retracted, double drive, double deploy, String name)
-        pusher_right = new Zipline(hardwareMap, 1,1, .35, "pusher_right"); //.5?
-        pusher_left = new Zipline(hardwareMap, 0,0, .7, "pusher_left"); //.5?
+        pusher_right = new Zipline(hardwareMap, 1,1, .35, "pusher_right"); //
+        pusher_left = new Zipline(hardwareMap, 0,0, .65, "pusher_left"); //
         pusher_right.setRetractedPosition();
         pusher_left.setRetractedPosition();
 

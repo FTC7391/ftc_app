@@ -29,10 +29,13 @@ public class DriveJoystick {
     static double positionL  = 1.0;
     static boolean bNewCommand = true;
 
+    public static double getAxialPower() { return axialPower;}
+    public static double getRotatePower() { return rotatePower;}
+
 
     public DriveJoystick(HardwareMap hardwareMap) {
-        pusher_left = new Zipline(hardwareMap, 1,1, .35, "pusher_left"); //.5?
-        pusher_right = new Zipline(hardwareMap, 0,0, .7, "pusher_right"); //.5?
+        pusher_left = new Zipline(hardwareMap, 0,0, .65, "pusher_left"); //.5?
+        pusher_right = new Zipline(hardwareMap, 1,1, .35, "pusher_right");
         pusher_left.setRetractedPosition();
         pusher_right.setRetractedPosition();
 

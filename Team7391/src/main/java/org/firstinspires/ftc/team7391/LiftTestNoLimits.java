@@ -46,7 +46,7 @@ import com.qualcomm.robotcore.util.Range;
  */
 @TeleOp(name = "LiftTestNoLimits" + "", group = "Practice")
 //@Disabled
-public class LiftTestNoLimits extends LiftTest {
+public class LiftTestNoLimits extends TeleOp7391 {
     @Override
     public void init() {
         super.init();

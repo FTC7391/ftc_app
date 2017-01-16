@@ -17,9 +17,9 @@ public class AutoLiftTestOp extends AutoOpBase
     {
         super.init();
         stepsList.add(new WaitState(0));//press a on gamepad 1
-        stepsList.add(new ClimbPositionState());
+        //stepsList.add(new ClimbPositionState());
         stepsList.add(new WaitState(0));//press a on gamepad 1
-        stepsList.add(new ReadyToHangPositionState());
+        //stepsList.add(new ReadyToHangPositionState());
 
     }
 

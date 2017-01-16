@@ -12,7 +12,7 @@
         <Motor name="stage2" port="1" />
         <Motor name="stage3" port="2" />
     </MotorController>
-    <MotorController name="Motor Controller Lift C" serialNumber="ALOOVSBL">
+    <MotorController name="Motor Controller Lift C" serialNumber="AL00VSBL">
        <Motor name="stage4" port="1" />
     </MotorController>
     <ServoController name="Servo Controller 2" serialNumber="AL026GCV">
