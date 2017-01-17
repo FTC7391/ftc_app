@@ -18,20 +18,20 @@ public abstract class AutoBeaconOp extends AutoOpBase
         FTC7391PrintWriter data1Writer = new FTC7391PrintWriter("Alliance" , "color");
         setRed();
 
-
-        //stepsList.add(new WaitState(0));
+        stepsList.add(new DrivePosition1State());
+        stepsList.add(new WaitState(0));
         stepsList.add(new MoveState(-8.6, 0.4));
-       // stepsList.add(new WaitState(0));
-        stepsList.add(new RotateState(40*isRed,0.4));
-       // stepsList.add(new WaitState(0));
-        stepsList.add(new MoveState(-72, 0.4));
+        stepsList.add(new WaitState(0));
+        stepsList.add(new RotateState(40*isRed,0.9));
+        stepsList.add(new WaitState(0));
+        stepsList.add(new MoveState(-72, 0.6));
         //stepsList.add(new WaitState(0));
-        stepsList.add(new RotateState(-32*isRed,0.4));
-        //stepsList.add(new WaitState(0));
+        stepsList.add(new RotateState(-32*isRed,0.8));
+        stepsList.add(new WaitState(0));
         stepsList.add(new MoveState(-25, 0.4));
         stepsList.add(new MoveState(-7.1, 0.2));
 
-       //stepsList.add(new WaitState(0));
+       stepsList.add(new WaitState(0));
         //stepsList.add(new RotateState(-3,0.4));
        // stepsList.add(new WaitState(0));
         stepsList.add(new MoveToColor(isRed, -5.5, 0.4));

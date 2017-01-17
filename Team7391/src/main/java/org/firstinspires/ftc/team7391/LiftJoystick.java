@@ -82,33 +82,19 @@ public class LiftJoystick {
 
         }
         else {
-            if (gamepad2.y) {
-                Lift.setTestMode(Lift.TestModes.MODE_MOVE_TOP, liftPower);
-            } else {
-                Lift.setTestMode(Lift.TestModes.MODE_MOVE_TOP, 0);
-            }
-
             if (gamepad2.b) {
-                //DriveTrain.testRotateDegrees(positiveNumber);
+                Lift.setTestMode(Lift.TestModes.MODE_MOVE_TOP, liftPower);
                 Lift.setTestMode(Lift.TestModes.MODE_MOVE_HIGH, liftPower);
-            } else {
-                Lift.setTestMode(Lift.TestModes.MODE_MOVE_HIGH, 0);
-            }
-
-            if (gamepad2.a) {
                 Lift.setTestMode(Lift.TestModes.MODE_MOVE_MID, liftPower);
-            } else {
-                Lift.setTestMode(Lift.TestModes.MODE_MOVE_MID, 0);
-            }
-
-
-            if (gamepad2.x) {
                 Lift.setTestMode(Lift.TestModes.MODE_MOVE_LOW, liftPower);
             } else {
+                Lift.setTestMode(Lift.TestModes.MODE_MOVE_TOP, 0);
+                Lift.setTestMode(Lift.TestModes.MODE_MOVE_HIGH, 0);
+                Lift.setTestMode(Lift.TestModes.MODE_MOVE_MID, 0);
                 Lift.setTestMode(Lift.TestModes.MODE_MOVE_LOW, 0);
             }
 
-            if (gamepad2.dpad_up) {
+            if (gamepad2.a) {
                 Lift.setTestMode(Lift.TestModes.MODE_MOVE_WRIST, liftPower);
             } else {
                 Lift.setTestMode(Lift.TestModes.MODE_MOVE_WRIST, 0);
