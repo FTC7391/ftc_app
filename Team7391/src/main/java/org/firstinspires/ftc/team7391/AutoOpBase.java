@@ -24,6 +24,8 @@ public class AutoOpBase extends OpMode {
 
     protected static Zipline pusher_right;
     protected static Zipline pusher_left;
+    protected static final double DEFAULT_MOVE_POWER = 0.65;
+    protected static final double DEFAULT_TURN_POWER = 0.6;
 
     private ColorSensor colorSensor;
     private ColorSensor colorRight;
