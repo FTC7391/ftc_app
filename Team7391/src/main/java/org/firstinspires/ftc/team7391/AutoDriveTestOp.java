@@ -25,27 +25,27 @@ public class AutoDriveTestOp extends AutoOpBase
 //        stepsList.add(new DrivePosition1State());
 
         stepsList.add(new WaitState(0));//press a on gamepad 1
-        stepsList.add(new RotateState(90,0.5));
+        stepsList.add(new RotateState(90,0.7));
         stepsList.add(new WaitState(0));//press a on gamepad 1
-        stepsList.add(new RotateState(90,0.5));
+        stepsList.add(new RotateState(90,0.7));
 
 
         stepsList.add(new WaitState(0));//press a on gamepad 1
-        stepsList.add(new RotateState(-90,0.5));
+        stepsList.add(new RotateState(-90,0.65));
         stepsList.add(new WaitState(0));//press a on gamepad 1
-        stepsList.add(new RotateState(-90,0.5));
+        stepsList.add(new RotateState(-90,0.65));
 
 
         stepsList.add(new WaitState(0));//press a on gamepad 1
-        stepsList.add(new RotateState(45,0.5));
+        stepsList.add(new RotateState(90,0.6));
         stepsList.add(new WaitState(0));//press a on gamepad 1
-        stepsList.add(new RotateState(45,0.5));
+        stepsList.add(new RotateState(90,0.6));
 
 
         stepsList.add(new WaitState(0));//press a on gamepad 1
-        stepsList.add(new RotateState(-45,0.5));
+        stepsList.add(new RotateState(90,0.55));
         stepsList.add(new WaitState(0));//press a on gamepad 1
-        stepsList.add(new RotateState(-45,0.5));
+        stepsList.add(new RotateState(90,0.55));
 
         stepsList.add(new WaitState(0));//press a on gamepad 1
         stepsList.add(new MoveState(24,0.4));

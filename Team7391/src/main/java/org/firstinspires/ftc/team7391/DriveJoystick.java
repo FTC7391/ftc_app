@@ -47,8 +47,8 @@ public class DriveJoystick {
 
     public static void update(Gamepad gamepad1) {
 
-        axialPower = scaleInput(gamepad1.left_stick_y)/2;
-        rotatePower = scaleInput(gamepad1.right_stick_x)/2;
+        axialPower = scaleInput(gamepad1.left_stick_y);
+        rotatePower = scaleInput(gamepad1.right_stick_x);
 
 		/*
 		 * Gamepad 1

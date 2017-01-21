@@ -200,7 +200,7 @@ public class Lift {
             stages[stageNum].motor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 //            liftHighTargetPosition = liftHigh.getCurrentPosition();
 //            liftHigh.setTargetPosition(liftHighTargetPosition); //OUT
-            stages[stageNum].motor.setPower(1);
+            stages[stageNum].motor.setPower(stages[stageNum].MAX_POWER);
             Log.i("FTC7391", "Lift: " + stages[stageNum].name + "RunToPosition"  );
         }
     }
