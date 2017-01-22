@@ -46,20 +46,22 @@ public class LiftJoystick {
 
             if (gamepad2.dpad_up) {
                 if (gamepad2.y) {
-                    Lift.raiseBallPosition1();
+                    Lift.grabPosition();
                 }
                 if (gamepad2.b) {
-                    Lift.raiseBallPosition2();
+                    Lift.raiseBallPosition1();
                 }
                 if (gamepad2.a) {
-                    Lift.dropBall1();
+                    Lift.raiseBallPosition2();
                 }
                 if (gamepad2.x) {
+                    Lift.dropBall1();
+                    //wait???
                     Lift.dropBall2();
                 }
 
             }
-            else {
+            else if (gamepad2.dpad_down) {
 
                 if (gamepad2.y) {
                     Lift.initPosition();
@@ -68,7 +70,7 @@ public class LiftJoystick {
                     Lift.drivePosition1();
                 }
                 if (gamepad2.a) {
-                    Lift.grabPosition();
+                    //Lift.grabPosition();
                 }
                 if (gamepad2.b) {
                     Lift.holdBall();
@@ -78,21 +80,34 @@ public class LiftJoystick {
 
         }
         else {
-            if (gamepad2.b) {
+            if (gamepad2.y) {
                 Lift.setTestMode(Lift.TestModes.MODE_MOVE_TOP, liftPower);
-                Lift.setTestMode(Lift.TestModes.MODE_MOVE_HIGH, liftPower);
-                Lift.setTestMode(Lift.TestModes.MODE_MOVE_MID, liftPower);
-                Lift.setTestMode(Lift.TestModes.MODE_MOVE_LOW, liftPower);
-            } else {
+            }
+            else {
                 Lift.setTestMode(Lift.TestModes.MODE_MOVE_TOP, 0);
+            }
+            if (gamepad2.b) {
+                Lift.setTestMode(Lift.TestModes.MODE_MOVE_HIGH, liftPower);
+            }
+            else {
                 Lift.setTestMode(Lift.TestModes.MODE_MOVE_HIGH, 0);
+            }
+            if (gamepad2.x) {
+                Lift.setTestMode(Lift.TestModes.MODE_MOVE_MID, liftPower);
+            }
+            else {
                 Lift.setTestMode(Lift.TestModes.MODE_MOVE_MID, 0);
+            }
+            if (gamepad2.a) {
+                Lift.setTestMode(Lift.TestModes.MODE_MOVE_LOW, liftPower);
+            }
+            else {
                 Lift.setTestMode(Lift.TestModes.MODE_MOVE_LOW, 0);
             }
-
-            if (gamepad2.a) {
+            if (gamepad2.dpad_up) {
                 Lift.setTestMode(Lift.TestModes.MODE_MOVE_WRIST, liftPower);
-            } else {
+            }
+            else {
                 Lift.setTestMode(Lift.TestModes.MODE_MOVE_WRIST, 0);
             }
 
