@@ -42,7 +42,7 @@ public class Lift {
             new Stage("stage1", 0, 12000),    //mid
             new Stage("stage2", 0, 12000),   //high
             new Stage("stage3", 0, 6000),    //12000 real max
-            new Stage("wrist", 0, -2300, 1.0)    //wrist
+            new Stage("wrist", -2300, 0, 1.0)    //wrist
     };
 
     private static final int NUM_STAGES = 5;
@@ -132,7 +132,7 @@ public class Lift {
 
     public static void setMotorDirection(){
         stages[0].motor.setDirection(DcMotor.Direction.FORWARD);
-        stages[1].motor.setDirection(DcMotor.Direction.FORWARD);
+        stages[1].motor.setDirection(DcMotor.Direction.REVERSE);
         stages[2].motor.setDirection(DcMotor.Direction.FORWARD);
         stages[3].motor.setDirection(DcMotor.Direction.FORWARD);
         stages[4].motor.setDirection(DcMotor.Direction.REVERSE);
@@ -419,17 +419,17 @@ public class Lift {
 
 
             case MODE_MOVE_WRIST:
-                if (bLimits && (power > 0 && stages[4].motor.getCurrentPosition() > stages[4].MAX_TICKS ||
-                        power < 0 && stages[4].motor.getCurrentPosition() < stages[4].MIN_TICKS )){
-                    stages[4].motor.setPower(0);
+//                if (bLimits && (power > 0 && stages[4].motor.getCurrentPosition() < stages[4].MIN_TICKS ||
+//                        power < 0 && stages[4].motor.getCurrentPosition() > stages[4].MAX_TICKS )){
+//                    stages[4].motor.setPower(0);
                     Log.d("FTC7391", "Lift: " + "wrist power = 0" );
                     //wristRunToPosition();  // Shouldn't need to do this
-                }
-                else{
+                //}
+                //else{
                     //wristRunUsingEncoders();
                     stages[4].motor.setPower(stages[4].MAX_POWER * power);    //negative power = backwards
                     //Log.v("FTC7391", "Lift: " + "WRIST_MAX_POWER" );
-                }
+                //}
                 break;
 
 
@@ -473,6 +473,7 @@ public class Lift {
             stages[3].motor.getCurrentPosition(),
             stages[4].motor.getCurrentPosition()
         );
+        setPowerOfMotors(0, 0, 0, 0, 0);
     }
 
 
