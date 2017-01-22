@@ -22,7 +22,7 @@ public abstract class AutoBeaconOp extends AutoOpBase
         stepsList.add(new WaitState(0));
         stepsList.add(new MoveState(-8.6, DEFAULT_MOVE_POWER));
         stepsList.add(new WaitState(0));
-        stepsList.add(new RotateState(40*isRed,DEFAULT_TURN_POWER));
+        stepsList.add(new RotateState(35*isRed,DEFAULT_TURN_POWER));
         stepsList.add(new WaitState(0));
         stepsList.add(new MoveState(-72, DEFAULT_MOVE_POWER));
         //stepsList.add(new WaitState(0));
