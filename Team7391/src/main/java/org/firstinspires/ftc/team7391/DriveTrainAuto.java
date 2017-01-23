@@ -56,6 +56,11 @@ public class DriveTrainAuto extends DriveTrain{
 
         power = Math.abs(power);
         ticks = (int) (distance * TICKS_PER_INCH);
+        if( distance > 0 )
+            ticks = (int) (distance * TICKS_PER_INCH);
+        else
+            ticks = (int) (0.92*distance * TICKS_PER_INCH);
+
         setMotorTargetPosition(ticks, ticks, ticks, ticks);
         if (distance > 0)
             setPowerOfMotors(power, power);

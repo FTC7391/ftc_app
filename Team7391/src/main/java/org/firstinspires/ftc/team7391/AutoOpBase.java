@@ -790,7 +790,7 @@ public class AutoOpBase extends OpMode {
 
         public void init() {
             super.init();
-            inches = -35-distMovedToColor;
+            inches = 35-distMovedToColor;
             power = 0.4;
             Log.i("FTC7391", "Auto: " + "MoveState init  inches:" + inches + " power:" + power );
             DriveTrainAuto.moveInches(inches, power);

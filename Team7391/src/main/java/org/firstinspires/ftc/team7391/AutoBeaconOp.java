@@ -20,25 +20,26 @@ public abstract class AutoBeaconOp extends AutoOpBase
 
         stepsList.add(new DrivePosition1State());
         stepsList.add(new WaitState(0));
-        stepsList.add(new MoveState(-8.6, DEFAULT_MOVE_POWER));
+        stepsList.add(new MoveState(-7.6, DEFAULT_MOVE_POWER));
         stepsList.add(new WaitState(0));
-        stepsList.add(new RotateState(40*isRed,DEFAULT_TURN_POWER));
+        stepsList.add(new RotateState(35*isRed,DEFAULT_TURN_POWER));
         stepsList.add(new WaitState(0));
         stepsList.add(new MoveState(-72, DEFAULT_MOVE_POWER));
         //stepsList.add(new WaitState(0));
-        stepsList.add(new RotateState(-32*isRed,DEFAULT_TURN_POWER));
+        stepsList.add(new RotateState(-34*isRed,DEFAULT_TURN_POWER));
         stepsList.add(new WaitState(0));
-        stepsList.add(new MoveState(-25, DEFAULT_MOVE_POWER));
-        stepsList.add(new MoveState(-7.1, DEFAULT_MOVE_POWER/2));
+        stepsList.add(new MoveState(-31.5, DEFAULT_MOVE_POWER));
+        //stepsList.add(new MoveState(-7.1, DEFAULT_MOVE_POWER/2));
 
        stepsList.add(new WaitState(0));
         //stepsList.add(new RotateState(-3,0.4));
        // stepsList.add(new WaitState(0));
         stepsList.add(new MoveToColor(isRed, -5.5, DEFAULT_MOVE_POWER));
+        stepsList.add(new WaitState(0));
         stepsList.add(new MoveState(3, DEFAULT_MOVE_POWER));  //move past first button before deploying pusher
-        //stepsList.add(new WaitState(0));
+        stepsList.add(new WaitState(0));
         stepsList.add(new PusherState(isRed, true));   //true = deploy
-        //stepsList.add(new WaitState(0));
+        stepsList.add(new WaitState(0));
         stepsList.add(new MoveState(5, DEFAULT_MOVE_POWER/2));
         //stepsList.add(new WaitState(0));
         stepsList.add(new PusherState(isRed, false));   //false = retract
@@ -60,6 +61,14 @@ public abstract class AutoBeaconOp extends AutoOpBase
         stepsList.add(new MoveState(5, DEFAULT_MOVE_POWER/2));
         //stepsList.add(new WaitState(0));
         stepsList.add(new PusherState(isRed, false));   //false = retract
+        stepsList.add(new WaitState(0));
+        stepsList.add(new RotateState(10,DEFAULT_TURN_POWER));
+        stepsList.add(new WaitState(0));
+        stepsList.add(new MoveState(15, DEFAULT_MOVE_POWER/2));
+        stepsList.add(new WaitState(0));
+        stepsList.add(new RotateState(-10,DEFAULT_TURN_POWER));
+        stepsList.add(new WaitState(0));
+        stepsList.add(new MoveState(15, DEFAULT_MOVE_POWER/2));
 
 
 //        stepsList.add(new RotateState(45,1));

@@ -24,7 +24,7 @@ public class AutoDriveTestOp extends AutoOpBase
 //        stepsList.add(new WaitState(0));//press a on gamepad 1
 //        stepsList.add(new DrivePosition1State());
 
-        stepsList.add(new WaitState(0));//press a on gamepad 1
+        /*stepsList.add(new WaitState(0));//press a on gamepad 1
         stepsList.add(new RotateState(90,0.7));
         stepsList.add(new WaitState(0));//press a on gamepad 1
         stepsList.add(new RotateState(90,0.7));
@@ -46,24 +46,25 @@ public class AutoDriveTestOp extends AutoOpBase
         stepsList.add(new RotateState(90,0.55));
         stepsList.add(new WaitState(0));//press a on gamepad 1
         stepsList.add(new RotateState(90,0.55));
+        */
 
         stepsList.add(new WaitState(0));//press a on gamepad 1
-        stepsList.add(new MoveState(24,0.4));
+        stepsList.add(new MoveState(24,DEFAULT_MOVE_POWER));
         stepsList.add(new WaitState(0));//press a on gamepad 1
-        stepsList.add(new MoveState(-24,0.4));
+        stepsList.add(new MoveState(-24,DEFAULT_MOVE_POWER));
         stepsList.add(new WaitState(0));//press a on gamepad 1
-        stepsList.add(new MoveState(24,0.4));
+        stepsList.add(new MoveState(24,DEFAULT_MOVE_POWER));
         stepsList.add(new WaitState(0));
-        stepsList.add(new MoveState(-24,0.4));
+        stepsList.add(new MoveState(-24,DEFAULT_MOVE_POWER));
 
         stepsList.add(new WaitState(0));
-        stepsList.add(new MoveState(6,0.4));
+        stepsList.add(new MoveState(6,DEFAULT_MOVE_POWER));
         stepsList.add(new WaitState(0));
-        stepsList.add(new MoveState(6,0.4));
+        stepsList.add(new MoveState(6,DEFAULT_MOVE_POWER));
         stepsList.add(new WaitState(0));
-        stepsList.add(new MoveState(6,0.4));
+        stepsList.add(new MoveState(6,DEFAULT_MOVE_POWER));
         stepsList.add(new WaitState(0));
-        stepsList.add(new MoveState(6,0.4));
+        stepsList.add(new MoveState(6,DEFAULT_MOVE_POWER));
 
 
 

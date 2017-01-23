@@ -491,7 +491,7 @@ public class Lift {
     public static void drivePosition1(){
         Log.i("FTC7391", "Lift: " + "drivePostion1 ");
         //runToPosition();
-        setMotorTargetPosition(300, 0, 0, 0, 0);
+        setMotorTargetPosition(600, 0, 0, 0, 0);
      }
 
      public static void grabPosition(){
