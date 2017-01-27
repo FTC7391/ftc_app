@@ -81,16 +81,16 @@ public class AutoOpBase extends OpMode {
         pusher_left.setRetractedPosition();
 
         colorRight = hardwareMap.colorSensor.get("color_right"); // 0X38 Default
-        colorRight.setI2cAddress(I2cAddr.create8bit(0X4C));
+        colorRight.setI2cAddress(I2cAddr.create8bit(0X5C));
         colorRight.enableLed(false);
         colorLeft = hardwareMap.colorSensor.get("color_left");
         colorLeft.setI2cAddress(I2cAddr.create8bit(0X3C));
         colorLeft.enableLed(false);
         colorRightBottom = hardwareMap.colorSensor.get("color_right_bottom");
-        colorRightBottom.setI2cAddress(I2cAddr.create8bit(0X5C));
+        colorRightBottom.setI2cAddress(I2cAddr.create8bit(0X6C));
         colorRight.enableLed(false);
         colorLeftBottom = hardwareMap.colorSensor.get("color_left_bottom");
-        colorLeftBottom.setI2cAddress(I2cAddr.create8bit(0X6C));
+        colorLeftBottom.setI2cAddress(I2cAddr.create8bit(0X4C));
         colorLeft.enableLed(false);
 
         Log.i("FTC7391", "Auto: " + " Color Left Address: " + colorLeft.getI2cAddress().get8Bit());
@@ -148,6 +148,69 @@ public class AutoOpBase extends OpMode {
 
     }
 
+
+
+
+
+    /* ----- STATES --------------*/
+    protected class WaitState extends State {
+
+        private int counter = 0;
+        private int waitTime;
+
+        public WaitState(int seconds)
+        {
+            waitTime = (int)(seconds * 160);
+            Log.i("FTC7391", "Auto: " + "WaitTime constructor " + "waitTime:" + waitTime);
+        }
+
+        public void init(){
+            super.init();
+            DriveTrainAuto.moveInches(0, 0);
+            stateStr = "WAIT";
+            showTelemetryStateInfo();
+        }
+
+        public boolean updateState(){
+            counter++;
+            //if(counter%2 == 1)
+            //if (counter%100 == 0)
+            // Log.d("FTC7391", "Auto: " + "WaitSate counter:" + counter  + " waitTime:" + waitTime + " gamepad1.a:" + gamepad1.a);
+
+            return (counter == waitTime || gamepad1.a);
+            //else
+            //return (counter == waitTime || gamepad1.b);
+
+        }
+
+    }
+
+    protected class TestPositionState extends State {
+
+        public void init(){
+            super.init();
+            Lift.testPosition();
+            stateStr = "TEST POSITION";
+        }
+
+        public boolean updateState() { return Lift.isDone(); }
+    }
+
+    protected class DrivePosition1State extends State {
+
+        public void init(){
+            super.init();
+            Lift.drivePosition1();
+            stateStr = "DRIVE POSITION 1";
+
+        }
+
+        public boolean updateState() {
+            Log.v("FTC7391", "Lift DrivePosition1 State update");
+            return Lift.isDone(); }
+
+    }
+
     protected class MoveState extends State {
 
         private double inches;
@@ -175,6 +238,34 @@ public class AutoOpBase extends OpMode {
         }
 
     }
+
+    protected class RotateState extends State {
+
+        protected double degrees;
+        protected double power;
+
+        public RotateState(double d, double p){
+            degrees = d;
+            power = p;
+            stateStr = "ROTATE" + d + "degrees";
+
+
+        }
+
+        public void init (){
+            super.init();
+            DriveTrainAuto.rotateDegrees(degrees, power);
+            dbgWriter.printf("Rotate Degrees %f \n", degrees);
+            telemetry.addData(TAG, "Rotate Degrees " + degrees);
+            showTelemetryStateInfo();
+        }
+
+        public boolean updateState(){
+            return DriveTrainAuto.isDone();
+        }
+
+    }
+
 
     protected class ColorTestState extends State {
 
@@ -214,11 +305,13 @@ public class AutoOpBase extends OpMode {
 
         public ColorState(int isRed){
             if(isRed == 1){
-                colorSensor = colorLeft;
+                colorSensor = colorRight;
+                Log.d("FTC7391", "Red so Color Right");
             }
             else //if(isRed == -1)
             {
-                colorSensor = colorRight;
+                colorSensor = colorLeft;
+                Log.d("FTC7391", "Blue so Color Color Left");
             }
         }
 
@@ -278,16 +371,18 @@ public class AutoOpBase extends OpMode {
             this.inches = inches;
             this.power = power;
             isMoving = false;
-            
-            
+
             if(isRed == 1){
-                colorSensor = colorLeft;
+                colorSensor = colorRight;
+                Log.d("FTC7391", "Red so Color Right");
             }
             else //if(isRed == -1)
             {
-                colorSensor = colorRight;
+                colorSensor = colorLeft;
+                Log.d("FTC7391", "Blue so Color Color Left");
             }
-        }
+
+         }
 
         public void init() {
             super.init();
@@ -442,174 +537,6 @@ public class AutoOpBase extends OpMode {
 
 
 
-    protected class WaitState extends State {
-
-        private int counter = 0;
-        private int waitTime;
-
-        public WaitState(int seconds)
-        {
-            waitTime = (int)(seconds * 160);
-            Log.i("FTC7391", "Auto: " + "WaitTime constructor " + "waitTime:" + waitTime);
-        }
-
-        public void init(){
-            super.init();
-            DriveTrainAuto.moveInches(0, 0);
-            stateStr = "WAIT";
-            showTelemetryStateInfo();
-        }
-
-        public boolean updateState(){
-            counter++;
-            //if(counter%2 == 1)
-            //if (counter%100 == 0)
-               // Log.d("FTC7391", "Auto: " + "WaitSate counter:" + counter  + " waitTime:" + waitTime + " gamepad1.a:" + gamepad1.a);
-
-            return (counter == waitTime || gamepad1.a);
-            //else
-                //return (counter == waitTime || gamepad1.b);
-
-        }
-
-    }
-
-
-    protected class RunToPositionState extends State {
-
-        private int counter = 0;
-        private int waitTime;
-
-        public RunToPositionState(int seconds){
-            waitTime = (int)(seconds * 40);
-        }
-
-        public void init(){
-            super.init();
-            DriveTrainAuto.moveInches(0, 0);
-            stateStr = "RUN TO POSITION STATE";
-            showTelemetryStateInfo();
-        }
-
-        public boolean updateState(){
-            counter++;
-            //if(counter%2 == 1)
-            return (counter == waitTime || gamepad1.b);
-            //else
-            //return (counter == waitTime || gamepad1.b);
-
-        }
-
-    }
-
-    protected class PauseState extends State {
-
-        private int counter = 0;
-
-        public PauseState(){
-
-        }
-
-        public void init(){
-            super.init();
-            DriveTrainAuto.moveInches(0, 0);
-        }
-
-        public boolean updateState(){
-            counter++;
-            return (counter == 1);
-        }
-
-    }
-
-    protected class RotateState extends State {
-
-        protected double degrees;
-        protected double power;
-
-        public RotateState(double d, double p){
-            degrees = d;
-            power = p;
-            stateStr = "ROTATE" + d + "degrees";
-
-
-        }
-
-        public void init (){
-            super.init();
-            DriveTrainAuto.rotateDegrees(degrees, power);
-            dbgWriter.printf("Rotate Degrees %f \n", degrees);
-            telemetry.addData(TAG, "Rotate Degrees " + degrees);
-            showTelemetryStateInfo();
-        }
-
-        public boolean updateState(){
-            return DriveTrainAuto.isDone();
-        }
-
-    }
-
-    protected class StopState extends State {
-
-        public StopState(){
-        }
-
-        public void init(){
-            super.init();
-            DriveTrainAuto.moveInches(0, 0);
-            stateStr = "STOP";
-        }
-
-        public boolean updateState(){
-            return false;
-        }
-
-    }
-
-    protected class StickLiftState extends State {
-
-        private int counter = 0;
-        private int waitTime;
-
-        public StickLiftState(){
-            waitTime = 500;
-        }
-
-        public void init(){
-            super.init();
-            DriveTrainAuto.moveInches(0, 0);
-            //Lift.stickLift();
-            stateStr = "STICK LIFT";
-        }
-
-        public boolean updateState(){
-            counter++;
-            return (counter == waitTime || gamepad1.b);
-        }
-
-    }
-    protected class StickDrivePositionState extends State {
-
-        private int counter = 0;
-        private int waitTime;
-
-        public StickDrivePositionState(){
-            waitTime = 100;
-        }
-
-        public void init(){
-            super.init();
-            DriveTrainAuto.moveInches(0, 0);
-            stateStr = "STICK DRIVE POSITION";
-        }
-
-        public boolean updateState(){
-            counter++;
-            return (counter == waitTime || gamepad1.b);
-        }
-
-    }
-
 
 
     protected class PusherState extends State {
@@ -655,78 +582,251 @@ public class AutoOpBase extends OpMode {
 
     }
 
-    protected class StickState extends State {
+      protected class MoveToSecondBeacon extends State {
+
+        private double inches;
+        private double power;
+
+        public MoveToSecondBeacon(double inches, double power){
+            this.inches = inches;
+            this.power = power;
+            Log.i("FTC7391", "Auto: " + "MoveToSecondBeacon constructor  inches:" + inches + " power:" + power );
+        }
+
+        public void init() {
+            super.init();
+            inches = inches - distMovedToColor;
+            Log.i("FTC7391", "Auto: " + "MoveToSecondBeacon init  inches:" + inches + " power:" + power );
+            DriveTrainAuto.moveInches(inches, power);
+            dbgWriter.printf("Move Inches %.2f \n", inches);
+            telemetry.addData(TAG, "Move Inches " + inches);
+            stateStr = "MOVE TO SECOND BEACON" + inches;
+            showTelemetryStateInfo();
+        }
+
+        public boolean updateState(){
+            return DriveTrainAuto.isDone();
+        }
+
+    }
+
+
+    protected class MoveToRightButtonBeacon2 extends State {
+
+        private double inches;
+        private double power;
+
+        public MoveToRightButtonBeacon2(double inches, double power){
+            this.inches = inches;
+            this.power = power;
+            Log.i("FTC7391", "Auto: " + "MoveToRightButtonBeacon2 constructor  inches:" + inches + " power:" + power );
+        }
+
+        public void init() {
+            super.init();
+            inches = inches - distMovedToColor;
+            Log.i("FTC7391", "Auto: " + "MoveToRightButtonBeacon2 init  inches:" + inches + " power:" + power );
+            DriveTrainAuto.moveInches(inches, power);
+            dbgWriter.printf("Move Inches %.2f \n", inches);
+            telemetry.addData(TAG, "Move Inches " + inches);
+            stateStr = "MOVE TO RIGHT BUTTON BEACON2" + inches;
+            showTelemetryStateInfo();
+        }
+
+        public boolean updateState(){
+            return DriveTrainAuto.isDone();
+        }
+
+    }
+
+
+    protected class PauseState extends State {
 
         private int counter = 0;
-        private int waitTime;
 
-        public StickState(){
-            waitTime = 50;
+        public PauseState(){
+
         }
 
         public void init(){
             super.init();
             DriveTrainAuto.moveInches(0, 0);
-            stateStr = "STICK";
         }
 
         public boolean updateState(){
             counter++;
-            return (counter == waitTime || gamepad1.b);
+            return (counter == 1);
         }
 
     }
 
-    protected class StickMoveState extends State {
+    protected class StopState extends State {
 
-        private int inches;
-        private double power;
-
-        public StickMoveState(int i, double p){
-
-            inches = i;
-            power = p;
-
+        public StopState(){
         }
 
         public void init(){
             super.init();
-            DriveTrainAuto.moveInches(inches, power);
-            stateStr = "STICK MOVE" + inches + "inches";
+            DriveTrainAuto.moveInches(0, 0);
+            stateStr = "STOP";
         }
 
         public boolean updateState(){
-            return Lift.isDone();
+            return false;
         }
 
     }
 
-    protected class TestPositionState extends State {
 
-        public void init(){
-            super.init();
-            Lift.testPosition();
-            stateStr = "TEST POSITION";
-        }
 
-        public boolean updateState() { return Lift.isDone(); }
+
+
+
+
+
+
+    private void showTelemetry() {
+        Log.i("FTC7391", "showTelemetry");
+        showTelemetryState();
+        showTelemetryDrivetrain();
+        showTelemetryLift();
+      }
+
+    private void showTelemetryStateInfo() {
+        telemetry.addData("10", String.format("Auto STATE %s", stateStr));
+        Log.i("FTC7391", "Auto: " + "STATE:" + stateStr + "  step " + step);
+    }
+     private void showTelemetryState() {
+        telemetry.addData("12",String.format("Auto STATE %s", stateStr));
+         Log.d("FTC7391", "Auto: " +  "STATE:" + stateStr + "  step " + step);
+     }
+
+    private void showTelemetryDrivetrain() {
+        telemetry.addData("20 " , String.format("DriveTrain Right %s", DriveTrainAuto.getPosition(DriveTrain.TestModes.MODE_MOVE_RIGHT)));
+        telemetry.addData("21 " , String.format("DriveTrain Left  %s", DriveTrainAuto.getPosition(DriveTrain.TestModes.MODE_MOVE_LEFT)));
+        dbgWriter.printf("r:%s l:%s \n",
+            DriveTrainAuto.getPosition(DriveTrain.TestModes.MODE_MOVE_RIGHT),
+            DriveTrainAuto.getPosition(DriveTrain.TestModes.MODE_MOVE_LEFT));
+
+        Log.d("FTC7391", "Auto: " + "Right:" + DriveTrainAuto.getPosition(DriveTrain.TestModes.MODE_MOVE_RIGHT));
+        Log.d("FTC7391", "Auto: " + "Left :" + DriveTrainAuto.getPosition(DriveTrain.TestModes.MODE_MOVE_LEFT));
+
     }
 
-    protected class DrivePosition1State extends State {
+    private void showTelemetryLift() {
+        telemetry.addData("30 " , String.format("High  : original: %d current: %d", Lift.getOriginalTicksHigh(), Lift.getTicksLiftHigh()));
+        telemetry.addData("31 " , String.format("Low   : original: %d current: %d", Lift.getOriginalTicksLow(), Lift.getTicksLiftLow()));
+        telemetry.addData("32 " , String.format("Angle : original: %d current: %d", Lift.getOriginalTicksMid(), Lift.getTicksLiftMid()));
+        telemetry.addData("33 " , String.format("Hook  : original: %d currnet: %d", Lift.getOriginalTicksWrist(), Lift.getTicksLiftWrist()));
+        dbgWriter.printf("High %d %d    Low %d %d    Angle %d %d     Hook %d %d \n",
+            Lift.getOriginalTicksHigh(), Lift.getTicksLiftHigh(),
+            Lift.getOriginalTicksLow(), Lift.getTicksLiftLow(),
+            Lift.getOriginalTicksMid(), Lift.getTicksLiftMid(),
+            Lift.getOriginalTicksWrist(), Lift.getTicksLiftWrist()
+        );
 
-        public void init(){
-            super.init();
-            Lift.drivePosition1();
-            stateStr = "DRIVE POSITION 1";
-
-        }
-
-        public boolean updateState() {
-            Log.v("FTC7391", "Lift DrivePosition1 State update");
-            return Lift.isDone(); }
+        Log.d("FTC7391", "Auto: " + "High     : original:" + Lift.getOriginalTicksHigh() + "|| end: " + Lift.getTicksLiftHigh());
+        Log.d("FTC7391", "Auto: " + "Low      : original:" + Lift.getOriginalTicksLow()+ "|| end: " + Lift.getTicksLiftLow());
+        Log.d("FTC7391", "Auto: " + "Mid : original:" + Lift.getOriginalTicksMid() + "|| end: " + Lift.getTicksLiftMid());
+        Log.d("FTC7391", "Auto: " + "Wrist    : original:" + Lift.getOriginalTicksWrist() + "|| end: " + Lift.getTicksLiftWrist());
 
     }
 
+
+
+
+
+//    protected class StickDrivePositionState extends State {
+//
+//        private int counter = 0;
+//        private int waitTime;
+//
+//        public StickDrivePositionState(){
+//            waitTime = 100;
+//        }
+//
+//        public void init(){
+//            super.init();
+//            DriveTrainAuto.moveInches(0, 0);
+//            stateStr = "STICK DRIVE POSITION";
+//        }
+//
+//        public boolean updateState(){
+//            counter++;
+//            return (counter == waitTime || gamepad1.b);
+//        }
+//
+//    }
+//
+//    protected class StickState extends State {
+//
+//        private int counter = 0;
+//        private int waitTime;
+//
+//        public StickState(){
+//            waitTime = 50;
+//        }
+//
+//        public void init(){
+//            super.init();
+//            DriveTrainAuto.moveInches(0, 0);
+//            stateStr = "STICK";
+//        }
+//
+//        public boolean updateState(){
+//            counter++;
+//            return (counter == waitTime || gamepad1.b);
+//        }
+//
+//    }
+//
+//    protected class StickMoveState extends State {
+//
+//        private int inches;
+//        private double power;
+//
+//        public StickMoveState(int i, double p){
+//
+//            inches = i;
+//            power = p;
+//
+//        }
+//
+//        public void init(){
+//            super.init();
+//            DriveTrainAuto.moveInches(inches, power);
+//            stateStr = "STICK MOVE" + inches + "inches";
+//        }
+//
+//        public boolean updateState(){
+//            return Lift.isDone();
+//        }
+//
+//    }
+//    protected class StickLiftState extends State {
+//
+//        private int counter = 0;
+//        private int waitTime;
+//
+//        public StickLiftState(){
+//            waitTime = 500;
+//        }
+//
+//        public void init(){
+//            super.init();
+//            DriveTrainAuto.moveInches(0, 0);
+//            //Lift.stickLift();
+//            stateStr = "STICK LIFT";
+//        }
+//
+//        public boolean updateState(){
+//            counter++;
+//            return (counter == waitTime || gamepad1.b);
+//        }
+//
+//    }
+//
+//
 //    protected class DrivePosition2State extends State {
 //
 //        public void init(){
@@ -775,85 +875,6 @@ public class AutoOpBase extends OpMode {
 //
 //        public boolean updateState(){ return Lift.isDone(); }
 //    }
-
-    protected class MoveToSecondState extends State {
-
-
-
-        private double inches;
-        private double power;
-
-        public MoveToSecondState(){
-
-            Log.i("FTC7391", "Auto: " + "MoveState constructor  inches:" + inches + " power:" + power );
-        }
-
-        public void init() {
-            super.init();
-            inches = 35-distMovedToColor;
-            power = 0.4;
-            Log.i("FTC7391", "Auto: " + "MoveState init  inches:" + inches + " power:" + power );
-            DriveTrainAuto.moveInches(inches, power);
-            dbgWriter.printf("Move Inches %.2f \n", inches);
-            telemetry.addData(TAG, "Move Inches " + inches);
-            stateStr = "MOVE INCHES" + inches;
-            showTelemetryStateInfo();
-        }
-
-        public boolean updateState(){
-            return DriveTrainAuto.isDone();
-        }
-
-    }
-
-
-    private void showTelemetry() {
-        Log.i("FTC7391", "showTelemetry");
-        //showTelemetryState();
-        //showTelemetryDrivetrain();
-        //showTelemetryLift();
-      }
-
-    private void showTelemetryStateInfo() {
-        telemetry.addData("10", String.format("Auto STATE %s", stateStr));
-        Log.i("FTC7391", "Auto: " + "STATE:" + stateStr + "  step " + step);
-    }
-     private void showTelemetryState() {
-        telemetry.addData("12",String.format("Auto STATE %s", stateStr));
-         Log.d("FTC7391", "Auto: " +  "STATE:" + stateStr + "  step " + step);
-     }
-
-    private void showTelemetryDrivetrain() {
-        telemetry.addData("20 " , String.format("DriveTrain Right %s", DriveTrainAuto.getPosition(DriveTrain.TestModes.MODE_MOVE_RIGHT)));
-        telemetry.addData("21 " , String.format("DriveTrain Left  %s", DriveTrainAuto.getPosition(DriveTrain.TestModes.MODE_MOVE_LEFT)));
-        dbgWriter.printf("r:%s l:%s \n",
-            DriveTrainAuto.getPosition(DriveTrain.TestModes.MODE_MOVE_RIGHT),
-            DriveTrainAuto.getPosition(DriveTrain.TestModes.MODE_MOVE_LEFT));
-
-        Log.d("FTC7391", "Auto: " + "Right:" + DriveTrainAuto.getPosition(DriveTrain.TestModes.MODE_MOVE_RIGHT));
-        Log.d("FTC7391", "Auto: " + "Left :" + DriveTrainAuto.getPosition(DriveTrain.TestModes.MODE_MOVE_LEFT));
-
-    }
-
-    private void showTelemetryLift() {
-        telemetry.addData("30 " , String.format("High  : original: %d current: %d", Lift.getOriginalTicksHigh(), Lift.getTicksLiftHigh()));
-        telemetry.addData("31 " , String.format("Low   : original: %d current: %d", Lift.getOriginalTicksLow(), Lift.getTicksLiftLow()));
-        telemetry.addData("32 " , String.format("Angle : original: %d current: %d", Lift.getOriginalTicksMid(), Lift.getTicksLiftMid()));
-        telemetry.addData("33 " , String.format("Hook  : original: %d currnet: %d", Lift.getOriginalTicksWrist(), Lift.getTicksLiftWrist()));
-        dbgWriter.printf("High %d %d    Low %d %d    Angle %d %d     Hook %d %d \n",
-            Lift.getOriginalTicksHigh(), Lift.getTicksLiftHigh(),
-            Lift.getOriginalTicksLow(), Lift.getTicksLiftLow(),
-            Lift.getOriginalTicksMid(), Lift.getTicksLiftMid(),
-            Lift.getOriginalTicksWrist(), Lift.getTicksLiftWrist()
-        );
-
-        Log.d("FTC7391", "Auto: " + "High     : original:" + Lift.getOriginalTicksHigh() + "|| end: " + Lift.getTicksLiftHigh());
-        Log.d("FTC7391", "Auto: " + "Low      : original:" + Lift.getOriginalTicksLow()+ "|| end: " + Lift.getTicksLiftLow());
-        Log.d("FTC7391", "Auto: " + "Mid : original:" + Lift.getOriginalTicksMid() + "|| end: " + Lift.getTicksLiftMid());
-        Log.d("FTC7391", "Auto: " + "Wrist    : original:" + Lift.getOriginalTicksWrist() + "|| end: " + Lift.getTicksLiftWrist());
-
-    }
-
 
 
 
