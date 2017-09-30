@@ -11,11 +11,14 @@ import com.qualcomm.robotcore.hardware.*;
 
 public class DriveJoystick {
 
+    protected static final double MAX_POWER = 0.7;
+
     private static final String TAG = TeleOp7391.class.getSimpleName();
     protected FTC7391PrintWriter dbgWriter = new FTC7391PrintWriter("Tele", "Debug");
 
     private static double axialPower;
     private static double rotatePower;
+    private static double strafingPower;
 
     private static Zipline pusher_left;
     private static Zipline pusher_right;
@@ -31,6 +34,7 @@ public class DriveJoystick {
 
     public static double getAxialPower() { return axialPower;}
     public static double getRotatePower() { return rotatePower;}
+    public static double getStrafingPower() { return strafingPower;}
 
 
     public DriveJoystick(HardwareMap hardwareMap) {
@@ -47,8 +51,9 @@ public class DriveJoystick {
 
     public static void update(Gamepad gamepad1) {
 
-        axialPower = scaleInput(gamepad1.left_stick_y) * .7;
-        rotatePower = scaleInput(gamepad1.right_stick_x) * .8;
+        axialPower = scaleInput(gamepad1.left_stick_y) * MAX_POWER;
+        rotatePower = scaleInput(gamepad1.right_stick_x) * MAX_POWER;
+        strafingPower = scaleInput(gamepad1.left_stick_x) * MAX_POWER;
 
 		/*
 		 * Gamepad 1
@@ -100,9 +105,12 @@ public class DriveJoystick {
 
 
 
-        if (axialPower > 0) {
-            DriveTrainTele.setTestMode(DriveTrainTele.TestModes.MODE_MOVE_FORWARD, axialPower, 0);
-        } else if (axialPower < 0) {
+        //if (axialPower != 0 || rotatePower != 0 || strafingPower != 0) {
+            //DriveTrainTele.setTestMode(DriveTrainTele.TestModes.MODE_MOVE_FORWARD, axialPower, 0);
+
+        //}
+        /*
+        else if (axialPower < 0) {
             DriveTrainTele.setTestMode(DriveTrainTele.TestModes.MODE_MOVE_BACKWARD, -axialPower, 0);
         } else if (rotatePower > 0) {
             DriveTrainTele.setTestMode(DriveTrainTele.TestModes.MODE_ROTATE_RIGHT, rotatePower, 0);
@@ -111,19 +119,29 @@ public class DriveJoystick {
         } else {
             DriveTrainTele.setTestMode(DriveTrainTele.TestModes.MODE_STOP, 0, 0);
         }
+        */
 
         if (gamepad1.x){
+            DriveTrainTele.setTestMode(DriveTrainTele.TestModes.MODE_MOVE_LEFT, MAX_POWER, 0);
         }
-
         if (gamepad1.y){
-            //there was something to do with Stick here
+            DriveTrainTele.setTestMode(DriveTrainTele.TestModes.MODE_MOVE_FORWARD, MAX_POWER, 0);
         }
-
         if (gamepad1.b){
+            DriveTrainTele.setTestMode(DriveTrainTele.TestModes.MODE_MOVE_RIGHT, MAX_POWER, 0);
         }
         if (gamepad1.a){
+            DriveTrainTele.setTestMode(DriveTrainTele.TestModes.MODE_MOVE_RIGHT, MAX_POWER, 0);
 
         }
+        if (gamepad1.right_bumper){
+            DriveTrainTele.setTestMode(DriveTrainTele.TestModes.MODE_ROTATE_RIGHT, MAX_POWER, 0);
+        }
+        if (gamepad1.left_bumper){
+            DriveTrainTele.setTestMode(DriveTrainTele.TestModes.MODE_ROTATE_LEFT, MAX_POWER, 0);
+        }
+
+        DriveTrainTele.updatePower(axialPower, strafingPower, rotatePower);
 
         if (gamepad1.dpad_right) {
             Log.i("FTC7391", "PUSHER: right: " + "DEPLOYED");
