@@ -8,11 +8,14 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
  */
 public class DriveTrain {
 
-    protected static DcMotor motorLeft;
-    protected static DcMotor motorRight;
+    protected static DcMotor motorFrontLeft;
+    protected static DcMotor motorFrontRight;
+    protected static DcMotor motorBackRight;
+    protected static DcMotor motorBackLeft;
 
     protected static boolean initialized = false;
 
+    //TBD ASK HARDWARE GUYS
     protected static final double AXLE_LENGTH = 15.8;
     protected static final double WHEEL_DIAMETER = 2.42;
     protected static final int TICKS_PER_REVOLUTION = 1680;
@@ -34,8 +37,10 @@ public class DriveTrain {
         initialized = true;
 
 
-        motorLeft = hardwareMap.dcMotor.get("motor_left");
-        motorRight = hardwareMap.dcMotor.get("motor_right");
+        motorFrontLeft = hardwareMap.dcMotor.get("motor_front_left");
+        motorFrontRight = hardwareMap.dcMotor.get("motor_front_right");
+        motorBackLeft = hardwareMap.dcMotor.get("motor_back_left");
+        motorBackRight = hardwareMap.dcMotor.get("motor_back_right");
 
        setMotorDirection();
 
@@ -44,33 +49,46 @@ public class DriveTrain {
     }
 
     public static void setMotorDirection(){
-        motorLeft.setDirection(DcMotor.Direction.REVERSE);
-        motorRight.setDirection(DcMotor.Direction.FORWARD);
+        motorFrontLeft.setDirection(DcMotor.Direction.FORWARD);
+        motorFrontRight.setDirection(DcMotor.Direction.FORWARD);
+        motorBackLeft.setDirection(DcMotor.Direction.FORWARD);
+        motorBackRight.setDirection(DcMotor.Direction.FORWARD);
     }
 
     protected static void resetEncoders(){
-        motorLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        motorRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        motorFrontLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        motorFrontRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        motorBackLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        motorBackRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
     }
 
     protected static void runToPosition(){
-        motorLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        motorRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        motorFrontLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        motorFrontRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        motorBackLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        motorBackRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
     }
 
     protected static void runUsingEncoders(){
-        motorLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        motorRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        motorFrontLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        motorFrontRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        motorBackLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        motorBackRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
     }
 
     protected static void runWithoutEncoders(){
-        motorLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        motorRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        motorFrontLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        motorFrontRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        motorBackLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        motorBackRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
     }
 
-    protected static void setPowerOfMotors(double rightPower, double leftPower) {
-        motorLeft.setPower(rightPower);
-        motorRight.setPower(leftPower);
+    protected static void setPowerOfMotors(double frontrightPower, double frontleftPower, double backrightPower, double backleftPower) {
+        motorFrontLeft.setPower(frontleftPower);
+        motorFrontRight.setPower(frontrightPower);
+        motorBackLeft.setPower(backleftPower);
+        motorBackRight.setPower(backrightPower);
     }
 
 
@@ -83,13 +101,13 @@ public class DriveTrain {
     public static void setTestMode(TestModes mode, double power) {
         switch (mode) {
             case MODE_MOVE_RIGHT:
-                setPowerOfMotors(power, 0);
+                setPowerOfMotors(power, 0, 0, 0);
                 break;
             case MODE_MOVE_LEFT:
-                setPowerOfMotors(0, power);
+                setPowerOfMotors(0, power, 0, 0);
                 break;
             case MODE_STOP:
-                setPowerOfMotors(0.0,0.0);
+                setPowerOfMotors(0.0,0.0, 0, 0);
                 break;
         }
     }

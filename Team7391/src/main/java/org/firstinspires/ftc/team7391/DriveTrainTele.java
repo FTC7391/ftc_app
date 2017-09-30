@@ -33,7 +33,7 @@ public class DriveTrainTele extends DriveTrain{
     }
 
     public static String getPosition(){
-        return "Current: " + motorRight.getCurrentPosition() + " Target: " + motorRight.getTargetPosition() + " Current: " + motorLeft.getCurrentPosition();
+        return "Current: " + motorFrontRight.getCurrentPosition() + " Target: " + motorFrontRight.getTargetPosition() + " Current: " + motorFrontLeft.getCurrentPosition();
     }
 
     public static void setTestMode(TestModes mode, double power, double lateralPower) {
@@ -53,7 +53,7 @@ public class DriveTrainTele extends DriveTrain{
                 moveLateral(-1 * power);    //negative power = left
                 break;
             case MODE_MOVE_ARC:
-                moveArc(power, lateralPower);
+                //moveArc(power, lateralPower);
                 break;
             case MODE_MOVE_DIAGONAL_RIGHT:
                 moveDiagonal(0); break;
@@ -72,36 +72,63 @@ public class DriveTrainTele extends DriveTrain{
                 rotate(1 * power);
                 break;
             case MODE_STOP:
-                setPowerOfMotors(0.0,0.0);
+                setPowerOfMotors(0.0,0.0,0.0,0.0);
                 break;
         }
     }
 
-    public static void moveAxial(double power) {
-        setPowerOfMotors(power,power);
+    public static void updatePower(double axialPower, double strafingPower, double rotatePower) {
+        // Handle Strafing Movement
+        double LF = 0;
+        double RF = 0;
+        double LB = 0;
+        double RB = 0;
+
+        LF += axialPower;
+        RF -= axialPower;
+        LB -= axialPower;
+        RB += axialPower;
+        // Handle Regular Movement
+        LF += strafingPower;
+        RF += strafingPower;
+        LB += strafingPower;
+        RB += strafingPower;
+        // Handle Turning Movement
+        LF += rotatePower;
+        RF -= rotatePower;
+        LB += rotatePower;
+        RB -= rotatePower;
+
+        setPowerOfMotors(RF, LF, RB, LB);
+    }
+
+    public static void moveAxial(double power){
+        setPowerOfMotors(-power,power,power,-power);
     }
     public static void moveLateral(double power) {
-        setPowerOfMotors(power, -power);
+        setPowerOfMotors(power, power, power, power);
     }
 
     //angle is angle counterclockwise from right
+
+    //TBD!!!
     public static void moveDiagonal(double angle){
         double frontLeft = (Math.cos(angle) + Math.sin(angle)) / (Math.sqrt(2));
         double frontRight = (Math.sin(angle) - Math.cos(angle)) / (Math.sqrt(2));
-        setPowerOfMotors(frontRight, frontLeft);
+        //setPowerOfMotors(frontRight, frontLeft, );
     }
     public static void moveArc(double axialPower, double rotatePower) {
         if (rotatePower > 0) {
-            setPowerOfMotors(axialPower, rotatePower);
+            //setPowerOfMotors(axialPower, rotatePower);
         }
         else {
-            setPowerOfMotors(axialPower, rotatePower);
+            //setPowerOfMotors(axialPower, rotatePower);
         }
     }
 
     public static void rotate(double power) {
         //Positive power, rotate to the left, frontRight & backRight postive
-        setPowerOfMotors(-power, power);
+        setPowerOfMotors(-power, power, -power, power);
     }
 
     /*
@@ -133,6 +160,7 @@ public class DriveTrainTele extends DriveTrain{
 
         return dScale;
     }
+
 
 }
 

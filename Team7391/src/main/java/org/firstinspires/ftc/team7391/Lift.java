@@ -329,7 +329,7 @@ public class Lift {
         MODE_GOTO_GRABPOSITION,
         MODE_GOTO_HOLDBALL,
 
-         MODE_STOP
+        MODE_STOP
     }
 
     public static void runWithoutLimits(){
