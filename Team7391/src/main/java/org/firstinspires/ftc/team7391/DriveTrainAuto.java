@@ -8,6 +8,8 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 /**
  * Created by Allana on 10/3/2015.
  */
+
+
 public class DriveTrainAuto extends DriveTrain{
 
     private static int frontRightTargetTick = 0;
@@ -28,19 +30,20 @@ public class DriveTrainAuto extends DriveTrain{
 
     public static void stop(){
         DriveTrain.resetEncoders();
-        DriveTrainAuto.setPowerOfMotors(0, 0);
+        DriveTrainAuto.setPowerOfMotors(0, 0, 0, 0);
     }
 
     public static String getPosition(TestModes mode){
 
         switch (mode) {
             case MODE_MOVE_RIGHT:
-                return "Current: "+ motorRight.getCurrentPosition() + " Target: " + motorRight.getTargetPosition();
+                return "Current: "+ motorFrontRight.getCurrentPosition() + " Target: " + motorFrontRight.getTargetPosition();
             case MODE_MOVE_LEFT:
-                return "Current: "+ motorLeft.getCurrentPosition() + " Target: " + motorLeft.getTargetPosition();
+                return "Current: "+ motorFrontLeft.getCurrentPosition() + " Target: " + motorFrontLeft.getTargetPosition();
             default:
                 return "Invalid DriveTrain getPosition() mode = " + mode;
         }
+
     }
 
     /**Move Inches.
@@ -63,9 +66,9 @@ public class DriveTrainAuto extends DriveTrain{
 
         setMotorTargetPosition(ticks, ticks, ticks, ticks);
         if (distance > 0)
-            setPowerOfMotors(power, power);
+            setPowerOfMotors(power, power, power, power);   //TBD Should powers be positive or negative, ALL PLACES.
         else if (distance < 0)
-            setPowerOfMotors(-power, -power);
+            setPowerOfMotors(-power, -power, power, power);
 
 //        else
 //            //setPowerOfMotors(0.0, 0.0, 0.0, 0.0);
@@ -73,10 +76,10 @@ public class DriveTrainAuto extends DriveTrain{
 
     public static void moveLateralInches(boolean right, int distance, double power) {
         if (right) {
-            setPowerOfMotors(power, -power);
+            setPowerOfMotors(power, -power, power, power);
             setMotorTargetPosition(distance, -distance, -distance, distance);
         } else { // if (!right)
-            setPowerOfMotors(-power, power);
+            setPowerOfMotors(-power, power, power, power);
             setMotorTargetPosition(-distance, distance, distance, -distance);
         }
     }
@@ -89,7 +92,7 @@ public class DriveTrainAuto extends DriveTrain{
     public static void moveDiagonalInches(double angle, int distance){
         double frontLeft = (Math.cos(angle) + Math.sin(angle));
         double frontRight = (Math.sin(angle) - Math.cos(angle));
-        setPowerOfMotors(frontRight / Math.sqrt(2), frontLeft / Math.sqrt(2));
+        setPowerOfMotors(frontRight / Math.sqrt(2), frontLeft / Math.sqrt(2), frontLeft, frontLeft);    //TBD
         //setMotorTargetPosition(frontRight/distance, frontLeft/distance, frontLeft/distance, frontRight/distance);
 
     }
@@ -115,10 +118,10 @@ public class DriveTrainAuto extends DriveTrain{
 
         if (degrees > 0) {
             //Rotate to the left,frontRight & backRight postive
-            setPowerOfMotors(power, -power);
+            setPowerOfMotors(power, -power, power, power);  //TBD for last two parameters.
         } else if (degrees < 0)
             //Rotate to the right,frontLeft & backLeft postive
-            setPowerOfMotors(-power, power);
+            setPowerOfMotors(-power, power, power, power);
 //        } else {
 //            //setPowerOfMotors(0.0, 0.0, 0.0, 0.0);
 //        }
@@ -127,8 +130,8 @@ public class DriveTrainAuto extends DriveTrain{
 
     private static void setMotorTargetPosition(int frontRightPosition, int frontLeftPosition, int backRightPosition, int backLeftPosition) {
         runToPosition();
-        motorRight.setTargetPosition(motorRight.getCurrentPosition() + frontRightPosition);
-        motorLeft.setTargetPosition(motorLeft.getCurrentPosition() + frontLeftPosition);
+        motorFrontRight.setTargetPosition(motorFrontRight.getCurrentPosition() + frontRightPosition);
+        motorFrontLeft.setTargetPosition(motorFrontLeft.getCurrentPosition() + frontLeftPosition);
     }
 
     public static boolean isDone(){
@@ -139,17 +142,17 @@ public class DriveTrainAuto extends DriveTrain{
     public static boolean isAtPosition(){
         boolean frDone = false, flDone = false;
 
-        Log.v("FTC7391", "Auto: " + "DriveTrain " + "         motorR " + motorRight.isBusy() + " " + motorRight.getCurrentPosition() + " " + motorRight.getTargetPosition() +
-              "        motorL " + motorLeft.isBusy() + " " + motorLeft.getCurrentPosition() + " " + motorLeft.getTargetPosition());
+        Log.v("FTC7391", "Auto: " + "DriveTrain " + "         motorR " + motorFrontRight.isBusy() + " " + motorFrontRight.getCurrentPosition() + " " + motorFrontRight.getTargetPosition() +
+              "        motorL " + motorFrontLeft.isBusy() + " " + motorFrontLeft.getCurrentPosition() + " " + motorFrontLeft.getTargetPosition());
 
-        if (/*!motorRight.isBusy() &&*/ Math.abs(motorRight.getCurrentPosition() - motorRight.getTargetPosition()) < MOTOR_POSITION_THESHOLD ){
-        //if ( Math.abs(motorRight.getCurrentPosition() - motorRight.getTargetPosition()) < MOTOR_POSITION_THESHOLD ){
-              //motorRight.setPower(0);
+        if (/*!motorFrontRight.isBusy() &&*/ Math.abs(motorFrontRight.getCurrentPosition() - motorFrontRight.getTargetPosition()) < MOTOR_POSITION_THESHOLD ){
+        //if ( Math.abs(motorFrontRight.getCurrentPosition() - motorFrontRight.getTargetPosition()) < MOTOR_POSITION_THESHOLD ){
+              //motorFrontRight.setPower(0);
                 frDone = true;
          }
-        if (/*!motorLeft.isBusy() &&*/ Math.abs(motorLeft.getCurrentPosition() - motorLeft.getTargetPosition()) < MOTOR_POSITION_THESHOLD ){
-        //if ( Math.abs(motorLeft.getCurrentPosition() - motorLeft.getTargetPosition()) < MOTOR_POSITION_THESHOLD ){
-                //motorLeft.setPower(0);
+        if (/*!motorFrontLeft.isBusy() &&*/ Math.abs(motorFrontLeft.getCurrentPosition() - motorFrontLeft.getTargetPosition()) < MOTOR_POSITION_THESHOLD ){
+        //if ( Math.abs(motorFrontLeft.getCurrentPosition() - motorFrontLeft.getTargetPosition()) < MOTOR_POSITION_THESHOLD ){
+                //motorFrontLeft.setPower(0);
                 flDone = true;
          }
 
@@ -163,16 +166,16 @@ public class DriveTrainAuto extends DriveTrain{
     /* Not using this during Autonomous */
     public static boolean isEncoderDone() {
         if (!isRotating &&
-                ( (ticks > 0 && motorRight.getCurrentPosition() >= motorRight.getTargetPosition()) ||
-                        (ticks < 0 && motorRight.getCurrentPosition() <= motorRight.getTargetPosition()))   ){
-            setPowerOfMotors(0.0, 0.0);
+                ( (ticks > 0 && motorFrontRight.getCurrentPosition() >= motorFrontRight.getTargetPosition()) ||
+                        (ticks < 0 && motorFrontRight.getCurrentPosition() <= motorFrontRight.getTargetPosition()))   ){
+            setPowerOfMotors(0.0, 0.0, 0.0, 0.0);
             return true;
         }
         else return false;
     }
 
     private static void fixStability(){
-        int[] positions = {motorRight.getCurrentPosition(), motorLeft.getCurrentPosition()};
+        int[] positions = {motorFrontRight.getCurrentPosition(), motorFrontLeft.getCurrentPosition()};
 
     }
 }

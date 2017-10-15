@@ -55,6 +55,8 @@ public class TeleOp7391 extends OpMode {
 	private static double liftPower;
 	private static double liftLowPower;
 
+	private boolean liftEnabled = false;
+
 	private Zipline ziplineBlue;
 	private Zipline ziplineRed;
 	private Claw claw;
@@ -80,11 +82,14 @@ public class TeleOp7391 extends OpMode {
 	@Override
 	public void init() {
 		DriveTrainTele.init(hardwareMap);
-		Lift.init(hardwareMap);
-		Lift.runUsingEncoders();
+		if (liftEnabled) {
+			Lift.init(hardwareMap);
+			Lift.runUsingEncoders();
+		}
 		//Claw.init(hardwareMap);
 		driveJoystick = new DriveJoystick(hardwareMap);
-		liftJoystick = new LiftJoystick();
+		if (liftEnabled) liftJoystick = new LiftJoystick();
+
 	}
 
 	/*
@@ -100,7 +105,7 @@ public class TeleOp7391 extends OpMode {
 			showTelemetry();
 		}
 		DriveJoystick.update(gamepad1);
-		LiftJoystick.update(gamepad2);
+		if (liftEnabled) LiftJoystick.update(gamepad2);
 
 
 	}
