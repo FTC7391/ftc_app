@@ -266,6 +266,19 @@ public class AutoOpBase extends OpMode {
 
     }
 
+    enum Colors {
+        RED("red"),BLUE("blue"),GRAY("gray"),WHITE("white");
+        private String name;
+        Colors(String n)
+        {
+           name = n;
+        }
+        public String toString()
+        {
+            return name;
+        }
+
+    }
 
     protected class ColorTestState extends State {
 
@@ -281,7 +294,8 @@ public class AutoOpBase extends OpMode {
             showTelemetryStateInfo();
         }
 
-        public boolean updateState(){
+        public boolean updateState()
+        {
 
             if (cnt%300 == 0) {
                 showTelemetryStateInfo();
@@ -289,12 +303,39 @@ public class AutoOpBase extends OpMode {
                 Log.d("FTC7391", "COLOR: " + "Red         " + "" + colorLeft.red() + "   " + colorRight.red() + " " + colorLeftBottom.red() + "   " + colorRightBottom.red());
                 Log.d("FTC7391", "COLOR: " + "Green       " + "" + colorLeft.green() + "   " + colorRight.green() +  " " + colorLeftBottom.green() + "   " + colorRightBottom.green());
                 Log.d("FTC7391", "COLOR: " + "Blue        " + "" + colorLeft.blue() + "   " + colorRight.blue() +  " " + colorLeftBottom.blue() + "   " + colorRightBottom.blue());
+
+                Log.d("FTC7391", "ColorLeft: " + getColor(colorLeft));
+                Log.d("FTC7391", "ColorRight: " + getColor(colorRight));
+                Log.d("FTC7391", "ColorLeftBottom: " + getColor(colorLeftBottom));
+                Log.d("FTC7391", "ColorRightBottom: " + getColor(colorRightBottom));
+
             }
+
+
 
 //            if (cnt%700 == 0)
 //                return true;
             return  gamepad1.a;
             //return false;
+        }
+
+
+        public Colors getColor(ColorSensor cs)
+        {
+            if(cs.blue()>12) {
+                if (cs.red() > 22)
+                    return Colors.WHITE;
+                else
+                    return Colors.BLUE;
+            }
+            else
+            {
+                if(cs.red()>17)
+                    return Colors.RED;
+                else
+                    return Colors.GRAY;
+            }
+
         }
 
     }

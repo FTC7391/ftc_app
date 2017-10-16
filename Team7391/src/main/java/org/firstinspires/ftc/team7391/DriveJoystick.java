@@ -38,15 +38,15 @@ public class DriveJoystick {
 
 
     public DriveJoystick(HardwareMap hardwareMap) {
-        pusher_left = new Zipline(hardwareMap, 0,0, .65, "pusher_left"); //.5?
-        pusher_right = new Zipline(hardwareMap, 1,1, .35, "pusher_right");
-        pusher_left.setRetractedPosition();
-        pusher_right.setRetractedPosition();
+//        pusher_left = new Zipline(hardwareMap, 0,0, .65, "pusher_left"); //.5?
+//        pusher_right = new Zipline(hardwareMap, 1,1, .35, "pusher_right");
+//        pusher_left.setRetractedPosition();
+//        pusher_right.setRetractedPosition();
 
-        colorRight = hardwareMap.colorSensor.get("color_right");
-        colorRight.enableLed(false);
-        colorLeft = hardwareMap.colorSensor.get("color_left");
-        colorLeft.enableLed(false);
+//        colorRight = hardwareMap.colorSensor.get("color_right");
+//        colorRight.enableLed(false);
+//        colorLeft = hardwareMap.colorSensor.get("color_left");
+//        colorLeft.enableLed(false);
     }
 
     public static void update(Gamepad gamepad1) {
@@ -88,13 +88,13 @@ public class DriveJoystick {
         }
         */
 
-        if (++ nTeleLoop%1000 == 0) {
-            //showTelemetry();
-            Log.d("FTC7391", "COLOR: " + "Clear(Alpha)" + "" + colorLeft.alpha() + "   " + colorRight.alpha());
-            Log.d("FTC7391", "COLOR: " + "Red         " + "" + colorLeft.red() + "   " + colorRight.red());
-            Log.d("FTC7391", "COLOR: " + "Green       " + "" + colorLeft.green() + "   " + colorRight.green());
-            Log.d("FTC7391", "COLOR: " + "Blue        " + "" + colorLeft.blue() + "   " + colorRight.blue());
-        }
+//        if (++ nTeleLoop%1000 == 0) {
+//            //showTelemetry();
+//            Log.d("FTC7391", "COLOR: " + "Clear(Alpha)" + "" + colorLeft.alpha() + "   " + colorRight.alpha());
+//            Log.d("FTC7391", "COLOR: " + "Red         " + "" + colorLeft.red() + "   " + colorRight.red());
+//            Log.d("FTC7391", "COLOR: " + "Green       " + "" + colorLeft.green() + "   " + colorRight.green());
+//            Log.d("FTC7391", "COLOR: " + "Blue        " + "" + colorLeft.blue() + "   " + colorRight.blue());
+//        }
 
 		/*
 		driveJoystick.update(gamepad1);
@@ -131,7 +131,7 @@ public class DriveJoystick {
             DriveTrainTele.setTestMode(DriveTrainTele.TestModes.MODE_MOVE_RIGHT, MAX_POWER, 0);
         }
         if (gamepad1.a){
-            DriveTrainTele.setTestMode(DriveTrainTele.TestModes.MODE_MOVE_RIGHT, MAX_POWER, 0);
+            DriveTrainTele.setTestMode(DriveTrainTele.TestModes.MODE_MOVE_BACKWARD, MAX_POWER, 0);
 
         }
         if (gamepad1.right_bumper){
@@ -143,20 +143,20 @@ public class DriveJoystick {
 
         DriveTrainTele.updatePower(axialPower, strafingPower, rotatePower);
 
-        if (gamepad1.dpad_right) {
-            Log.i("FTC7391", "PUSHER: right: " + "DEPLOYED");
-            pusher_right.setDeployedPosition();
-            pusher_left.setDrivePosition();
-        }
-        if (gamepad1.dpad_left) {
-            Log.i("FTC7391", "PUSHER: left: " + "DEPLOYED");
-            pusher_right.setDrivePosition();
-            pusher_left.setDeployedPosition();
-        }
-        if (gamepad1.dpad_up){
-            pusher_right.setDrivePosition();
-            pusher_left.setDrivePosition();
-        }
+//        if (gamepad1.dpad_right) {
+//            Log.i("FTC7391", "PUSHER: right: " + "DEPLOYED");
+//            pusher_right.setDeployedPosition();
+//            pusher_left.setDrivePosition();
+//        }
+//        if (gamepad1.dpad_left) {
+//            Log.i("FTC7391", "PUSHER: left: " + "DEPLOYED");
+//            pusher_right.setDrivePosition();
+//            pusher_left.setDeployedPosition();
+//        }
+//        if (gamepad1.dpad_up){
+//            pusher_right.setDrivePosition();
+//            pusher_left.setDrivePosition();
+//        }
 
 
     /* ---   To test  pusher positions ----

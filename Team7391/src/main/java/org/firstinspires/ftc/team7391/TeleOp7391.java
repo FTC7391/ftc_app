@@ -124,8 +124,9 @@ public class TeleOp7391 extends OpMode {
 	private void showTelemetry(){
 		showTelemetryPower();
 		showTelemetryDrivetrain();
-		showTelemetryLift();
-
+		if(liftEnabled) {
+			showTelemetryLift();
+		}
 	}
 	private void showTelemetryPower() {
 		telemetry.addData("10  ", String.format("AxialPower  : %.2f", DriveJoystick.getAxialPower()));
