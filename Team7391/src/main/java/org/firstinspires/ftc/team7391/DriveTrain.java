@@ -45,8 +45,7 @@ public class DriveTrain {
         motorBackLeft = hardwareMap.dcMotor.get("motor_back_left");
         motorBackRight = hardwareMap.dcMotor.get("motor_back_right");
 
-       setMotorDirection();
-
+        setMotorDirection();
         resetEncoders();
 
     }
@@ -54,8 +53,8 @@ public class DriveTrain {
     public static void setMotorDirection(){
         motorFrontLeft.setDirection(DcMotor.Direction.REVERSE);
         motorFrontRight.setDirection(DcMotor.Direction.FORWARD);
-        motorBackLeft.setDirection(DcMotor.Direction.FORWARD);
-        motorBackRight.setDirection(DcMotor.Direction.REVERSE);
+        motorBackLeft.setDirection(DcMotor.Direction.REVERSE);
+        motorBackRight.setDirection(DcMotor.Direction.FORWARD);
     }
 
     protected static void resetEncoders(){
@@ -73,10 +72,10 @@ public class DriveTrain {
     }
 
     protected static void runUsingEncoders(){
-        motorFrontLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        motorFrontRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        motorBackLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        motorBackRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        motorFrontLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        motorFrontRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        motorBackLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        motorBackRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
     }
 

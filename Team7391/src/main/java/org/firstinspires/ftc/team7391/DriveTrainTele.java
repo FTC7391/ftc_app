@@ -13,7 +13,7 @@ public class DriveTrainTele extends DriveTrain{
     public static void init (HardwareMap hardwareMap) {
         DriveTrain.init(hardwareMap);
         //runToPosition();
-        runUsingEncoders();
+        runWithoutEncoders();
    }
 
     enum TestModes {
@@ -86,18 +86,18 @@ public class DriveTrainTele extends DriveTrain{
 
         LF += axialPower;
         RF += axialPower;
-        LB -= axialPower;
-        RB -= axialPower;
+        LB += axialPower;
+        RB += axialPower;
          // Handle Regular Movement
-        LF -= strafingPower;
-        RF += strafingPower;
-        LB += strafingPower;
-        RB -= strafingPower;
+        LF += strafingPower;
+        RF -= strafingPower;
+        LB -= strafingPower;
+        RB += strafingPower;
         // Handle Turning Movement
-        LF += rotatePower;
-        RF -= rotatePower;
-        LB += rotatePower;
-        RB -= rotatePower;
+        LF -= rotatePower;
+        RF += rotatePower;
+        LB -= rotatePower;
+        RB += rotatePower;
 
         setPowerOfMotors(RF, LF, RB, LB);
     }
@@ -129,6 +129,7 @@ public class DriveTrainTele extends DriveTrain{
     public static void rotate(double power) {
         //Positive power, rotate to the left, frontRight & backRight postive
         setPowerOfMotors(-power, power, -power, power);
+
     }
 
     /*

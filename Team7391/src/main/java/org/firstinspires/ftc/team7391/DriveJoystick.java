@@ -52,8 +52,8 @@ public class DriveJoystick {
     public static void update(Gamepad gamepad1) {
 
         axialPower = scaleInput(gamepad1.left_stick_y) * MAX_POWER;
-        rotatePower = scaleInput(gamepad1.right_stick_x) * MAX_POWER;
-        strafingPower = scaleInput(gamepad1.left_stick_x) * MAX_POWER;
+        rotatePower = scaleInput(gamepad1.left_stick_x) * MAX_POWER;
+        strafingPower = scaleInput(gamepad1.right_stick_x) * MAX_POWER;
 
 		/*
 		 * Gamepad 1
