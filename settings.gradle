@@ -1,2 +1,2 @@
-include ':FtcRobotController'
+include ':FtcRobotController', ':Team7391-Velocity-Vortex', ':Team7391-Relic-Recovery'
 include ':Team7391'
