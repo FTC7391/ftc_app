@@ -28,13 +28,15 @@ public class AutoTestOp extends AutoOpBase
         stepsList.add(new WaitState(0));
         stepsList.add(new MoveState(-12, 1));
         stepsList.add(new WaitState(0));
-       stepsList.add(new MoveState(24, 1));
+        stepsList.add(new MoveState(24, 1));
         stepsList.add(new WaitState(0));
         stepsList.add(new MoveState(-24, 1));
-       stepsList.add(new MoveState(48, 1));
+        stepsList.add(new MoveState(48, 1));
         stepsList.add(new WaitState(0));
         stepsList.add(new MoveState(-48, 1));
-
+        stepsList.add(new RotateState(90, 1));
+        stepsList.add(new WaitState(0));
+        stepsList.add(new RotateState(-90, 1));
 
 //
 //
