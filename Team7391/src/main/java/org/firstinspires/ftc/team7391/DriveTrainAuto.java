@@ -62,7 +62,7 @@ public class DriveTrainAuto extends DriveTrain{
         if( distance > 0 )
             ticks = (int) (distance * TICKS_PER_INCH);
         else
-            ticks = (int) (0.92*distance * TICKS_PER_INCH);
+            ticks = (int) (distance * TICKS_PER_INCH);
 
         setMotorTargetPosition(ticks, ticks, ticks, ticks);
         if (distance > 0)
@@ -74,14 +74,9 @@ public class DriveTrainAuto extends DriveTrain{
 //            //setPowerOfMotors(0.0, 0.0, 0.0, 0.0);
      }
 
-    public static void moveLateralInches(boolean right, int distance, double power) {
-        if (right) {
-            setPowerOfMotors(power, -power, power, power);
-            setMotorTargetPosition(distance, -distance, -distance, distance);
-        } else { // if (!right)
-            setPowerOfMotors(-power, power, power, power);
-            setMotorTargetPosition(-distance, distance, distance, -distance);
-        }
+    public static void moveLateralInches(int distance, double power) {
+        setPowerOfMotors(-power, power, power, -power);
+        setMotorTargetPosition(-distance, distance, distance, -distance);
     }
 
     /**
@@ -118,10 +113,10 @@ public class DriveTrainAuto extends DriveTrain{
 
         if (degrees > 0) {
             //Rotate to the left,frontRight & backRight postive
-            setPowerOfMotors(power, -power, power, power);  //TBD for last two parameters.
+            setPowerOfMotors(-power, power, -power, power);  //TBD for last two parameters.
         } else if (degrees < 0)
             //Rotate to the right,frontLeft & backLeft postive
-            setPowerOfMotors(-power, power, power, power);
+            setPowerOfMotors(power, -power, power, -power);
 //        } else {
 //            //setPowerOfMotors(0.0, 0.0, 0.0, 0.0);
 //        }
@@ -132,6 +127,8 @@ public class DriveTrainAuto extends DriveTrain{
         runToPosition();
         motorFrontRight.setTargetPosition(motorFrontRight.getCurrentPosition() + frontRightPosition);
         motorFrontLeft.setTargetPosition(motorFrontLeft.getCurrentPosition() + frontLeftPosition);
+        motorBackRight.setTargetPosition(motorBackRight.getCurrentPosition() + backRightPosition);
+        motorBackLeft.setTargetPosition(motorBackLeft.getCurrentPosition() + backLeftPosition);
     }
 
     public static boolean isDone(){

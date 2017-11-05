@@ -84,29 +84,29 @@ public class DriveTrainTele extends DriveTrain{
         double LB = 0;
         double RB = 0;
 
-        LF += axialPower;
         RF += axialPower;
-        LB += axialPower;
+        LF += axialPower;
         RB += axialPower;
+        LB += axialPower;
          // Handle Regular Movement
-        LF += strafingPower;
         RF -= strafingPower;
-        LB -= strafingPower;
+        LF += strafingPower;
         RB += strafingPower;
+        LB -= strafingPower;
         // Handle Turning Movement
-        LF -= rotatePower;
         RF += rotatePower;
-        LB -= rotatePower;
+        LF -= rotatePower;
         RB += rotatePower;
+        LB -= rotatePower;
 
         setPowerOfMotors(RF, LF, RB, LB);
     }
 
     public static void moveAxial(double power){
-        setPowerOfMotors(-power,power,power,-power);
+        setPowerOfMotors(power, power, power, power);
     }
     public static void moveLateral(double power) {
-        setPowerOfMotors(power, power, power, power);
+        setPowerOfMotors(-power, power, power, -power);
     }
 
     //angle is angle counterclockwise from right
