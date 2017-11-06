@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.team7391;
 
+import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.vuforia.HINT;
 import com.vuforia.Vuforia;
@@ -17,6 +18,9 @@ import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackables;
  * Created by ArjunVerma on 10/29/17.
  */
 
+@Autonomous(name = "Tournament: VuforiaTest" + "", group = "Tournament")
+
+
 public class VuforiaOp extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
@@ -29,7 +33,9 @@ public class VuforiaOp extends LinearOpMode {
         Vuforia.setHint(HINT.HINT_MAX_SIMULTANEOUS_IMAGE_TARGETS, 4);
 
         VuforiaTrackables beacons = vuforia.loadTrackablesFromAsset("RelicVuMark"); // TBD!!! NEED TO GET IMAGES FROM FTC
-        beacons.get(0).setName("RelicRecovery");
+        beacons.get(0).setName("pictograph_left.png");
+        beacons.get(1).setName("pictograph_right.png");
+        beacons.get(2).setName("pictograph_center");
 
         waitForStart();
 
