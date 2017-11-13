@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.team7391;
 
+import android.util.Log;
+
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.vuforia.HINT;
@@ -30,22 +32,22 @@ public class VuforiaOp extends LinearOpMode {
         params.cameraMonitorFeedback = VuforiaLocalizer.Parameters.CameraMonitorFeedback.AXES;
 
         VuforiaLocalizer vuforia = ClassFactory.createVuforiaLocalizer(params);
-        Vuforia.setHint(HINT.HINT_MAX_SIMULTANEOUS_IMAGE_TARGETS, 4);
+        Vuforia.setHint(HINT.HINT_MAX_SIMULTANEOUS_IMAGE_TARGETS, 3);
 
-        VuforiaTrackables beacons = vuforia.loadTrackablesFromAsset("RelicVuMark"); // TBD!!! NEED TO GET IMAGES FROM FTC
-        beacons.get(0).setName("pictograph_left.png");
-        beacons.get(1).setName("pictograph_right.png");
-        beacons.get(2).setName("pictograph_center");
-
+        VuforiaTrackables beacons = vuforia.loadTrackablesFromAsset("RelicVuMark");
+        beacons.get(0).setName("RelicRecovery");
+        //beacons.get(1).setName("pictograph_right");
+        //beacons.get(2).setName("pictograph_center");
+        Log.d("Vuforia", ""+beacons.size());
         waitForStart();
 
         beacons.activate();
 
-        while(opModeIsActive()){
-            for(VuforiaTrackable beac : beacons) {
+        while (opModeIsActive()) {
+            for (VuforiaTrackable beac : beacons) {
                 OpenGLMatrix pose = ((VuforiaTrackableDefaultListener) beac.getListener()).getPose();
 
-                if(pose != null){
+                if (pose != null) {
                     VectorF translation = pose.getTranslation();
 
                     telemetry.addData(beac.getName() + "-Translation", translation);
@@ -54,11 +56,14 @@ public class VuforiaOp extends LinearOpMode {
                     telemetry.addData(beac.getName() + "-Degrees", degreesToTurn);
 
                 }
+                if (pose == null)
+                    telemetry.addData(beac.getName() + "NOT PRESENT", -1);
 
             }
             telemetry.update();
+
+
         }
-
     }
-
 }
+
