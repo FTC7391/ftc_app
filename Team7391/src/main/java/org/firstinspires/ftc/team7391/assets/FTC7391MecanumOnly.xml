@@ -1,11 +1,11 @@
 <?xml version='1.0' encoding='UTF-8' standalone='yes' ?>
 <Robot type="FirstInspires-FTC">
     <MotorController name="Motor Controller Drive Train 1" serialNumber="AL00XUAK">
-        <Motor name="motor_front_left" port="1" />
-        <Motor name="motor_back_right" port="2" />
+        <NeveRest60Gearmotor name="motor_front_left" port="1" />
+        <NeveRest60Gearmotor name="motor_back_right" port="2" />
     </MotorController>
     <MotorController name="Motor Controller Drive Train 2" serialNumber="AL025TKK">
-        <Motor name="motor_front_right" port="1" />
-        <Motor name="motor_back_left" port="2" />
+        <NeveRest60Gearmotor name="motor_front_right" port="1" />
+        <NeveRest60Gearmotor name="motor_back_left" port="2" />
     </MotorController>
 </Robot>

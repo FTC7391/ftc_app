@@ -11,7 +11,7 @@ import com.qualcomm.robotcore.hardware.*;
 
 public class DriveJoystick {
 
-    protected static final double MAX_POWER = 0.7;
+    protected static final double MAX_POWER = 0.4;
 
     private static final String TAG = TeleOp7391.class.getSimpleName();
     protected FTC7391PrintWriter dbgWriter = new FTC7391PrintWriter("Tele", "Debug");
@@ -120,7 +120,7 @@ public class DriveJoystick {
             DriveTrainTele.setTestMode(DriveTrainTele.TestModes.MODE_STOP, 0, 0);
         }
         */
-
+/*
         if (gamepad1.x){
             DriveTrainTele.setTestMode(DriveTrainTele.TestModes.MODE_MOVE_LEFT, MAX_POWER, 0);
         }
@@ -134,6 +134,21 @@ public class DriveJoystick {
             DriveTrainTele.setTestMode(DriveTrainTele.TestModes.MODE_MOVE_BACKWARD, MAX_POWER, 0);
 
         }
+        */
+        if (gamepad1.x){
+            DriveTrainTele.setTestMode(DriveTrainTele.TestModes.MODE_MOVE_FORWARD, 0.1, 0);
+        }
+        if (gamepad1.y){
+            DriveTrainTele.setTestMode(DriveTrainTele.TestModes.MODE_MOVE_FORWARD, 0.2, 0);
+        }
+        if (gamepad1.b){
+            DriveTrainTele.setTestMode(DriveTrainTele.TestModes.MODE_MOVE_FORWARD, 0.3, 0);
+        }
+        if (gamepad1.a){
+            DriveTrainTele.setTestMode(DriveTrainTele.TestModes.MODE_MOVE_FORWARD, 0.4, 0);
+
+        }
+
         if (gamepad1.right_bumper){
             DriveTrainTele.setTestMode(DriveTrainTele.TestModes.MODE_ROTATE_RIGHT, MAX_POWER, 0);
         }

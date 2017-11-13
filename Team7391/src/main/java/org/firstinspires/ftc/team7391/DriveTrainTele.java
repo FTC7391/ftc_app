@@ -13,7 +13,7 @@ public class DriveTrainTele extends DriveTrain{
     public static void init (HardwareMap hardwareMap) {
         DriveTrain.init(hardwareMap);
         //runToPosition();
-        runWithoutEncoders();
+        runUsingEncoders();
    }
 
     enum TestModes {
