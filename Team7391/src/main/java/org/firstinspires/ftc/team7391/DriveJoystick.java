@@ -136,27 +136,25 @@ public class DriveJoystick {
         }
         */
         if (gamepad1.x){
+            DriveTrainTele.setTestMode(DriveTrainTele.TestModes.MODE_MOVE_FORWARD, 0.01, 0);
+        }
+        else if (gamepad1.y){
+            DriveTrainTele.setTestMode(DriveTrainTele.TestModes.MODE_MOVE_FORWARD, 0.05, 0);
+        }
+        else if (gamepad1.b){
             DriveTrainTele.setTestMode(DriveTrainTele.TestModes.MODE_MOVE_FORWARD, 0.1, 0);
         }
-        if (gamepad1.y){
-            DriveTrainTele.setTestMode(DriveTrainTele.TestModes.MODE_MOVE_FORWARD, 0.2, 0);
+        else if (gamepad1.a){
+            DriveTrainTele.setTestMode(DriveTrainTele.TestModes.MODE_MOVE_FORWARD, 0.15, 0);
         }
-        if (gamepad1.b){
-            DriveTrainTele.setTestMode(DriveTrainTele.TestModes.MODE_MOVE_FORWARD, 0.3, 0);
-        }
-        if (gamepad1.a){
-            DriveTrainTele.setTestMode(DriveTrainTele.TestModes.MODE_MOVE_FORWARD, 0.4, 0);
-
-        }
-
-        if (gamepad1.right_bumper){
+        else if (gamepad1.right_bumper){
             DriveTrainTele.setTestMode(DriveTrainTele.TestModes.MODE_ROTATE_RIGHT, MAX_POWER, 0);
         }
-        if (gamepad1.left_bumper){
+        else if (gamepad1.left_bumper){
             DriveTrainTele.setTestMode(DriveTrainTele.TestModes.MODE_ROTATE_LEFT, MAX_POWER, 0);
         }
-
-        DriveTrainTele.updatePower(axialPower, strafingPower, rotatePower);
+        else
+            DriveTrainTele.updatePower(axialPower, strafingPower, rotatePower);
 
 //        if (gamepad1.dpad_right) {
 //            Log.i("FTC7391", "PUSHER: right: " + "DEPLOYED");
