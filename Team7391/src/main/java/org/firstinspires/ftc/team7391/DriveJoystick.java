@@ -24,6 +24,8 @@ public class DriveJoystick {
     private static Zipline pusher_right;
     private static ColorSensor colorRight;
     private static ColorSensor colorLeft;
+    private static CRServo servo1;
+    private static CRServo servo2;
 
     private static int nTeleLoop = 0;
 
@@ -38,6 +40,7 @@ public class DriveJoystick {
 
 
     public DriveJoystick(HardwareMap hardwareMap) {
+        servo1 =  hardwareMap.crservo.get("servo1");
 //        pusher_left = new Zipline(hardwareMap, 0,0, .65, "pusher_left"); //.5?
 //        pusher_right = new Zipline(hardwareMap, 1,1, .35, "pusher_right");
 //        pusher_left.setRetractedPosition();
@@ -136,10 +139,18 @@ public class DriveJoystick {
         }
         */
         if (gamepad1.x){
-            DriveTrainTele.setTestMode(DriveTrainTele.TestModes.MODE_MOVE_FORWARD, 0.01, 0);
+            //DriveTrainTele.setTestMode(DriveTrainTele.TestModes.MODE_MOVE_FORWARD, 0.01, 0)
+            servo1.setDirection(CRServo.Direction.FORWARD);
+            servo1.setPower(1);
+            servo2.setDirection(CRServo.Direction.FORWARD);
+            servo2.setPower(1);
         }
         else if (gamepad1.y){
-            DriveTrainTele.setTestMode(DriveTrainTele.TestModes.MODE_MOVE_FORWARD, 0.05, 0);
+            //DriveTrainTele.setTestMode(DriveTrainTele.TestModes.MODE_MOVE_FORWARD, 0.05, 0);
+            servo1.setDirection(CRServo.Direction.REVERSE);
+            servo1.setPower(1);
+            servo2.setDirection(CRServo.Direction.REVERSE);
+            servo2.setPower(1);
         }
         else if (gamepad1.b){
             DriveTrainTele.setTestMode(DriveTrainTele.TestModes.MODE_MOVE_FORWARD, 0.1, 0);

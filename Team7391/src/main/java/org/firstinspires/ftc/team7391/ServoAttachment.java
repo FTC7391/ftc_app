@@ -20,7 +20,7 @@ public class ServoAttachment {
         DEPLOYED_POS = deployedPos;
     }
 
-     protected void setRetractedPosition(){
+    protected void setRetractedPosition(){
         
         servo.setPosition(RETRACTED_POS);
     }
