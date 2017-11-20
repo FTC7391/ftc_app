@@ -41,6 +41,8 @@ public class DriveJoystick {
 
     public DriveJoystick(HardwareMap hardwareMap) {
         servo1 =  hardwareMap.crservo.get("servo1");
+        servo2 =  hardwareMap.crservo.get("servo2");
+
 //        pusher_left = new Zipline(hardwareMap, 0,0, .65, "pusher_left"); //.5?
 //        pusher_right = new Zipline(hardwareMap, 1,1, .35, "pusher_right");
 //        pusher_left.setRetractedPosition();
