@@ -141,7 +141,6 @@ public class DriveJoystick {
         */
         if (gamepad1.x){
             //DriveTrainTele.setTestMode(DriveTrainTele.TestModes.MODE_MOVE_FORWARD, 0.01, 0)
-
             collector.grab();
         }
         else if (gamepad1.y){

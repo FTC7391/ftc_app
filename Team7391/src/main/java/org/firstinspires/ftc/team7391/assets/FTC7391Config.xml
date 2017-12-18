@@ -1,29 +1,19 @@
 <?xml version='1.0' encoding='UTF-8' standalone='yes' ?>
 <Robot type="FirstInspires-FTC">
-    <MotorController name="Motor Controller Drive Train" serialNumber="AL00XUAK">
-        <Motor name="motor_left" port="1" />
-        <Motor name="motor_right" port="2" />
+    <MotorController name="Motor Controller Drive Train 1" serialNumber="AL00XUAK">
+        <NeveRest60Gearmotor name="motor_front_left" port="1" />
+        <NeveRest60Gearmotor name="motor_back_right" port="2" />
     </MotorController>
-    <MotorController name="Motor Controller Lift A" serialNumber="AL00VGUM">
-        <Motor name="stage0" port="1" />
-        <Motor name="stage1" port="2" />
+    <MotorController name="Motor Controller Drive Train 2" serialNumber="AL025TKK">
+        <NeveRest60Gearmotor name="motor_front_right" port="1" />
+        <NeveRest60Gearmotor name="motor_back_left" port="2" />
     </MotorController>
-    <MotorController name="Motor Controller Lift B" serialNumber="AL00XTK5">
-        <Motor name="stage2" port="1" />
-        <Motor name="stage3" port="2" />
+    <MotorController name="Motor Controller Drive Train 2" serialNumber="AL00VVK3">
+        <NeveRest60Gearmotor name="collector_left" port="1" />
+        <NeveRest60Gearmotor name="collector_right" port="2" />
     </MotorController>
-    <MotorController name="Motor Controller Lift C" serialNumber="AL00VSBL">
-       <Motor name="stage4" port="1" />
+    <MotorController name="Motor Controller Drive Train 2" serialNumber="AL00VGUM">
+        <NeveRest60Gearmotor name="stage0" port="1" />
+        <NeveRest60Gearmotor name="stage1" port="2" />
     </MotorController>
-    <ServoController name="Servo Controller 2" serialNumber="AL026GCV">
-        <Servo name="pusher_right" port="1" />
-        <Servo name="pusher_left" port="2" />
-    </ServoController>
-    <DeviceInterfaceModule name="Device Interface Module" serialNumber="AL00VF3K">
-        <ColorSensor name="color_left_bottom" port="0" />
-        <ColorSensor name="color_left" port="1" />
-        <ColorSensor name="color_right_bottom" port="4" />
-        <ColorSensor name="color_right" port="5" />
-    </DeviceInterfaceModule>
-
 </Robot>
