@@ -149,25 +149,17 @@ public class TeleOp7391 extends OpMode {
 
 	private void showTelemetryLift() {
 		telemetry.addData("29 " , "MODE: " + Lift.getStrMode());
-		telemetry.addData("30 " , String.format("Top  : original: %d currnet: %d", Lift.getOriginalTicksTop(), Lift.getTicksLiftTop()));
-		telemetry.addData("31 " , String.format("High  : original: %d current: %d", Lift.getOriginalTicksHigh(), Lift.getTicksLiftHigh()));
 		telemetry.addData("32 " , String.format("Low   : original: %d current: %d", Lift.getOriginalTicksLow(), Lift.getTicksLiftLow()));
 		telemetry.addData("33 " , String.format("Mid : original: %d current: %d", Lift.getOriginalTicksMid(), Lift.getTicksLiftMid()));
-		telemetry.addData("34 " , String.format("Wrist  : original: %d currnet: %d", Lift.getOriginalTicksWrist(), Lift.getTicksLiftWrist()));
 
 		dbgWriter.printf("Top %d %d    High %d %d    Low %d %d     Mid %d %d     Wrist %d %d \n",
-				Lift.getOriginalTicksTop(), Lift.getTicksLiftTop(),
-				Lift.getOriginalTicksHigh(), Lift.getTicksLiftHigh(),
-			Lift.getOriginalTicksLow(), Lift.getTicksLiftLow(),
-			Lift.getOriginalTicksMid(), Lift.getTicksLiftMid(),
-			Lift.getOriginalTicksWrist(), Lift.getTicksLiftWrist()
+				Lift.getOriginalTicksLow(), Lift.getTicksLiftLow(),
+			Lift.getOriginalTicksMid(), Lift.getTicksLiftMid()
+
 		);
 
-		Log.d("Lift", "Top  : original:" + Lift.getOriginalTicksTop() + "|| end: " + Lift.getTicksLiftTop());
-		Log.d("Lift", "High  : original:" + Lift.getOriginalTicksHigh() + "|| end: " + Lift.getTicksLiftHigh());
 		Log.d("Lift", "Low   : original:" + Lift.getOriginalTicksLow() + "|| end: " + Lift.getTicksLiftLow());
 		Log.d("Lift", "Angle : original:" + Lift.getOriginalTicksMid() + "|| end: " + Lift.getTicksLiftMid());
-		Log.d("Lift", "Hook  : original:" + Lift.getOriginalTicksWrist() + "|| end: " + Lift.getTicksLiftWrist());
 
 	}
 

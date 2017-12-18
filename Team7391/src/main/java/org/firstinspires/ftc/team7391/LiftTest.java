@@ -78,11 +78,9 @@ public class LiftTest extends OpMode {
 
         telemetry.addData(TAG, "OpMode Started  10");
         telemetry.addData("MODE", Lift.getStrMode());
-        telemetry.addData("High", "original: " + Lift.getOriginalTicksHigh() + "|| end: " + Lift.getTicksLiftHigh());
         telemetry.addData("Low", "original: " + Lift.getOriginalTicksLow() + "|| end: " + Lift.getTicksLiftLow());
         telemetry.addData("Shoulder", "original: " + Lift.getOriginalTicksMid() + "|| end: " + Lift.getTicksLiftMid()); //AJE
-        telemetry.addData("Wrist", "original: " + Lift.getOriginalTicksWrist() + "|| end: " + Lift.getTicksLiftWrist());
-		/*
+        /*
 		 * Send telemetry data back to driver station. Note that if we are using
 		 * a legacy NXT-compatible motor controller, then the getPower() method
 		 * will return a null value. The legacy NXT-compatible motor controllers

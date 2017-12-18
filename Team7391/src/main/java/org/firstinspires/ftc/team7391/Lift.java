@@ -39,10 +39,7 @@ public class Lift {
 
     private static Stage[] stages = {     //what should these numbers be?
             new Stage("stage0", 0, 12000),    //low
-            new Stage("stage1", 0, 12000),    //mid
-            new Stage("stage2", 0, 12000),   //high
-            new Stage("stage3", 0, 6000),    //12000 real max
-            new Stage("wrist", -2300, 0, 1.0)    //wrist
+            new Stage("stage1", 0, 12000)    //mid
     };
 
     private static final int NUM_STAGES = 5;
@@ -57,18 +54,13 @@ public class Lift {
 
     public static int getTicksLiftLow(){return stages[0].motor.getCurrentPosition();}
     public static int getTicksLiftMid(){return stages[1].motor.getCurrentPosition();}
-    public static int getTicksLiftHigh(){return stages[2].motor.getCurrentPosition();}
-    public static int getTicksLiftTop(){return stages[3].motor.getCurrentPosition();}
-    public static int getTicksLiftWrist(){return stages[4].motor.getCurrentPosition();}
+
 
 
 
 
     public static int getOriginalTicksLow(){return stages[0].originalTicks;}
     public static int getOriginalTicksMid(){return stages[1].originalTicks;}
-    public static int getOriginalTicksHigh(){return stages[2].originalTicks;}
-    public static int getOriginalTicksTop(){return stages[3].originalTicks;}
-    public static int getOriginalTicksWrist(){return stages[4].originalTicks;}
 
 
 
@@ -99,9 +91,7 @@ public class Lift {
 
         stages[0].motor = hardwareMap.dcMotor.get("stage0");
         stages[1].motor = hardwareMap.dcMotor.get("stage1");
-        stages[2].motor = hardwareMap.dcMotor.get("stage2");
-        stages[3].motor = hardwareMap.dcMotor.get("stage3");
-        stages[4].motor = hardwareMap.dcMotor.get("stage4");
+
 
         //Log.i ("FTC7391", "Lift: " + "REVERSE/FORWARD" + " H:" + liftHigh.get())
         setMotorDirection();
@@ -133,9 +123,7 @@ public class Lift {
     public static void setMotorDirection(){
         stages[0].motor.setDirection(DcMotor.Direction.FORWARD);
         stages[1].motor.setDirection(DcMotor.Direction.REVERSE);
-        stages[2].motor.setDirection(DcMotor.Direction.FORWARD);
-        stages[3].motor.setDirection(DcMotor.Direction.FORWARD);
-        stages[4].motor.setDirection(DcMotor.Direction.REVERSE);
+
 
     }
 
@@ -211,9 +199,7 @@ public class Lift {
                                      " M:" + liftMidPower + " W:" + stages[4].MAX_POWER*liftWristPower);
         stages[0].motor.setPower(liftLowPower);
         stages[1].motor.setPower(liftMidPower);
-        stages[2].motor.setPower(liftHighPower);
-        stages[3].motor.setPower(liftTopPower);
-        stages[4].motor.setPower(stages[4].MAX_POWER * liftWristPower);
+
 
     }
 
@@ -227,15 +213,10 @@ public class Lift {
                                               " S:" + liftMidDifference + " W:" + liftWristDifference + " ");
         stages[0].motor.setTargetPosition(liftLowDifference);
         stages[1].motor.setTargetPosition(liftMidDifference);
-        stages[2].motor.setTargetPosition(liftHighDifference);
-        stages[3].motor.setTargetPosition(liftTopDifference);
-        stages[4].motor.setTargetPosition(liftWristDifference);
+
 
         stages[0].targetPosition    = liftLowDifference;
         stages[1].targetPosition  = liftMidDifference;
-        stages[2].targetPosition   = liftHighDifference;
-        stages[3].targetPosition   = liftTopDifference;
-        stages[4].targetPosition   = liftWristDifference;
 
     }
 
@@ -252,7 +233,7 @@ public class Lift {
         boolean wristDone = false;
         boolean topDone = false;
 
-        Log.v("FTC7391", "Lift: " + "High " +  stages[2].motor.isBusy()   + " " + stages[2].motor.getCurrentPosition() + " " + stages[2].motor.getTargetPosition()  + " " + stages[2].targetPosition);
+        Log.v("FTC7391", "Lift: " + "Mid " +  stages[1].motor.isBusy()   + " " + stages[1].motor.getCurrentPosition() + " " + stages[1].motor.getTargetPosition()  + " " + stages[1].targetPosition);
 
         //if (!liftLow.isBusy() && Math.abs(liftLow.getCurrentPosition() - liftLowTargetPosition) < 50){
         if (Math.abs(stages[0].motor.getCurrentPosition() - stages[0].targetPosition) < 50){
@@ -268,41 +249,18 @@ public class Lift {
             //Log.i("FTC7391", "Lift: " + "Mid Done True");
         }
 
-        if (stages[2].targetPosition != stages[2].motor.getTargetPosition()) {
-            stages[2].motor.setTargetPosition(stages[2].targetPosition);
-        }
-        //else if (!liftHigh.isBusy() && Math.abs(liftHigh.getCurrentPosition() - liftHighTargetPosition) < 50 ){
-        else if (Math.abs(stages[2].motor.getCurrentPosition() - stages[2].targetPosition) < 50 ){
-            //liftHigh.setPower(0);
-            Log.v("FTC7391", "Lift " + "highDone = true");
-            highDone = true;
-        }
 
-        //if (!liftWrist.isBusy() && Math.abs(liftWrist.getCurrentPosition() - liftWristTargetPosition) < 50){
-        if (Math.abs(stages[3].motor.getCurrentPosition() - stages[3].targetPosition) < 50){
-            //stages[3].motor.setPower(0);
-            topDone = true;
-            //Log.i("FTC7391", "Lift: " + "Wrist Done True");
-        }
-
-        if (Math.abs(stages[4].motor.getCurrentPosition() - stages[4].targetPosition) < 50){
-            //stages[0].motor.setPower(0);
-            wristDone = true;
-            //Log.i("FTC7391", "Lift: " + "Low Done True");
-        }
 
        //if (nLiftLoop == 0) {
-            Log.v("FTC7391", "Lift: " + "High: Busy:" + stages[2].motor.isBusy() + " Curr:" + stages[2].motor.getCurrentPosition() + " Target:" + stages[2].motor.getTargetPosition() + " " + stages[2].targetPosition);
             Log.v("FTC7391", "Lift: " + "Low: Busy:" + stages[0].motor.isBusy() + " Curr:" + stages[0].motor.getCurrentPosition() + " Target:" + stages[0].motor.getTargetPosition()+ " " + stages[0].targetPosition);
-            Log.v("FTC7391", "Lift: " + "Angle: Busy:" + stages[1].motor.isBusy() + " Curr:" + stages[1].motor.getCurrentPosition() + " Target:" + stages[1].motor.getTargetPosition()+ " " + stages[1].targetPosition);
-            Log.v("FTC7391", "Lift: " + "Hook: Busy:" + stages[3].motor.isBusy() + " Curr:" + stages[3].motor.getCurrentPosition() + " Target:" + stages[3].motor.getTargetPosition()+ " " + stages[3].targetPosition);
+            Log.v("FTC7391", "Lift: " + "Mid: Busy:" + stages[1].motor.isBusy() + " Curr:" + stages[1].motor.getCurrentPosition() + " Target:" + stages[1].motor.getTargetPosition()+ " " + stages[1].targetPosition);
             //if (++nLiftLoop == 10)
              //   nLiftLoop = 0;
 
-            Log.v("FTC7391", "Lift: " + highDone + " "  + lowDone + " " + midDone + " " + topDone + " " + wristDone);
+            Log.v("FTC7391", "Lift: " + lowDone + " " + midDone + " ");
         //}
 
-        if (highDone && lowDone && midDone && wristDone) return true;
+        if (lowDone && midDone) return true;
 
         else return false;
 
@@ -347,35 +305,16 @@ public class Lift {
 
 
         if (power !=0) {
-            Log.d("FTC7391", "Lift: " + "Power:" + power + "Current High" + stages[2].motor.getCurrentPosition() + "Current Low" + stages[0].motor.getCurrentPosition());
+            Log.d("FTC7391", "Lift: " + "Power:" + power + "Current Mid" + stages[1].motor.getCurrentPosition() + "Current Low" + stages[0].motor.getCurrentPosition());
         }
         switch (mode) {
             case MODE_MOVE_TOP:
 
-                if (bLimits && (power > 0 && stages[3].motor.getCurrentPosition() > stages[3].MAX_TICKS ||
-                        power < 0 && stages[3].motor.getCurrentPosition() < stages[3].MIN_TICKS )){
-                    stages[3].motor.setPower(0);
-                    Log.d("FTC7391", "Lift: " + "Mid power = 0" );
-                    //MidRunToPosition();
-                }
-                else{
-                    //MidRunUsingEncoders();
-                    stages[3].motor.setPower(1 * power);    //negative power = backwards
-                }
                 break;
 
             case MODE_MOVE_HIGH:
 
-               if (bLimits && (power > 0 && stages[2].motor.getCurrentPosition() > stages[2].MAX_TICKS ||
-                    power < 0 && stages[2].motor.getCurrentPosition() <= stages[2].MIN_TICKS )){
-                   stages[2].motor.setPower(0);  //
-                   Log.d("FTC7391", "Lift: " + "high power = 0" );
-                   //highRunToPosition();
-               }
-               else{
-                   //highRunUsingEncoders();
-                   stages[2].motor.setPower(1 * power);
-              }
+
                 break;
 
             case MODE_MOVE_MID:
@@ -411,7 +350,7 @@ public class Lift {
                     runUsingEncoders();
 //                if (power > 0 && liftHigh.getCurrentPosition() < LIFT_HIGH_MAX ||
 //                    power < 0 && liftHigh.getCurrentPosition() > LIFT_HIGH_MIN )
-                stages[2].motor.setPower(1 * power);
+                stages[1].motor.setPower(1 * power);
 //                if (power > 0 && liftHigh.getCurrentPosition() < LIFT_LOW_MAX ||
 //                    power < 0 && liftHigh.getCurrentPosition() > LIFT_LOW_MIN )
                 stages[0].motor.setPower(1 * power);    //negative power = backwards
@@ -419,17 +358,7 @@ public class Lift {
 
 
             case MODE_MOVE_WRIST:
-//                if (bLimits && (power > 0 && stages[4].motor.getCurrentPosition() < stages[4].MIN_TICKS ||
-//                        power < 0 && stages[4].motor.getCurrentPosition() > stages[4].MAX_TICKS )){
-//                    stages[4].motor.setPower(0);
-                    Log.d("FTC7391", "Lift: " + "wrist power = 0" );
-                    //wristRunToPosition();  // Shouldn't need to do this
-                //}
-                //else{
-                    //wristRunUsingEncoders();
-                    stages[4].motor.setPower(stages[4].MAX_POWER * power);    //negative power = backwards
-                    //Log.v("FTC7391", "Lift: " + "WRIST_MAX_POWER" );
-                //}
+//
                 break;
 
 
@@ -468,10 +397,8 @@ public class Lift {
     public static void stop() {
         setMotorTargetPosition(
                 stages[0].motor.getCurrentPosition(),
-            stages[1].motor.getCurrentPosition(),
-                stages[2].motor.getCurrentPosition(),
-            stages[3].motor.getCurrentPosition(),
-            stages[4].motor.getCurrentPosition()
+            stages[1].motor.getCurrentPosition(),0,0,0
+
         );
         setPowerOfMotors(0, 0, 0, 0, 0);
     }
@@ -485,7 +412,7 @@ public class Lift {
 
     public static void testPosition(){
         //runToPosition();
-        setMotorTargetPosition(3000, 2000, 2000, 3000, -500);
+        setMotorTargetPosition(3000, 2000, 0,0,0);
      }
 
     public static void drivePosition1(){
@@ -496,27 +423,19 @@ public class Lift {
 
      public static void grabPosition(){
         Log.i("FTC7391", "Lift: " + "grabPosition ");
-        setMotorTargetPosition(850, 850, 550, 0, -120);
+        setMotorTargetPosition(850, 850, 0, 0, 0);
      }
 
     public static void holdBall(){
         Log.i("FTC7391", "Lift: " + "holdBallPosition ");
-        setMotorTargetPosition(850, 850, 550, 0, -120);
+        setMotorTargetPosition(850, 850, 0, 0, 0);
     }
 
-    public static void raiseBallPosition1(){
-        setMotorTargetPosition(stages[0].MAX_TICKS, stages[1].MAX_TICKS, 0, 0, -500);
+    public static void raiseToPosition1(){
+        setMotorTargetPosition(stages[0].MAX_TICKS, stages[1].MAX_TICKS, 0, 0, 0);
     }
 
-    public static void raiseBallPosition2(){
-        setMotorTargetPosition(stages[0].MAX_TICKS, stages[1].MAX_TICKS, stages[2].MAX_TICKS, stages[3].MAX_TICKS, -500);
-    }
-
-    public static void dropBall1(){
-        setMotorTargetPosition(stages[0].MAX_TICKS, stages[1].MAX_TICKS, stages[2].MAX_TICKS, stages[3].MAX_TICKS, -2300);
-    }
-
-    public static void dropBall2(){
+    public static void dropBlock(){
         setMotorTargetPosition(0, 0, 0, 0, 0);
     }
 

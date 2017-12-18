@@ -70,9 +70,9 @@ public class AutoOpBase extends OpMode {
         Log.i("FTC7391", "Auto: " + "AutoOpBase init:"+ "  step " + step);
 
         DriveTrainAuto.init(hardwareMap);
-//        Lift.init(hardwareMap);
+        Lift.init(hardwareMap);
 //        //Claw.init(hardwareMap);
-//        Lift.resetEncoders();
+        Lift.resetEncoders();
 //
 //        //public Zipline(HardwareMap hardwareMap, double retracted, double drive, double deploy, String name)
 //        pusher_right = new Zipline(hardwareMap, 1,1, .35, "pusher_right"); //
@@ -132,7 +132,7 @@ public class AutoOpBase extends OpMode {
         protected int cnt = 0;
 
         public void init(){
-//            Lift.runToPosition();
+            Lift.runToPosition();
             //perform state action
         }
 
@@ -783,21 +783,15 @@ public class AutoOpBase extends OpMode {
     }
 
     private void showTelemetryLift() {
-        telemetry.addData("30 " , String.format("High  : original: %d current: %d", Lift.getOriginalTicksHigh(), Lift.getTicksLiftHigh()));
         telemetry.addData("31 " , String.format("Low   : original: %d current: %d", Lift.getOriginalTicksLow(), Lift.getTicksLiftLow()));
         telemetry.addData("32 " , String.format("Angle : original: %d current: %d", Lift.getOriginalTicksMid(), Lift.getTicksLiftMid()));
-        telemetry.addData("33 " , String.format("Hook  : original: %d currnet: %d", Lift.getOriginalTicksWrist(), Lift.getTicksLiftWrist()));
-        dbgWriter.printf("High %d %d    Low %d %d    Angle %d %d     Hook %d %d \n",
-            Lift.getOriginalTicksHigh(), Lift.getTicksLiftHigh(),
+       dbgWriter.printf("High %d %d    Low %d %d    Angle %d %d     Hook %d %d \n",
             Lift.getOriginalTicksLow(), Lift.getTicksLiftLow(),
-            Lift.getOriginalTicksMid(), Lift.getTicksLiftMid(),
-            Lift.getOriginalTicksWrist(), Lift.getTicksLiftWrist()
-        );
+            Lift.getOriginalTicksMid(), Lift.getTicksLiftMid()
+            );
 
-        Log.d("FTC7391", "Auto: " + "High     : original:" + Lift.getOriginalTicksHigh() + "|| end: " + Lift.getTicksLiftHigh());
         Log.d("FTC7391", "Auto: " + "Low      : original:" + Lift.getOriginalTicksLow()+ "|| end: " + Lift.getTicksLiftLow());
         Log.d("FTC7391", "Auto: " + "Mid : original:" + Lift.getOriginalTicksMid() + "|| end: " + Lift.getTicksLiftMid());
-        Log.d("FTC7391", "Auto: " + "Wrist    : original:" + Lift.getOriginalTicksWrist() + "|| end: " + Lift.getTicksLiftWrist());
 
     }
 

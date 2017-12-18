@@ -49,16 +49,15 @@ public class LiftJoystick {
                     Lift.grabPosition();
                 }
                 if (gamepad2.b) {
-                    Lift.raiseBallPosition1();
-                    Lift.raiseBallPosition2();
+                    Lift.raiseToPosition1();
                 }
                 if (gamepad2.a) {
                     Lift.holdBall();
                 }
                 if (gamepad2.x) {
-                    Lift.dropBall1();
+                    Lift.dropBlock();
                     //wait???
-                    Lift.dropBall2();
+
                 }
 
             }
