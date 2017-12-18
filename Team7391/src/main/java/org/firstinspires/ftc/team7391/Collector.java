@@ -13,8 +13,8 @@ public class Collector {
     private static DcMotor collectorRight;
 
     public Collector(HardwareMap hardwareMap){
-        collectorLeft = hardwareMap.dcMotor.get("collectorLeft");
-        collectorRight = hardwareMap.dcMotor.get("collectorRight");
+        collectorLeft = hardwareMap.dcMotor.get("collector_left");
+        collectorRight = hardwareMap.dcMotor.get("collector_right");
 
         collectorLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         collectorRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
