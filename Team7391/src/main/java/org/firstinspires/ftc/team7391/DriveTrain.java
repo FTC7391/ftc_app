@@ -1,17 +1,27 @@
 package org.firstinspires.ftc.team7391;
 
+import com.qualcomm.hardware.motors.NeveRest60Gearmotor;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.hardware.configuration.MotorConfigurationType;
 
 /**
  * Created by Dylan on 7/19/2015.
  */
 public class DriveTrain {
 
+    @interface Motor NeverRest60GearMotor
     protected static DcMotor motorFrontLeft;
+
+
+    @interface MotorType NeverRest60GearMotor
     protected static DcMotor motorFrontRight;
+
+    @interface MotorType NeverRest60GearMotor
     protected static DcMotor motorBackRight;
+
+    @interface MotorType NeverRest60GearMotor
     protected static DcMotor motorBackLeft;
 
 
@@ -45,6 +55,11 @@ public class DriveTrain {
         motorFrontRight = hardwareMap.dcMotor.get("motor_front_right");
         motorBackLeft = hardwareMap.dcMotor.get("motor_back_left");
         motorBackRight = hardwareMap.dcMotor.get("motor_back_right");
+
+        motorFrontLeft.setMotorType(MotorConfigurationType.);
+        motorFrontRight.setMotorType(NeveRest60Gearmotor);
+        motorBackLeft.setMotorType(NeveRest60Gearmotor);
+        motorBackRight.setMotorType(NeveRest60Gearmotor);
 
         setMotorDirection();
         resetEncoders();
