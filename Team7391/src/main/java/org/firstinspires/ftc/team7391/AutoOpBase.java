@@ -239,6 +239,34 @@ public class AutoOpBase extends OpMode {
 
     }
 
+    protected class MoveLateralState extends State {
+
+        private double inches;
+        private double power;
+
+        public MoveLateralState(double i, double p){
+            inches = i;
+            power = p;
+            Log.i("FTC7391", "Auto: " + "StrafeState constructor  inches:" + inches + " power:" + power + " i:" + i + " p:" + p);
+        }
+
+        public void init() {
+            super.init();
+
+            Log.i("FTC7391", "Auto: " + "StrafeState init  inches:" + inches + " power:" + power );
+            DriveTrainAuto.moveLateralInches(inches, power);
+            dbgWriter.printf("Move Lateral Inches %.2f \n", inches);
+            telemetry.addData(TAG, "Move Lateral Inches " + inches);
+            stateStr = "MOVE LATERAL INCHES" + inches;
+            showTelemetryStateInfo();
+        }
+
+        public boolean updateState(){
+            return DriveTrainAuto.isDone();
+        }
+
+    }
+
     protected class RotateState extends State {
 
         protected double degrees;

@@ -68,15 +68,28 @@ public class DriveTrainAuto extends DriveTrain{
         if (distance > 0)
             setPowerOfMotors(power, power, power, power);   //TBD Should powers be positive or negative, ALL PLACES.
         else if (distance < 0)
-            setPowerOfMotors(-power, -power, power, power);
+            setPowerOfMotors(-power, -power, -power, -power);
 
 //        else
 //            //setPowerOfMotors(0.0, 0.0, 0.0, 0.0);
      }
 
-    public static void moveLateralInches(int distance, double power) {
-        setPowerOfMotors(-power, power, power, -power);
-        setMotorTargetPosition(-distance, distance, distance, -distance);
+    public static void moveLateralInches(double distance, double power) {
+
+        Log.i("FTC7391", "Auto: " + "moveLateralInches:" + "inches:" + distance + " power:" + power);
+
+        power = Math.abs(power);
+        ticks = (int) (distance * TICKS_PER_LATERAL_INCH);
+        if( distance > 0 )
+            ticks = (int) (distance * TICKS_PER_LATERAL_INCH);
+        else
+            ticks = (int) (distance * TICKS_PER_LATERAL_INCH);
+
+        setMotorTargetPosition(-ticks, ticks, ticks, -ticks);
+        if (distance > 0)
+            setPowerOfMotors(-power, power, power, -power);
+        else if (distance < 0)
+            setPowerOfMotors(power, -power, -power, power);
     }
 
     /**
