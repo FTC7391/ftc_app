@@ -6,6 +6,8 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorController;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
+import java.util.Timer;
+
 /**
  * Created by Arjun Verma on 10/3/15.
  */
@@ -42,7 +44,7 @@ public class Lift {
             new Stage("stage1", 0, 12000)    //mid
     };
 
-    private static final int NUM_STAGES = 5;
+    private static final int NUM_STAGES = 2;
 
     private static boolean initialized = false;
 
@@ -98,6 +100,7 @@ public class Lift {
 
 
         resetEncoders();
+
         runUsingEncoders();
         //stop();
 
@@ -105,7 +108,7 @@ public class Lift {
             stages[i].originalTicks = stages[i].motor.getCurrentPosition();
 
         //runToPosition();
-       Log.i("FTC7391", "Lift: " + "INIT Complete  originalTicksWrist" + stages[4].originalTicks);
+       Log.i("FTC7391", "Lift: " + "INIT Complete  originalTicksMid" + stages[1].originalTicks);
     }
 
     public static boolean isModeRunToPosition() {
@@ -194,9 +197,8 @@ public class Lift {
     }
 
     // --------------- SET POWER ---------------
-    public static void setPowerOfMotors(double liftTopPower, double liftHighPower, double liftLowPower, double liftMidPower, double liftWristPower) {
-        Log.i("FTC7391", "Lift: " + "SET POWER " + " L:" + liftLowPower + " M:" + liftMidPower + " H:" + liftHighPower +
-                                     " M:" + liftMidPower + " W:" + stages[4].MAX_POWER*liftWristPower);
+    public static void setPowerOfMotors(double liftLowPower, double liftMidPower, double liftTopPower, double liftHighPower, double liftWristPower) {
+        Log.i("FTC7391", "Lift: " + "SET POWER " + " L:" + liftLowPower + " M:" + liftMidPower);
         stages[0].motor.setPower(liftLowPower);
         stages[1].motor.setPower(liftMidPower);
 
@@ -305,7 +307,7 @@ public class Lift {
 
 
         if (power !=0) {
-            Log.d("FTC7391", "Lift: " + "Power:" + power + "Current Mid" + stages[1].motor.getCurrentPosition() + "Current Low" + stages[0].motor.getCurrentPosition());
+            Log.v("FTC7391", "Lift: " + "Power:" + power + "Current Mid" + stages[1].motor.getCurrentPosition() + "Current Low" + stages[0].motor.getCurrentPosition());
         }
         switch (mode) {
             case MODE_MOVE_TOP:
@@ -328,6 +330,7 @@ public class Lift {
                 else{
                     //MidRunUsingEncoders();
                     stages[1].motor.setPower(1 * power);    //negative power = backwards
+                    //Log.v("FTC7391", "Lift: " + "Mid power = " + power );
                 }
                 break;
 

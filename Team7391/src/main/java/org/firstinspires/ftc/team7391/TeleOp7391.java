@@ -55,7 +55,7 @@ public class TeleOp7391 extends OpMode {
 	private static double liftPower;
 	private static double liftLowPower;
 
-	private boolean liftEnabled = false;
+	private boolean liftEnabled = true;
 
 	private Zipline ziplineBlue;
 	private Zipline ziplineRed;
@@ -152,14 +152,17 @@ public class TeleOp7391 extends OpMode {
 		telemetry.addData("32 " , String.format("Low   : original: %d current: %d", Lift.getOriginalTicksLow(), Lift.getTicksLiftLow()));
 		telemetry.addData("33 " , String.format("Mid : original: %d current: %d", Lift.getOriginalTicksMid(), Lift.getTicksLiftMid()));
 
-		dbgWriter.printf("Top %d %d    High %d %d    Low %d %d     Mid %d %d     Wrist %d %d \n",
+		dbgWriter.printf("Low %d %d    Mid %d %d \n",
 				Lift.getOriginalTicksLow(), Lift.getTicksLiftLow(),
 			Lift.getOriginalTicksMid(), Lift.getTicksLiftMid()
 
 		);
-
-		Log.d("Lift", "Low   : original:" + Lift.getOriginalTicksLow() + "|| end: " + Lift.getTicksLiftLow());
-		Log.d("Lift", "Angle : original:" + Lift.getOriginalTicksMid() + "|| end: " + Lift.getTicksLiftMid());
+		if (Lift.getTicksLiftLow() != 0) {
+			Log.d("Lift", "Low   : original:" + Lift.getOriginalTicksLow() + "|| end: " + Lift.getTicksLiftLow());
+		}
+		if (Lift.getTicksLiftMid() !=0) {
+			Log.d("Lift", "Mid : original:" + Lift.getOriginalTicksMid() + "|| end: " + Lift.getTicksLiftMid());
+		}
 
 	}
 
