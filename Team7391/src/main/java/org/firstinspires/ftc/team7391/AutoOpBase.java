@@ -24,7 +24,7 @@ public class AutoOpBase extends OpMode {
 
     protected static Zipline pusher_right;
     protected static Zipline pusher_left;
-    protected static final double DEFAULT_MOVE_POWER = 0.4;
+    protected static final double DEFAULT_MOVE_POWER = 0.65;
     protected static final double DEFAULT_TURN_POWER = 0.6;
 
     private ColorSensor colorSensor;
@@ -71,30 +71,7 @@ public class AutoOpBase extends OpMode {
 
         DriveTrainAuto.init(hardwareMap);
         Lift.init(hardwareMap);
-//        //Claw.init(hardwareMap);
         Lift.resetEncoders();
-//
-//        //public Zipline(HardwareMap hardwareMap, double retracted, double drive, double deploy, String name)
-//        pusher_right = new Zipline(hardwareMap, 1,1, .35, "pusher_right"); //
-//        pusher_left = new Zipline(hardwareMap, 0,0, .65, "pusher_left"); //
-//        pusher_right.setRetractedPosition();
-//        pusher_left.setRetractedPosition();
-//
-//        colorRight = hardwareMap.colorSensor.get("color_right"); // 0X38 Default
-//        colorRight.setI2cAddress(I2cAddr.create8bit(0X5C));
-//        colorRight.enableLed(false);
-//        colorLeft = hardwareMap.colorSensor.get("color_left");
-//        colorLeft.setI2cAddress(I2cAddr.create8bit(0X3C));
-//        colorLeft.enableLed(false);
-//        colorRightBottom = hardwareMap.colorSensor.get("color_right_bottom");
-//        colorRightBottom.setI2cAddress(I2cAddr.create8bit(0X6C));
-//        colorRight.enableLed(false);
-//        colorLeftBottom = hardwareMap.colorSensor.get("color_left_bottom");
-//        colorLeftBottom.setI2cAddress(I2cAddr.create8bit(0X4C));
-//        colorLeft.enableLed(false);
-
-//        Log.i("FTC7391", "Auto: " + " Color Left Address: " + colorLeft.getI2cAddress().get8Bit());
-//        Log.i("FTC7391", "Auto: " + " Color Right Address: " + colorRight.getI2cAddress().get8Bit());
 
 
         stateStr = "INIT";
@@ -247,16 +224,16 @@ public class AutoOpBase extends OpMode {
         public MoveLateralState(double i, double p){
             inches = i;
             power = p;
-            Log.i("FTC7391", "Auto: " + "MoveLateralState constructor  inches:" + inches + " power:" + power + " i:" + i + " p:" + p);
+            Log.i("FTC7391", "Auto: " + "StrafeState constructor  inches:" + inches + " power:" + power + " i:" + i + " p:" + p);
         }
 
         public void init() {
             super.init();
 
-            Log.i("FTC7391", "Auto: " + "MoveLateralState init  inches:" + inches + " power:" + power );
-            DriveTrainAuto.moveLateralInches((int)inches, power);
+            Log.i("FTC7391", "Auto: " + "StrafeState init  inches:" + inches + " power:" + power );
+            DriveTrainAuto.moveLateralInches(inches, power);
             dbgWriter.printf("Move Lateral Inches %.2f \n", inches);
-            telemetry.addData(TAG, "Move Inches " + inches);
+            telemetry.addData(TAG, "Move Lateral Inches " + inches);
             stateStr = "MOVE LATERAL INCHES" + inches;
             showTelemetryStateInfo();
         }
@@ -758,7 +735,7 @@ public class AutoOpBase extends OpMode {
         Log.i("FTC7391", "showTelemetry");
         showTelemetryState();
         showTelemetryDrivetrain();
-        //showTelemetryLift();
+        showTelemetryLift();
       }
 
     private void showTelemetryStateInfo() {
