@@ -16,4 +16,8 @@
         <NeveRest60Gearmotor name="stage0" port="1" />
         <NeveRest60Gearmotor name="stage1" port="2" />
     </MotorController>
+    <ServoController name="Servo Controller " serialNumber="AI02RMWJ">
+        <Servo name="ejecter_left" port="1" />
+        <Servo name="ejecter_right" port="2"/>
+    </ServoController>
 </Robot>
