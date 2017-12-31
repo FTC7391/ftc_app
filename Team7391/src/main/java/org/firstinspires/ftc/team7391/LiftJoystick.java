@@ -3,6 +3,7 @@ package org.firstinspires.ftc.team7391;
 import android.util.Log;
 
 import com.qualcomm.robotcore.hardware.Gamepad;
+import com.qualcomm.robotcore.hardware.HardwareMap;
 
 /**
  * Created by nikashkhanna on 11/14/15.
@@ -11,6 +12,14 @@ public class LiftJoystick {
     private static int nLoop = 0;
     private static double liftPower = 0;
     private static double liftLowPower = 0;
+
+    private static Collector collector;
+    private static Ejector ejector;
+
+
+    public LiftJoystick(HardwareMap hardwareMap){
+        collector = new Collector(hardwareMap);
+    }
 
     public static double getLiftPower() { return liftPower;}
 
@@ -76,28 +85,67 @@ public class LiftJoystick {
                     //Lift.holdBall();
                 }
             }
-
+            else if (gamepad2.dpad_left) {
+                if (gamepad2.x){
+                    collector.grab();
+                }
+                else if (gamepad2.y){
+                    collector.release();
+                }
+                else if (gamepad2.a){
+                    collector.stop();
+                }
+            }
 
         }
         else {
-            if (gamepad2.y) {
-                Lift.setTestMode(Lift.TestModes.MODE_MOVE_TOP, liftPower);
+
+            if (gamepad2.b){
+                if(liftPower>0) {
+                    collector.release();
+                    ejector.grab();
+                }
+                else if(liftPower<0) {
+                    collector.grab();
+                    ejector.release();
+                }
+                else {
+                    collector.stop();
+                    ejector.stop();
+                }
             }
             else {
-                Lift.setTestMode(Lift.TestModes.MODE_MOVE_TOP, 0);
+                if (gamepad2.y) {
+                    if(liftPower>0)
+                        collector.release();
+                    else if(liftPower<0)
+                        collector.grab();
+                    else
+                        collector.stop();
+                }
+                else {
+                    collector.stop();
+                }
+                if (gamepad2.x) {
+                    if(liftPower>0)
+                        ejector.grab();
+                    else if(liftPower<0)
+                        ejector.release();
+                    else
+                        ejector.stop();
+                }
+                else {
+                    ejector.stop();
+                }
             }
+
             if (gamepad2.b) {
                 Lift.setTestMode(Lift.TestModes.MODE_MOVE_HIGH, liftPower);
             }
             else {
                 Lift.setTestMode(Lift.TestModes.MODE_MOVE_HIGH, 0);
             }
-            if (gamepad2.x) {
-                Lift.setTestMode(Lift.TestModes.MODE_MOVE_MID, liftPower);
-            }
-            else {
-                Lift.setTestMode(Lift.TestModes.MODE_MOVE_MID, 0);
-            }
+
             if (gamepad2.a) {
                 Lift.setTestMode(Lift.TestModes.MODE_MOVE_LOW, liftPower);
             }

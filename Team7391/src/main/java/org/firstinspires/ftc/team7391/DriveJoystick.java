@@ -24,7 +24,6 @@ public class DriveJoystick {
     private static Zipline pusher_right;
     private static ColorSensor colorRight;
     private static ColorSensor colorLeft;
-    private static Collector collector;
 
     private static int nTeleLoop = 0;
 
@@ -39,7 +38,6 @@ public class DriveJoystick {
 
 
     public DriveJoystick(HardwareMap hardwareMap) {
-        collector = new Collector(hardwareMap);
 
 
 //        pusher_left = new Zipline(hardwareMap, 0,0, .65, "pusher_left"); //.5?
@@ -140,19 +138,16 @@ public class DriveJoystick {
         }
         */
         if (gamepad1.x){
-            //DriveTrainTele.setTestMode(DriveTrainTele.TestModes.MODE_MOVE_FORWARD, 0.01, 0)
-            collector.grab();
+            DriveTrainTele.setTestMode(DriveTrainTele.TestModes.MODE_MOVE_FORWARD, 0.01, 0);
         }
         else if (gamepad1.y){
-            //DriveTrainTele.setTestMode(DriveTrainTele.TestModes.MODE_MOVE_FORWARD, 0.05, 0);
-            collector.release();
+            DriveTrainTele.setTestMode(DriveTrainTele.TestModes.MODE_MOVE_FORWARD, 0.05, 0);
         }
         else if (gamepad1.b){
             DriveTrainTele.setTestMode(DriveTrainTele.TestModes.MODE_MOVE_FORWARD, 0.1, 0);
         }
         else if (gamepad1.a){
-            //DriveTrainTele.setTestMode(DriveTrainTele.TestModes.MODE_MOVE_FORWARD, 0.15, 0);
-            collector.stop();
+            DriveTrainTele.setTestMode(DriveTrainTele.TestModes.MODE_MOVE_FORWARD, 0.15, 0);
         }
         else if (gamepad1.right_bumper){
             DriveTrainTele.setTestMode(DriveTrainTele.TestModes.MODE_ROTATE_RIGHT, MAX_POWER, 0);
