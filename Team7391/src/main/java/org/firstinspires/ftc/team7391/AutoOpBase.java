@@ -24,6 +24,9 @@ public class AutoOpBase extends OpMode {
 
     protected static Zipline pusher_right;
     protected static Zipline pusher_left;
+    protected static Collector collector;
+    protected static Ejector ejector;
+
     protected static final double DEFAULT_MOVE_POWER = 0.65;
     protected static final double DEFAULT_TURN_POWER = 0.6;
 
@@ -628,7 +631,7 @@ public class AutoOpBase extends OpMode {
 
     }
 
-      protected class MoveToSecondBeacon extends State {
+    protected class MoveToSecondBeacon extends State {
 
         private double inches;
         private double power;

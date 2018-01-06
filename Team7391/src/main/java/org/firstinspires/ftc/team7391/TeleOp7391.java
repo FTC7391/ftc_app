@@ -88,7 +88,7 @@ public class TeleOp7391 extends OpMode {
 		}
 		//Claw.init(hardwareMap);
 		driveJoystick = new DriveJoystick(hardwareMap);
-		if (liftEnabled) liftJoystick = new LiftJoystick();
+		if (liftEnabled) liftJoystick = new LiftJoystick(hardwareMap);
 
 	}
 
