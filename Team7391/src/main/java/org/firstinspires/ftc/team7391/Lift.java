@@ -57,10 +57,6 @@ public class Lift {
     public static int getTicksLiftLow(){return stages[0].motor.getCurrentPosition();}
     public static int getTicksLiftMid(){return stages[1].motor.getCurrentPosition();}
 
-
-
-
-
     public static int getOriginalTicksLow(){return stages[0].originalTicks;}
     public static int getOriginalTicksMid(){return stages[1].originalTicks;}
 
@@ -406,28 +402,57 @@ public class Lift {
         setPowerOfMotors(0, 0, 0, 0, 0);
     }
 
+    public static void testPosition(){
+        //runToPosition();
+        setMotorTargetPosition(3000, 2000, 0,0,0);
+    }
 
     public static void initPosition(){
         Log.i("FTC7391", "Lift: " + "initPosition ");
         //runToPosition();  //Done in setMotorTargetPosition();
         setMotorTargetPosition(0, 0, 0, 0, 0);
-     }
+    }
 
-    public static void testPosition(){
-        //runToPosition();
-        setMotorTargetPosition(3000, 2000, 0,0,0);
-     }
+    public static void collectPosition(){
+        Log.i("FTC7391", "Lift: " + "collectPosition ");
+        //runToPosition();  //Done in setMotorTargetPosition();
+        setMotorTargetPosition(5000, 0, 0, 0, 0);
+    }
 
     public static void drivePosition1(){
         Log.i("FTC7391", "Lift: " + "drivePostion1 ");
         //runToPosition();
         setMotorTargetPosition(600, 0, 0, 0, 0);
-     }
+    }
 
-     public static void grabPosition(){
+    public static void deployPosition1(){
+        Log.i("FTC7391", "Lift: " + "deployPostion1 ");
+        //runToPosition();
+        setMotorTargetPosition(1200, 1200, 0, 0, 0);
+    }
+
+    public static void deployPosition2(){
+        Log.i("FTC7391", "Lift: " + "deployPosition2 ");
+        //runToPosition();
+        setMotorTargetPosition(1800, 1800, 0, 0, 0);
+    }
+
+    public static void deployPosition3(){
+        Log.i("FTC7391", "Lift: " + "deployPosition3 ");
+        //runToPosition();
+        setMotorTargetPosition(2400, 2400, 0, 0, 0);
+    }
+
+    public static void deployPosition4(){
+        Log.i("FTC7391", "Lift: " + "deployPosition4 ");
+        //runToPosition();
+        setMotorTargetPosition(5000, 5000, 0, 0, 0);
+    }
+
+    public static void grabPosition(){
         Log.i("FTC7391", "Lift: " + "grabPosition ");
         setMotorTargetPosition(850, 850, 0, 0, 0);
-     }
+    }
 
     public static void holdBall(){
         Log.i("FTC7391", "Lift: " + "holdBallPosition ");
