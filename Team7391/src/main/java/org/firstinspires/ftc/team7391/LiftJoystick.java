@@ -54,113 +54,103 @@ public class LiftJoystick {
             if (gamepad2.back)
                 Lift.stop();
 
-            if (gamepad2.dpad_up) {
+            else if (gamepad2.dpad_up) {
                 if (gamepad2.y) {
-                    Lift.grabPosition();
+                    Lift.initPosition();
                 }
                 if (gamepad2.b) {
-                    Lift.raiseToPosition1();
-                }
-                if (gamepad2.a) {
-                    Lift.holdBall();
+                    Lift.drivePosition1();
                 }
                 if (gamepad2.x) {
-                    Lift.dropBlock();
-                    //wait???
-
+                    //unused
+                }
+                if (gamepad2.a) {
+                    Lift.collectPosition();
                 }
 
             }
             else if (gamepad2.dpad_down) {
 
                 if (gamepad2.y) {
-                    Lift.initPosition();
-                }
-                if (gamepad2.x) {
-                    Lift.drivePosition1();
-                }
-                if (gamepad2.a) {
-                    //Lift.grabPosition();
+                    Lift.deployPosition4();
                 }
                 if (gamepad2.b) {
-                    //Lift.holdBall();
+                    Lift.deployPosition3();
+                }
+                if (gamepad2.x) {
+                    Lift.deployPosition2();
+                }
+                if (gamepad2.a) {
+                    Lift.deployPosition1();
                 }
             }
-            else if (gamepad2.dpad_left) {
-                if (gamepad2.x){
-                    collector.grab();
-                }
-                else if (gamepad2.y){
-                    collector.release();
-                }
-                else if (gamepad2.a){
-                    collector.stop();
-                }
+            else{
+                updateCollectorEjector(gamepad2);
             }
 
         }
         else {          //Encoder mode
 
-            if (gamepad2.b){
-                if(liftPower>0) {
-                    collector.release();
-                    ejector.grab();
-                }
-                else if(liftPower<0) {
-                    collector.grab();
-                    ejector.release();
-                }
-                else {
-                    collector.stop();
-                    ejector.stop();
-                }
+            if (gamepad2.dpad_left) {   //mid
+                Lift.setTestMode(Lift.TestModes.MODE_MOVE_MID, liftLowPower);
+                Lift.setTestMode(Lift.TestModes.MODE_MOVE_LOW, 0);
             }
-            else {
-                if (gamepad2.y) {
-                    if(liftPower>0)
-                        collector.release();
-                    else if(liftPower<0)
-                        collector.grab();
-                    else
-                        collector.stop();
-                }
-                else {
-                    collector.stop();
-                }
-                if (gamepad2.a) {
-                    if(liftPower>0)
-                        ejector.grab();
-                    else if(liftPower<0)
-                        ejector.release();
-                    else
-                        ejector.stop();
-                }
-                else {
-                    ejector.stop();
-                }
+            else if (gamepad2.dpad_right){  //low
+                Lift.setTestMode(Lift.TestModes.MODE_MOVE_LOW, liftLowPower);
+                Lift.setTestMode(Lift.TestModes.MODE_MOVE_MID, 0);
             }
-
-            if (gamepad2.dpad_down) {
-                if (gamepad2.b) {
-                    Lift.setTestMode(Lift.TestModes.MODE_MOVE_MID, liftPower);
-                }
-                else {
-                    Lift.setTestMode(Lift.TestModes.MODE_MOVE_MID, 0);
-                }
-
-                if (gamepad2.a) {
-                    Lift.setTestMode(Lift.TestModes.MODE_MOVE_LOW, liftPower);
-                }
-                else {
-                    Lift.setTestMode(Lift.TestModes.MODE_MOVE_LOW, 0);
-                }
+            else if (gamepad2.dpad_up) {    //both
+                Lift.setTestMode(Lift.TestModes.MODE_MOVE_LOW, liftLowPower);
+                Lift.setTestMode(Lift.TestModes.MODE_MOVE_MID, liftLowPower);
             }
-
-
-
-
+            else{
+                Lift.setTestMode(Lift.TestModes.MODE_MOVE_MID, 0);
+                Lift.setTestMode(Lift.TestModes.MODE_MOVE_LOW, 0);
+                updateCollectorEjector(gamepad2);
+            }
         }
 
+    }
+
+    private static void updateCollectorEjector(Gamepad gamepad2) {
+        if (gamepad2.b){
+            if(liftPower>0) {
+                collector.release();
+                ejector.grab();
+            }
+            else if(liftPower<0) {
+                collector.grab();
+                ejector.release();
+            }
+            else {
+                collector.stop();
+                ejector.stop();
+            }
+        }
+        else {
+            if (gamepad2.y) {
+                if(liftPower>0)
+                    collector.release();
+                else if(liftPower<0)
+                    collector.grab();
+                else
+                    collector.stop();
+            }
+            else {
+                collector.stop();
+            }
+            if (gamepad2.a) {
+                if(liftPower>0)
+                    ejector.grab();
+                else if(liftPower<0)
+                    ejector.release();
+                else
+                    ejector.stop();
+            }
+            else {
+                ejector.stop();
+            }
+        }
     }
 
 
