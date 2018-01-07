@@ -416,13 +416,13 @@ public class Lift {
     public static void collectPosition(){
         Log.i("FTC7391", "Lift: " + "collectPosition ");
         //runToPosition();  //Done in setMotorTargetPosition();
-        setMotorTargetPosition(5000, 0, 0, 0, 0);
+        setMotorTargetPosition(500, 500, 0, 0, 0);
     }
 
     public static void drivePosition1(){
         Log.i("FTC7391", "Lift: " + "drivePostion1 ");
         //runToPosition();
-        setMotorTargetPosition(600, 0, 0, 0, 0);
+        setMotorTargetPosition(900, 900, 0, 0, 0);
     }
 
     public static void deployPosition1(){
@@ -446,7 +446,7 @@ public class Lift {
     public static void deployPosition4(){
         Log.i("FTC7391", "Lift: " + "deployPosition4 ");
         //runToPosition();
-        setMotorTargetPosition(5000, 5000, 0, 0, 0);
+        setMotorTargetPosition(3000, 3000, 0, 0, 0);
     }
 
     public static void grabPosition(){
