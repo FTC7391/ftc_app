@@ -21,18 +21,18 @@ public class Ejector {
     }
 
     public void grab(){
-        ejectorLeft.setDirection(CRServo.Direction.FORWARD);
-        ejectorLeft.setPower(1.0);
-
-        ejectorRight.setDirection(CRServo.Direction.REVERSE);
-        ejectorRight.setPower(1.0);
-    }
-
-    public void release(){
         ejectorLeft.setDirection(CRServo.Direction.REVERSE);
         ejectorLeft.setPower(1.0);
 
         ejectorRight.setDirection(CRServo.Direction.FORWARD);
+        ejectorRight.setPower(1.0);
+    }
+
+    public void release(){
+        ejectorLeft.setDirection(CRServo.Direction.FORWARD);
+        ejectorLeft.setPower(1.0);
+
+        ejectorRight.setDirection(CRServo.Direction.REVERSE);
         ejectorRight.setPower(1.0);
     }
 

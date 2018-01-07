@@ -19,6 +19,7 @@ public class LiftJoystick {
 
     public LiftJoystick(HardwareMap hardwareMap){
         collector = new Collector(hardwareMap);
+        ejector = new Ejector(hardwareMap);
     }
 
     public static double getLiftPower() { return liftPower;}
@@ -98,7 +99,7 @@ public class LiftJoystick {
             }
 
         }
-        else {
+        else {          //Encoder mode
 
             if (gamepad2.b){
                 if(liftPower>0) {
@@ -126,7 +127,7 @@ public class LiftJoystick {
                 else {
                     collector.stop();
                 }
-                if (gamepad2.x) {
+                if (gamepad2.a) {
                     if(liftPower>0)
                         ejector.grab();
                     else if(liftPower<0)
@@ -139,25 +140,24 @@ public class LiftJoystick {
                 }
             }
 
-            if (gamepad2.b) {
-                Lift.setTestMode(Lift.TestModes.MODE_MOVE_HIGH, liftPower);
-            }
-            else {
-                Lift.setTestMode(Lift.TestModes.MODE_MOVE_HIGH, 0);
+            if (gamepad2.dpad_down) {
+                if (gamepad2.b) {
+                    Lift.setTestMode(Lift.TestModes.MODE_MOVE_MID, liftPower);
+                }
+                else {
+                    Lift.setTestMode(Lift.TestModes.MODE_MOVE_MID, 0);
+                }
+
+                if (gamepad2.a) {
+                    Lift.setTestMode(Lift.TestModes.MODE_MOVE_LOW, liftPower);
+                }
+                else {
+                    Lift.setTestMode(Lift.TestModes.MODE_MOVE_LOW, 0);
+                }
             }
 
-            if (gamepad2.a) {
-                Lift.setTestMode(Lift.TestModes.MODE_MOVE_LOW, liftPower);
-            }
-            else {
-                Lift.setTestMode(Lift.TestModes.MODE_MOVE_LOW, 0);
-            }
-            if (gamepad2.dpad_up) {
-                Lift.setTestMode(Lift.TestModes.MODE_MOVE_WRIST, liftPower);
-            }
-            else {
-                Lift.setTestMode(Lift.TestModes.MODE_MOVE_WRIST, 0);
-            }
+
+
 
         }
 
