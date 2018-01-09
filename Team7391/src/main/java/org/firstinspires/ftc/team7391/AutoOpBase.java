@@ -765,14 +765,13 @@ public class AutoOpBase extends OpMode {
     private void showTelemetryLift() {
         telemetry.addData("31 " , String.format("Low   : original: %d current: %d", Lift.getOriginalTicksLow(), Lift.getTicksLiftLow()));
         telemetry.addData("32 " , String.format("Angle : original: %d current: %d", Lift.getOriginalTicksMid(), Lift.getTicksLiftMid()));
-       dbgWriter.printf("High %d %d    Low %d %d    Angle %d %d     Hook %d %d \n",
+       dbgWriter.printf("Low %d %d  Mid %d %d \n",
             Lift.getOriginalTicksLow(), Lift.getTicksLiftLow(),
             Lift.getOriginalTicksMid(), Lift.getTicksLiftMid()
             );
 
         Log.d("FTC7391", "Auto: " + "Low      : original:" + Lift.getOriginalTicksLow()+ "|| end: " + Lift.getTicksLiftLow());
         Log.d("FTC7391", "Auto: " + "Mid : original:" + Lift.getOriginalTicksMid() + "|| end: " + Lift.getTicksLiftMid());
-
     }
 
 

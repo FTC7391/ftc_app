@@ -41,7 +41,7 @@ public class Lift {
 
     private static Stage[] stages = {     //what should these numbers be?
             new Stage("stage0", 0, 12000),    //low
-            new Stage("stage1", 0, 12000)    //mid
+            new Stage("stage1", 0, 1500)    //mid - hits ejector
     };
 
     private static final int NUM_STAGES = 2;
@@ -120,8 +120,8 @@ public class Lift {
     // --------------- SET MOTOR DIRECTION ---------------
 
     public static void setMotorDirection(){
-        stages[0].motor.setDirection(DcMotor.Direction.FORWARD);
-        stages[1].motor.setDirection(DcMotor.Direction.REVERSE);
+        stages[0].motor.setDirection(DcMotor.Direction.REVERSE);
+        stages[1].motor.setDirection(DcMotor.Direction.FORWARD);
 
 
     }
