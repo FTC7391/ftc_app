@@ -89,10 +89,10 @@ public class DriveTrainTele extends DriveTrain{
         RB += axialPower;
         LB += axialPower;
          // Handle Regular Movement
-        RF -= strafingPower;
-        LF += strafingPower;
-        RB += strafingPower;
-        LB -= strafingPower;
+        RF += strafingPower;
+        LF -= strafingPower;
+        RB -= strafingPower;
+        LB += strafingPower;
         // Handle Turning Movement
         RF += rotatePower;
         LF -= rotatePower;

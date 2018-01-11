@@ -87,9 +87,9 @@ public class DriveTrainAuto extends DriveTrain{
 
         setMotorTargetPosition(-ticks, ticks, ticks, -ticks);
         if (distance > 0)
-            setPowerOfMotors(-power, power, power, -power);
-        else if (distance < 0)
             setPowerOfMotors(power, -power, -power, power);
+        else if (distance < 0)
+            setPowerOfMotors(-power, power, power, -power);
     }
 
     /**

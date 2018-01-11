@@ -16,7 +16,7 @@ public class Lift {
     private static class Stage{
         private DcMotor motor;
         private int MIN_TICKS;
-        private int MAX_TICKS = 12000;
+        private int MAX_TICKS;
         private double MAX_POWER = 1.0;
 
         private int originalTicks = 0;
@@ -40,8 +40,8 @@ public class Lift {
     }
 
     private static Stage[] stages = {     //what should these numbers be?
-            new Stage("stage0", 0, 12000),    //low
-            new Stage("stage1", 0, 1500)    //mid - hits ejector
+            new Stage("stage0", 0, 1825),    //low - 1845 ABSOLUTE MAX
+            new Stage("stage1", 0, 1350)    //mid - hits ejector
     };
 
     private static final int NUM_STAGES = 2;
@@ -187,7 +187,7 @@ public class Lift {
             stages[stageNum].motor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 //            liftHighTargetPosition = liftHigh.getCurrentPosition();
 //            liftHigh.setTargetPosition(liftHighTargetPosition); //OUT
-            stages[stageNum].motor.setPower(stages[stageNum].MAX_POWER);
+            stages[stageNum].motor.setPower(stages[stageNum].MAX_POWER*0.75);
             Log.i("FTC7391", "Lift: " + stages[stageNum].name + "RunToPosition"  );
         }
     }
@@ -404,7 +404,7 @@ public class Lift {
 
     public static void testPosition(){
         //runToPosition();
-        setMotorTargetPosition(3000, 2000, 0,0,0);
+        setMotorTargetPosition(300, 200, 0,0,0);
     }
 
     public static void initPosition(){
@@ -414,39 +414,48 @@ public class Lift {
     }
 
     public static void collectPosition(){
+
         Log.i("FTC7391", "Lift: " + "collectPosition ");
         //runToPosition();  //Done in setMotorTargetPosition();
-        setMotorTargetPosition(500, 500, 0, 0, 0);
+        setMotorTargetPosition(0, 0, 0, 0, 0);
     }
 
     public static void drivePosition1(){
         Log.i("FTC7391", "Lift: " + "drivePostion1 ");
         //runToPosition();
-        setMotorTargetPosition(900, 900, 0, 0, 0);
+        setMotorTargetPosition(0, 0, 0, 0, 0);
     }
 
     public static void deployPosition1(){
         Log.i("FTC7391", "Lift: " + "deployPostion1 ");
         //runToPosition();
-        setMotorTargetPosition(1200, 1200, 0, 0, 0);
+        setMotorTargetPosition(0, 0, 0, 0, 0);
+        //stages[0].MAX_TICKS = 0;
+        //stages[1].MAX_TICKS = 0;
     }
 
     public static void deployPosition2(){
         Log.i("FTC7391", "Lift: " + "deployPosition2 ");
         //runToPosition();
-        setMotorTargetPosition(1800, 1800, 0, 0, 0);
+        setMotorTargetPosition(1100, 0, 0, 0, 0);
+        //stages[0].MAX_TICKS = 1100;
+        //stages[1].MAX_TICKS = 0;
     }
 
     public static void deployPosition3(){
         Log.i("FTC7391", "Lift: " + "deployPosition3 ");
         //runToPosition();
-        setMotorTargetPosition(2400, 2400, 0, 0, 0);
+        setMotorTargetPosition(1225, 1225, 0, 0, 0);
+        //stages[0].MAX_TICKS = 1225;
+        //stages[1].MAX_TICKS = 1225;
     }
 
     public static void deployPosition4(){
         Log.i("FTC7391", "Lift: " + "deployPosition4 ");
         //runToPosition();
-        setMotorTargetPosition(3000, 3000, 0, 0, 0);
+        setMotorTargetPosition(stages[0].MAX_TICKS, stages[1].MAX_TICKS, 0, 0, 0);
+        //stages[0].MAX_TICKS = 1825;
+        //stages[1].MAX_TICKS = 1350;
     }
 
     public static void grabPosition(){

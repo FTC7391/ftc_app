@@ -42,9 +42,9 @@ public class LiftJoystick {
 
        // Log.i("Lift", "gamepad2.left_stick_y" + gamepad2.left_stick_y + " liftPower"+ liftPower);
 
-         //Choose RUN_TO_POSITON or RUN_USING_ECODER mode
+         //Choose RUN_TO_POSITON or RUN_USING_ENCODER mode
         if (gamepad2.right_bumper) {
-            Lift.setTestMode(Lift.TestModes.MODE_STOP, 1); //runToPostion mode
+            Lift.setTestMode(Lift.TestModes.MODE_RUN_TO_POSITION, 1); //runToPostion mode
         } else if (gamepad2.left_bumper) {
             Lift.runUsingEncoders();
         }
