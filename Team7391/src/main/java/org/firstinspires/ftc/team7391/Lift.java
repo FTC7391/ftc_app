@@ -12,23 +12,25 @@ import java.util.Timer;
  * Created by Arjun Verma on 10/3/15.
  */
 public class Lift {
+    public static int HOOK_OFFSET = 75;
 
     private static class Stage{
         private DcMotor motor;
         private int MIN_TICKS;
         private int MAX_TICKS;
-        private double MAX_POWER = 1.0;
+        private static double MAX_POWER = 0.6;
 
         private int originalTicks = 0;
         private int targetPosition = 0;
         private boolean isRunToPosition = false;
+
 
         private double currentPower;
 
         private String name = "";
 
         public Stage(String name, int min, int max){
-            this(name, min, max, 1.0);
+            this(name, min, max, MAX_POWER);
         }
 
         public Stage(String name, int min, int max, double power){
@@ -40,8 +42,8 @@ public class Lift {
     }
 
     private static Stage[] stages = {     //what should these numbers be?
-            new Stage("stage0", 0, 1825),    //low - 1845 ABSOLUTE MAX
-            new Stage("stage1", 0, 1350)    //mid - hits ejector
+            new Stage("stage0", 0, 1845),    //low - 1845 ABSOLUTE MAX
+            new Stage("stage1", 0-HOOK_OFFSET, 1845-HOOK_OFFSET)    //
     };
 
     private static final int NUM_STAGES = 2;
@@ -429,7 +431,7 @@ public class Lift {
     public static void deployPosition1(){
         Log.i("FTC7391", "Lift: " + "deployPostion1 ");
         //runToPosition();
-        setMotorTargetPosition(0, 0, 0, 0, 0);
+        setMotorTargetPosition(0, 0-HOOK_OFFSET, 0, 0, 0);
         //stages[0].MAX_TICKS = 0;
         //stages[1].MAX_TICKS = 0;
     }
@@ -437,7 +439,7 @@ public class Lift {
     public static void deployPosition2(){
         Log.i("FTC7391", "Lift: " + "deployPosition2 ");
         //runToPosition();
-        setMotorTargetPosition(1100, 0, 0, 0, 0);
+        setMotorTargetPosition(500, 600-HOOK_OFFSET, 0, 0, 0);
         //stages[0].MAX_TICKS = 1100;
         //stages[1].MAX_TICKS = 0;
     }
@@ -445,7 +447,7 @@ public class Lift {
     public static void deployPosition3(){
         Log.i("FTC7391", "Lift: " + "deployPosition3 ");
         //runToPosition();
-        setMotorTargetPosition(1225, 1225, 0, 0, 0);
+        setMotorTargetPosition(1225, 1225-HOOK_OFFSET, 0, 0, 0);
         //stages[0].MAX_TICKS = 1225;
         //stages[1].MAX_TICKS = 1225;
     }

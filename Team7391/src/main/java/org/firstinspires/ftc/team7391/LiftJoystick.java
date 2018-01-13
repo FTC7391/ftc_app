@@ -35,7 +35,7 @@ public class LiftJoystick {
         // Here add, the if statements
         // the scale input method is used to get the adjusted  power.
         liftPower =scaleInput(gamepad2.left_stick_y);
-        liftLowPower = scaleInput(gamepad2.right_stick_y) / 4;
+        liftLowPower = scaleInput(gamepad2.right_stick_y) / 8;
         if (liftPower == 0 && liftLowPower !=0) {
             liftPower = liftLowPower;
         }
@@ -54,30 +54,30 @@ public class LiftJoystick {
             if (gamepad2.back)
                 Lift.stop();
 
-            else if (gamepad2.dpad_down) {
-                if (gamepad2.y) {
-                    Lift.initPosition();
-                }
-                if (gamepad2.b) {
-                    Lift.drivePosition1();
-                }
-                if (gamepad2.x) {
-                    //unused
-                }
-                if (gamepad2.a) {
-                    Lift.collectPosition();
-                }
-
-            }
-            else if (gamepad2.dpad_up) {
+//            else if (gamepad2.dpad_down) {
+//                if (gamepad2.y) {
+//                    Lift.initPosition();
+//                }
+//                if (gamepad2.b) {
+//                    Lift.drivePosition1();
+//                }
+//                if (gamepad2.x) {
+//                    //unused
+//                }
+//                if (gamepad2.a) {
+//                    Lift.collectPosition();
+//                }
+//
+//            }
+            else if (gamepad2.dpad_left) {
 
                 if (gamepad2.y) {
                     Lift.deployPosition4();
                 }
-                if (gamepad2.b) {
+                if (gamepad2.x) {
                     Lift.deployPosition3();
                 }
-                if (gamepad2.x) {
+                if (gamepad2.b) {
                     Lift.deployPosition2();
                 }
                 if (gamepad2.a) {
@@ -91,15 +91,15 @@ public class LiftJoystick {
         }
         else {          //Encoder mode
 
-            if (gamepad2.dpad_left) {   //mid
+            if (gamepad2.dpad_up) {   //mid
                 Lift.setTestMode(Lift.TestModes.MODE_MOVE_MID, liftLowPower);
                 Lift.setTestMode(Lift.TestModes.MODE_MOVE_LOW, 0);
             }
-            else if (gamepad2.dpad_right){  //low
+            else if (gamepad2.dpad_down){  //low
                 Lift.setTestMode(Lift.TestModes.MODE_MOVE_LOW, liftLowPower);
                 Lift.setTestMode(Lift.TestModes.MODE_MOVE_MID, 0);
             }
-            else if (gamepad2.dpad_up) {    //both
+            else if (gamepad2.dpad_right) {    //both
                 Lift.setTestMode(Lift.TestModes.MODE_MOVE_LOW, liftLowPower);
                 Lift.setTestMode(Lift.TestModes.MODE_MOVE_MID, liftLowPower);
             }
