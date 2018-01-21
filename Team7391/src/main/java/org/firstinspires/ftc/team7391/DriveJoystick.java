@@ -11,7 +11,7 @@ import com.qualcomm.robotcore.hardware.*;
 
 public class DriveJoystick {
 
-    protected static final double MAX_POWER = 0.6;
+    protected static final double MAX_POWER = 1.0;
 
     private static final String TAG = TeleOp7391.class.getSimpleName();
     protected FTC7391PrintWriter dbgWriter = new FTC7391PrintWriter("Tele", "Debug");

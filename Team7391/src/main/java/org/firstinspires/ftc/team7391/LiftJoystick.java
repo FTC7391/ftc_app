@@ -35,7 +35,7 @@ public class LiftJoystick {
         // Here add, the if statements
         // the scale input method is used to get the adjusted  power.
         liftPower =scaleInput(gamepad2.left_stick_y);
-        liftLowPower = scaleInput(gamepad2.right_stick_y) / 8;
+        liftLowPower = scaleInput(gamepad2.right_stick_y) / 4;
         if (liftPower == 0 && liftLowPower !=0) {
             liftPower = liftLowPower;
         }
