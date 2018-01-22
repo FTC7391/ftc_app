@@ -18,7 +18,7 @@ public class Lift {
         private DcMotor motor;
         private int MIN_TICKS;
         private int MAX_TICKS;
-        private static double MAX_POWER = 0.6;
+        public  static double MAX_POWER = 0.6;
 
         private int originalTicks = 0;
         private int targetPosition = 0;
@@ -431,6 +431,7 @@ public class Lift {
     public static void deployPosition1(){
         Log.i("FTC7391", "Lift: " + "deployPostion1 ");
         //runToPosition();
+        setPowerOfMotors(Stage.MAX_POWER*0.75, Stage.MAX_POWER*0.75, 0, 0, 0);
         setMotorTargetPosition(0, 0-HOOK_OFFSET, 0, 0, 0);
         //stages[0].MAX_TICKS = 0;
         //stages[1].MAX_TICKS = 0;
@@ -439,6 +440,7 @@ public class Lift {
     public static void deployPosition2(){
         Log.i("FTC7391", "Lift: " + "deployPosition2 ");
         //runToPosition();
+        setPowerOfMotors(Stage.MAX_POWER*0.75, Stage.MAX_POWER*0.75, 0, 0, 0);
         setMotorTargetPosition(500, 600-HOOK_OFFSET, 0, 0, 0);
         //stages[0].MAX_TICKS = 1100;
         //stages[1].MAX_TICKS = 0;
@@ -447,6 +449,7 @@ public class Lift {
     public static void deployPosition3(){
         Log.i("FTC7391", "Lift: " + "deployPosition3 ");
         //runToPosition();
+        setPowerOfMotors(Stage.MAX_POWER*0.75, Stage.MAX_POWER*0.75, 0, 0, 0);
         setMotorTargetPosition(1225, 1225-HOOK_OFFSET, 0, 0, 0);
         //stages[0].MAX_TICKS = 1225;
         //stages[1].MAX_TICKS = 1225;
@@ -455,6 +458,7 @@ public class Lift {
     public static void deployPosition4(){
         Log.i("FTC7391", "Lift: " + "deployPosition4 ");
         //runToPosition();
+        setPowerOfMotors(0.5*0.75, 0.5*0.75, 0, 0, 0);
         setMotorTargetPosition(stages[0].MAX_TICKS, stages[1].MAX_TICKS, 0, 0, 0);
         //stages[0].MAX_TICKS = 1825;
         //stages[1].MAX_TICKS = 1350;
