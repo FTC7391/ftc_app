@@ -22,7 +22,7 @@ public class Collector {
         stop();
     }
 
-    public void grab(){
+    public static void grab(){
         collectorLeft.setDirection(DcMotor.Direction.FORWARD);
         collectorLeft.setPower(1.0);
 

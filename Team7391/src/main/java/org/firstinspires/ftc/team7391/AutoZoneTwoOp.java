@@ -5,7 +5,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 /**
  * Created by ArjunVerma on 1/7/18.
  */
-@Autonomous(name = "Tournament: Zone One" + "", group = "Tournament")
+@Autonomous(name = "Tournament: Zone Three" + "", group = "Tournament")
 //@Disabled
 
 public class AutoZoneTwoOp extends AutoOpBase {
@@ -19,12 +19,14 @@ public class AutoZoneTwoOp extends AutoOpBase {
 
         FTC7391PrintWriter data1Writer = new FTC7391PrintWriter("Alliance" , "color");
 
-        stepsList.add(new MoveState(27, 0.8));
+        stepsList.add(new MoveState(26, 0.8));
         //stepsList.add(new WaitState(0));
         //stepsList.add(new MoveLateralState(24,0.8));
         //stepsList.add(new WaitState(0));
        // stepsList.add(new RotateState(90,0.8));
         //stepsList.add(new WaitState(0));
+        stepsList.add(new LiftPosition2State());
+        stepsList.add(new LiftPosition1State());
         stepsList.add(new LiftPosition2State());
 
         stepsList.add(new StopState());

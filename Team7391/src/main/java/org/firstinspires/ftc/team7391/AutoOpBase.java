@@ -774,12 +774,37 @@ public class AutoOpBase extends OpMode {
         Log.d("FTC7391", "Auto: " + "Mid : original:" + Lift.getOriginalTicksMid() + "|| end: " + Lift.getTicksLiftMid());
     }
 
+    protected class LiftPosition1State extends State {
+
+        public void init(){
+            super.init();
+            Lift.deployPosition1();
+            stateStr = "LIFT POSITION 1";
+
+        }
+        public boolean updateState(){
+            return Lift.isDone();
+        }
+    }
+
     protected class LiftPosition2State extends State {
 
         public void init(){
             super.init();
             Lift.deployPosition2();
             stateStr = "LIFT POSITION 2";
+
+        }
+        public boolean updateState(){
+            return Lift.isDone();
+        }
+    }
+    protected class CollectorState extends State {
+
+        public void init(){
+            super.init();
+            Collector.grab();
+            stateStr = "COLLECTOR GRAB";
 
         }
         public boolean updateState(){

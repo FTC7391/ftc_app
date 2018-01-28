@@ -10,6 +10,13 @@ import com.qualcomm.robotcore.eventloop.opmode.Disabled;
  */
 //@Autonomous(name = "Auto: Red" + "", group = "Tournament")
 @Disabled
+
+
+
+
+
+
+
 public class AutoRedOp extends AutoOp
 {
     private static final String TAG = AutoRedOp.class.getSimpleName();

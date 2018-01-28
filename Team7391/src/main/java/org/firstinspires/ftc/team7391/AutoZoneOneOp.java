@@ -19,12 +19,17 @@ public class AutoZoneOneOp extends AutoOpBase {
 
         FTC7391PrintWriter data1Writer = new FTC7391PrintWriter("Alliance" , "color");
 
-        stepsList.add(new MoveState(-35, 0.8));
+        //stepsList.add(new CollectorState());
+
+        stepsList.add(new MoveState(-34, 0.8));
+
         //stepsList.add(new WaitState(0));
         //stepsList.add(new MoveLateralState(24,0.8));
         //stepsList.add(new WaitState(0));
        // stepsList.add(new RotateState(90,0.8));
         //stepsList.add(new WaitState(0));
+        stepsList.add(new LiftPosition2State());
+        stepsList.add(new LiftPosition1State());
         stepsList.add(new LiftPosition2State());
 
         stepsList.add(new StopState());
