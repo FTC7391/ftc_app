@@ -8,7 +8,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 @Autonomous(name = "Tournament: Zone One" + "", group = "Tournament")
 //@Disabled
 
-public class AutoZoneOneOp extends AutoOpBase {
+public class AutoZoneTwoOp extends AutoOpBase {
     private static final String TAG = AutoOp.class.getSimpleName();
     protected static int isRed = 1; //1 if we are red, -1 if we are blue
 
@@ -19,7 +19,7 @@ public class AutoZoneOneOp extends AutoOpBase {
 
         FTC7391PrintWriter data1Writer = new FTC7391PrintWriter("Alliance" , "color");
 
-        stepsList.add(new MoveState(-35, 0.8));
+        stepsList.add(new MoveState(27, 0.8));
         //stepsList.add(new WaitState(0));
         //stepsList.add(new MoveLateralState(24,0.8));
         //stepsList.add(new WaitState(0));
